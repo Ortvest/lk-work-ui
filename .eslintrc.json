@@ -1,0 +1,110 @@
+{
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      },
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+
+  "parser": "@typescript-eslint/parser",
+
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended"
+  ],
+
+  "plugins": ["react", "@typescript-eslint", "simple-import-sort"],
+
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "import/newline-after-import": ["warn", { "count": 1 }],
+    "react/display-name": "off",
+    "no-extra-boolean-cast": "off",
+    "react/react-in-jsx-scope": "off",
+    "prefer-const": "warn",
+    "react-hooks/rules-of-hooks": "warn",
+    "import/no-unresolved": "off",
+    "import/default": "off",
+    "quotes": ["warn", "single"],
+    "max-len": ["warn", 120],
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-closing-bracket-location": [
+      1,
+      {
+        "selfClosing": "tag-aligned",
+        "nonEmpty": "after-props"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".tsx"]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  },
+
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "warn",
+          {
+            "groups": [
+              ["^react$"],
+              ["^\\w"],
+              ["^@global/store"],
+              ["^@global/router"],
+              ["^@modules/"],
+              ["^@shared/interfaces, ^@shared/types, ^@shared/enums"],
+              ["^@shared/config"],
+              ["^@shared/hooks"],
+              ["^@shared/components"],
+              ["^@shared/assets"],
+              ["^.+\\.css$"]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
