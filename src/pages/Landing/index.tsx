@@ -1,3 +1,11 @@
+import { Fragment } from 'react';
+
+import { WelcomeMessage } from '@modules/WelcomeMessage';
+
 export const LandingPage = (): JSX.Element => {
-  return <h1>LK-Work</h1>;
+  return (
+    <Fragment>
+      <WelcomeMessage />
+    </Fragment>
+  );
 };

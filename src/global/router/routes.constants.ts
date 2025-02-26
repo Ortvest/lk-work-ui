@@ -20,6 +20,18 @@ export const AppRoutes = {
     title: '',
     usageScope: [UsageScopes.SYSTEM],
   },
+  AUTHED_EMPLOYEES_PAGE: {
+    path: '/employees',
+    isVisible: true,
+    title: '',
+    usageScope: [UsageScopes.SYSTEM],
+  },
+  AUTHED_TEAM_MEMBERS_PAGE: {
+    path: '/team-members',
+    isVisible: true,
+    title: '',
+    usageScope: [UsageScopes.SYSTEM],
+  },
 };
 
 export type AppRoute = { path: string; isVisible: boolean; title: string; usageScope: string[] };

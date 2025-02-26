@@ -1,17 +1,25 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserState } from '@shared/interfaces/UserState.interfaces';
 
-const initialState = {
-  isTest: true,
+const initialState: UserState = {
+  isAuth: false,
+  email: '',
+  password: '',
+  name: 'Super Admin',
 };
 
-export const TestSlice = createSlice({
-  name: 'TestSlice',
+export const UserSlice = createSlice({
+  name: 'UserSlice',
   initialState,
   reducers: {
-    setTestStatus(state, action: PayloadAction<boolean>) {
-      state.isTest = action.payload;
+    setUserAuthStatus(state, action: PayloadAction<boolean>) {
+      state.isAuth = action.payload;
+    },
+    setUserCredentials(state, action: PayloadAction<{ email: string; password: string }>) {
+      state.email = action.payload.email;
+      state.password = action.payload.password;
     },
   },
 });
 
-export const TestReducer = TestSlice.reducer;
+export const UserReducer = UserSlice.reducer;

@@ -1,6 +1,9 @@
 import classNames from 'classnames';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import { Header } from '@modules/Header';
+import { Sidebar } from '@modules/Sidebar';
+
 import { AppRoutes } from './routes.constants';
 
 export const AppLayout = ({ authed }: { authed: boolean }): JSX.Element => {
@@ -10,8 +13,10 @@ export const AppLayout = ({ authed }: { authed: boolean }): JSX.Element => {
 
   return (
     <>
+      <Header />
       <main>
         <div className={classNames('layout-wrapper')}>
+          <Sidebar />
           <Outlet />
         </div>
       </main>
