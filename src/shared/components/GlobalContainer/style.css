@@ -1,0 +1,10 @@
+.global-container {
+  background-color: #ebebec;
+}
+
+.global-wrapper {
+  height: calc(100vh - 78px);
+  max-width: 1212px;
+  margin: 0 auto;
+  padding: 26px 48px 0;
+}
