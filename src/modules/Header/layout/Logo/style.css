@@ -1,0 +1,12 @@
+.header-logo {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+}
+
+.header-logo-link {
+  color: var(--black);
+  text-decoration: none;
+}

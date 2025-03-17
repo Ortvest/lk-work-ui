@@ -1,4 +1,4 @@
-import '@shared/config/style-config.css';
+import '@shared/config/style.config.css';
 
 import { LandingPage } from '@pages/Landing';
 

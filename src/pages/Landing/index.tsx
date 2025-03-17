@@ -1,5 +1,11 @@
 import { Fragment } from 'react';
 
+import { Header } from '@modules/Header';
+
 export const LandingPage = (): JSX.Element => {
-  return <Fragment>LK-Work</Fragment>;
+  return (
+    <Fragment>
+      <Header />
+    </Fragment>
+  );
 };
