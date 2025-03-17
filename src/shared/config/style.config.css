@@ -2,6 +2,9 @@
 
 :root {
   --black: #000;
+  --light-gray: #ebebec;
+  --white: #fff;
+  --dark-gray: #0000008f;
 }
 
 * {

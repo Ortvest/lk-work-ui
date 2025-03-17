@@ -1,5 +1,5 @@
 .global-container {
-  background-color: #ebebec;
+  background-color: var(--light-gray);
 }
 
 .global-wrapper {

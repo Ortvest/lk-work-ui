@@ -1,0 +1,39 @@
+.user-data {
+  display: flex;
+  align-items: center;
+
+  padding: 0 0 16px;
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0 16px 0 0;
+  padding: 20px;
+
+  border-radius: 50%;
+
+  background-color: #efefef;
+}
+
+.user-name {
+  font-size: 18px;
+}
+
+.user-email {
+  color: var(--dark-gray);
+}
+
+.user-data-values {
+  flex-grow: 1;
+}
+
+.user-options {
+  border: none;
+
+  background: none;
+}
+
+.user-options:hover {
+  cursor: pointer;
+}
