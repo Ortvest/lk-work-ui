@@ -1,0 +1,17 @@
+.personal-info-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  background-color: var(--white);
+}
+
+.personal-info-title {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.personal-info-subtitle {
+  color: var(--dark-gray);
+  line-height: 150%;
+}

@@ -1,0 +1,64 @@
+.photo-field-wrapper {
+  display: flex;
+  flex-grow: 1;
+  gap: 20px;
+  align-items: center;
+
+  max-width: 360px;
+}
+
+.photo-field-preview {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 80px;
+  height: 80px;
+  padding: 28px;
+
+  border-radius: 50%;
+
+  background-color: #efefef;
+}
+
+.photo-field-img {
+  z-index: 1;
+
+  width: 80px;
+  height: 80px;
+
+  border-radius: 50%;
+}
+
+.photo-field-preview::before {
+  position: absolute;
+  inset: 4px;
+  content: '';
+
+  border: 1px dashed #0000001a;
+  border-radius: 50%;
+}
+
+.photo-field-input {
+  display: none;
+}
+
+.photo-field-button {
+  padding: 6px 10px;
+
+  color: var(--black);
+  font-weight: 600;
+  font-size: 14px;
+
+  border: none;
+
+  background-color: #e5e5e5;
+
+  outline: none;
+}
+
+.photo-field-button:hover {
+  cursor: pointer;
+}

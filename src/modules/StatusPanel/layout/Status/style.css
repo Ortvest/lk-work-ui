@@ -1,0 +1,19 @@
+.status {
+  flex-grow: 1;
+
+  padding: 24px 0 24px 24px;
+
+  color: var(--dark-gray);
+}
+
+.status-value {
+  margin: 0 0 0 12px;
+  padding: 2.5px 6px;
+
+  color: #035f8a99;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+
+  background-color: #e0f3ff;
+}

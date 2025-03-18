@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { AppRoute, AppRoutes, UsageScopes } from '@global/router/router.constans';
+import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
 
 import './style.css';
 

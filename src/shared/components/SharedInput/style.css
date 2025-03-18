@@ -1,0 +1,17 @@
+.field-input {
+  flex-grow: 1;
+
+  max-width: 360px;
+  padding: 12px 16px;
+
+  border: 1px solid var(--border-dark-gray);
+
+  background-color: var(--soft-gray);
+
+  outline: none;
+}
+
+.field-input::placeholder {
+  color: var(--dark-gray);
+  font-size: 16px;
+}

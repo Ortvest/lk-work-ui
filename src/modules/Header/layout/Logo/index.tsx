@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import { AppRoutes } from '@global/router/router.constans';
+import { AppRoutes } from '@global/router/routes.constans';
 
 import './style.css';
 

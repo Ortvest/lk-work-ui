@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
-import { AppRoute, AppRoutes, UsageScopes } from '@global/router/router.constans';
+import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
 
 import ArrowRightIcon from '@shared/assets/icons/ArrowRightIcon.svg';
 

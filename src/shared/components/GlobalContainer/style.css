@@ -3,6 +3,9 @@
 }
 
 .global-wrapper {
+  display: flex;
+  gap: 24px;
+
   height: calc(100vh - 68px);
   max-width: 1212px;
   margin: 0 auto;

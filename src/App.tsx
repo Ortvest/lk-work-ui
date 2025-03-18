@@ -1,9 +1,15 @@
+import { useState } from 'react';
+
+import { RouterProvider } from 'react-router-dom';
+
+import { router } from '@global/router/router';
+
 import '@shared/config/style.config.css';
 
-import { LandingPage } from '@pages/Landing';
+export const App = (): JSX.Element => {
+  const [authed] = useState(true);
 
-function App(): JSX.Element {
-  return <LandingPage />;
-}
+  const currentRouter = router(authed);
 
-export default App;
+  return <RouterProvider router={currentRouter} />;
+};

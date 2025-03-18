@@ -1,0 +1,44 @@
+.personal-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+}
+
+.personal-info-form {
+  padding: 24px 32px;
+
+  background-color: var(--white);
+}
+
+.personal-info-header-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.personal-info-header-wrapper::after {
+  content: '';
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
+  margin: 24px 0;
+
+  background-color: var(--light-gray);
+}
+
+.personal-info-form-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  border: none;
+}
+
+.field-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
