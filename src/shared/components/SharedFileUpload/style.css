@@ -1,0 +1,44 @@
+.shared-file-label {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 231px;
+
+  background-color: var(--soft-gray);
+}
+
+.shared-file-label:hover {
+  cursor: pointer;
+}
+
+.shared-file-label::before {
+  position: absolute;
+  inset: 12px;
+  content: '';
+
+  border: 1px dashed #0000001a;
+}
+
+.shared-file-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.shared-file-input {
+  display: none;
+}
+
+.shared-file-title {
+  padding: 24px 0 8px;
+}
+
+.shared-file-subtitle {
+  max-width: 378px;
+
+  color: var(--dark-gray);
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 export interface PersonalInfoData {
-  photo: string;
+  photo: File;
   firstName: string;
   lastName: string;
   dateOfBirth: {

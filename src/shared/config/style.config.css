@@ -16,3 +16,16 @@
 
   font-family: Inter, sans-serif;
 }
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+}
+
+.global-container {
+  flex-grow: 1;
+
+  overflow-y: auto;
+}

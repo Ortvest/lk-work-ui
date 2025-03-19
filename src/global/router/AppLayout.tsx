@@ -1,4 +1,3 @@
-import { Fragment } from 'react/jsx-runtime';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { Header } from '@modules/Header';
@@ -13,12 +12,12 @@ export const AppLayout = ({ authed }: { authed: boolean }): JSX.Element => {
     return <Navigate to={AppRoutes.MAIN.path} replace />;
   }
   return (
-    <Fragment>
+    <div className="layout-container">
       <Header />
       <GlobalContainer>
         <Sidebar />
         <Outlet />
       </GlobalContainer>
-    </Fragment>
+    </div>
   );
 };
