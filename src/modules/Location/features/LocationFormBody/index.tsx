@@ -5,6 +5,8 @@ import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 import { SharedSelect } from '@shared/components/SharedSelect';
 
+import './style.css';
+
 import { citiesMock } from '@shared/mocks/Cities.mocks';
 
 export const LocationFormBody = (): JSX.Element => {

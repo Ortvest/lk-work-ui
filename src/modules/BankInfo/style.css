@@ -1,4 +1,4 @@
-.location {
+.bank-info {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -7,7 +7,7 @@
   margin: 0 0 30px;
 }
 
-.location-form {
+.bank-info-form {
   max-width: 660px;
   padding: 24px 32px;
 

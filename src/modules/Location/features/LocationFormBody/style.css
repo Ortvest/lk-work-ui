@@ -1,0 +1,7 @@
+.location-form-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  border: none;
+}
