@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
 import { SharedInput } from '@shared/components/SharedInput';
+import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
 
@@ -14,7 +15,7 @@ interface PhoneNumberProps {
 export const PhoneNumberFields = ({ prefixName, numberName, title }: PhoneNumberProps): JSX.Element => {
   const { register } = useFormContext();
   return (
-    <label className={classNames('field-label')}>
+    <SharedLabel>
       {title}
       <fieldset className={classNames('phone-wrapper')}>
         <select className={classNames('phone-select')} {...register(prefixName)}>
@@ -27,6 +28,6 @@ export const PhoneNumberFields = ({ prefixName, numberName, title }: PhoneNumber
         </select>
         <SharedInput type="tel" {...register(numberName)} placeholder="00 000 00 00" />
       </fieldset>
-    </label>
+    </SharedLabel>
   );
 };

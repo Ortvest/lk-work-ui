@@ -3,6 +3,8 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
+import { SharedLabel } from '@shared/components/SharedLabel';
+
 import UserIcon from '@shared/assets/icons/UserIcon.svg';
 
 import './style.css';
@@ -30,7 +32,7 @@ export const PhotoField = (): JSX.Element => {
   };
 
   return (
-    <label className={classNames('field-label')}>
+    <SharedLabel>
       Photo:*
       <div className={classNames('photo-field-wrapper')}>
         <div className={classNames('photo-field-preview')}>
@@ -52,6 +54,6 @@ export const PhotoField = (): JSX.Element => {
           Upload Photo
         </button>
       </div>
-    </label>
+    </SharedLabel>
   );
 };

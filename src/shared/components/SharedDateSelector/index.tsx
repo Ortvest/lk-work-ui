@@ -3,6 +3,8 @@ import { Fragment } from 'react';
 import classNames from 'classnames';
 import { Controller, useFormContext } from 'react-hook-form';
 
+import { SharedLabel } from '@shared/components/SharedLabel';
+
 import './style.css';
 
 interface SharedDateSelectorProps {
@@ -15,7 +17,7 @@ export const SharedDateSelector = ({ title, namePrefix }: SharedDateSelectorProp
 
   return (
     <Fragment>
-      <label className={classNames('field-label')}>
+      <SharedLabel>
         {title}
         <fieldset className={classNames('date-selector-fields-wrapper')}>
           <Controller
@@ -72,7 +74,7 @@ export const SharedDateSelector = ({ title, namePrefix }: SharedDateSelectorProp
             )}
           />
         </fieldset>
-      </label>
+      </SharedLabel>
     </Fragment>
   );
 };

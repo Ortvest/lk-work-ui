@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
+import { SharedLabel } from '@shared/components/SharedLabel';
+
 import './style.css';
 
 export const GenderFields = (): JSX.Element => {
@@ -21,7 +23,7 @@ export const GenderFields = (): JSX.Element => {
   };
 
   return (
-    <label className={classNames('field-label')}>
+    <SharedLabel>
       Gender:*
       <div className={classNames('gender-options')}>
         <label className={classNames('gender-option', { active: selectedGender === 'male' })}>
@@ -45,6 +47,6 @@ export const GenderFields = (): JSX.Element => {
           Female
         </label>
       </div>
-    </label>
+    </SharedLabel>
   );
 };

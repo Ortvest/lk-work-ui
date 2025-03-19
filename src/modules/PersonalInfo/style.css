@@ -3,6 +3,8 @@
   flex-direction: column;
   flex-grow: 1;
   gap: 12px;
+
+  margin: 0 0 30px;
 }
 
 .personal-info-form {
@@ -35,10 +37,4 @@
   gap: 16px;
 
   border: none;
-}
-
-.field-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
