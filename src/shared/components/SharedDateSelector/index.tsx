@@ -8,17 +8,16 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 interface SharedDateSelectorProps {
-  title: string;
+  dateSelectorTitle: string;
   namePrefix: string;
 }
 
-export const SharedDateSelector = ({ title, namePrefix }: SharedDateSelectorProps): JSX.Element => {
+export const SharedDateSelector = ({ dateSelectorTitle, namePrefix }: SharedDateSelectorProps): JSX.Element => {
   const { control } = useFormContext();
 
   return (
     <Fragment>
-      <SharedLabel>
-        {title}
+      <SharedLabel title={dateSelectorTitle}>
         <fieldset className={classNames('date-selector-fields-wrapper')}>
           <Controller
             name={`${namePrefix}.year`}

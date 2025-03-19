@@ -23,8 +23,7 @@ export const GenderFields = (): JSX.Element => {
   };
 
   return (
-    <SharedLabel>
-      Gender:*
+    <SharedLabel title="Gender:*">
       <div className={classNames('gender-options')}>
         <label className={classNames('gender-option', { active: selectedGender === 'male' })}>
           <input

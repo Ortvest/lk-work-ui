@@ -9,14 +9,13 @@ import './style.css';
 interface PhoneNumberProps {
   prefixName: string;
   numberName: string;
-  title: string;
+  phoneNumberTitle: string;
 }
 
-export const PhoneNumberFields = ({ prefixName, numberName, title }: PhoneNumberProps): JSX.Element => {
+export const PhoneNumberFields = ({ prefixName, numberName, phoneNumberTitle }: PhoneNumberProps): JSX.Element => {
   const { register } = useFormContext();
   return (
-    <SharedLabel>
-      {title}
+    <SharedLabel title={phoneNumberTitle}>
       <fieldset className={classNames('phone-wrapper')}>
         <select className={classNames('phone-select')} {...register(prefixName)}>
           <option className={classNames('phone-option')} value="+48">

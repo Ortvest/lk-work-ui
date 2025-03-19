@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from '@global/router/AppLayout';
 import { AppRoutes } from '@global/router/routes.constans';
 
+import { Location } from '@modules/Location';
 import { PersonalInfo } from '@modules/PersonalInfo';
 
 export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> =>
@@ -14,6 +15,10 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
         {
           path: AppRoutes.PERSONAL_INFO.path,
           element: <PersonalInfo />,
+        },
+        {
+          path: AppRoutes.LOCATION.path,
+          element: <Location />,
         },
       ],
     },

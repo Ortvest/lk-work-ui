@@ -32,8 +32,7 @@ export const PhotoField = (): JSX.Element => {
   };
 
   return (
-    <SharedLabel>
-      Photo:*
+    <SharedLabel title="Photo:*">
       <div className={classNames('photo-field-wrapper')}>
         <div className={classNames('photo-field-preview')}>
           {preview ? (
