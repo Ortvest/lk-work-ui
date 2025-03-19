@@ -3,7 +3,8 @@
   gap: 12px;
   align-items: center;
 
-  width: 60.4%;
+  width: 100%;
+  max-width: 360px;
 
   border: none;
 }
