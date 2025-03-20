@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserState } from '@shared/interfaces/UserState.interfaces';
 
-const initialState: UserState = {
+const initialState = {
   isAuth: false,
   email: '',
   password: '',
