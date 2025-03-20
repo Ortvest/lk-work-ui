@@ -1,0 +1,15 @@
+.shared-button {
+  margin: 16px 0;
+  padding: 8px 24px;
+
+  color: var(--white);
+  font-weight: 600;
+
+  border: none;
+
+  background-color: var(--black);
+}
+
+.shared-button:hover {
+  cursor: pointer;
+}

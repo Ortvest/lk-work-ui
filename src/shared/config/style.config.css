@@ -1,0 +1,31 @@
+@import url('./font.config.css');
+
+:root {
+  --black: #000;
+  --light-gray: #ebebec;
+  --soft-gray: #f6f6f6;
+  --white: #fff;
+  --dark-gray: #0000008f;
+  --border-dark-gray: #1313370a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: Inter, sans-serif;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+}
+
+.global-container {
+  flex-grow: 1;
+
+  overflow-y: auto;
+}

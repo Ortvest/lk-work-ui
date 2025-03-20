@@ -1,0 +1,15 @@
+.location {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+
+  margin: 0 0 30px;
+}
+
+.location-form {
+  max-width: 660px;
+  padding: 24px 32px;
+
+  background-color: var(--white);
+}

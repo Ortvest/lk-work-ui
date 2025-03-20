@@ -1,0 +1,28 @@
+.gender-options {
+  display: flex;
+  gap: 12px;
+}
+
+.gender-option {
+  padding: 8px 63px;
+
+  color: var(--dark-gray);
+
+  border: 1px solid var(--border-dark-gray);
+
+  background-color: var(--soft-gray);
+}
+
+.gender-option.active {
+  color: var(--white);
+
+  background-color: #565353;
+}
+
+.gender-option:hover {
+  cursor: pointer;
+}
+
+.gender-option > input {
+  display: none;
+}

@@ -1,0 +1,35 @@
+.header-navigation {
+  display: flex;
+  gap: 16px;
+}
+
+.header-navigation-list {
+  padding: 8px 12px;
+
+  list-style: none;
+}
+
+.header-navigation-link {
+  color: var(--black);
+  text-decoration: none;
+}
+
+.header-navigation-select {
+  padding: 8px 12px;
+
+  font-size: 16px;
+
+  border: none;
+
+  background-image: url('../../../../shared/assets/icons/RectangleIcon.svg');
+  background-repeat: no-repeat;
+  background-position: 100% 55%;
+
+  outline: none;
+
+  appearance: none;
+}
+
+.header-navigation-select:hover {
+  cursor: pointer;
+}

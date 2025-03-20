@@ -1,57 +1,40 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { EmployeesTable } from '@modules/EmployeesTable';
-import { Login } from '@modules/Login';
-import { TeamMembersTable } from '@modules/TeamMembersTable';
+import { AppLayout } from '@global/router/AppLayout';
+import { AppRoutes } from '@global/router/routes.constans';
 
-import { AppLayout } from './AppLayout';
-import { AuthLayout } from './AuthLayout';
-import { AppRoutes } from './routes.constants';
-import { AuthLanding } from '@pages/AuthLanding';
-import { LandingPage } from '@pages/Landing';
+import { BankInfo } from '@modules/BankInfo';
+import { Documents } from '@modules/Documents';
+import { JobInfo } from '@modules/JobInfo';
+import { Location } from '@modules/Location';
+import { PersonalInfo } from '@modules/PersonalInfo';
 
 export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> =>
   createBrowserRouter([
-    //not authed user
-    {
-      path: '/',
-      element: <AuthLayout authed={authed} />,
-      children: [
-        {
-          path: AppRoutes.AUTH_LOG_IN.path,
-          element: <Login />,
-        },
-        {
-          path: AppRoutes.AUTH_REGISTER.path,
-          element: null,
-        },
-        {
-          path: AppRoutes.MAIN.path,
-          element: <LandingPage />,
-        },
-      ],
-    },
-    //authed user
     {
       path: '/',
       element: <AppLayout authed={authed} />,
       children: [
         {
-          path: AppRoutes.AUTHED_MAIN_PAGE.path,
-          element: <AuthLanding />,
+          path: AppRoutes.PERSONAL_INFO.path,
+          element: <PersonalInfo />,
         },
         {
-          path: AppRoutes.AUTHED_EMPLOYEES_PAGE.path,
-          element: <EmployeesTable />,
+          path: AppRoutes.LOCATION.path,
+          element: <Location />,
         },
         {
-          path: AppRoutes.AUTHED_TEAM_MEMBERS_PAGE.path,
-          element: <TeamMembersTable />,
+          path: AppRoutes.JOB_INFO.path,
+          element: <JobInfo />,
+        },
+        {
+          path: AppRoutes.BANK_INFO.path,
+          element: <BankInfo />,
+        },
+        {
+          path: AppRoutes.DOCUMENTS.path,
+          element: <Documents />,
         },
       ],
-    },
-    {
-      path: '*',
-      element: null,
     },
   ]);

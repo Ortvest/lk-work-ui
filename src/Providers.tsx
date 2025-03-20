@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { Provider } from 'react-redux';
 
@@ -10,8 +10,8 @@ interface ProviderProps {
 
 export const Providers = ({ children }: ProviderProps): JSX.Element => {
   return (
-    <>
+    <Fragment>
       <Provider store={store}>{children}</Provider>
-    </>
+    </Fragment>
   );
 };

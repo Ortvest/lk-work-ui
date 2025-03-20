@@ -1,0 +1,11 @@
+.status-panel {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+
+  max-width: 660px;
+  max-height: fit-content;
+
+  background-color: var(--white);
+}

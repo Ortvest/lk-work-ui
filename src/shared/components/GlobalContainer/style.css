@@ -1,0 +1,15 @@
+.global-container {
+  height: auto;
+  min-height: calc(100vh - 68px);
+
+  background-color: var(--light-gray);
+}
+
+.global-wrapper {
+  display: flex;
+  gap: 24px;
+
+  max-width: 1212px;
+  margin: 0 auto;
+  padding: 26px 48px 0;
+}
