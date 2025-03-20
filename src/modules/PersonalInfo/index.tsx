@@ -17,7 +17,11 @@ import './style.css';
 import { PersonalInfoData } from '@shared/interfaces/PersonalInfoData.interfaces';
 
 export const PersonalInfo = (): JSX.Element => {
-  const methods = useForm<PersonalInfoData>();
+  const methods = useForm<PersonalInfoData>({
+    defaultValues: {
+      emailAgreement: true,
+    },
+  });
 
   const onSaveHanlder = (data: PersonalInfoData): void => {
     console.log(data);
