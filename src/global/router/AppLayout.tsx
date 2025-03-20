@@ -11,6 +11,7 @@ export const AppLayout = ({ authed }: { authed: boolean }): JSX.Element => {
   if (!authed) {
     return <Navigate to={AppRoutes.MAIN.path} replace />;
   }
+
   return (
     <div className="layout-container">
       <Header />
