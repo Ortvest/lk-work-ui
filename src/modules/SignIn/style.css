@@ -1,0 +1,15 @@
+.sign-in-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: calc(100% - 68px);
+}
+
+.sign-in-wrapper {
+  height: fit-content;
+  padding: 24px 32px;
+
+  background-color: var(--white);
+}

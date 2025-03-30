@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import { AppLayout } from '@global/router/AppLayout';
+import { AuthLayout } from '@global/router/AuthLayout';
 import { AppRoutes } from '@global/router/routes.constans';
 
 import { BankInfo } from '@modules/BankInfo';
@@ -8,12 +9,14 @@ import { Documents } from '@modules/Documents';
 import { JobInfo } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { PersonalInfo } from '@modules/PersonalInfo';
+import { SignIn } from '@modules/SignIn';
 
 export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> =>
   createBrowserRouter([
+    //authed user
     {
       path: '/',
-      element: <AppLayout authed={authed} />,
+      element: <AuthLayout authed={authed} />,
       children: [
         {
           index: true,
@@ -38,6 +41,17 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
         {
           path: AppRoutes.DOCUMENTS.path,
           element: <Documents />,
+        },
+      ],
+    },
+    // not authed user
+    {
+      path: '/',
+      element: <AppLayout authed={authed} />,
+      children: [
+        {
+          path: AppRoutes.SIGN_IN.path,
+          element: <SignIn />,
         },
       ],
     },

@@ -13,6 +13,8 @@ export const UsageScopes = {
 export const AppRoutes = {
   MAIN: { path: '/', isVisible: false, title: 'Main', usageScope: [UsageScopes.NONE] },
 
+  SIGN_IN: { path: '/sign-in', isVisible: false, title: 'Sign In', usageScope: [UsageScopes.NONE] },
+
   SUPPORT: { path: '/support', isVisible: true, title: 'Support', usageScope: [UsageScopes.HEADER] },
 
   PERSONAL_INFO: {
