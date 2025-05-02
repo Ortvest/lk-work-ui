@@ -29,8 +29,8 @@ export const PersonalInfo = (): JSX.Element => {
   return (
     <FormProvider {...methods}>
       <section className={classNames('personal-info')}>
-        <StatusPanel />
         <form className={classNames('personal-info-form')} onSubmit={methods.handleSubmit(onSaveHanlder)}>
+          <StatusPanel />
           <SharedSectionHeader title="Personal info" subtitle="Niewielki opis funkcji strony" />
           <fieldset className={classNames('personal-info-form-fields-wrapper')}>
             <PhotoField />

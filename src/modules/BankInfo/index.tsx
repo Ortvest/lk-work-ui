@@ -20,8 +20,8 @@ export const BankInfo = (): JSX.Element => {
   return (
     <FormProvider {...methods}>
       <section className={classNames('bank-info')}>
-        <StatusPanel />
         <form className={classNames('bank-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+          <StatusPanel />
           <SharedSectionHeader title="Bank Info" subtitle="Leave information about your bank" />
           <BankInfoFormBody />
         </form>

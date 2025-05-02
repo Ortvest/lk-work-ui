@@ -5,7 +5,6 @@ import { AuthLayout } from '@global/router/AuthLayout';
 import { AppRoutes } from '@global/router/routes.constans';
 
 import { BankInfo } from '@modules/BankInfo';
-import { Documents } from '@modules/Documents';
 import { JobInfo } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { PersonalInfo } from '@modules/PersonalInfo';
@@ -40,7 +39,7 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
         },
         {
           path: AppRoutes.DOCUMENTS.path,
-          element: <Documents />,
+          element: null,
         },
       ],
     },

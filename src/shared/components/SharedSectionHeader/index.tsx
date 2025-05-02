@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 
-import { SharedButton } from '@shared/components/SharedButton';
-
 import './style.css';
 
 interface SharedSectionHeaderProps {
@@ -15,7 +13,6 @@ export const SharedSectionHeader = ({ title, subtitle }: SharedSectionHeaderProp
         <h2 className={classNames('shared-section-title')}>{title}</h2>
         <p className={classNames('shared-section-subtitle')}>{subtitle}</p>
       </header>
-      <SharedButton type="submit" text="Save" />
     </div>
   );
 };

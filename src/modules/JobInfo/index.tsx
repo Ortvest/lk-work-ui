@@ -20,8 +20,8 @@ export const JobInfo = (): JSX.Element => {
   return (
     <FormProvider {...methods}>
       <section className={classNames('job-info')}>
-        <StatusPanel />
         <form className={classNames('job-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+          <StatusPanel />
           <SharedSectionHeader title="Job Info" subtitle="Leave information about your work" />
           <JobInfoFormBody />
         </form>
