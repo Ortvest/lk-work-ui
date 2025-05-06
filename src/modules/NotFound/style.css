@@ -1,0 +1,24 @@
+.error-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+.error-message-text {
+  text-align: center;
+}
+
+.error-message-link {
+  padding: 12px 36px;
+
+  color: var(--white);
+  text-transform: uppercase;
+  text-decoration: none;
+
+  background-color: var(--black);
+}

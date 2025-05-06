@@ -101,6 +101,12 @@ export const AppRoutes = {
     title: 'Questionnaire',
     usageScope: [UsageScopes.NONE],
   },
+  EMPLOYEERS_TABLE: {
+    path: 'employeers-table',
+    isVisible: false,
+    title: 'employeers-table',
+    usageScope: [UsageScopes.NONE],
+  },
 };
 
 export type AppRoute = { path: string; isVisible: boolean; title: string; usageScope: string[]; icon?: string };
