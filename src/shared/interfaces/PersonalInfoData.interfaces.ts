@@ -1,3 +1,5 @@
+import { LocationData } from '@shared/interfaces/LocationData.interfaces';
+
 export interface PersonalInfoData {
   photo: File;
   firstName: string;
@@ -8,6 +10,26 @@ export interface PersonalInfoData {
     day: string;
   };
   gender: 'male' | 'female';
+  citizenship: string;
+  passportNumber: number;
+  peselNumber: number;
+  studentData: {
+    isStudent: boolean;
+    validityPeriod: {
+      year: string;
+      month: string;
+      day: string;
+    };
+  };
+  drivingLicenceData: {
+    isDrivingLicence: boolean;
+    validityPeriod: {
+      year: string;
+      month: string;
+      day: string;
+    };
+  };
+  emailAgreement: boolean;
   requiredPhoneNumber: {
     prefix: string;
     number: string;
@@ -17,5 +39,18 @@ export interface PersonalInfoData {
     number: string;
   };
   email: string;
-  emailAgreement: boolean;
+  workStartDate: {
+    year: string;
+    month: string;
+    day: string;
+  };
+  prefferedCompanies: string;
+}
+
+export interface QuestionnaireData extends Omit<PersonalInfoData, 'photo'>, LocationData {
+  studentData: PersonalInfoData['studentData'] & {
+    studentCardFrontSide?: File;
+    studentCardBackSide?: File;
+    educationalInstitution?: string;
+  };
 }

@@ -20,6 +20,11 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  margin: 12px 0 0;
+  padding: 24px 32px 0;
+
+  background-color: var(--white);
 }
 
 .shared-header-wrapper::after {

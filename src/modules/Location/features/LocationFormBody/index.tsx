@@ -17,6 +17,9 @@ export const LocationFormBody = (): JSX.Element => {
       <SharedLabel title="City:*">
         <SharedSelect {...register('city')} options={citiesMock} />
       </SharedLabel>
+      <SharedLabel title="Postal Сode:*">
+        <SharedInput type="text" {...register('postalCode')} placeholder="Enter postal code" />
+      </SharedLabel>
       <SharedLabel title=" Street:*">
         <SharedInput type="text" {...register('street')} placeholder="Enter your street" />
       </SharedLabel>
@@ -25,9 +28,6 @@ export const LocationFormBody = (): JSX.Element => {
       </SharedLabel>
       <SharedLabel title="Apartment Number:*">
         <SharedInput type="text" {...register('aparmentNumber')} placeholder="Enter apartment number" />
-      </SharedLabel>
-      <SharedLabel title="Postal Сode:*">
-        <SharedInput type="text" {...register('postalCode')} placeholder="Enter postal code" />
       </SharedLabel>
     </fieldset>
   );

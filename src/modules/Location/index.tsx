@@ -20,8 +20,8 @@ export const Location = (): JSX.Element => {
   return (
     <FormProvider {...methods}>
       <section className={classNames('location')}>
-        <StatusPanel />
         <form className={classNames('location-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+          <StatusPanel />
           <SharedSectionHeader title="Location" subtitle="Fill in information about your actual place of residence" />
           <LocationFormBody />
         </form>

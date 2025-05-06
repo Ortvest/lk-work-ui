@@ -1,8 +1,7 @@
 .sidebar {
-  flex-grow: 1;
-
-  width: 389.92px;
-  max-height: fit-content;
+  width: 432px;
+  height: fit-content;
+  max-width: 432px;
   padding: 24px;
 
   background-color: var(--white);

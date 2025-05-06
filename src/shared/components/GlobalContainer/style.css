@@ -8,6 +8,7 @@
 .global-wrapper {
   display: flex;
   gap: 24px;
+  justify-content: center;
 
   max-width: 1212px;
   margin: 0 auto;

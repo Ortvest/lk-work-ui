@@ -1,7 +1,12 @@
 export interface JobInfoData {
   company: string;
   position: string;
-  dateOfDateCommencement: {
+  dateOfCommencement: {
+    year: string;
+    month: string;
+    day: string;
+  };
+  dateOfCompletion: {
     year: string;
     month: string;
     day: string;

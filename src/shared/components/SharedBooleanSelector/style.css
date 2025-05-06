@@ -1,0 +1,35 @@
+.select-options {
+  display: flex;
+  flex-grow: 1;
+  gap: 12px;
+
+  max-width: 360px;
+}
+
+.select-option {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+
+  padding: 8px 63px;
+
+  color: var(--dark-gray);
+
+  border: 1px solid var(--border-dark-gray);
+
+  background-color: var(--soft-gray);
+}
+
+.select-option.active {
+  color: var(--white);
+
+  background-color: #565353;
+}
+
+.select-option:hover {
+  cursor: pointer;
+}
+
+.select-option > input {
+  display: none;
+}
