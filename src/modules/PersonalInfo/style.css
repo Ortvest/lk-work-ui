@@ -1,5 +1,6 @@
 .personal-info-form {
   max-width: 660px;
+  margin: 0 0 24px;
 
   background-color: var(--gray);
 }

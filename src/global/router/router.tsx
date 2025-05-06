@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 
 import { AppLayout } from '@global/router/AppLayout';
 import { AuthLayout } from '@global/router/AuthLayout';
@@ -15,6 +15,7 @@ import { WorkPermission } from '@modules/Documents/WorkPermission';
 import { JobInfo } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { PersonalInfoForm } from '@modules/PersonalInfo';
+import { Questionnaire } from '@modules/PersonalInfo/features/Questionnaire';
 import { SignIn } from '@modules/SignIn';
 
 export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> =>
@@ -24,10 +25,6 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
       path: '/',
       element: <AuthLayout authed={authed} />,
       children: [
-        {
-          index: true,
-          element: <Navigate to={AppRoutes.PERSONAL_INFO.path} replace />,
-        },
         {
           path: AppRoutes.PERSONAL_INFO.path,
           element: <PersonalInfoForm />,
@@ -72,6 +69,7 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
           path: AppRoutes.DRIVING_LICENCE.path,
           element: <DrivingLicence />,
         },
+        { path: AppRoutes.QUESTIONNAIRE.path, element: <Questionnaire /> },
       ],
     },
     // not authed user

@@ -1,3 +1,5 @@
+import { LocationData } from '@shared/interfaces/LocationData.interfaces';
+
 export interface PersonalInfoData {
   photo: File;
   firstName: string;
@@ -41,5 +43,14 @@ export interface PersonalInfoData {
     year: string;
     month: string;
     day: string;
+  };
+  prefferedCompanies: string;
+}
+
+export interface QuestionnaireData extends Omit<PersonalInfoData, 'photo'>, LocationData {
+  studentData: PersonalInfoData['studentData'] & {
+    studentCardFrontSide?: File;
+    studentCardBackSide?: File;
+    educationalInstitution?: string;
   };
 }

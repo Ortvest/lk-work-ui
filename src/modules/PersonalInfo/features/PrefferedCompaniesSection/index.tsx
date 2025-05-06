@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 
 import classNames from 'classnames';
+import { useFormContext } from 'react-hook-form';
 
 import { SharedLabel } from '@shared/components/SharedLabel';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
@@ -11,6 +12,7 @@ import './style.css';
 import { companies } from '@shared/mocks/JobInfo.mocks';
 
 export const PrefferedCompaniesSection = (): JSX.Element => {
+  const { register } = useFormContext();
   return (
     <Fragment>
       <SharedSectionHeader
@@ -19,7 +21,7 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
       />
       <fieldset className={classNames('preffered-companies-fields-wrapper')}>
         <SharedLabel title="Select companies:*">
-          <SharedSelect options={companies} />
+          <SharedSelect {...register('prefferedCompanies')} options={companies} />
         </SharedLabel>
       </fieldset>
     </Fragment>

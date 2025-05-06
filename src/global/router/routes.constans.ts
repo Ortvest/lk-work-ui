@@ -95,6 +95,12 @@ export const AppRoutes = {
     title: 'Driving Licence',
     usageScope: [UsageScopes.DOCUMENTS],
   },
+  QUESTIONNAIRE: {
+    path: '/questionnaire',
+    isVisible: false,
+    title: 'Questionnaire',
+    usageScope: [UsageScopes.NONE],
+  },
 };
 
 export type AppRoute = { path: string; isVisible: boolean; title: string; usageScope: string[]; icon?: string };
