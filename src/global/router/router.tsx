@@ -5,9 +5,16 @@ import { AuthLayout } from '@global/router/AuthLayout';
 import { AppRoutes } from '@global/router/routes.constans';
 
 import { BankInfo } from '@modules/BankInfo';
+import { DrivingLicence } from '@modules/Documents/DrivingLicence';
+import { Embassy } from '@modules/Documents/Embassy';
+import { Passport } from '@modules/Documents/Passport';
+import { ResidenceCard } from '@modules/Documents/ResidenceCard';
+import { StudentCard } from '@modules/Documents/StudentCard';
+import { VisaInfo } from '@modules/Documents/VisaInfo';
+import { WorkPermission } from '@modules/Documents/WorkPermission';
 import { JobInfo } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
-import { PersonalInfo } from '@modules/PersonalInfo';
+import { PersonalInfoForm } from '@modules/PersonalInfo';
 import { SignIn } from '@modules/SignIn';
 
 export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> =>
@@ -23,7 +30,7 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
         },
         {
           path: AppRoutes.PERSONAL_INFO.path,
-          element: <PersonalInfo />,
+          element: <PersonalInfoForm />,
         },
         {
           path: AppRoutes.LOCATION.path,
@@ -38,8 +45,32 @@ export const router = (authed: boolean): ReturnType<typeof createBrowserRouter> 
           element: <BankInfo />,
         },
         {
-          path: AppRoutes.DOCUMENTS.path,
-          element: null,
+          path: AppRoutes.PASSPORT.path,
+          element: <Passport />,
+        },
+        {
+          path: AppRoutes.EMBASSY.path,
+          element: <Embassy />,
+        },
+        {
+          path: AppRoutes.WORK_PERMISSION.path,
+          element: <WorkPermission />,
+        },
+        {
+          path: AppRoutes.STUDENT_CARD.path,
+          element: <StudentCard />,
+        },
+        {
+          path: AppRoutes.RESIDENCE_CARD.path,
+          element: <ResidenceCard />,
+        },
+        {
+          path: AppRoutes.VISA_INFO.path,
+          element: <VisaInfo />,
+        },
+        {
+          path: AppRoutes.DRIVING_LICENCE.path,
+          element: <DrivingLicence />,
         },
       ],
     },

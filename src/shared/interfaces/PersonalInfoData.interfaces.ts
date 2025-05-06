@@ -8,6 +8,26 @@ export interface PersonalInfoData {
     day: string;
   };
   gender: 'male' | 'female';
+  citizenship: string;
+  passportNumber: number;
+  peselNumber: number;
+  studentData: {
+    isStudent: boolean;
+    validityPeriod: {
+      year: string;
+      month: string;
+      day: string;
+    };
+  };
+  drivingLicenceData: {
+    isDrivingLicence: boolean;
+    validityPeriod: {
+      year: string;
+      month: string;
+      day: string;
+    };
+  };
+  emailAgreement: boolean;
   requiredPhoneNumber: {
     prefix: string;
     number: string;
@@ -17,5 +37,9 @@ export interface PersonalInfoData {
     number: string;
   };
   email: string;
-  emailAgreement: boolean;
+  workStartDate: {
+    year: string;
+    month: string;
+    day: string;
+  };
 }

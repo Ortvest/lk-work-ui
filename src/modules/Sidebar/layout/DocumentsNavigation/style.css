@@ -1,0 +1,55 @@
+.documents-options-list {
+  padding: 0 0 14px;
+
+  border-left: 2px solid var(--black);
+
+  background-color: #f0f0f0;
+
+  list-style: none;
+}
+
+.documents-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  max-height: 43px;
+  padding: 0 0 0 25px;
+}
+
+.documents-option::before {
+  content: url('../../../../shared/assets/icons/DocumentNavigationIcon.svg');
+}
+
+.documents-option:last-child::before {
+  content: url('../../../../shared/assets/icons/LastDocumentNavigationIcon.svg');
+
+  padding: 0 0 20px;
+}
+
+.document-link {
+  display: flex;
+  flex-grow: 1;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+
+  max-height: 43px;
+  margin: 0 16px 0 0;
+  padding: 0 0 0 16px;
+
+  color: var(--black);
+  text-decoration: none;
+}
+
+.document-link.active {
+  border-radius: 8px;
+
+  background-color: #e4e4e4;
+}
+
+.document-link > .document-link-text {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}

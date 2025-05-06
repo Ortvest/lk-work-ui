@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
-import { SharedDateSelector } from '@shared/components/SharedDateSelector';
+import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 import { SharedSelect } from '@shared/components/SharedSelect';
 
 import './style.css';
 
-import { bankPositions, banks } from '@shared/mocks/BankInfo.mocks';
+import { banks } from '@shared/mocks/BankInfo.mocks';
 
 export const BankInfoFormBody = (): JSX.Element => {
   const { register } = useFormContext();
@@ -17,10 +17,9 @@ export const BankInfoFormBody = (): JSX.Element => {
       <SharedLabel title="Bank Name:">
         <SharedSelect {...register('bankName')} options={banks} />
       </SharedLabel>
-      <SharedLabel title="Position:">
-        <SharedSelect {...register('position')} options={bankPositions} />
+      <SharedLabel title="Account Bank Number:">
+        <SharedInput type="number" {...register('accountBankNumber')} placeholder="Enter Account Bank Number..." />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle="Date of Commencement:" namePrefix="dateOfDateCommencement" />
     </fieldset>
   );
 };

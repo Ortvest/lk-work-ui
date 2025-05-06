@@ -9,7 +9,7 @@ import './style.css';
 
 export const GenderFields = (): JSX.Element => {
   const { register, setValue, watch } = useFormContext();
-  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [selectedGender, setSelectedGender] = useState<string | null>('male');
 
   const gender = watch('gender');
 

@@ -6,4 +6,6 @@
   padding: 0 32px 24px;
 
   border: none;
+
+  background-color: var(--white);
 }

@@ -1,0 +1,14 @@
+.driving-licence {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+
+  margin: 0 0 30px;
+}
+
+.driving-licence-form {
+  max-width: 660px;
+
+  background-color: var(--gray);
+}

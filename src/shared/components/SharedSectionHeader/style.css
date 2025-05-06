@@ -21,6 +21,20 @@
   flex-wrap: wrap;
   justify-content: space-between;
 
+  margin: 12px 0 0;
+  padding: 24px 32px 0;
+
+  background-color: var(--white);
+}
+
+.shared-header-wrapper::after {
+  content: '';
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
   margin: 24px 0;
-  padding: 0 32px;
+
+  background-color: var(--light-gray);
 }
