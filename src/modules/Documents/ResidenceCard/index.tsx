@@ -19,8 +19,8 @@ export const ResidenceCard = (): JSX.Element => {
 
   return (
     <FormProvider {...methods}>
-      <section className={classNames('.residence-card')}>
-        <form className={classNames('.residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+      <section className={classNames('residence-card')}>
+        <form className={classNames('residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
           <StatusPanel />
           <SharedSectionHeader
             title="Residence Card"
