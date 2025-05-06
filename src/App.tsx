@@ -7,7 +7,8 @@ import '@shared/config/style.config.css';
 
 export const App = (): JSX.Element => {
   const authed = true;
-  const isAdmin = false;
+  //const authed = useTypedSelector((state) => state.userReducer.isAuth);
+  const isAdmin = true;
   const currentRouter = router(authed, isAdmin);
 
   return <RouterProvider router={currentRouter} key={authed.toString()} />;
