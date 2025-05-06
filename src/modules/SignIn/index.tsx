@@ -14,13 +14,29 @@ import { UserSignInData } from '@shared/interfaces/User.interfaces';
 
 export const SignIn = (): JSX.Element => {
   const dispatch = useTypedDispatch();
-  const { setUserAuthStatus } = UserSlice.actions;
+  const { setUserAuthStatus, setUserAdminStatus } = UserSlice.actions;
 
   const methods = useForm<UserSignInData>();
 
   const onSubmitHanlder = (data: UserSignInData): void => {
-    if (data.email && data.password) {
+    let isAuth = false;
+    let isAdmin = false;
+
+    if (data.email === 'admin@gmail.com' && data.password === '1111') {
+      isAuth = true;
+      isAdmin = true;
+    }
+
+    if (data.email === 'user@gmail.com' && data.password === '1111') {
+      isAuth = true;
+      isAdmin = false;
+    }
+
+    if (isAuth) {
       dispatch(setUserAuthStatus(true));
+      dispatch(setUserAdminStatus(isAdmin));
+      localStorage.setItem('authed', 'true');
+      localStorage.setItem('isAdmin', String(isAdmin));
     }
   };
 
