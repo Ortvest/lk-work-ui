@@ -11,6 +11,7 @@ import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import './style.css';
 
 import { UserSignInData } from '@shared/interfaces/User.interfaces';
+import { useAuthenticateUserMutation } from '@global/api/auth/auth.api';
 
 export const SignIn = (): JSX.Element => {
   const dispatch = useTypedDispatch();
@@ -18,19 +19,24 @@ export const SignIn = (): JSX.Element => {
 
   const methods = useForm<UserSignInData>();
 
+  const [signIn] = useAuthenticateUserMutation()
   const onSubmitHanlder = (data: UserSignInData): void => {
+
+      signIn(data)
+      console.log(data, )
+
     let isAuth = false;
     let isAdmin = false;
 
-    if (data.email === 'admin@gmail.com' && data.password === '1111') {
-      isAuth = true;
-      isAdmin = true;
-    }
-
-    if (data.email === 'user@gmail.com' && data.password === '1111') {
-      isAuth = true;
-      isAdmin = false;
-    }
+    // if (data.email === 'admin@gmail.com' && data.password === '1111') {
+    //   isAuth = true;
+    //   isAdmin = true;
+    // }
+    //
+    // if (data.email === 'user@gmail.com' && data.password === '1111') {
+    //   isAuth = true;
+    //   isAdmin = false;
+    // }
 
     if (isAuth) {
       dispatch(setUserAuthStatus(true));
