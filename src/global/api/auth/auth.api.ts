@@ -24,47 +24,25 @@ export const authApi = baseAuthApi.injectEndpoints({
         }
       },
     }),
-    // registerUser: builder.mutation<AuthResponse, { username: string; email: string; password: string }>({
-    //   query: ({ username, email, password }) => ({
-    //     url: API_ENDPOINTS.AUTH_SIGN_UP,
-    //     method: HttpMethods.POST,
-    //     body: { username, email, password },
-    //   }),
-    //   async onQueryStarted(_, { dispatch, queryFulfilled }) {
-    //     try {
-    //       const { data } = await queryFulfilled;
-    //       if (data.user) {
-    //         dispatch(setUserData(data.user));
-    //         dispatch(setAuthStatus(true));
-    //       }
-    //     } catch (error) {
-    //       console.error('Registration failed:', error);
-    //       dispatch(setAuthStatus(false));
-    //       dispatch(setUserData({} as UserEntity));
-    //     }
-    //   },
-    // }),
-    // getMe: builder.query<{ data: UserEntity }, void>({
-    //   query: () => ({
-    //     url: API_ENDPOINTS.ME,
-    //     method: HttpMethods.GET,
-    //     credentials: 'include',
-    //   }),
-    //   async onQueryStarted(_, { dispatch, queryFulfilled }) {
-    //     try {
-    //       const { data } = await queryFulfilled;
-    //       if (data) {
-    //         dispatch(setUserData(data.data));
-    //         dispatch(setAuthStatus(true));
-    //       }
-    //     } catch (error) {
-    //       console.error('Failed to fetch user data:', error);
-    //       dispatch(setAuthStatus(false));
-    //       dispatch(setUserData({} as UserEntity));
-    //     }
-    //   },
-    // }),
+    getMe: builder.query<UserEntity, void>({
+      query: () => ({
+        url: API_CONFIG.authMe(),
+        method: "GET",
+        credentials: 'include',
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data) {
+            dispatch(setCurrentUser(data));
+            dispatch(setIsAuth(true));
+          }
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      },
+    }),
   }),
 });
 
-export const { useAuthenticateUserMutation } = authApi;
+export const { useAuthenticateUserMutation, useGetMeQuery} = authApi;
