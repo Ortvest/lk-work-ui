@@ -1,26 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserEntity } from '@shared/interfaces/User.interfaces';
 
-const initialState = {
+interface UserState {
+  user: UserEntity | null;
+  isAuth: boolean;
+}
+const initialState: UserState = {
   isAuth: false,
-  isAdmin: false,
-  email: '',
-  password: '',
-  name: 'Super Admin',
+  user: null,
 };
 
 export const UserSlice = createSlice({
   name: 'UserSlice',
   initialState,
   reducers: {
-    setUserAuthStatus(state, action: PayloadAction<boolean>) {
+    setIsAuth(state, action: PayloadAction<boolean>) {
       state.isAuth = action.payload;
     },
-    setUserAdminStatus(state, action) {
-      state.isAdmin = action.payload;
-    },
-    setUserCredentials(state, action: PayloadAction<{ email: string; password: string }>) {
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+    setCurrentUser(state, action: PayloadAction<UserEntity>) {
+      state.user = action.payload;
     },
   },
 });
