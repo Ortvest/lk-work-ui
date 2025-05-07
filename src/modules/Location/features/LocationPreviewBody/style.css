@@ -1,0 +1,23 @@
+.location-preview-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 0 32px 24px;
+
+  border: none;
+
+  background-color: var(--white);
+}
+
+.location-preview-fields-wrapper > label {
+  color: #00000080;
+}
+
+.location-preview-fields-wrapper > label > span {
+  color: var(--black);
+}
+
+.location-preview-fields-wrapper > label > span::first-letter {
+  text-transform: uppercase;
+}

@@ -1,6 +1,10 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+
+import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { AppRoutes } from '@global/router/routes.constans';
 
@@ -11,6 +15,8 @@ import { QuestionnaireFormBody } from '@modules/PersonalInfo/features/Questionna
 import { WorkStartSection } from '@modules/PersonalInfo/features/WorkStartSection';
 import { StatusPanel } from '@modules/StatusPanel';
 
+import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
+
 import { QuestionnaireData } from '@shared/interfaces/PersonalInfoData.interfaces';
 
 export const Questionnaire = (): JSX.Element => {
@@ -20,11 +26,20 @@ export const Questionnaire = (): JSX.Element => {
       emailAgreement: true,
     },
   });
+  const dispatch = useTypedDispatch();
+  const { setIsEditModeEnabled } = CommonSlice.actions;
 
   const onSaveHandler = (data: QuestionnaireData): void => {
     console.log(data);
     navigate(AppRoutes.PERSONAL_INFO.path);
+    dispatch(setIsEditModeEnabled(false));
   };
+
+  useEffect(() => {
+    dispatch(setIsEditModeEnabled(true));
+    console.log('Hello');
+  }, []);
+
   return (
     <FormProvider {...methods}>
       <section className={classNames('personal-info')}>
