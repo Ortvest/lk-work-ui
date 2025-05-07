@@ -1,20 +1,13 @@
 import { useMemo } from 'react';
 
 import classNames from 'classnames';
-import { Link, useNavigate } from 'react-router-dom';
-
-import { UserSlice } from '@global/store/slices/User.slice';
+import { Link } from 'react-router-dom';
 
 import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
-
-import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 
 import './style.css';
 
 export const Menu = (): JSX.Element => {
-  const navigate = useNavigate();
-  const dispatch = useTypedDispatch();
-  const { setUserAuthStatus, setUserAdminStatus } = UserSlice.actions;
   const headerMenuItems: AppRoute[] = useMemo(
     () =>
       Object.values(AppRoutes).filter(
@@ -23,12 +16,6 @@ export const Menu = (): JSX.Element => {
     []
   );
 
-  const onLogoutHanlder = (): void => {
-    localStorage.clear();
-    dispatch(setUserAuthStatus(false));
-    dispatch(setUserAdminStatus(false));
-    navigate('/');
-  };
   return (
     <nav className={classNames('header-navigation')}>
       <ul className={classNames('header-navigation-list')}>
@@ -39,9 +26,6 @@ export const Menu = (): JSX.Element => {
             </Link>
           </li>
         ))}
-        <li className={classNames('header-navigation-item')} onClick={onLogoutHanlder}>
-          Logout
-        </li>
       </ul>
       <select className={classNames('header-navigation-select')} name="lang-switch">
         <option className={classNames('header-navigation-option')} value="eng">
