@@ -3,14 +3,13 @@ import {
   Gender,
   UserDocumentsStatus,
   UserRole,
-  UserWorkStatus
+  UserWorkStatus,
 } from '@shared/enums/user.enums';
 
 export interface UserSignInData {
   email: string;
   password: string;
 }
-
 
 export interface PersonalInfo {
   firstName?: string;
@@ -25,7 +24,7 @@ export interface PersonalInfo {
   passportNumber?: string;
   peselNumber?: string;
   timeFromWorkStartDate?: string;
-  isStudent: boolean
+  isStudent: boolean;
 }
 
 export interface Address {
@@ -111,5 +110,5 @@ export interface UserEntity {
   workStatus: UserWorkStatus;
   role: UserRole;
   consentToEmailPIT: boolean;
-  _id: string
+  _id: string;
 }

@@ -1,13 +1,14 @@
+import { UserSlice } from '@global/store/slices/User.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseAuthApi } from '@global/api/auth/base-auth.api';
-import { UserSlice } from "@global/store/slices/User.slice";
+import { UserEntity, UserSignInData } from '@shared/interfaces/User.interfaces';
 
-const { setIsAuth, setCurrentUser} = UserSlice.actions;
+const { setIsAuth, setCurrentUser } = UserSlice.actions;
 
 export const authApi = baseAuthApi.injectEndpoints({
   endpoints: (builder) => ({
-    authenticateUser: builder.mutation<any, any>({
+    authenticateUser: builder.mutation<UserEntity, UserSignInData>({
       query: ({ email, password }) => ({
         url: API_CONFIG.signIn(),
         method: 'POST',
@@ -18,7 +19,6 @@ export const authApi = baseAuthApi.injectEndpoints({
           const { data } = await queryFulfilled;
           dispatch(setIsAuth(true));
           dispatch(setCurrentUser(data));
-
         } catch (error) {
           console.error('Authentication failed:', error);
         }
