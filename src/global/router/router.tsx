@@ -14,7 +14,7 @@ import { StudentCard } from '@modules/Documents/StudentCard';
 import { VisaInfo } from '@modules/Documents/VisaInfo';
 import { WorkPermission } from '@modules/Documents/WorkPermission';
 import { EmployeersTable } from '@modules/EmployeersTable';
-import { JobInfo } from '@modules/JobInfo';
+import { JobInformation } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { NotFound } from '@modules/NotFound';
 import { PersonalInfoForm } from '@modules/PersonalInfo';
@@ -67,7 +67,7 @@ export const router = (authed: boolean, isAdmin: boolean): ReturnType<typeof cre
           },
           {
             path: AppRoutes.JOB_INFO.path,
-            element: <JobInfo />,
+            element: <JobInformation />,
           },
           {
             path: AppRoutes.BANK_INFO.path,

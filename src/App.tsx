@@ -16,6 +16,7 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     refetch();
   }, []);
+
   const authed = useTypedSelector((state) => state.userReducer.isAuth);
 
   const currentRouter = router(Boolean(authed), false);

@@ -29,7 +29,7 @@ export const Location = (): JSX.Element => {
     if (!employeeId) return;
 
     try {
-      await collectUserAddress({ address: data, employeeId }).unwrap();
+      await collectUserAddress({ address: data, employeeId });
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {
       console.error('Failed to save address:', error);

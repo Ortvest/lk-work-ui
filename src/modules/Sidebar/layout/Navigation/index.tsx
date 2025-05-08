@@ -13,7 +13,8 @@ import DocumentsIcon from '@shared/assets/icons/DocumentsIcon.svg';
 import './style.css';
 
 export const Navigation = (): JSX.Element => {
-  const [activeRoute, setActiveRoute] = useState<string | null>(AppRoutes.PERSONAL_INFO.path);
+  const currentPathname = window.location.pathname;
+  const [activeRoute, setActiveRoute] = useState<string | null>(currentPathname);
 
   const onRouteChangeHanlder = (selectedRoute: string): void => {
     setActiveRoute(selectedRoute);
