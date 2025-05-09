@@ -1,16 +1,16 @@
-.admin-sidebar-item{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.admin-sidebar-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .admin-sidebar-item.active {
-    border-radius: 8px;
+  border-radius: 8px;
 
-    background-color: var(--black-80);
+  background-color: var(--black-80);
 }

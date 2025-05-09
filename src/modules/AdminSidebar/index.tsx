@@ -29,7 +29,7 @@ const sidebarRoutes = [
     selectedIcon: IconEmployeesWhite,
     label: 'Employees',
     scope: RouteScopes.TOP,
-    path: AppRoutes.EMPLOYEERS_TABLE.path,
+    path: AppRoutes.EMPLOYEES_TABLE.path,
   },
   {
     icon: IconUserProfile,
