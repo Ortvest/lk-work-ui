@@ -1,20 +1,20 @@
-.switch-table-button{
-    padding: 8px 16px;
+.switch-table-button {
+  padding: 8px 16px;
 
-    color: var(--black);
-    font-size: 14px;
-    line-height: 16px;
+  color: var(--black);
+  font-size: 14px;
+  line-height: 16px;
 
-    border: 0;
-    border-radius: 8px;
+  border: 0;
+  border-radius: 8px;
 
-    outline: none;
+  outline: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .switch-table-button.active {
-    color: var(--white);
+  color: var(--white);
 
-    background-color: var(--black-80);
+  background-color: var(--black-80);
 }

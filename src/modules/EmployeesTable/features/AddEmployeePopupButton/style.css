@@ -1,19 +1,19 @@
 .add-employee-popup-button {
-    display: flex;
-    gap: 4px;
-    align-items: center;
+  display: flex;
+  gap: 4px;
+  align-items: center;
 
-    padding: 8px 16px;
+  padding: 8px 16px;
 
-    color: var(--white);
-    font-size: 14px;
-    line-height: 16px;
+  color: var(--white);
+  font-size: 14px;
+  line-height: 16px;
 
-    border: 0;
+  border: 0;
 
-    background-color: var(--black-80);
+  background-color: var(--black-80);
 
-    outline: none;
+  outline: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }

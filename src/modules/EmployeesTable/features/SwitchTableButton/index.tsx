@@ -1,23 +1,25 @@
 import React from 'react';
+
 import classNames from 'classnames';
 
-import './style.css'
+import './style.css';
 
 interface SwitchTableButtonProps {
   text: string;
   isActive: boolean;
-  setSelectedTable: (selectedTable: 'hired' | "fired") => void;
+  setSelectedTable: (selectedTable: 'hired' | 'fired') => void;
 }
 export const SwitchTableButton = ({ text, isActive, setSelectedTable }: SwitchTableButtonProps): React.ReactNode => {
-
   const onSetSelectedTable = (): void => {
-    if(text === 'Fired'){
+    if (text === 'Fired') {
       setSelectedTable('fired');
-    }else{
+    } else {
       setSelectedTable('hired');
     }
-  }
+  };
   return (
-    <button onClick={onSetSelectedTable} className={classNames('switch-table-button', {active: isActive})}>{text}</button>
-  )
-}
+    <button onClick={onSetSelectedTable} className={classNames('switch-table-button', { active: isActive })}>
+      {text}
+    </button>
+  );
+};
