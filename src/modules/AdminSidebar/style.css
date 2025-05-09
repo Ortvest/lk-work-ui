@@ -1,0 +1,31 @@
+.admin-sidebar {
+    display: flex;
+    flex-direction: column;
+
+    width: 64px;
+    height: 100vh;
+    padding: 16px 12px;
+    box-sizing: border-box;
+
+    background-color: var(--white);
+}
+
+.admin-sidebar-navigation {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin-sidebar-top-routes, .admin-sidebar-bottom-routes {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-sidebar-top-routes{
+    gap: 8px;
+}
+
+.admin-sidebar-bottom-routes {
+    gap: 24px;
+}

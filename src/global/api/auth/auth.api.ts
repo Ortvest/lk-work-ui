@@ -27,7 +27,7 @@ export const authApi = baseAuthApi.injectEndpoints({
     getMe: builder.query<UserEntity, void>({
       query: () => ({
         url: API_CONFIG.authMe(),
-        method: "GET",
+        method: 'GET',
         credentials: 'include',
       }),
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
@@ -45,4 +45,4 @@ export const authApi = baseAuthApi.injectEndpoints({
   }),
 });
 
-export const { useAuthenticateUserMutation, useGetMeQuery} = authApi;
+export const { useAuthenticateUserMutation, useGetMeQuery } = authApi;

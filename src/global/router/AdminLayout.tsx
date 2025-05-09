@@ -1,6 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { GlobalContainer } from '@shared/components/GlobalContainer';
+import { AdminSidebar } from '@modules/AdminSidebar';
+
+import { AdminGlobalContainer } from '@shared/components/AdminGlobalContainer';
 
 import { AppRoutes } from './routes.constans';
 
@@ -11,9 +13,10 @@ export const AdminLayout = ({ authed, isAdmin }: { authed: boolean; isAdmin: boo
 
   return (
     <div className="layout-container">
-      <GlobalContainer>
+      <AdminGlobalContainer>
+        <AdminSidebar />
         <Outlet />
-      </GlobalContainer>
+      </AdminGlobalContainer>
     </div>
   );
 };
