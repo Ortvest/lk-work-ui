@@ -2,7 +2,7 @@ import { UserSlice } from '@global/store/slices/User.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseCollectData } from '@global/api/updateUserData/base-collectData.api';
-import { Address, JobInfo, UserEntity } from '@shared/interfaces/User.interfaces';
+import { Address, BankInfo, JobInfo, UserEntity } from '@shared/interfaces/User.interfaces';
 
 const { setCurrentUser } = UserSlice.actions;
 
@@ -40,7 +40,24 @@ export const collectDataApi = baseCollectData.injectEndpoints({
         }
       },
     }),
+    collectUserBankInfo: builder.mutation<UserEntity, { bankInfo: BankInfo; employeeId: string }>({
+      query: ({ bankInfo, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { bankInfo: { ...bankInfo } },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('Response data:', data);
+          dispatch(setCurrentUser(data));
+        } catch (error) {
+          console.error('Failed to submit bank info data:', error);
+        }
+      },
+    }),
   }),
 });
 
-export const { useCollectUserAddressMutation, useCollectUserJobInfoMutation } = collectDataApi;
+export const { useCollectUserAddressMutation, useCollectUserJobInfoMutation, useCollectUserBankInfoMutation } =
+  collectDataApi;

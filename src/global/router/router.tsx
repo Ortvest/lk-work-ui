@@ -5,7 +5,7 @@ import { AppLayout } from '@global/router/AppLayout';
 import { AuthLayout } from '@global/router/AuthLayout';
 import { AppRoutes } from '@global/router/routes.constans';
 
-import { BankInfo } from '@modules/BankInfo';
+import { BankInformation } from '@modules/BankInfo';
 import { DrivingLicence } from '@modules/Documents/DrivingLicence';
 import { Embassy } from '@modules/Documents/Embassy';
 import { Passport } from '@modules/Documents/Passport';
@@ -71,7 +71,7 @@ export const router = (authed: boolean, isAdmin: boolean): ReturnType<typeof cre
           },
           {
             path: AppRoutes.BANK_INFO.path,
-            element: <BankInfo />,
+            element: <BankInformation />,
           },
           {
             path: AppRoutes.PASSPORT.path,

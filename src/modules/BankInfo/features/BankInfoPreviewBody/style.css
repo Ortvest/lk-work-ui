@@ -1,0 +1,23 @@
+.bank-info-preview-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 0 32px 24px;
+
+  border: none;
+
+  background-color: var(--white);
+}
+
+.bank-info-preview-fields-wrapper > label {
+  color: #00000080;
+}
+
+.bank-info-preview-fields-wrapper > label > span {
+  color: var(--black);
+}
+
+.bank-info-preview-fields-wrapper > label > span::first-letter {
+  text-transform: uppercase;
+}

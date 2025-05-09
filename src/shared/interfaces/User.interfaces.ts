@@ -97,6 +97,7 @@ export interface JobInfo {
 
 export interface BankInfo {
   bankName?: string;
+  bankAccountNumber?: string;
   bankEmploymentStartDate?: string;
 }
 
