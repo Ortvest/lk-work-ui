@@ -43,6 +43,7 @@
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "import/newline-after-import": ["warn", { "count": 1 }],
     "react/display-name": "off",
     "no-extra-boolean-cast": "off",

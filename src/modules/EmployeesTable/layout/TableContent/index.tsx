@@ -2,16 +2,14 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import { mockUsers } from '@modules/EmployeesTable';
-
 import IconDots from '@shared/assets/icons/IconDots.svg';
 
 import './style.css';
 
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { UserEntity } from '@shared/interfaces/User.interfaces';
 
-type Employee = (typeof mockUsers)[number];
-const columns: ColumnDef<Employee>[] = [
+const columns: ColumnDef<any>[] = [
   {
     header: 'Employee',
     accessorFn: (row) => `${row.personalInfo.firstName} ${row.personalInfo.lastName}`,
@@ -86,21 +84,30 @@ const columns: ColumnDef<Employee>[] = [
     ),
     meta: { className: 'column-action' },
   },
-
 ];
-export const EmployeesTableContent = (): React.ReactNode => {
+
+interface EmployeeTableContentProps {
+  employees: UserEntity[];
+}
+export const EmployeesTableContent = ({employees}: EmployeeTableContentProps): React.ReactNode => {
+  console.log(employees, 'employees');
   const table = useReactTable({
-    data: mockUsers,
+    data: employees,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
   return (
     <table className="employees-table">
       <thead className={classNames('employees-table-content-header')}>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header: any) => (
-              <th key={header.id} className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
+
+            {
+              headerGroup.headers.map((header: any) => (
+              <th
+                key={header.id}
+                className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
                 {flexRender(header.column.columnDef.header, header.getContext())}
               </th>
             ))}
@@ -108,11 +115,14 @@ export const EmployeesTableContent = (): React.ReactNode => {
         ))}
       </thead>
       <tbody>
-        {table.getRowModel().rows.map((row) => (
+        {table?.getRowModel()?.rows?.map((row) => (
           <tr key={row.id} className="employees-table-row">
-            {row.getVisibleCells().map((cell: any) => (
-              <td key={cell.id} className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            {
+              row?.getVisibleCells()?.map((cell: any) => (
+              <td
+                key={cell.id}
+                className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
+                {flexRender(cell?.column?.columnDef?.cell, cell?.getContext())}
               </td>
             ))}
           </tr>

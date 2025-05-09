@@ -1,5 +1,8 @@
 import { EmployeeTableHeader } from '@modules/EmployeesTable/layout/Header';
 import { EmployeesTableContent } from '@modules/EmployeesTable/layout/TableContent';
+import { useFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
+import { useEffect } from "react";
+import { useTypedSelector } from "@shared/hooks/useTypedSelector";
 
 export const mockUsers = [
   {
@@ -393,10 +396,16 @@ export const mockUsers = [
 ];
 
 export const EmployeesTable = (): JSX.Element => {
+  const {refetch} = useFetchAllEmployeesQuery();
+
+  const {employees} = useTypedSelector(state => state.employeeReducer)
+  useEffect(() => {
+    refetch();
+  }, [])
   return (
     <div style={{ width: '100%' }}>
       <EmployeeTableHeader />
-      <EmployeesTableContent />
+      <EmployeesTableContent employees={employees}/>
     </div>
   );
 };

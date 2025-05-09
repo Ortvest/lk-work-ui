@@ -1,185 +1,183 @@
 .employees-table {
-    width: 100%;
-    margin-top: 36px;
+  width: 100%;
+  margin-top: 36px;
 
-    font-size: 14px;
+  font-size: 14px;
 
-    border-collapse: collapse;
+  border-collapse: collapse;
 
-    background-color: var(--white);
+  background-color: var(--white);
 }
 
 .employees-table th,
 .employees-table td {
-    padding: 12px;
+  padding: 12px;
 
-    text-align: left;
+  text-align: left;
 
-    border-bottom: 1px solid rgb(0 0 0 / 10%);
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
 }
 
 .status {
-    display: inline-block;
+  display: inline-block;
 
-    padding: 2px 6px;
+  padding: 2px 6px;
 
-    font-weight: bold;
-    font-size: 12px;
+  font-weight: bold;
+  font-size: 12px;
 
-    border-radius: 4px;
+  border-radius: 4px;
 }
 
 .status.working {
-    color: #333;
+  color: #333;
 
-    background: #f0f0f0;
+  background: #f0f0f0;
 }
 
 .status.confirmed {
-    color: #157715;
+  color: #157715;
 
-    background: #c3f7c3;
+  background: #c3f7c3;
 }
 
 .status.checking {
-    color: #0056b3;
+  color: #0056b3;
 
-    background: #cce5ff;
+  background: #cce5ff;
 }
 
 .status.layoff {
-    color: #fff;
+  color: #fff;
 
-    background: #aaa;
+  background: #aaa;
 }
 
 .status.need-update {
-    color: #b30000;
+  color: #b30000;
 
-    background: #fcc;
+  background: #fcc;
 }
 
 .action-button {
-    font-size: 18px;
+  font-size: 18px;
 
-    border: none;
+  border: none;
 
-    background: none;
+  background: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }
-
 
 .employees-table-content-header {
-    background-color: rgb(247 247 247 / 100%);
+  background-color: rgb(247 247 247 / 100%);
 }
 
-.employees-table-content-header-item{
-    color: var(--dark-gray);
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 16px;
+.employees-table-content-header-item {
+  color: var(--dark-gray);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .contract-expire {
-    display: flex;
-    gap: 8px;
-    align-items: center;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .contract-expire-dot {
-    width: 8px;
-    height: 8px;
+  width: 8px;
+  height: 8px;
 
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .dot-red {
-    background-color: rgb(234 42 42 / 100%);
+  background-color: rgb(234 42 42 / 100%);
 }
 
 .dot-green {
-    background-color: rgb(0 189 22 / 100%);
+  background-color: rgb(0 189 22 / 100%);
 }
 
 .dot-yellow {
-    background-color: rgb(244 200 0 / 100%);
+  background-color: rgb(244 200 0 / 100%);
 }
 
 .dot-orange {
-    background-color: rgb(244 163 0 / 100%);
+  background-color: rgb(244 163 0 / 100%);
 }
 
 .dot-gray {
-    background-color: #ccc;
+  background-color: #ccc;
 }
 
 .employees-table-row {
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
 }
 
 .employees-table-row:hover {
-    background-color: rgb(247 247 247 / 100%);
+  background-color: rgb(247 247 247 / 100%);
 }
 
 .employees-table-cell {
-    padding: 12px;
+  padding: 12px;
 
-    text-align: left;
+  text-align: left;
 
-    border-bottom: 1px solid #ebebec;
+  border-bottom: 1px solid #ebebec;
 }
 
 .employees-table-row .action-button {
-    opacity: 0;
+  opacity: 0;
 
-    transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
-
 .employees-table-row:hover .action-button {
-    opacity: 1;
+  opacity: 1;
 }
 
 .employees-table-action-cell {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 
-    width: 100%;
-    padding-right: 12px;
+  width: 100%;
+  padding-right: 12px;
 }
 
 .column-employee {
-    width: 289px;
+  width: 289px;
 }
 
 .column-status {
-    width: 289px;
+  width: 289px;
 }
 
 .column-citizenship {
-    width: 289px;
+  width: 289px;
 }
 
 .column-expire {
-    width: 200px;
+  width: 200px;
 }
 
 .column-hire-date {
-    width: 137px;
+  width: 137px;
 }
 
 .column-action {
-    width: 66px;
+  width: 66px;
 }
 
-.employees-table-content-header-cell{
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 100%;
+.employees-table-content-header-cell {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
 }
