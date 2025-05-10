@@ -1,4 +1,4 @@
-.driving-licence-form-fields-wrapper {
+.visa-info-preview-fields-wrapper {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -9,4 +9,8 @@
   border: none;
 
   background-color: var(--white);
+}
+
+.visa-info-preview-fields-wrapper > label > span::first-letter {
+  text-transform: uppercase;
 }

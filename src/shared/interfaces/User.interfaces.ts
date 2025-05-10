@@ -35,11 +35,61 @@ export interface Address {
   apartmentNumber?: string;
 }
 
+export interface JobInfo {
+  company?: string;
+  position?: string;
+  employmentStartDate?: string;
+  employmentEndDate?: string;
+}
+
+export interface BankInfo {
+  bankName?: string;
+  bankAccountNumber?: string;
+  bankEmploymentStartDate?: string;
+}
+
+export interface PassportDocument {
+  passportNumber?: string;
+  passportExpirationDate?: string;
+  passportDateOfIssue?: string;
+  passportFileKey?: string;
+}
+
+export interface PassportDocumentsUploadData extends Omit<PassportDocument, 'passportFileKey'> {
+  passportFile: File;
+}
+
+export interface EmbassyDocument {
+  embassyFirstDocumentFileKey?: string;
+  embassySecondDocumentFileKey?: string;
+  embassyDateOfIssue?: string;
+}
+
+export interface EmbassyData {
+  documents: EmbassyDocument[];
+}
+
+export interface EmbassyNotUploadedData {
+  documents: [
+    {
+      embassyFirstDocumentPhoto?: string;
+      embassySecondDocumentPhoto?: string;
+      embassyDateOfIssue?: string;
+    },
+  ];
+}
 export interface WorkPermissionDocument {
-  workPermitNumber?: string;
   workPermitExpirationDate?: string;
   workPermitDocumentFileKey?: string;
-  workPermitDocumentUrl?: string;
+  workPermitPaymentDocumentFileKey?: string;
+  workPermitApplicationFileKey?: string;
+}
+
+export interface WorkPermissiontNotUploadedData {
+  workPermitDocumentFile?: File;
+  workPermitPaymentDocumentFile?: File;
+  workPermitApplicationFile?: File;
+  workPermitExpirationDate?: string;
 }
 
 export interface EducationDocuments {
@@ -49,17 +99,15 @@ export interface EducationDocuments {
   studentStatusDate?: string;
 }
 
-export interface DrivingLicenseDocument {
-  drivingLicenceNumber?: string;
-  drivingLicenceCategories?: DrivingLicenseCategory[];
-  drivingLicenceFrontCardFileKey?: string;
-  drivingLicenceBackCardFileKey?: string;
-  drivingLicenceDate?: string;
+export interface StudentNotUploadedData {
+  studentFrontCardFile?: File;
+  studentBackCardFile?: File;
+  studentPermitCardFile?: File;
+  studentStatusDate?: string;
 }
 
 export interface ResidenceCardDocument {
   residenceCardFileKey?: string;
-  residenceCardUrl?: string;
   cardNumber?: string;
   countryOfIssue?: string;
   dateOfIssue?: string;
@@ -67,12 +115,35 @@ export interface ResidenceCardDocument {
   reasonForIssuance?: string;
 }
 
+export interface ResidenceCardDocumentNotUploaded extends Omit<ResidenceCardDocument, 'residenceCardFileKey'> {
+  residenceCardFile: File;
+}
+
 export interface VisaInformationDocument {
   visaType?: string;
   dateOfIssue?: string;
   expirationDate?: string;
   visaDocumentFileKey?: string;
-  visaDocumentUrl?: string;
+}
+
+export interface VisaInformationDocumentNotUploaded extends Omit<VisaInformationDocument, 'visaDocumentFileKey'> {
+  visaDocumentFile: File;
+}
+
+export interface DrivingLicenseDocument {
+  drivingLicenceCategories?: DrivingLicenseCategory[];
+  drivingLicenceFrontCardFileKey?: string;
+  drivingLicenceBackCardFileKey?: string;
+  drivingLicenseExpirationDate?: string;
+  drivingLicenseDateOfIssue?: string;
+}
+
+export interface DrivingLicenseDocumentNotUploaded {
+  drivingLicenceCategories?: DrivingLicenseCategory[];
+  drivingLicenceFrontCardFile?: File;
+  drivingLicenceBackCardFile?: File;
+  drivingLicenseExpirationDate?: string;
+  drivingLicenseDateOfIssue?: string;
 }
 
 export interface UkrainianStatementDocument {
@@ -86,19 +157,8 @@ export interface Documents {
   visaInformationDocuments?: VisaInformationDocument;
   ukrainianStatementDocument?: UkrainianStatementDocument;
   drivingLicenceDocuments?: DrivingLicenseDocument;
-}
-
-export interface JobInfo {
-  company?: string;
-  position?: string;
-  employmentStartDate?: string;
-  employmentEndDate?: string;
-}
-
-export interface BankInfo {
-  bankName?: string;
-  bankAccountNumber?: string;
-  bankEmploymentStartDate?: string;
+  passportDocuments?: PassportDocument;
+  embassyDocuments?: EmbassyDocument[];
 }
 
 export interface UserEntity {

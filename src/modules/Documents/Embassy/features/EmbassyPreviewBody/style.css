@@ -1,0 +1,35 @@
+.embassy-preview-fields-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 0 32px 24px;
+
+  border: none;
+
+  background-color: var(--white);
+}
+
+.embassy-preview-fields-wrapper > label {
+  color: #00000080;
+}
+
+.embassy-preview-fields-wrapper > label > span {
+  color: var(--black);
+}
+
+.embassy-preview-fields-wrapper > label > span::first-letter {
+  text-transform: uppercase;
+}
+
+.embassy-preview-fields-wrapper::after {
+  content: '';
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
+  margin: 24px 0;
+
+  background-color: var(--light-gray);
+}

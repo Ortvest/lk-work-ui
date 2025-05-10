@@ -9,7 +9,9 @@ import './style.css';
 
 type SharedFileUploadProps = {
   title?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>;
+  onChange?: (file: File) => void;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
+
 export const SharedFileUpload = forwardRef<HTMLInputElement, SharedFileUploadProps>(
   ({ title = 'Add a Scan or Photo Document', onChange, ...props }, ref) => {
     const [preview, setPreview] = useState<string | null>(null);
@@ -28,9 +30,9 @@ export const SharedFileUpload = forwardRef<HTMLInputElement, SharedFileUploadPro
           name: file.name,
           size: `${(file.size / (1024 * 1024)).toFixed(1)} Mb`,
         });
-      }
 
-      onChange?.(event);
+        onChange?.(file);
+      }
     };
 
     return (
