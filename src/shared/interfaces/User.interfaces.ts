@@ -112,3 +112,11 @@ export interface UserEntity {
   consentToEmailPIT: boolean;
   _id: string;
 }
+
+
+export interface AddEmployee {
+  email: string;
+  firstName: string;
+  lastName: string;
+  role?: UserRole
+}

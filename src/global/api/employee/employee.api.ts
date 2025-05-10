@@ -1,7 +1,8 @@
+import { EmployeeSlice } from '@global/store/slices/Employee.slice';
+
 import { API_CONFIG } from '@global/api/api.constants';
-import { UserEntity } from '@shared/interfaces/User.interfaces';
-import { baseEmployeeApi } from "@global/api/employee/base-employee.api";
-import { EmployeeSlice } from "@global/store/slices/Employee.slice";
+import { baseEmployeeApi } from '@global/api/employee/base-employee.api';
+import { AddEmployee, UserEntity } from "@shared/interfaces/User.interfaces";
 
 const { setEmployees } = EmployeeSlice.actions;
 export const employeeApi = baseEmployeeApi.injectEndpoints({
@@ -21,7 +22,18 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         }
       },
     }),
+    inviteEmployee: builder.mutation<boolean, AddEmployee>({
+      query: (body: AddEmployee) => ({
+        url: API_CONFIG.inviteEmployee(),
+        method: 'POST',
+        body,
+        credentials: 'include',
+      }),
+    }),
+
   }),
+  overrideExisting: false,
+
 });
 
-export const { useFetchAllEmployeesQuery } = employeeApi;
+export const { useFetchAllEmployeesQuery, useInviteEmployeeMutation } = employeeApi;

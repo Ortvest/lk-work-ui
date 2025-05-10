@@ -6,10 +6,10 @@ import IconDots from '@shared/assets/icons/IconDots.svg';
 
 import './style.css';
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-const columns: ColumnDef<any>[] = [
+const columns: ColumnDef<UserEntity>[] = [
   {
     header: 'Employee',
     accessorFn: (row) => `${row.personalInfo.firstName} ${row.personalInfo.lastName}`,
@@ -35,7 +35,7 @@ const columns: ColumnDef<any>[] = [
     header: 'The contract will expire',
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     cell: ({ row }) => {
-      const end = new Date(row.original.jobInfo.employmentEndDate);
+      const end = new Date(row.original.jobInfo.employmentEndDate as string);
       const today = new Date();
       const diffMs = end.getTime() - today.getTime();
       const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
@@ -89,7 +89,7 @@ const columns: ColumnDef<any>[] = [
 interface EmployeeTableContentProps {
   employees: UserEntity[];
 }
-export const EmployeesTableContent = ({employees}: EmployeeTableContentProps): React.ReactNode => {
+export const EmployeesTableContent = ({ employees }: EmployeeTableContentProps): React.ReactNode => {
   console.log(employees, 'employees');
   const table = useReactTable({
     data: employees,
@@ -102,9 +102,7 @@ export const EmployeesTableContent = ({employees}: EmployeeTableContentProps): R
       <thead className={classNames('employees-table-content-header')}>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
-
-            {
-              headerGroup.headers.map((header: any) => (
+            {headerGroup.headers.map((header: any) => (
               <th
                 key={header.id}
                 className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
@@ -117,8 +115,7 @@ export const EmployeesTableContent = ({employees}: EmployeeTableContentProps): R
       <tbody>
         {table?.getRowModel()?.rows?.map((row) => (
           <tr key={row.id} className="employees-table-row">
-            {
-              row?.getVisibleCells()?.map((cell: any) => (
+            {row?.getVisibleCells()?.map((cell: any) => (
               <td
                 key={cell.id}
                 className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>

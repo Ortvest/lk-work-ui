@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
+
 import { EmployeeTableHeader } from '@modules/EmployeesTable/layout/Header';
 import { EmployeesTableContent } from '@modules/EmployeesTable/layout/TableContent';
+
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import { useFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
-import { useEffect } from "react";
-import { useTypedSelector } from "@shared/hooks/useTypedSelector";
+import { AddEmployeePopup } from "@modules/EmployeesTable/layout/AddEmployeePopup";
 
 export const mockUsers = [
   {
@@ -396,16 +400,19 @@ export const mockUsers = [
 ];
 
 export const EmployeesTable = (): JSX.Element => {
-  const {refetch} = useFetchAllEmployeesQuery();
+  const { refetch } = useFetchAllEmployeesQuery();
 
-  const {employees} = useTypedSelector(state => state.employeeReducer)
+  const { employees } = useTypedSelector((state) => state.employeeReducer);
+
+  const [isOpenedModal, setIsOpenedModal] = useState(false);
   useEffect(() => {
     refetch();
-  }, [])
+  }, []);
   return (
     <div style={{ width: '100%' }}>
-      <EmployeeTableHeader />
-      <EmployeesTableContent employees={employees}/>
+      <EmployeeTableHeader setIsOpenedModal={setIsOpenedModal} />
+      <EmployeesTableContent employees={employees} />
+      <AddEmployeePopup setIsOpenedModal={setIsOpenedModal} isOpen={isOpenedModal}/>
     </div>
   );
 };

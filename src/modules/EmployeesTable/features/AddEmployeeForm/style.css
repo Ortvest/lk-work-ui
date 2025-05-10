@@ -1,0 +1,57 @@
+.add-employee-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    width: 100%;
+    margin-top: 24px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+
+    font-family: sans-serif;
+}
+
+.form-field-label {
+    margin-bottom: 4px;
+
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+}
+
+.form-field-field {
+    padding: 12px;
+
+    font-size: 14px;
+
+    border: 1px solid rgb(19 19 55 / 4%);
+    border-radius: 4px;
+
+    background-color: rgb(246 246 246 / 100%);
+}
+
+.form-buttons-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 24px;
+}
+
+.cancel-button {
+    padding: 10px 24px;
+
+    color: var(--black);
+
+    border: none;
+    border-radius: 4px;
+
+    background-color: rgb(239 239 239 / 100%);
+
+    outline: none;
+
+    cursor: pointer;
+}

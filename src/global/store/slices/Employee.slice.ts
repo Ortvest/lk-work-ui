@@ -3,10 +3,9 @@ import { UserEntity } from '@shared/interfaces/User.interfaces';
 
 interface EmployeeState {
   employees: UserEntity[];
-
 }
 const initialState: EmployeeState = {
-  employees: []
+  employees: [],
 };
 
 export const EmployeeSlice = createSlice({

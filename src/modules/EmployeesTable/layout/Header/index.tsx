@@ -9,7 +9,10 @@ import { SwitchTableButton } from '@modules/EmployeesTable/features/SwitchTableB
 
 import './style.css';
 
-export const EmployeeTableHeader = (): React.ReactNode => {
+interface EmployeesTableProps {
+  setIsOpenedModal: (isOpen: boolean) => void;
+}
+export const EmployeeTableHeader = ({setIsOpenedModal}: EmployeesTableProps): React.ReactNode => {
   const [selectedTable, setSelectedTable] = useState<'hired' | 'fired'>('hired');
 
   return (
@@ -25,7 +28,7 @@ export const EmployeeTableHeader = (): React.ReactNode => {
       </section>
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>
-          <AddEmployeePopupButton />
+          <AddEmployeePopupButton setIsOpenedModal={setIsOpenedModal} />
         </div>
         <div className={classNames('employees-table-header-toolbar')}>
           <FindEmployeesField />
