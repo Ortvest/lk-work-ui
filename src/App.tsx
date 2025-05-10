@@ -9,6 +9,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import '@shared/config/style.config.css';
 
 import { useGetMeQuery } from '@global/api/auth/auth.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const App = (): JSX.Element => {
   const { refetch } = useGetMeQuery(undefined);
@@ -17,9 +18,9 @@ export const App = (): JSX.Element => {
     refetch();
   }, []);
 
-  const authed = useTypedSelector((state) => state.userReducer.isAuth);
+  const { isAuth, user } = useTypedSelector((state) => state.userReducer);
 
-  const currentRouter = router(Boolean(authed), false);
+  const currentRouter = router(Boolean(isAuth), user?.role === UserRoles.SUPER_ADMIN);
 
-  return <RouterProvider router={currentRouter} key={String(authed)} />;
+  return <RouterProvider router={currentRouter} key={String(isAuth)} />;
 };

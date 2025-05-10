@@ -208,4 +208,11 @@ export interface UserEntity {
   _id: string;
 }
 
+export interface AddEmployee {
+  email: string;
+  firstName: string;
+  lastName: string;
+  role?: UserRole;
+}
+
 export interface QuestionnaireData extends Omit<PersonalInfoData, 'avatarUrl'>, Address {}

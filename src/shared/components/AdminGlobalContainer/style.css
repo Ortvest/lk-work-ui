@@ -1,0 +1,11 @@
+.admin-global-container {
+  height: auto;
+  min-height: calc(100vh - 68px);
+
+  background-color: var(--light-gray);
+}
+
+.admin-global-wrapper {
+  display: flex;
+  gap: 32px;
+}

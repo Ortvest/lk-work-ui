@@ -1,0 +1,18 @@
+.user-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 24px;
+  padding: 0 32px;
+}
+
+.user-preview-header-button {
+  border: none;
+
+  background: none;
+
+  outline: none;
+
+  cursor: pointer;
+}

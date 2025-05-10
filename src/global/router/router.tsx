@@ -13,7 +13,7 @@ import { ResidenceCard } from '@modules/Documents/ResidenceCard';
 import { StudentCard } from '@modules/Documents/StudentCard';
 import { VisaInfo } from '@modules/Documents/VisaInfo';
 import { WorkPermission } from '@modules/Documents/WorkPermission';
-import { EmployeersTable } from '@modules/EmployeersTable';
+import { EmployeesTable } from '@modules/EmployeesTable';
 import { JobInformation } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { NotFound } from '@modules/NotFound';
@@ -31,11 +31,11 @@ export const router = (authed: boolean, isAdmin: boolean): ReturnType<typeof cre
         children: [
           {
             path: '',
-            element: <Navigate to={AppRoutes.EMPLOYEERS_TABLE.path} replace />,
+            element: <Navigate to={AppRoutes.EMPLOYEES_TABLE.path} replace />,
           },
           {
-            path: AppRoutes.EMPLOYEERS_TABLE.path,
-            element: <EmployeersTable />,
+            path: AppRoutes.EMPLOYEES_TABLE.path,
+            element: <EmployeesTable />,
           },
           {
             path: '*',

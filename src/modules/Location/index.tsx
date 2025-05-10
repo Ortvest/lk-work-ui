@@ -1,3 +1,5 @@
+import React from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -17,7 +19,7 @@ import './style.css';
 import { useCollectUserAddressMutation } from '@global/api/updateUserData/collectData.api';
 import { Address } from '@shared/interfaces/User.interfaces';
 
-export const Location = (): JSX.Element => {
+export const Location = (): React.ReactNode => {
   const methods = useForm<Address>();
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);

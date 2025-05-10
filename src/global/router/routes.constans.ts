@@ -101,10 +101,10 @@ export const AppRoutes = {
     title: 'Questionnaire',
     usageScope: [UsageScopes.NONE],
   },
-  EMPLOYEERS_TABLE: {
-    path: 'employeers-table',
+  EMPLOYEES_TABLE: {
+    path: 'employees-table',
     isVisible: false,
-    title: 'employeers-table',
+    title: 'employees-table',
     usageScope: [UsageScopes.NONE],
   },
 };
