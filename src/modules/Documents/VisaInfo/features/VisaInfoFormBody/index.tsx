@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
@@ -11,11 +11,15 @@ import './style.css';
 import { visaTypes } from '@shared/mocks/VisaInfo.mocks';
 
 export const VisaInfoFormBody = (): JSX.Element => {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
 
   return (
     <fieldset className={classNames('visa-info-form-fields-wrapper')}>
-      <SharedFileUpload {...register('visaInfoFile')} />
+      <Controller
+        name="visaDocumentFile"
+        control={control}
+        render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
+      />
       <SharedLabel title="Type Visa:*">
         <SharedSelect {...register('visaType')} options={visaTypes} />
       </SharedLabel>

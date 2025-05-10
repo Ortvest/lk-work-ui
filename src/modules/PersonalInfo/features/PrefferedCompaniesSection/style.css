@@ -9,3 +9,7 @@
 
   background-color: var(--white);
 }
+
+.preffered-companies-text::first-letter {
+  text-transform: uppercase;
+}

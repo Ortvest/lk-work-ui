@@ -18,7 +18,7 @@ export const BankInfoFormBody = (): JSX.Element => {
         <SharedSelect {...register('bankName')} options={banks} />
       </SharedLabel>
       <SharedLabel title="Account Bank Number:">
-        <SharedInput type="number" {...register('accountBankNumber')} placeholder="Enter Account Bank Number..." />
+        <SharedInput type="number" {...register('bankAccountNumber')} placeholder="Enter Account Bank Number..." />
       </SharedLabel>
     </fieldset>
   );

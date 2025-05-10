@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
@@ -12,11 +12,17 @@ import './style.css';
 import { countries, reasons } from '@shared/mocks/ResidenceCard.mocks';
 
 export const ResidenceCardFormBody = (): JSX.Element => {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
 
   return (
     <fieldset className={classNames('residence-card-form-fields-wrapper')}>
-      <SharedFileUpload {...register('resedenceCardFile')} title="Add a Scan or Photo Residence Card" />
+      <Controller
+        name="residenceCardFile"
+        control={control}
+        render={({ field }) => (
+          <SharedFileUpload title="Add a Scan or Photo Residence Card" onChange={(file) => field.onChange(file)} />
+        )}
+      />
       <SharedLabel title="Card Number:*">
         <SharedInput {...register('cardNumber')} type="number" placeholder="Enter card number..." />
       </SharedLabel>

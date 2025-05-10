@@ -1,0 +1,3 @@
+.nationality-text::first-letter {
+  text-transform: uppercase;
+}

@@ -6,16 +6,22 @@ import { SignInHeader } from '@modules/SignIn/layout/SignInHeader';
 
 import './style.css';
 
-import { useAuthenticateUserMutation } from '@global/api/auth/auth.api';
+import { useAuthenticateUserMutation, useLazyGetMeQuery } from '@global/api/auth/auth.api';
 import { UserSignInData } from '@shared/interfaces/User.interfaces';
 
 export const SignIn = (): JSX.Element => {
   const methods = useForm<UserSignInData>();
 
   const [signIn] = useAuthenticateUserMutation();
-  const onSubmitHanlder = (data: UserSignInData): void => {
-    signIn(data);
-    console.log(data);
+  const [getUserData] = useLazyGetMeQuery();
+
+  const onSubmitHanlder = async (data: UserSignInData): Promise<void> => {
+    try {
+      await signIn(data);
+      await getUserData();
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
   };
 
   return (

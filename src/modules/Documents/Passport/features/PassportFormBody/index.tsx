@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
@@ -9,16 +9,20 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 export const PassportFormBody = (): JSX.Element => {
-  const { register } = useFormContext();
+  const { register, control } = useFormContext();
 
   return (
     <fieldset className={classNames('passport-form-fields-wrapper')}>
-      <SharedFileUpload {...register('passportFile')} />
+      <Controller
+        name="passportFile"
+        control={control}
+        render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
+      />
       <SharedLabel title="PassportNumber:*">
-        <SharedInput {...register('passportNumber')} type="number" placeholder="Enter your number..." />
+        <SharedInput {...register('passportNumber')} type="text" placeholder="Enter your number..." />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle="Date of issue:*" namePrefix="dateOfIssue" />
-      <SharedDateSelector dateSelectorTitle="Expiration Date:*" namePrefix="expirationDate" />
+      <SharedDateSelector dateSelectorTitle="Date of issue:*" namePrefix="passportDateOfIssue" />
+      <SharedDateSelector dateSelectorTitle="Expiration Date:*" namePrefix="passportExpirationDate" />
     </fieldset>
   );
 };

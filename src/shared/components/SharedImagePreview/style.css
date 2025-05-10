@@ -1,0 +1,44 @@
+.shared-img-preview-container {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  padding: 8px;
+
+  background-color: var(--soft-gray);
+}
+
+.shared-img-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 72px;
+  height: 72px;
+
+  background-color: var(--white);
+}
+
+.shared-img-preview {
+  width: 52px;
+  height: 37px;
+}
+
+.shared-img-preview-name-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 4px;
+}
+
+.shared-img-preview-size {
+  color: #0006;
+}
+
+.shared-img-preview-download-icon {
+  padding-right: 16px;
+}
+
+.shared-img-preview-download-icon:hover {
+  cursor: pointer;
+}

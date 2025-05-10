@@ -15,16 +15,18 @@ export const ContactSection = (): JSX.Element => {
       <SharedSectionHeader title="Contacts" subtitle="Full Correspondence Address" />
       <fieldset className={classNames('contacts-fields-wrapper')}>
         <PhoneNumberFields
-          prefixName="requiredPhoneNumber.prefix"
-          numberName="requiredPhoneNumber.number"
-          phoneNumberTitle="Phone number:*"
+          prefixName="nationalPhoneNumber.prefix"
+          numberName="nationalPhoneNumber.number"
+          phoneNumberTitle="National Phone Number:*"
+          editModeTitle="nationalPhoneNumber"
         />
         <PhoneNumberFields
-          prefixName="optionalPhoneNumber.prefix"
-          numberName="optionalPhoneNumber.number"
-          phoneNumberTitle="Phone number:"
+          prefixName="polishPhoneNumber.prefix"
+          numberName="polishPhoneNumber.number"
+          phoneNumberTitle="Polish Phone number:"
+          editModeTitle="polishPhoneNumber"
         />
-        <EmailField />
+        {location.pathname === '/questionnaire' ? null : <EmailField />}
       </fieldset>
     </Fragment>
   );

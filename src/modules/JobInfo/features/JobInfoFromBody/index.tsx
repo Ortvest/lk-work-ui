@@ -20,8 +20,8 @@ export const JobInfoFormBody = (): JSX.Element => {
       <SharedLabel title="Position:">
         <SharedSelect {...register('position')} options={positions} />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle="Date of Commencement:" namePrefix="dateOfCommencement" />
-      <SharedDateSelector dateSelectorTitle="Date of Completion:" namePrefix="dateOfCompletion" />
+      <SharedDateSelector dateSelectorTitle="Date of Commencement:" namePrefix="employmentStartDate" />
+      <SharedDateSelector dateSelectorTitle="Date of Completion:" namePrefix="employmentEndDate" />
     </fieldset>
   );
 };
