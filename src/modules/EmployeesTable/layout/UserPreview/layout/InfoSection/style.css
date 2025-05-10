@@ -1,0 +1,30 @@
+.user-preview-contact-header {
+    margin-bottom: 24px;
+}
+
+.user-preview-contact-header h1 {
+    font-weight: 500;
+}
+
+.user-preview-contact-main {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-row {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 14px;
+}
+
+.contact-label {
+    color: rgb(0 0 0 / 48%);
+    font-weight: 500;
+}
+
+.contact-value {
+    color: rgb(0 0 0 / 100%);
+    font-weight: 500;
+}

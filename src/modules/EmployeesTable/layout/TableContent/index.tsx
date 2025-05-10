@@ -2,6 +2,10 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import { EmployeeSlice } from '@global/store/slices/Employee.slice';
+
+import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
+
 import IconDots from '@shared/assets/icons/IconDots.svg';
 
 import './style.css';
@@ -88,14 +92,23 @@ const columns: ColumnDef<UserEntity>[] = [
 
 interface EmployeeTableContentProps {
   employees: UserEntity[];
+  setIsDrawerOpen: (isOpen: boolean) => void;
 }
-export const EmployeesTableContent = ({ employees }: EmployeeTableContentProps): React.ReactNode => {
-  console.log(employees, 'employees');
+
+const { setSelectedEmployee } = EmployeeSlice.actions;
+export const EmployeesTableContent = ({ employees, setIsDrawerOpen }: EmployeeTableContentProps): React.ReactNode => {
+  const dispatch = useTypedDispatch();
+
   const table = useReactTable({
     data: employees,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const onSelectEmployee = (employee: UserEntity): void => {
+    setIsDrawerOpen(true);
+    dispatch(setSelectedEmployee(employee));
+  };
 
   return (
     <table className="employees-table">
@@ -114,7 +127,7 @@ export const EmployeesTableContent = ({ employees }: EmployeeTableContentProps):
       </thead>
       <tbody>
         {table?.getRowModel()?.rows?.map((row) => (
-          <tr key={row.id} className="employees-table-row">
+          <tr onClick={() => onSelectEmployee(row.original)} key={row.id} className="employees-table-row">
             {row?.getVisibleCells()?.map((cell: any) => (
               <td
                 key={cell.id}

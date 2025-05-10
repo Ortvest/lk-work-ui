@@ -1,0 +1,23 @@
+.user-documents-button-wrapper {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 24px;
+}
+
+.user-documents-button {
+    width: 100%;
+    margin: 0 24px;
+    padding: 12px 0;
+
+    color: rgb(0 0 0 / 100%);
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: rgb(219 218 218 / 100%);
+
+    outline: none;
+
+    cursor: pointer;
+}

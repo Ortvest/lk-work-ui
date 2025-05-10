@@ -7,10 +7,7 @@ import { AddEmployeeButton } from '@modules/EmployeesTable/features/AddEmployeeB
 
 import './style.css';
 
-import {
-  useInviteEmployeeMutation,
-  useLazyFetchAllEmployeesQuery,
-} from '@global/api/employee/employee.api';
+import { useInviteEmployeeMutation, useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { AddEmployee } from '@shared/interfaces/User.interfaces';
 

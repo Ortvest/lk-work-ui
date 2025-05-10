@@ -1,0 +1,35 @@
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+
+    background: rgb(0 0 0 / 40%);
+}
+
+
+.drawer-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+
+    height: 100vh;
+
+    background: white;
+
+    box-shadow: -2px 0 8px rgb(0 0 0 / 15%);
+
+    overflow-y: auto;
+
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.drawer-open {
+    transform: translateX(0%);
+}
+
+
+.drawer-closed {
+    transform: translateX(100%);
+}
