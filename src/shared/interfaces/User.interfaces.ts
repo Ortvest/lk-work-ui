@@ -24,7 +24,41 @@ export interface PersonalInfo {
   passportNumber?: string;
   peselNumber?: string;
   timeFromWorkStartDate?: string;
-  isStudent: boolean;
+  isStudent?: boolean;
+  avatarUrl?: string;
+  whichCompanyDoYouWantWorkFor?: string[];
+  avatarFile?: string;
+  consentToEmailPIT: boolean;
+  hasDrivingLicence: boolean;
+}
+
+export interface PersonalInfoData {
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth: {
+    year: string;
+    month: string;
+    day: string;
+  };
+  password?: string;
+  gender?: Gender;
+  polishPhoneNumber?: { prefix: string; number: string };
+  nationalPhoneNumber?: { prefix: string; number: string };
+  email?: string;
+  nationality?: string;
+  passportNumber?: string;
+  peselNumber?: string;
+  timeFromWorkStartDate?: {
+    year: string;
+    month: string;
+    day: string;
+  };
+  isStudent?: boolean;
+  avatarUrl?: string;
+  whichCompanyDoYouWantWorkFor?: string[];
+  avatarFile?: string;
+  consentToEmailPIT: boolean;
+  hasDrivingLicence: boolean;
 }
 
 export interface Address {
@@ -173,3 +207,5 @@ export interface UserEntity {
   consentToEmailPIT: boolean;
   _id: string;
 }
+
+export interface QuestionnaireData extends Omit<PersonalInfoData, 'avatarUrl'>, Address {}

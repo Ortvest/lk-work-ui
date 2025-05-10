@@ -32,7 +32,7 @@ export const Address = (): JSX.Element => {
           <SharedInput type="text" {...register('houseNumber')} placeholder="Enter house number" />
         </SharedLabel>
         <SharedLabel title="Apartment Number:*">
-          <SharedInput type="text" {...register('aparmentNumber')} placeholder="Enter apartment number" />
+          <SharedInput type="text" {...register('apartmentNumber')} placeholder="Enter apartment number" />
         </SharedLabel>
       </fieldset>
     </Fragment>

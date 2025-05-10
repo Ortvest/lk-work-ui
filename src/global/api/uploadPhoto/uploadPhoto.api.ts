@@ -15,6 +15,13 @@ export const uploadPhotoApi = baseUploadPhoto.injectEndpoints({
         body: file,
       }),
     }),
+    uploadUserPhoto: builder.mutation<UploadFileResponse, FormData>({
+      query: (file) => ({
+        url: API_CONFIG.uploadUserPhoto(),
+        method: 'POST',
+        body: file,
+      }),
+    }),
     getUploadedPhotoUrl: builder.mutation<{ url: string }, string>({
       query: (fileKey) => ({
         url: API_CONFIG.getUploadedPhoto(fileKey),
@@ -24,4 +31,4 @@ export const uploadPhotoApi = baseUploadPhoto.injectEndpoints({
   }),
 });
 
-export const { useUploadPhotoMutation, useGetUploadedPhotoUrlMutation } = uploadPhotoApi;
+export const { useUploadPhotoMutation, useGetUploadedPhotoUrlMutation, useUploadUserPhotoMutation } = uploadPhotoApi;

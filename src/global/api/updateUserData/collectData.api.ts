@@ -10,6 +10,7 @@ import {
   EmbassyDocument,
   JobInfo,
   PassportDocument,
+  PersonalInfo,
   ResidenceCardDocument,
   UserEntity,
   VisaInformationDocument,
@@ -20,6 +21,22 @@ const { setCurrentUser } = UserSlice.actions;
 
 export const collectDataApi = baseCollectData.injectEndpoints({
   endpoints: (builder) => ({
+    collectUserPersonalInfo: builder.mutation<UserEntity, { personalData: PersonalInfo; employeeId: string }>({
+      query: ({ personalData, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { personalInfo: { ...personalData } },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('Response data:', data);
+          dispatch(setCurrentUser(data));
+        } catch (error) {
+          console.error('Failed to submit personal data info data:', error);
+        }
+      },
+    }),
     collectUserAddress: builder.mutation<UserEntity, { address: Address; employeeId: string }>({
       query: ({ address, employeeId }) => ({
         url: API_CONFIG.collectData(employeeId),
@@ -193,6 +210,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
 });
 
 export const {
+  useCollectUserPersonalInfoMutation,
   useCollectUserAddressMutation,
   useCollectUserJobInfoMutation,
   useCollectUserBankInfoMutation,

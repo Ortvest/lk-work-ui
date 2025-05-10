@@ -1,3 +1,9 @@
+.personal-info {
+  flex-grow: 1;
+
+  max-width: 660px;
+}
+
 .personal-info-form {
   max-width: 660px;
   margin: 0 0 24px;
