@@ -4,7 +4,6 @@ import classNames from 'classnames';
 
 import { UserDocument } from '@modules/EmployeesTable/layout/UserDocuments/layout/UserDocumentsList/layout/UserDocument';
 
-
 const userDocuments = [
   {
     fileName: 'Umowa 1',

@@ -1,39 +1,38 @@
 .user-preview-toolbar {
-    position: sticky;
-    bottom: 0;
+  position: sticky;
+  bottom: 0;
 
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
 
-    margin-top: auto;
-    padding: 16px;
-
+  margin-top: auto;
+  padding: 16px;
 }
 
 .user-preview-toolbar-button {
-    padding: 12px 48px;
+  padding: 12px 48px;
 
-    font-weight: 500;
-    font-size: 16px;
+  font-weight: 500;
+  font-size: 16px;
 
-    border: none;
-    border-radius: 8px;
+  border: none;
+  border-radius: 8px;
 
-    outline: none;
+  outline: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .user-preview-toolbar-button:first-child {
-    color: rgb(0 0 0 / 100%);
+  color: rgb(0 0 0 / 100%);
 
-    background-color: rgb(219 218 218 / 100%);
+  background-color: rgb(219 218 218 / 100%);
 }
 
 .user-preview-toolbar-button:last-child {
-    color: var(--white);
+  color: var(--white);
 
-    background-color: rgb(47 47 47 / 100%);
+  background-color: rgb(47 47 47 / 100%);
 }

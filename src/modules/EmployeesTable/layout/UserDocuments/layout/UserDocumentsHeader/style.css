@@ -1,31 +1,31 @@
 .user-documents-header {
-    position: relative;
+  position: relative;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    height: 56px;
+  height: 56px;
 }
 
 .user-documents-header-button {
-    position: absolute;
-    left: 16px;
+  position: absolute;
+  left: 16px;
 
-    border: none;
+  border: none;
 
-    background: none;
+  background: none;
 
-    outline: none;
+  outline: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .user-documents-header-title {
-    position: absolute;
-    left: 50%;
+  position: absolute;
+  left: 50%;
 
-    font-weight: 500;
-    font-size: 16px;
+  font-weight: 500;
+  font-size: 16px;
 
-    transform: translateX(-50%);
+  transform: translateX(-50%);
 }

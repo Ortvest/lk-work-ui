@@ -1,18 +1,18 @@
 .print-documents-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    width: calc(100% - 48px);
-    margin: 8px auto 0;
-    padding: 16px 0;
+  width: calc(100% - 48px);
+  margin: 8px auto 0;
+  padding: 16px 0;
 
-    border: none;
-    border-radius: 10px;
+  border: none;
+  border-radius: 10px;
 
-    background-color: var(--white);
+  background-color: var(--white);
 
-    outline: none;
+  outline: none;
 
-    cursor: pointer;
+  cursor: pointer;
 }
