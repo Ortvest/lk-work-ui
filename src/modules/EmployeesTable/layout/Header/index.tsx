@@ -12,7 +12,7 @@ import './style.css';
 interface EmployeesTableProps {
   setIsOpenedModal: (isOpen: boolean) => void;
 }
-export const EmployeeTableHeader = ({setIsOpenedModal}: EmployeesTableProps): React.ReactNode => {
+export const EmployeeTableHeader = ({ setIsOpenedModal }: EmployeesTableProps): React.ReactNode => {
   const [selectedTable, setSelectedTable] = useState<'hired' | 'fired'>('hired');
 
   return (

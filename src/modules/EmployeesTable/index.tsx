@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
+import { AddEmployeePopup } from '@modules/EmployeesTable/layout/AddEmployeePopup';
 import { EmployeeTableHeader } from '@modules/EmployeesTable/layout/Header';
 import { EmployeesTableContent } from '@modules/EmployeesTable/layout/TableContent';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { useFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
-import { AddEmployeePopup } from "@modules/EmployeesTable/layout/AddEmployeePopup";
 
 export const mockUsers = [
   {
@@ -412,7 +412,7 @@ export const EmployeesTable = (): JSX.Element => {
     <div style={{ width: '100%' }}>
       <EmployeeTableHeader setIsOpenedModal={setIsOpenedModal} />
       <EmployeesTableContent employees={employees} />
-      <AddEmployeePopup setIsOpenedModal={setIsOpenedModal} isOpen={isOpenedModal}/>
+      <AddEmployeePopup setIsOpenedModal={setIsOpenedModal} isOpen={isOpenedModal} />
     </div>
   );
 };

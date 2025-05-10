@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import './style.css'
-import classNames from "classnames";
+import classNames from 'classnames';
+
+import './style.css';
+
 export const AddEmployeeButton = (): React.ReactNode => {
-  return (
-    <button className={classNames("add-employee-button")}>Add and Send Invite</button>
-  )
-}
+  return <button className={classNames('add-employee-button')}>Add and Send Invite</button>;
+};

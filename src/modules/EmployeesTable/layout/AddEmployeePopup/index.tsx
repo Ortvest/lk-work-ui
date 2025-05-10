@@ -1,24 +1,31 @@
+import React from 'react';
 
+import classNames from 'classnames';
 import ReactModal from 'react-modal';
-import React from "react";
-import classNames from "classnames";
 
-import './style.css'
-import { AddEmployeeForm } from "@modules/EmployeesTable/features/AddEmployeeForm";
+import { AddEmployeeForm } from '@modules/EmployeesTable/features/AddEmployeeForm';
+
+import './style.css';
 
 interface AddEmployeePopupProps {
   isOpen: boolean;
   setIsOpenedModal: (isOpen: boolean) => void;
 }
-export const AddEmployeePopup = ({isOpen, setIsOpenedModal}: AddEmployeePopupProps): React.ReactNode => {
+export const AddEmployeePopup = ({ isOpen, setIsOpenedModal }: AddEmployeePopupProps): React.ReactNode => {
   return (
-    <ReactModal ariaHideApp={false} overlayClassName="add-employee-popup-overlay" className={classNames("add-employee-popup-container")} shouldCloseOnOverlayClick={true} shouldCloseOnEsc={true} isOpen={isOpen}>
+    <ReactModal
+      ariaHideApp={false}
+      overlayClassName="add-employee-popup-overlay"
+      className={classNames('add-employee-popup-container')}
+      shouldCloseOnOverlayClick={true}
+      shouldCloseOnEsc={true}
+      isOpen={isOpen}>
       <header>
-        <h1  className={classNames("add-employee-popup-title")}>Add Employee</h1>
+        <h1 className={classNames('add-employee-popup-title')}>Add Employee</h1>
       </header>
       <main>
-        <AddEmployeeForm setIsOpenedModal={setIsOpenedModal}/>
+        <AddEmployeeForm setIsOpenedModal={setIsOpenedModal} />
       </main>
     </ReactModal>
-  )
-}
+  );
+};

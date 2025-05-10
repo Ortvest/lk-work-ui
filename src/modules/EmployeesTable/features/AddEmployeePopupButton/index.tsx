@@ -12,8 +12,8 @@ interface AddEmployeePopupButton {
 
 export const AddEmployeePopupButton = ({ setIsOpenedModal }: AddEmployeePopupButton): React.ReactNode => {
   const onOpenPopup = (): void => {
-    setIsOpenedModal(true)
-  }
+    setIsOpenedModal(true);
+  };
   return (
     <button onClick={onOpenPopup} className={classNames('add-employee-popup-button')}>
       <img src={IconPlus} alt="IconPlus" />

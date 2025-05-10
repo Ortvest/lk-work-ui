@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import { AdminSidebar } from '@modules/AdminSidebar';
@@ -16,6 +17,7 @@ export const AdminLayout = ({ authed, isAdmin }: { authed: boolean; isAdmin: boo
       <AdminGlobalContainer>
         <AdminSidebar />
         <Outlet />
+        <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
       </AdminGlobalContainer>
     </div>
   );
