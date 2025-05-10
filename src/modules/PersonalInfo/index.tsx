@@ -20,7 +20,7 @@ import { PersonalInfo, PersonalInfoData } from '@shared/interfaces/User.interfac
 import { dateParser } from '@shared/utils/dateParser';
 
 export const PersonalInfoForm = (): JSX.Element => {
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employee = useTypedSelector((state) => state.userReducer.user);
   const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
   const [uploadPhoto] = useUploadPhotoMutation();
 
@@ -29,12 +29,12 @@ export const PersonalInfoForm = (): JSX.Element => {
 
   const methods = useForm<PersonalInfoData>({
     defaultValues: {
-      consentToEmailPIT: true,
+      ...(employee?.personalInfo as unknown as PersonalInfoData),
     },
   });
 
   const onSaveHandler = async (data: PersonalInfoData): Promise<void> => {
-    if (!employeeId) return;
+    if (!employee?._id) return;
 
     const formData = new FormData();
 
@@ -42,7 +42,7 @@ export const PersonalInfoForm = (): JSX.Element => {
       formData.append('file', data.avatarFile);
     }
 
-    const fileKey = (await uploadPhoto(formData)).data?.fileKey;
+    const fileKey = (await uploadPhoto(formData)).data?.fileKey as string;
 
     const parsedData: PersonalInfo = {
       ...data,
@@ -56,7 +56,7 @@ export const PersonalInfoForm = (): JSX.Element => {
     };
 
     try {
-      await collectUserPersonalInfo({ personalData: parsedData, employeeId });
+      await collectUserPersonalInfo({ personalData: parsedData, employeeId: employee?._id});
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {
       console.error('Failed to save job info:', error);
