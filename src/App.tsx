@@ -17,6 +17,7 @@ export const App = (): JSX.Element => {
   useEffect(() => {
     refetch();
   }, []);
+
   const { isAuth, user } = useTypedSelector((state) => state.userReducer);
 
   const currentRouter = router(Boolean(isAuth), user?.role === UserRoles.SUPER_ADMIN);

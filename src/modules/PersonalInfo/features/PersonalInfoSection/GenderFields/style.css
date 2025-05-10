@@ -26,3 +26,7 @@
 .gender-option > input {
   display: none;
 }
+
+label > span.gender-value::first-letter {
+  text-transform: uppercase;
+}

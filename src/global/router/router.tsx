@@ -5,7 +5,7 @@ import { AppLayout } from '@global/router/AppLayout';
 import { AuthLayout } from '@global/router/AuthLayout';
 import { AppRoutes } from '@global/router/routes.constans';
 
-import { BankInfo } from '@modules/BankInfo';
+import { BankInformation } from '@modules/BankInfo';
 import { DrivingLicence } from '@modules/Documents/DrivingLicence';
 import { Embassy } from '@modules/Documents/Embassy';
 import { Passport } from '@modules/Documents/Passport';
@@ -14,7 +14,7 @@ import { StudentCard } from '@modules/Documents/StudentCard';
 import { VisaInfo } from '@modules/Documents/VisaInfo';
 import { WorkPermission } from '@modules/Documents/WorkPermission';
 import { EmployeesTable } from '@modules/EmployeesTable';
-import { JobInfo } from '@modules/JobInfo';
+import { JobInformation } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { NotFound } from '@modules/NotFound';
 import { PersonalInfoForm } from '@modules/PersonalInfo';
@@ -67,11 +67,11 @@ export const router = (authed: boolean, isAdmin: boolean): ReturnType<typeof cre
           },
           {
             path: AppRoutes.JOB_INFO.path,
-            element: <JobInfo />,
+            element: <JobInformation />,
           },
           {
             path: AppRoutes.BANK_INFO.path,
-            element: <BankInfo />,
+            element: <BankInformation />,
           },
           {
             path: AppRoutes.PASSPORT.path,
