@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -16,11 +18,13 @@ import './style.css';
 
 import { useCollectUserPassportDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
-import { PassportDocument, PassportDocumentsUploadData } from '@shared/interfaces/User.interfaces';
+import { PassportDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
+import { datePartsParser } from '@shared/utils/datePartsParser';
 
 export const Passport = (): JSX.Element => {
-  const methods = useForm<PassportDocumentsUploadData>();
+  const passportDocumentsData = useTypedSelector((state) => state.userReducer.user?.documents.passportDocuments);
+
   const [uploadfile] = useUploadPhotoMutation();
   const [collectPassportData] = useCollectUserPassportDataMutation();
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
@@ -28,13 +32,35 @@ export const Passport = (): JSX.Element => {
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const dispatch = useTypedDispatch();
 
-  const onSaveHandler = async (data: PassportDocumentsUploadData): Promise<void> => {
+  const methods = useForm<PassportDocument>({
+    defaultValues: {
+      passportFileKey: passportDocumentsData?.passportFileKey || '',
+      passportNumber: passportDocumentsData?.passportNumber || '',
+      passportExpirationDate: datePartsParser(passportDocumentsData?.passportExpirationDate),
+      passportDateOfIssue: datePartsParser(passportDocumentsData?.passportDateOfIssue),
+    },
+  });
+
+  const onSaveHandler = async (data: PassportDocument): Promise<void> => {
     if (!employeeId) return;
 
     try {
-      const formData = new FormData();
-      formData.append('file', data.passportFile);
-      const fileKey = (await uploadfile(formData)).data?.fileKey;
+      const fileKey = await (async (): Promise<string> => {
+        if (data.passportFileKey instanceof File) {
+          const formData = new FormData();
+          formData.append('file', data.passportFileKey);
+          const uploaded = await uploadfile(formData);
+          const uploadedKey = uploaded.data?.fileKey;
+          if (!uploadedKey) throw new Error('File upload failed or no key returned');
+          return uploadedKey;
+        }
+
+        if (typeof data.passportFileKey === 'string') {
+          return data.passportFileKey;
+        }
+
+        throw new Error('Invalid type for passportFileKey');
+      })();
 
       const parsedData: PassportDocument = {
         passportNumber: data.passportNumber,
@@ -49,6 +75,17 @@ export const Passport = (): JSX.Element => {
       console.error('Failed to save passport data:', error);
     }
   };
+
+  useEffect(() => {
+    if (passportDocumentsData) {
+      methods.reset({
+        passportFileKey: passportDocumentsData?.passportFileKey || '',
+        passportNumber: passportDocumentsData?.passportNumber,
+        passportExpirationDate: datePartsParser(passportDocumentsData?.passportExpirationDate),
+        passportDateOfIssue: datePartsParser(passportDocumentsData?.passportDateOfIssue),
+      });
+    }
+  }, [passportDocumentsData]);
 
   return (
     <FormProvider {...methods}>

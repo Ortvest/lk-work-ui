@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -20,12 +20,22 @@ import { useCollectUserAddressMutation } from '@global/api/updateUserData/collec
 import { Address } from '@shared/interfaces/User.interfaces';
 
 export const Location = (): React.ReactNode => {
-  const methods = useForm<Address>();
+  const locationInfo = useTypedSelector((state) => state.userReducer.user?.address);
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const [collectUserAddress] = useCollectUserAddressMutation();
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
+
+  const methods = useForm<Address>({
+    defaultValues: {
+      city: locationInfo?.city || '',
+      postalCode: locationInfo?.postalCode || '',
+      street: locationInfo?.street || '',
+      houseNumber: locationInfo?.houseNumber || '',
+      apartmentNumber: locationInfo?.apartmentNumber || '',
+    },
+  });
 
   const onSaveHandler = async (data: Address): Promise<void> => {
     if (!employeeId) return;
@@ -37,6 +47,18 @@ export const Location = (): React.ReactNode => {
       console.error('Failed to save address:', error);
     }
   };
+
+  useEffect(() => {
+    if (locationInfo) {
+      methods.reset({
+        city: locationInfo.city || '',
+        postalCode: locationInfo.postalCode || '',
+        street: locationInfo.street || '',
+        houseNumber: locationInfo.houseNumber || '',
+        apartmentNumber: locationInfo.apartmentNumber || '',
+      });
+    }
+  }, [locationInfo]);
 
   return (
     <FormProvider {...methods}>

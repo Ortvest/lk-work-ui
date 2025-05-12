@@ -22,33 +22,25 @@ export const SharedDateSelector = ({ dateSelectorTitle, namePrefix }: SharedDate
           <Controller
             name={`${namePrefix}.year`}
             control={control}
-            defaultValue="YYYY"
             render={({ field }) => (
-              <select {...field} className={classNames('date-select')} name="year" value={field.value || 'YYYY'}>
-                <option value="YYYY" disabled>
-                  YYYY
-                </option>
-                {Array.from({ length: 50 }, (_, index: number) => new Date().getFullYear() - index).map(
-                  (year: number) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  )
-                )}
+              <select {...field} className={classNames('date-select')} name={`${namePrefix}.year`}>
+                <option value="">YYYY</option>
+                {Array.from({ length: 50 }, (_, index) => new Date().getFullYear() - index).map((year) => (
+                  <option key={year} value={String(year)}>
+                    {year}
+                  </option>
+                ))}
               </select>
             )}
           />
           <Controller
             name={`${namePrefix}.month`}
             control={control}
-            defaultValue="MM"
             render={({ field }) => (
-              <select {...field} className={classNames('date-select')} name="month" value={field.value || 'MM'}>
-                <option value="MM" disabled>
-                  MM
-                </option>
-                {Array.from({ length: 12 }, (_, index: number) => index + 1).map((month: number) => (
-                  <option key={month} value={month}>
+              <select {...field} className={classNames('date-select')} name={`${namePrefix}.month`}>
+                <option value="">MM</option>
+                {Array.from({ length: 12 }, (_, index) => index + 1).map((month) => (
+                  <option key={month} value={String(month)}>
                     {month}
                   </option>
                 ))}
@@ -58,14 +50,11 @@ export const SharedDateSelector = ({ dateSelectorTitle, namePrefix }: SharedDate
           <Controller
             name={`${namePrefix}.day`}
             control={control}
-            defaultValue="DD"
             render={({ field }) => (
-              <select {...field} className={classNames('date-select')} name="day" value={field.value || 'DD'}>
-                <option value="DD" disabled>
-                  DD
-                </option>
-                {Array.from({ length: 31 }, (_, index: number) => index + 1).map((day: number) => (
-                  <option key={day} value={day}>
+              <select {...field} className={classNames('date-select')} name={`${namePrefix}.day`}>
+                <option value="">DD</option>
+                {Array.from({ length: 31 }, (_, index) => index + 1).map((day) => (
+                  <option key={day} value={String(day)}>
                     {day}
                   </option>
                 ))}

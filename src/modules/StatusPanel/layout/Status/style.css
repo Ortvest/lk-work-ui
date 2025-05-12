@@ -1,10 +1,10 @@
-.status {
+.status-panel-value {
   flex-grow: 1;
 
   color: var(--dark-gray);
 }
 
-.status-value {
+.status-panel-value-text {
   margin: 0 0 0 12px;
   padding: 2.5px 6px;
 

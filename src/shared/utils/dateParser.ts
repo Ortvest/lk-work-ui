@@ -1,9 +1,8 @@
 export const dateParser = (date: string): string => {
-  const stringifyedDate = JSON.parse(date);
-  const { year, month, day } = stringifyedDate;
+  const parsedDate = JSON.parse(date);
+  const year = String(parsedDate.year || '');
+  const month = String(parsedDate.month || '').padStart(2, '0');
+  const day = String(parsedDate.day || '').padStart(2, '0');
 
-  const formattedDay = day.padStart(2, '0');
-  const formattedMonth = month.padStart(2, '0');
-
-  return `${formattedDay}-${formattedMonth}-${year}`;
+  return `${day}-${month}-${year}`;
 };

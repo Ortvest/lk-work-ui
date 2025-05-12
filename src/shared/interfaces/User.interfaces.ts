@@ -72,8 +72,8 @@ export interface Address {
 export interface JobInfo {
   company?: string;
   position?: string;
-  employmentStartDate?: string;
-  employmentEndDate?: string;
+  employmentStartDate?: string | { year: string; month: string; day: string };
+  employmentEndDate?: string | { year: string; month: string; day: string };
 }
 
 export interface BankInfo {
@@ -84,13 +84,9 @@ export interface BankInfo {
 
 export interface PassportDocument {
   passportNumber?: string;
-  passportExpirationDate?: string;
-  passportDateOfIssue?: string;
-  passportFileKey?: string;
-}
-
-export interface PassportDocumentsUploadData extends Omit<PassportDocument, 'passportFileKey'> {
-  passportFile: File;
+  passportExpirationDate?: string | { year: string; month: string; day: string };
+  passportDateOfIssue?: string | { year: string; month: string; day: string };
+  passportFileKey?: string | File;
 }
 
 export interface EmbassyDocument {
@@ -214,5 +210,3 @@ export interface AddEmployee {
   lastName: string;
   role?: UserRole;
 }
-
-export interface QuestionnaireData extends Omit<PersonalInfoData, 'avatarUrl'>, Address {}

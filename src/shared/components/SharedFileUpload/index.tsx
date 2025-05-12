@@ -50,8 +50,8 @@ export const SharedFileUpload = forwardRef<HTMLInputElement, SharedFileUploadPro
           <div className={classNames('shared-file-preview-container')}>
             <img className={classNames('shared-file-preview')} src={preview} alt={fileInfo.name} />
             <div className={classNames('shared-file-info')}>
-              <span className={classNames('shared-file-name')}>{fileInfo.name}</span>
-              <span className={classNames('shared-file-size')}>{fileInfo.size}</span>
+              <span className={classNames('shared-file-name')}>{fileInfo?.name}</span>
+              <span className={classNames('shared-file-size')}>{fileInfo?.size}</span>
             </div>
             <img className={classNames('shared-file-options')} src={VerticalDotsIcon} alt="options" />
           </div>

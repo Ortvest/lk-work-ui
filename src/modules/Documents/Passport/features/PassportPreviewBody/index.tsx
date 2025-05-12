@@ -23,7 +23,7 @@ export const PassportPreviewBody = (): JSX.Element => {
     const getPassportPhotoUrl = async (): Promise<void> => {
       if (!passportData?.passportFileKey) return;
 
-      const { data, error } = await getUploadedPhoto(passportData.passportFileKey);
+      const { data, error } = await getUploadedPhoto(passportData.passportFileKey as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -43,10 +43,10 @@ export const PassportPreviewBody = (): JSX.Element => {
         <span>{passportData?.passportNumber || AlertIcon}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{passportData?.passportDateOfIssue || AlertIcon}</span>
+        <span>{(passportData?.passportDateOfIssue as string) || AlertIcon}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{passportData?.passportExpirationDate || AlertIcon}</span>
+        <span>{(passportData?.passportExpirationDate as string) || AlertIcon}</span>
       </SharedLabel>
     </fieldset>
   );

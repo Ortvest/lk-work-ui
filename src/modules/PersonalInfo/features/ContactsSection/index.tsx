@@ -26,7 +26,7 @@ export const ContactSection = (): JSX.Element => {
           phoneNumberTitle="Polish Phone number:"
           editModeTitle="polishPhoneNumber"
         />
-        {location.pathname === '/questionnaire' ? null : <EmailField />}
+        <EmailField />
       </fieldset>
     </Fragment>
   );
