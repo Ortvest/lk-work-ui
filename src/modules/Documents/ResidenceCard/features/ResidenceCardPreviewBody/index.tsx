@@ -23,7 +23,7 @@ export const ResidenceCardPreviewBody = (): JSX.Element => {
     const fetchResidenceCardPhoto = async (): Promise<void> => {
       if (!residenceData?.residenceCardFileKey) return;
 
-      const { data, error } = await getUploadedPhoto(residenceData.residenceCardFileKey);
+      const { data, error } = await getUploadedPhoto(residenceData.residenceCardFileKey as string);
 
       if (error || !data) {
         console.error('Failed to fetch residence card photo URL:', error);
@@ -46,10 +46,10 @@ export const ResidenceCardPreviewBody = (): JSX.Element => {
         <span>{residenceData?.countryOfIssue || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{residenceData?.dateOfIssue || '-'}</span>
+        <span>{(residenceData?.dateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{residenceData?.expirationDate || '-'}</span>
+        <span>{(residenceData?.expirationDate as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Reason for issuance:">
         <span>{residenceData?.reasonForIssuance || '-'}</span>

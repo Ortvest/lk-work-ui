@@ -26,10 +26,10 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
     const getDrivingLicencePhotosUrl = async (): Promise<void> => {
       const [drivingLicenceFrontCardPhotoResponse, drivingLicenceBackCardPhotoResponse] = await Promise.all([
         drivingLicenceData?.drivingLicenceFrontCardFileKey
-          ? getUploadedPhoto(drivingLicenceData?.drivingLicenceFrontCardFileKey).unwrap()
+          ? getUploadedPhoto(drivingLicenceData?.drivingLicenceFrontCardFileKey as string).unwrap()
           : Promise.resolve(null),
         drivingLicenceData?.drivingLicenceBackCardFileKey
-          ? getUploadedPhoto(drivingLicenceData?.drivingLicenceBackCardFileKey).unwrap()
+          ? getUploadedPhoto(drivingLicenceData?.drivingLicenceBackCardFileKey as string).unwrap()
           : Promise.resolve(null),
       ]);
 
@@ -56,10 +56,10 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
         <span>{drivingLicenceData?.drivingLicenceCategories || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{drivingLicenceData?.drivingLicenseDateOfIssue || '-'}</span>
+        <span>{(drivingLicenceData?.drivingLicenseDateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{drivingLicenceData?.drivingLicenseExpirationDate || '-'}</span>
+        <span>{(drivingLicenceData?.drivingLicenseExpirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

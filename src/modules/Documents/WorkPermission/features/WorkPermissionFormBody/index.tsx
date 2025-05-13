@@ -12,7 +12,7 @@ export const WorkPermissionFormBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('work-permission-form-fields-wrapper')}>
       <Controller
-        name="workPermitDocumentFile"
+        name="workPermitDocumentFileKey"
         control={control}
         render={({ field }) => (
           <SharedFileUpload title="Add a Scan or Photo Work Permission" onChange={(file) => field.onChange(file)} />
@@ -21,14 +21,14 @@ export const WorkPermissionFormBody = (): JSX.Element => {
       <SharedDateSelector dateSelectorTitle="Date of issue:*" namePrefix="workPermitExpirationDate" />
       <span className={classNames('work-permission-line')}></span>
       <Controller
-        name="workPermitPaymentDocumentFile"
+        name="workPermitPaymentDocumentFileKey"
         control={control}
         render={({ field }) => (
           <SharedFileUpload title="Add a Scan or Photo Payment" onChange={(file) => field.onChange(file)} />
         )}
       />
       <Controller
-        name="workPermitApplicationFile"
+        name="workPermitApplicationFileKey"
         control={control}
         render={({ field }) => (
           <SharedFileUpload title="Add a Scan or Photo Application" onChange={(file) => field.onChange(file)} />

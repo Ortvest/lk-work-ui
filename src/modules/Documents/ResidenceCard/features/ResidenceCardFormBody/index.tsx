@@ -17,7 +17,7 @@ export const ResidenceCardFormBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('residence-card-form-fields-wrapper')}>
       <Controller
-        name="residenceCardFile"
+        name="residenceCardFileKey"
         control={control}
         render={({ field }) => (
           <SharedFileUpload title="Add a Scan or Photo Residence Card" onChange={(file) => field.onChange(file)} />

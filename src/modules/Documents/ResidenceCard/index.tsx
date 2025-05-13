@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -16,11 +18,24 @@ import './style.css';
 
 import { useCollectUserResidenceDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
-import { ResidenceCardDocument, ResidenceCardDocumentNotUploaded } from '@shared/interfaces/User.interfaces';
+import { ResidenceCardDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
+import { datePartsParser } from '@shared/utils/datePartsParser';
 
 export const ResidenceCard = (): JSX.Element => {
-  const methods = useForm<ResidenceCardDocumentNotUploaded>();
+  const residenceCardData = useTypedSelector((state) => state.userReducer.user?.documents.residenceCardDocuments);
+
+  const methods = useForm<ResidenceCardDocument>({
+    defaultValues: {
+      cardNumber: residenceCardData?.cardNumber ?? '',
+      countryOfIssue: residenceCardData?.countryOfIssue ?? '',
+      dateOfIssue: datePartsParser(residenceCardData?.dateOfIssue),
+      expirationDate: datePartsParser(residenceCardData?.expirationDate),
+      reasonForIssuance: residenceCardData?.reasonForIssuance ?? '',
+      residenceCardFileKey: residenceCardData?.residenceCardFileKey ?? '',
+    },
+  });
+
   const [uploadFile] = useUploadPhotoMutation();
   const [collectResidenceCardData] = useCollectUserResidenceDataMutation();
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
@@ -28,13 +43,18 @@ export const ResidenceCard = (): JSX.Element => {
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const dispatch = useTypedDispatch();
 
-  const onSaveHandler = async (data: ResidenceCardDocumentNotUploaded): Promise<void> => {
+  const onSaveHandler = async (data: ResidenceCardDocument): Promise<void> => {
     if (!employeeId) return;
 
     try {
-      const formData = new FormData();
-      formData.append('file', data.residenceCardFile);
-      const fileKey = (await uploadFile(formData)).data?.fileKey ?? '';
+      let fileKey = '';
+      if (data.residenceCardFileKey instanceof File) {
+        const formData = new FormData();
+        formData.append('file', data.residenceCardFileKey);
+        fileKey = (await uploadFile(formData)).data?.fileKey ?? '';
+      } else {
+        fileKey = data.residenceCardFileKey ?? '';
+      }
 
       const parsedData: ResidenceCardDocument = {
         cardNumber: data.cardNumber,
@@ -51,6 +71,19 @@ export const ResidenceCard = (): JSX.Element => {
       console.error('Failed to save residence card data:', error);
     }
   };
+
+  useEffect(() => {
+    if (isEditModeEnabled && residenceCardData) {
+      methods.reset({
+        cardNumber: residenceCardData?.cardNumber ?? '',
+        countryOfIssue: residenceCardData?.countryOfIssue ?? '',
+        dateOfIssue: datePartsParser(residenceCardData?.dateOfIssue),
+        expirationDate: datePartsParser(residenceCardData?.expirationDate),
+        reasonForIssuance: residenceCardData?.reasonForIssuance ?? '',
+        residenceCardFileKey: residenceCardData?.residenceCardFileKey ?? '',
+      });
+    }
+  }, [isEditModeEnabled, residenceCardData, methods]);
 
   return (
     <FormProvider {...methods}>

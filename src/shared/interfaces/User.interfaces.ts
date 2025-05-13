@@ -90,90 +90,47 @@ export interface PassportDocument {
 }
 
 export interface EmbassyDocument {
-  embassyFirstDocumentFileKey?: string;
-  embassySecondDocumentFileKey?: string;
-  embassyDateOfIssue?: string;
+  embassyFirstDocumentFileKey?: string | File;
+  embassySecondDocumentFileKey?: string | File;
+  embassyDateOfIssue?: string | { day: string; month: string; year: string };
 }
 
-export interface EmbassyData {
-  documents: EmbassyDocument[];
-}
-
-export interface EmbassyNotUploadedData {
-  documents: [
-    {
-      embassyFirstDocumentPhoto?: string;
-      embassySecondDocumentPhoto?: string;
-      embassyDateOfIssue?: string;
-    },
-  ];
-}
 export interface WorkPermissionDocument {
-  workPermitExpirationDate?: string;
-  workPermitDocumentFileKey?: string;
-  workPermitPaymentDocumentFileKey?: string;
-  workPermitApplicationFileKey?: string;
-}
-
-export interface WorkPermissiontNotUploadedData {
-  workPermitDocumentFile?: File;
-  workPermitPaymentDocumentFile?: File;
-  workPermitApplicationFile?: File;
-  workPermitExpirationDate?: string;
+  workPermitExpirationDate?: string | { day: string; month: string; year: string };
+  workPermitDocumentFileKey?: string | File;
+  workPermitPaymentDocumentFileKey?: string | File;
+  workPermitApplicationFileKey?: string | File;
 }
 
 export interface EducationDocuments {
-  studentFrontCardFileKey?: string;
-  studentBackCardFileKey?: string;
-  studentPermitCardFileKey?: string;
-  studentStatusDate?: string;
-}
-
-export interface StudentNotUploadedData {
-  studentFrontCardFile?: File;
-  studentBackCardFile?: File;
-  studentPermitCardFile?: File;
-  studentStatusDate?: string;
+  studentFrontCardFileKey?: string | File;
+  studentBackCardFileKey?: string | File;
+  studentPermitCardFileKey?: string | File;
+  studentStatusDate?: string | { day: string; month: string; year: string };
 }
 
 export interface ResidenceCardDocument {
-  residenceCardFileKey?: string;
+  residenceCardFileKey?: string | File;
   cardNumber?: string;
   countryOfIssue?: string;
-  dateOfIssue?: string;
-  expirationDate?: string;
+  dateOfIssue?: string | { day: string; month: string; year: string };
+  expirationDate?: string | { day: string; month: string; year: string };
   reasonForIssuance?: string;
-}
-
-export interface ResidenceCardDocumentNotUploaded extends Omit<ResidenceCardDocument, 'residenceCardFileKey'> {
-  residenceCardFile: File;
 }
 
 export interface VisaInformationDocument {
   visaType?: string;
-  dateOfIssue?: string;
-  expirationDate?: string;
-  visaDocumentFileKey?: string;
-}
-
-export interface VisaInformationDocumentNotUploaded extends Omit<VisaInformationDocument, 'visaDocumentFileKey'> {
-  visaDocumentFile: File;
+  dateOfIssue?: string | { day: string; month: string; year: string };
+  expirationDate?: string | { day: string; month: string; year: string };
+  visaDocumentFileKey?: string | File;
 }
 
 export interface DrivingLicenseDocument {
   drivingLicenceCategories?: DrivingLicenseCategory[];
-  drivingLicenceFrontCardFileKey?: string;
-  drivingLicenceBackCardFileKey?: string;
-  drivingLicenseExpirationDate?: string;
-  drivingLicenseDateOfIssue?: string;
-}
-
-export interface DrivingLicenseDocumentNotUploaded {
-  drivingLicenceCategories?: DrivingLicenseCategory[];
-  drivingLicenceFrontCardFile?: File;
-  drivingLicenceBackCardFile?: File;
-  drivingLicenseExpirationDate?: string;
-  drivingLicenseDateOfIssue?: string;
+  drivingLicenceFrontCardFileKey?: string | File;
+  drivingLicenceBackCardFileKey?: string | File;
+  drivingLicenseExpirationDate?: string | { day: string; month: string; year: string };
+  drivingLicenseDateOfIssue?: string | { day: string; month: string; year: string };
 }
 
 export interface UkrainianStatementDocument {

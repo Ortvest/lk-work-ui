@@ -16,7 +16,7 @@ export const VisaInfoFormBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('visa-info-form-fields-wrapper')}>
       <Controller
-        name="visaDocumentFile"
+        name="visaDocumentFileKey"
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />

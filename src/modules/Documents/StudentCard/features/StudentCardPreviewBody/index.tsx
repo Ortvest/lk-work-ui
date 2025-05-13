@@ -28,13 +28,13 @@ export const StudentCardPreviewBody = (): JSX.Element => {
       const [studentFrontCardPhotoResponse, studentBackCardPhotoResponse, studentPermitCardPhotoResponse] =
         await Promise.all([
           studentData?.studentFrontCardFileKey
-            ? getUploadedPhoto(studentData?.studentFrontCardFileKey).unwrap()
+            ? getUploadedPhoto(studentData?.studentFrontCardFileKey as string).unwrap()
             : Promise.resolve(null),
           studentData?.studentBackCardFileKey
-            ? getUploadedPhoto(studentData?.studentBackCardFileKey).unwrap()
+            ? getUploadedPhoto(studentData?.studentBackCardFileKey as string).unwrap()
             : Promise.resolve(null),
           studentData?.studentPermitCardFileKey
-            ? getUploadedPhoto(studentData?.studentPermitCardFileKey).unwrap()
+            ? getUploadedPhoto(studentData?.studentPermitCardFileKey as string).unwrap()
             : Promise.resolve(null),
         ]);
 
@@ -59,7 +59,7 @@ export const StudentCardPreviewBody = (): JSX.Element => {
         imageUrl={studentDocumentsPhotoUrls.studentBackCardPhotoUrl}
       />
       <SharedLabel title="Date of issue:">
-        <span>{studentData?.studentStatusDate || '-'}</span>
+        <span>{(studentData?.studentStatusDate as string) || '-'}</span>
       </SharedLabel>
       <span className={classNames('student-card-line')}></span>
       <SharedImagePreview

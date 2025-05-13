@@ -28,13 +28,13 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
     const getWorkPermitPhotosUrl = async (): Promise<void> => {
       const [permitDocRes, paymentDocRes, applicationDocRes] = await Promise.all([
         workPermitData?.workPermitDocumentFileKey
-          ? getUploadedPhoto(workPermitData.workPermitDocumentFileKey).unwrap()
+          ? getUploadedPhoto(workPermitData.workPermitDocumentFileKey as string).unwrap()
           : Promise.resolve(null),
         workPermitData?.workPermitPaymentDocumentFileKey
-          ? getUploadedPhoto(workPermitData.workPermitPaymentDocumentFileKey).unwrap()
+          ? getUploadedPhoto(workPermitData.workPermitPaymentDocumentFileKey as string).unwrap()
           : Promise.resolve(null),
         workPermitData?.workPermitApplicationFileKey
-          ? getUploadedPhoto(workPermitData.workPermitApplicationFileKey).unwrap()
+          ? getUploadedPhoto(workPermitData.workPermitApplicationFileKey as string).unwrap()
           : Promise.resolve(null),
       ]);
 
@@ -55,7 +55,7 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
         imageUrl={workPermitPhotoUrls.workPermitDocumentPhotoUrl}
       />
       <SharedLabel title="Date of issue:">
-        <span>{workPermitData?.workPermitExpirationDate || '-'}</span>
+        <span>{(workPermitData?.workPermitExpirationDate as string) || '-'}</span>
       </SharedLabel>
       <span className={classNames('work-permission-line')}></span>
       <SharedImagePreview
