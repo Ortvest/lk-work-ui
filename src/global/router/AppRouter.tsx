@@ -18,10 +18,15 @@ import { JobInformation } from '@modules/JobInfo';
 import { Location } from '@modules/Location';
 import { NotFound } from '@modules/NotFound';
 import { PersonalInfoForm } from '@modules/PersonalInfo';
-import { Questionnaire } from '@modules/PersonalInfo/features/Questionnaire';
+import { Questionnaire } from '@modules/Questionnaire';
 import { SignIn } from '@modules/SignIn';
 
-export const router = (authed: boolean, isAdmin: boolean): ReturnType<typeof createBrowserRouter> => {
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
+import { UserDocumentsStatuses } from '@shared/enums/user.enums';
+
+export const Router = (authed: boolean, isAdmin: boolean): ReturnType<typeof createBrowserRouter> => {
+  const userDocumentStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
   // Admin routes only
   if (authed && isAdmin) {
     return createBrowserRouter([
@@ -55,7 +60,12 @@ export const router = (authed: boolean, isAdmin: boolean): ReturnType<typeof cre
         children: [
           {
             path: '',
-            element: <Navigate to={AppRoutes.QUESTIONNAIRE.path} replace />,
+            element:
+              userDocumentStatus === UserDocumentsStatuses.WAITING_FOR_BRIEFING ? (
+                <Navigate to={AppRoutes.QUESTIONNAIRE.path} replace />
+              ) : (
+                <Navigate to={AppRoutes.PERSONAL_INFO.path} replace />
+              ),
           },
           {
             path: AppRoutes.PERSONAL_INFO.path,

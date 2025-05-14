@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { RouterProvider } from 'react-router-dom';
 
-import { router } from '@global/router/router';
+import { Router } from '@global/router/AppRouter';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -20,7 +20,7 @@ export const App = (): JSX.Element => {
 
   const { isAuth, user } = useTypedSelector((state) => state.userReducer);
 
-  const currentRouter = router(Boolean(isAuth), user?.role === UserRoles.SUPER_ADMIN);
+  const currentRouter = Router(Boolean(isAuth), user?.role === UserRoles.SUPER_ADMIN);
 
   return <RouterProvider router={currentRouter} key={String(isAuth)} />;
 };

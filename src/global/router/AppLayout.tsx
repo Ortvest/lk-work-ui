@@ -9,7 +9,7 @@ import { AppRoutes } from './routes.constans';
 
 export const AppLayout = ({ authed }: { authed: boolean }): JSX.Element => {
   if (authed) {
-    return <Navigate to={AppRoutes.QUESTIONNAIRE.path} replace />;
+    return <Navigate to={AppRoutes.PERSONAL_INFO.path} replace />;
   }
 
   return (

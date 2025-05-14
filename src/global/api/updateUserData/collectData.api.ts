@@ -2,6 +2,7 @@ import { UserSlice } from '@global/store/slices/User.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseCollectData } from '@global/api/updateUserData/base-collectData.api';
+import { UserDocumentsStatus } from '@shared/enums/user.enums';
 import {
   Address,
   BankInfo,
@@ -206,6 +207,41 @@ export const collectDataApi = baseCollectData.injectEndpoints({
         }
       },
     }),
+    collectUserGlobalData: builder.mutation<UserEntity, { consentToEmailPITInfo: boolean; employeeId: string }>({
+      query: ({ consentToEmailPITInfo, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { consentToEmailPIT: consentToEmailPITInfo },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('Response data:', data);
+          dispatch(setCurrentUser(data));
+        } catch (error) {
+          console.error('Failed to submit email consert info data:', error);
+        }
+      },
+    }),
+    collectUserDocumentStatusData: builder.mutation<
+      UserEntity,
+      { documentStatusInfo: UserDocumentsStatus; employeeId: string }
+    >({
+      query: ({ documentStatusInfo, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { documentStatus: documentStatusInfo },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('Response data:', data);
+          dispatch(setCurrentUser(data));
+        } catch (error) {
+          console.error('Failed to submit document status info data:', error);
+        }
+      },
+    }),
   }),
 });
 
@@ -221,4 +257,6 @@ export const {
   useCollectUserResidenceDataMutation,
   useCollectUserVisaDataMutation,
   useCollectUserDrivingLicenceMutation,
+  useCollectUserGlobalDataMutation,
+  useCollectUserDocumentStatusDataMutation,
 } = collectDataApi;

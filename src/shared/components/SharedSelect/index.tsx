@@ -18,6 +18,9 @@ export const SharedSelect = forwardRef<HTMLSelectElement, SharedSelectProps>(
   ({ options, className, ...props }, ref) => {
     return (
       <select ref={ref} className={classNames('shared-select', className)} {...props}>
+        <option value="" disabled selected hidden>
+          Select an option
+        </option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

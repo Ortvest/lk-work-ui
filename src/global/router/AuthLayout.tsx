@@ -12,7 +12,6 @@ export const AuthLayout = ({ authed }: { authed: boolean }): JSX.Element => {
   const sidebarExcludedRoutes = [AppRoutes.QUESTIONNAIRE.path];
 
   const shouldShowSidebar = !sidebarExcludedRoutes.includes(location.pathname);
-
   if (!authed) {
     return <Navigate to={AppRoutes.SIGN_IN.path} replace />;
   }

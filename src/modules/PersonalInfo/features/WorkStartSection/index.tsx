@@ -24,7 +24,7 @@ export const WorkStartSection = (): JSX.Element => {
           <SharedDateSelector dateSelectorTitle="Pick date:*" namePrefix="timeFromWorkStartDate" />
         ) : (
           <SharedLabel title="When can you start work:">
-            <span>{personalInfo?.timeFromWorkStartDate || '-'}</span>
+            <span>{(personalInfo?.timeFromWorkStartDate as string) || '-'}</span>
           </SharedLabel>
         )}
       </fieldset>
