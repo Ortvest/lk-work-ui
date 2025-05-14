@@ -206,6 +206,22 @@ export const collectDataApi = baseCollectData.injectEndpoints({
         }
       },
     }),
+    collectUserGlobalData: builder.mutation<UserEntity, { consentToEmailPITInfo: boolean; employeeId: string }>({
+      query: ({ consentToEmailPITInfo, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { consentToEmailPIT: consentToEmailPITInfo },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log('Response data:', data);
+          dispatch(setCurrentUser(data));
+        } catch (error) {
+          console.error('Failed to submit email consert info data:', error);
+        }
+      },
+    }),
   }),
 });
 
@@ -221,4 +237,5 @@ export const {
   useCollectUserResidenceDataMutation,
   useCollectUserVisaDataMutation,
   useCollectUserDrivingLicenceMutation,
+  useCollectUserGlobalDataMutation,
 } = collectDataApi;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import classNames from 'classnames';
 import ReactModal from 'react-modal';
 
@@ -11,7 +9,7 @@ interface AddEmployeePopupProps {
   isOpen: boolean;
   setIsOpenedModal: (isOpen: boolean) => void;
 }
-export const AddEmployeePopup = ({ isOpen, setIsOpenedModal }: AddEmployeePopupProps): React.ReactNode => {
+export const AddEmployeePopup = ({ isOpen, setIsOpenedModal }: AddEmployeePopupProps): JSX.Element => {
   return (
     <ReactModal
       ariaHideApp={false}

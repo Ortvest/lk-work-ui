@@ -15,11 +15,12 @@ export const UserData = (): JSX.Element => {
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
   const [userPhoto, setUserPhoto] = useState('');
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
+
   useEffect(() => {
-    const getPassportPhotoUrl = async (): Promise<void> => {
+    const getUserAvatar = async (): Promise<void> => {
       if (!personalInfo?.avatarUrl) return;
 
-      const { data, error } = await getUploadedPhoto(personalInfo?.avatarUrl);
+      const { data, error } = await getUploadedPhoto(personalInfo?.avatarUrl as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -29,8 +30,8 @@ export const UserData = (): JSX.Element => {
       setUserPhoto(data.url);
     };
 
-    getPassportPhotoUrl();
-  }, []);
+    getUserAvatar();
+  }, [personalInfo?.avatarUrl]);
 
   return (
     <article className={classNames('user-data')}>

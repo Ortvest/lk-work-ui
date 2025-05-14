@@ -33,7 +33,7 @@ export const PersonalInfoSection = (): JSX.Element => {
           <SharedDateSelector dateSelectorTitle="Date of Birth:*" namePrefix="dateOfBirth" />
         ) : (
           <SharedLabel title="Date of Birth:">
-            <span>{personalInfo?.dateOfBirth || '-'}</span>
+            <span>{(personalInfo?.dateOfBirth as string) || '-'}</span>
           </SharedLabel>
         )}
         <GenderFields />

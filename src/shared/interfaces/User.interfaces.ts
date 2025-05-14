@@ -14,49 +14,19 @@ export interface UserSignInData {
 export interface PersonalInfo {
   firstName?: string;
   lastName?: string;
-  dateOfBirth?: string;
+  dateOfBirth: string | { year: string; month: string; day: string };
   password?: string;
   gender?: Gender;
-  polishPhoneNumber?: string;
-  nationalPhoneNumber?: string;
+  polishPhoneNumber?: { prefix: string; number: string } | string;
+  nationalPhoneNumber?: { prefix: string; number: string } | string;
   email?: string;
   nationality?: string;
   passportNumber?: string;
   peselNumber?: string;
-  timeFromWorkStartDate?: string;
+  timeFromWorkStartDate?: string | { year: string; month: string; day: string };
   isStudent?: boolean;
-  avatarUrl?: string;
+  avatarUrl?: string | File;
   whichCompanyDoYouWantWorkFor?: string[];
-  avatarFile?: string;
-  consentToEmailPIT: boolean;
-  hasDrivingLicence: boolean;
-}
-
-export interface PersonalInfoData {
-  firstName?: string;
-  lastName?: string;
-  dateOfBirth: {
-    year: string;
-    month: string;
-    day: string;
-  };
-  password?: string;
-  gender?: Gender;
-  polishPhoneNumber?: { prefix: string; number: string };
-  nationalPhoneNumber?: { prefix: string; number: string };
-  email?: string;
-  nationality?: string;
-  passportNumber?: string;
-  peselNumber?: string;
-  timeFromWorkStartDate?: {
-    year: string;
-    month: string;
-    day: string;
-  };
-  isStudent?: boolean;
-  avatarUrl?: string;
-  whichCompanyDoYouWantWorkFor?: string[];
-  avatarFile?: string;
   consentToEmailPIT: boolean;
   hasDrivingLicence: boolean;
 }

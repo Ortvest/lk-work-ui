@@ -21,6 +21,7 @@ export const PhotoField = (): JSX.Element => {
   const fileKey = useTypedSelector((state) => state.userReducer.user?.personalInfo.avatarUrl);
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
   const [userPhoto, setUserPhoto] = useState('');
+
   const onFileChangeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
     if (file) {
@@ -30,7 +31,7 @@ export const PhotoField = (): JSX.Element => {
       };
       reader.readAsDataURL(file);
 
-      setValue('avatarFile', file);
+      setValue('avatarUrl', file);
     }
   };
 
@@ -40,10 +41,10 @@ export const PhotoField = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const getPassportPhotoUrl = async (): Promise<void> => {
+    const getUserAvatar = async (): Promise<void> => {
       if (!fileKey) return;
 
-      const { data, error } = await getUploadedPhoto(fileKey);
+      const { data, error } = await getUploadedPhoto(fileKey as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -53,8 +54,8 @@ export const PhotoField = (): JSX.Element => {
       setUserPhoto(data.url);
     };
 
-    getPassportPhotoUrl();
-  }, []);
+    getUserAvatar();
+  }, [fileKey]);
 
   return (
     <Fragment>
@@ -72,7 +73,7 @@ export const PhotoField = (): JSX.Element => {
               id="file-input"
               className={classNames('photo-field-input')}
               type="file"
-              {...register('avatarFile')}
+              {...register('avatarUrl')}
               onChange={onFileChangeHandler}
               accept="image/*"
             />

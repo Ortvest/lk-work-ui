@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -6,7 +8,7 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 import { ContactSection } from '@modules/PersonalInfo/features/ContactsSection';
 import { PersonalInfoSection } from '@modules/PersonalInfo/features/PersonalInfoSection';
 import { PrefferedCompaniesSection } from '@modules/PersonalInfo/features/PrefferedCompaniesSection';
-import { WorkStartSection } from '@modules/PersonalInfo/features/WorkStartSection';
+//import { WorkStartSection } from '@modules/PersonalInfo/features/WorkStartSection';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
@@ -14,52 +16,82 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import './style.css';
 
-import { useCollectUserPersonalInfoMutation } from '@global/api/updateUserData/collectData.api';
+import {
+  useCollectUserGlobalDataMutation,
+  useCollectUserPersonalInfoMutation,
+} from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
-import { PersonalInfo, PersonalInfoData } from '@shared/interfaces/User.interfaces';
+import { PersonalInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
+import { datePartsParser } from '@shared/utils/datePartsParser';
+import { phoneNumberParser } from '@shared/utils/phoneNumberParser';
 
 export const PersonalInfoForm = (): JSX.Element => {
-  const employee = useTypedSelector((state) => state.userReducer.user);
-  const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
-  const [uploadPhoto] = useUploadPhotoMutation();
-
+  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const personalDataInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
 
-  const methods = useForm<PersonalInfoData>({
-    defaultValues: {
-      ...(employee?.personalInfo as unknown as PersonalInfoData),
-    },
-  });
+  const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
+  const [collectUserGlobalData] = useCollectUserGlobalDataMutation();
+  const [uploadPhoto] = useUploadPhotoMutation();
 
-  const onSaveHandler = async (data: PersonalInfoData): Promise<void> => {
-    if (!employee?._id) return;
+  const methods = useForm<PersonalInfo>();
 
-    const formData = new FormData();
+  useEffect(() => {
+    if (personalDataInfo) {
+      methods.reset({
+        ...personalDataInfo,
+        dateOfBirth: datePartsParser(personalDataInfo.dateOfBirth),
+        timeFromWorkStartDate: dateParser(personalDataInfo.timeFromWorkStartDate as string),
+        polishPhoneNumber:
+          typeof personalDataInfo.polishPhoneNumber === 'string'
+            ? phoneNumberParser(personalDataInfo.polishPhoneNumber)
+            : personalDataInfo.polishPhoneNumber,
+        nationalPhoneNumber:
+          typeof personalDataInfo.nationalPhoneNumber === 'string'
+            ? phoneNumberParser(personalDataInfo.nationalPhoneNumber)
+            : personalDataInfo.nationalPhoneNumber,
+        avatarUrl: personalDataInfo.avatarUrl,
+      });
+    }
+  }, [personalDataInfo]);
 
-    if (data.avatarFile) {
-      formData.append('file', data.avatarFile);
+  const onSaveHandler = async (data: PersonalInfo): Promise<void> => {
+    console.log(data);
+    if (!employeeId) return;
+
+    let fileKey = '';
+
+    if (data.avatarUrl instanceof File) {
+      const formData = new FormData();
+      formData.append('file', data.avatarUrl);
+      fileKey = (await uploadPhoto(formData)).data?.fileKey ?? '';
+    } else {
+      fileKey = data.avatarUrl || '';
     }
 
-    const fileKey = (await uploadPhoto(formData)).data?.fileKey as string;
-
     const parsedData: PersonalInfo = {
+      ...personalDataInfo,
       ...data,
       avatarUrl: fileKey,
-      dateOfBirth: dateParser(JSON.stringify(data.dateOfBirth!)),
-      timeFromWorkStartDate: dateParser(JSON.stringify(data.timeFromWorkStartDate!)),
-      nationalPhoneNumber: data.nationalPhoneNumber
-        ? data.nationalPhoneNumber?.prefix + data.nationalPhoneNumber?.number
-        : '',
-      polishPhoneNumber: data.polishPhoneNumber ? data.polishPhoneNumber?.prefix + data.polishPhoneNumber?.number : '',
+      dateOfBirth: dateParser(JSON.stringify(data.dateOfBirth || personalDataInfo?.dateOfBirth)),
+      polishPhoneNumber:
+        typeof data.polishPhoneNumber === 'object'
+          ? data.polishPhoneNumber.prefix + data.polishPhoneNumber.number
+          : data.polishPhoneNumber,
+      nationalPhoneNumber:
+        typeof data.nationalPhoneNumber === 'object'
+          ? data.nationalPhoneNumber.prefix + data.nationalPhoneNumber.number
+          : data.nationalPhoneNumber,
     };
 
     try {
-      await collectUserPersonalInfo({ personalData: parsedData, employeeId: employee?._id});
+      await collectUserPersonalInfo({ personalData: parsedData, employeeId });
+      await collectUserGlobalData({ consentToEmailPITInfo: data.consentToEmailPIT, employeeId });
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {
-      console.error('Failed to save job info:', error);
+      console.error('Failed to save personal info:', error);
     }
   };
 
@@ -70,7 +102,7 @@ export const PersonalInfoForm = (): JSX.Element => {
           <StatusPanel />
           <PersonalInfoSection />
           <ContactSection />
-          <WorkStartSection />
+          {/* <WorkStartSection /> */}
           <PrefferedCompaniesSection />
         </form>
       </section>
