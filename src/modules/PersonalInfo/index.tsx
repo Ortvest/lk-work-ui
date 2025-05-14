@@ -36,10 +36,11 @@ export const PersonalInfoForm = (): JSX.Element => {
   const [collectUserGlobalData] = useCollectUserGlobalDataMutation();
   const [uploadPhoto] = useUploadPhotoMutation();
 
-  const methods = useForm<PersonalInfo>();
+  const methods = useForm<PersonalInfo>({ defaultValues: {} });
 
   useEffect(() => {
-    if (personalDataInfo) {
+    if (personalDataInfo && typeof personalDataInfo.consentToEmailPIT === 'boolean') {
+      console.log('consentToEmailPIT from Redux:', personalDataInfo.consentToEmailPIT);
       methods.reset({
         ...personalDataInfo,
         dateOfBirth: datePartsParser(personalDataInfo.dateOfBirth),
@@ -52,6 +53,7 @@ export const PersonalInfoForm = (): JSX.Element => {
             ? phoneNumberParser(personalDataInfo.nationalPhoneNumber)
             : personalDataInfo.nationalPhoneNumber,
         avatarUrl: personalDataInfo.avatarUrl,
+        consentToEmailPIT: personalDataInfo.consentToEmailPIT ?? false,
       });
     }
   }, [personalDataInfo]);
@@ -97,7 +99,10 @@ export const PersonalInfoForm = (): JSX.Element => {
   return (
     <FormProvider {...methods}>
       <section className={classNames('personal-info')}>
-        <form className={classNames('personal-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+        <form
+          className={classNames('personal-info-form')}
+          key={employeeId}
+          onSubmit={methods.handleSubmit(onSaveHandler)}>
           <StatusPanel />
           <PersonalInfoSection />
           <ContactSection />
