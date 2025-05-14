@@ -43,7 +43,6 @@ export const PersonalInfoForm = (): JSX.Element => {
       methods.reset({
         ...personalDataInfo,
         dateOfBirth: datePartsParser(personalDataInfo.dateOfBirth),
-        timeFromWorkStartDate: dateParser(personalDataInfo.timeFromWorkStartDate as string),
         polishPhoneNumber:
           typeof personalDataInfo.polishPhoneNumber === 'string'
             ? phoneNumberParser(personalDataInfo.polishPhoneNumber)
