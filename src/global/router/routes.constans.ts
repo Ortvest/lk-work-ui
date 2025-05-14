@@ -95,6 +95,12 @@ export const AppRoutes = {
     title: 'Driving Licence',
     usageScope: [UsageScopes.DOCUMENTS],
   },
+  QUESTIONNAIRE: {
+    path: '/questionnaire',
+    isVisible: false,
+    title: 'Questionnaire',
+    usageScope: [UsageScopes.NONE],
+  },
   EMPLOYEES_TABLE: {
     path: 'employees-table',
     isVisible: false,
