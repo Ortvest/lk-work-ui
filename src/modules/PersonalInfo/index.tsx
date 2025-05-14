@@ -39,7 +39,7 @@ export const PersonalInfoForm = (): JSX.Element => {
   const methods = useForm<PersonalInfo>({ defaultValues: {} });
 
   useEffect(() => {
-    if (personalDataInfo && typeof personalDataInfo.consentToEmailPIT === 'boolean') {
+    if (personalDataInfo) {
       console.log('consentToEmailPIT from Redux:', personalDataInfo.consentToEmailPIT);
       methods.reset({
         ...personalDataInfo,

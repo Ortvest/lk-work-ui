@@ -57,6 +57,12 @@ export const PhotoField = (): JSX.Element => {
     getUserAvatar();
   }, [fileKey]);
 
+  useEffect(() => {
+    if (isEditModeEnabled && !preview && userPhoto) {
+      setPreview(userPhoto);
+    }
+  }, [isEditModeEnabled, userPhoto, preview]);
+
   return (
     <Fragment>
       {isEditModeEnabled ? (
