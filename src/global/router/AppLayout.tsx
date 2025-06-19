@@ -1,7 +1,7 @@
-import { Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { Navigate, Outlet } from 'react-router-dom';
 
 import { Header } from '@modules/Header';
-import { SignIn } from '@modules/SignIn';
 
 import { GlobalContainer } from '@shared/components/GlobalContainer';
 
@@ -16,7 +16,8 @@ export const AppLayout = ({ authed }: { authed: boolean }): JSX.Element => {
     <div className="layout-container">
       <Header />
       <GlobalContainer>
-        <SignIn />
+        <Outlet />
+        <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
       </GlobalContainer>
     </div>
   );

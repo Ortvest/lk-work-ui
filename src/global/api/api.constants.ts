@@ -4,6 +4,7 @@ export const API_CONFIG = {
 
   fetchEmployees: (): string => '/employee/list',
   inviteEmployee: (): string => '/employee/add',
+  setNewPassword: (): string => '/employee/set-password',
 
   collectData: (employeeId: string): string => `/employee/collect-data?employeeId=${employeeId}`,
   uploadPhoto: (): string => '/upload',

@@ -40,7 +40,6 @@ export const PersonalInfoForm = (): JSX.Element => {
 
   useEffect(() => {
     if (personalDataInfo) {
-      console.log('consentToEmailPIT from Redux:', personalDataInfo.consentToEmailPIT);
       methods.reset({
         ...personalDataInfo,
         dateOfBirth: datePartsParser(personalDataInfo.dateOfBirth),
@@ -53,7 +52,7 @@ export const PersonalInfoForm = (): JSX.Element => {
             ? phoneNumberParser(personalDataInfo.nationalPhoneNumber)
             : personalDataInfo.nationalPhoneNumber,
         avatarUrl: personalDataInfo.avatarUrl,
-        consentToEmailPIT: personalDataInfo.consentToEmailPIT ?? false,
+        consentToEmailPIT: personalDataInfo.consentToEmailPIT ?? true,
       });
     }
   }, [personalDataInfo]);

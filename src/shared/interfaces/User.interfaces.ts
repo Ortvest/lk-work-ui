@@ -137,3 +137,14 @@ export interface AddEmployee {
   lastName: string;
   role?: UserRole;
 }
+
+export interface SetNewPasswordArgs {
+  password: string;
+  email: string;
+  token: string;
+}
+
+export interface NewPassword {
+  password: string;
+  confirmPassword: string;
+}
