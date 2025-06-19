@@ -2,7 +2,7 @@ import { UserSlice } from '@global/store/slices/User.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseAuthApi } from '@global/api/auth/base-auth.api';
-import { UserEntity, UserSignInData } from '@shared/interfaces/User.interfaces';
+import { SetNewPasswordArgs, UserEntity, UserSignInData } from '@shared/interfaces/User.interfaces';
 
 const { setIsAuth, setCurrentUser } = UserSlice.actions;
 
@@ -42,7 +42,18 @@ export const authApi = baseAuthApi.injectEndpoints({
         }
       },
     }),
+    setNewPassword: builder.mutation<UserEntity, SetNewPasswordArgs>({
+      query: ({ password, email, token }) => ({
+        url: API_CONFIG.setNewPassword(),
+        body: { password, email },
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useAuthenticateUserMutation, useGetMeQuery, useLazyGetMeQuery } = authApi;
+export const { useAuthenticateUserMutation, useGetMeQuery, useLazyGetMeQuery, useSetNewPasswordMutation } = authApi;

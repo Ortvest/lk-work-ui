@@ -23,6 +23,7 @@ import { SignIn } from '@modules/SignIn';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { SetNewPassword } from '@pages/SetNewPassword';
 import { UserDocumentsStatuses } from '@shared/enums/user.enums';
 
 export const Router = (authed: boolean, isAdmin: boolean): ReturnType<typeof createBrowserRouter> => {
@@ -131,8 +132,16 @@ export const Router = (authed: boolean, isAdmin: boolean): ReturnType<typeof cre
       element: <AppLayout authed={authed} />,
       children: [
         {
+          path: '',
+          element: <Navigate to={AppRoutes.SIGN_IN.path} replace />,
+        },
+        {
           path: AppRoutes.SIGN_IN.path,
           element: <SignIn />,
+        },
+        {
+          path: AppRoutes.SET_NEW_PASSWORD.path,
+          element: <SetNewPassword />,
         },
         {
           path: '*',
