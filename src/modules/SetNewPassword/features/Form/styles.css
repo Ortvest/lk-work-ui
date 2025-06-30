@@ -1,6 +1,7 @@
 .set-new-password-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 344px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  width: 344px;
 }
