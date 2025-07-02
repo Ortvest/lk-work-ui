@@ -10,22 +10,34 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { Drawer } from '@shared/components/Drawer';
 
-import { useFetchAllEmployeesQuery, useFetchVacationRequestsQuery } from '@global/api/employee/employee.api';
+import { useFetchAllEmployeesQuery, useLazyFetchVacationRequestsQuery } from '@global/api/employee/employee.api';
+import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+import { VacationFilters } from '@shared/enums/vacation.enums';
+import { VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 
 export const EmployeesTable = (): JSX.Element => {
   const { refetch } = useFetchAllEmployeesQuery();
-  const { data, refetch: refetchVacationsRequests } = useFetchVacationRequestsQuery();
+  const [vacationType, setVacationType] = useState<EmployeeTableTab>(EmployeeTableTabs.VACATION_REQUESTS);
+
+  const [fetchAllVacationRequests, { data }] = useLazyFetchVacationRequestsQuery();
 
   const { employees } = useTypedSelector((state) => state.employeeReducer);
   const [isUserPreviewDrawerOpen, setIsUserPreviewDrawerOpen] = useState(false);
   const [isUserDocumentsDrawerOpen, setIsUserDocumentsDrawerOpen] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
-  const [selectedTable, setSelectedTable] = useState<'hired' | 'fired' | 'vacation-requests'>('hired');
+  const [selectedTable, setSelectedTable] = useState<EmployeeTableTab>('hired');
 
   useEffect(() => {
     refetch();
-    refetchVacationsRequests();
   }, []);
+
+  useEffect(() => {
+    if (vacationType === EmployeeTableTabs.VACATION_REQUESTS) {
+      fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS);
+    } else {
+      fetchAllVacationRequests(VacationFilters.ON_VACATION);
+    }
+  }, [vacationType]);
   return (
     <div style={{ width: '100%' }}>
       <EmployeeTableHeader
@@ -33,12 +45,13 @@ export const EmployeesTable = (): JSX.Element => {
         selectedTable={selectedTable}
         vacationRequestsNumber={data?.length}
         setIsOpenedModal={setIsOpenedModal}
+        setVacationType={setVacationType}
       />
       <EmployeesTableContent
         selectedTable={selectedTable}
         setIsDrawerOpen={setIsUserPreviewDrawerOpen}
         employees={employees}
-        vacationRequests={data}
+        vacationRequests={data as VacationRequestsResponse[]}
       />
       <AddEmployeePopup setIsOpenedModal={setIsOpenedModal} isOpen={isOpenedModal} />
       <Drawer

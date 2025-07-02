@@ -155,9 +155,11 @@
 .column-employee {
   width: 289px;
 }
+
 .column-vacation-citizenship {
   width: auto;
 }
+
 .column-status {
   width: 289px;
 }
@@ -185,19 +187,27 @@
 }
 
 .action-approve-btn {
-  background: #222;
-  color: white;
   padding: 6px 12px;
+
+  color: white;
+
   border: none;
   border-radius: 4px;
+
+  background: #222;
+
   cursor: pointer;
 }
 
 .action-cancel-btn {
-  background: #eee;
-  color: #222;
   padding: 6px 12px;
+
+  color: #222;
+
   border: none;
   border-radius: 4px;
+
+  background: #eee;
+
   cursor: pointer;
 }

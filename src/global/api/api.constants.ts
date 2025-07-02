@@ -1,9 +1,11 @@
+import { VacationFilter } from '@shared/enums/vacation.enums';
+
 export const API_CONFIG = {
   signIn: (): string => '/auth/sign-in',
   authMe: (): string => '/auth/me',
 
   fetchEmployees: (): string => '/employee/list',
-  fetchEmployeesRequests: (): string => '/employee/vacations',
+  fetchEmployeesRequests: (filter: VacationFilter): string => `/employee/vacations?filter=${filter}`,
   handleEmployeesRequest: (): string => '/employee/vacation/decision',
   inviteEmployee: (): string => '/employee/add',
   setNewPassword: (): string => '/employee/set-password',

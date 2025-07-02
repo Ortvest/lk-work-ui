@@ -2,6 +2,7 @@ import { EmployeeSlice } from '@global/store/slices/Employee.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseEmployeeApi } from '@global/api/employee/base-employee.api';
+import { VacationFilter } from '@shared/enums/vacation.enums';
 import { AddEmployee, UserEntity } from '@shared/interfaces/User.interfaces';
 import { VacationRequestDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 
@@ -31,9 +32,9 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
-    fetchVacationRequests: builder.query<VacationRequestsResponse[], void>({
-      query: () => ({
-        url: API_CONFIG.fetchEmployeesRequests(),
+    fetchVacationRequests: builder.query<VacationRequestsResponse[], VacationFilter>({
+      query: (filter) => ({
+        url: API_CONFIG.fetchEmployeesRequests(filter),
         method: 'GET',
         credentials: 'include',
       }),
