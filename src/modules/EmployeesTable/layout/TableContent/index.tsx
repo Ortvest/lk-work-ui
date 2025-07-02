@@ -19,6 +19,8 @@ import {
   useHandleVacationRequestsMutation,
   useLazyFetchVacationRequestsQuery,
 } from '@global/api/employee/employee.api';
+import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+import { VacationFilters } from '@shared/enums/vacation.enums';
 import { isUserEntity } from '@shared/guards/isUserEntity';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 import { VacationDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
@@ -213,7 +215,7 @@ interface EmployeeTableContentProps {
   employees: UserEntity[];
   vacationRequests: VacationRequestsResponse[];
   setIsDrawerOpen: (isOpen: boolean) => void;
-  selectedTable: 'hired' | 'fired' | 'vacation-requests';
+  selectedTable: EmployeeTableTab;
 }
 
 const { setSelectedEmployee } = EmployeeSlice.actions;
@@ -243,7 +245,7 @@ export const EmployeesTableContent = ({
         userId: entity.userId,
         decision: decision as VacationDecision,
       }).then(() => {
-        fetchAllVacationRequests();
+        fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS);
 
         if (decision === 'approved') {
           toast.success('Vacation request approved successfully');
@@ -254,7 +256,8 @@ export const EmployeesTableContent = ({
     }
   };
 
-  const isVacation = selectedTable === 'vacation-requests';
+  const isVacation =
+    selectedTable === EmployeeTableTabs.VACATION_REQUESTS || selectedTable === EmployeeTableTabs.ON_VACATION;
 
   type TableData = typeof isVacation extends true ? VacationRequestsResponse : UserEntity;
 
