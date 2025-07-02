@@ -114,6 +114,13 @@ export const AppRoutes = {
     title: 'employees-table',
     usageScope: [UsageScopes.NONE],
   },
+
+  VACATIONS_TABLE: {
+    path: 'vacations',
+    isVisible: true,
+    title: 'vacations-table',
+    usageScope: [UsageScopes.SIDEBAR],
+  },
 };
 
 export type AppRoute = { path: string; isVisible: boolean; title: string; usageScope: string[]; icon?: string };

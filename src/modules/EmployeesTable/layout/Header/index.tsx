@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classNames from 'classnames';
 
@@ -11,10 +11,16 @@ import './style.css';
 
 interface EmployeesTableProps {
   setIsOpenedModal: (isOpen: boolean) => void;
+  vacationRequestsNumber?: number;
+  setSelectedTable: (selectedTable: 'hired' | 'fired' | 'vacation-requests') => void;
+  selectedTable: 'hired' | 'fired' | 'vacation-requests';
 }
-export const EmployeeTableHeader = ({ setIsOpenedModal }: EmployeesTableProps): React.ReactNode => {
-  const [selectedTable, setSelectedTable] = useState<'hired' | 'fired'>('hired');
-
+export const EmployeeTableHeader = ({
+  setIsOpenedModal,
+  vacationRequestsNumber,
+  setSelectedTable,
+  selectedTable,
+}: EmployeesTableProps): React.ReactNode => {
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
@@ -24,6 +30,11 @@ export const EmployeeTableHeader = ({ setIsOpenedModal }: EmployeesTableProps): 
         <div>
           <SwitchTableButton setSelectedTable={setSelectedTable} text={'Hired'} isActive={selectedTable === 'hired'} />
           <SwitchTableButton setSelectedTable={setSelectedTable} text={'Fired'} isActive={selectedTable === 'fired'} />
+          <SwitchTableButton
+            setSelectedTable={setSelectedTable}
+            text={`Vacation requests ${vacationRequestsNumber || 0}`}
+            isActive={selectedTable === 'vacation-requests'}
+          />
         </div>
       </section>
       <section className={classNames('employees-table-header-content')}>
