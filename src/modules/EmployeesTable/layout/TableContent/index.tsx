@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import classNames from 'classnames';
+import dayjs from 'dayjs';
+import toast from 'react-hot-toast';
 
 import { EmployeeSlice } from '@global/store/slices/Employee.slice';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
+import { Loader } from '@shared/components/Loader';
 
 import IconDots from '@shared/assets/icons/IconDots.svg';
 
 import './style.css';
 
+import {
+  useHandleVacationRequestsMutation,
+  useLazyFetchVacationRequestsQuery,
+} from '@global/api/employee/employee.api';
+import { isUserEntity } from '@shared/guards/isUserEntity';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
+import { VacationDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-const columns: ColumnDef<UserEntity>[] = [
+const employeesColumns: ColumnDef<UserEntity>[] = [
   {
     header: 'Employee',
     accessorFn: (row) => `${row.personalInfo.firstName} ${row.personalInfo.lastName}`,
@@ -79,37 +90,188 @@ const columns: ColumnDef<UserEntity>[] = [
   },
   {
     header: 'Action',
-    cell: () => (
-      <div className="employees-table-action-cell">
-        <button className="action-button">
-          <img src={IconDots} alt="IconDots" />
-        </button>
-      </div>
-    ),
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
+    cell: ({ hoveredRowId, currentRowId, selectedTable }) => {
+      if (selectedTable === 'vacation-requests' && hoveredRowId === currentRowId) {
+        return (
+          <div className="employees-table-row-actions" style={{ display: 'flex', gap: '8px' }}>
+            <button className="action-cancel-btn">Cancel</button>
+            <button className="action-approve-btn">Approve</button>
+          </div>
+        );
+      }
+
+      return (
+        <div className="employees-table-action-cell">
+          <button className="action-button">
+            <img src={IconDots} alt="IconDots" />
+          </button>
+        </div>
+      );
+    },
     meta: { className: 'column-action' },
   },
 ];
 
+export const vacationRequestsColumns: ColumnDef<VacationRequestsResponse>[] = [
+  {
+    header: 'Requests Date',
+    accessorKey: 'createdAt',
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
+    cell: (info) => {
+      const date = info.getValue() as string;
+      return <span>{dayjs(date).format('DD.MM.YYYY')}</span>;
+    },
+    meta: { className: 'column-hire-date' },
+  },
+  {
+    header: 'First Name',
+    accessorFn: (row) => row.user.firstName,
+    cell: (info) => <span>{info.getValue() as string}</span>,
+    meta: { className: 'column-first-name' },
+  },
+  {
+    header: 'Last Name',
+    accessorFn: (row) => row.user.lastName,
+    cell: (info) => <span>{info.getValue() as string}</span>,
+    meta: { className: 'column-last-name' },
+  },
+  {
+    header: 'Citizenship',
+    accessorFn: (row) => row.user.nationality,
+    cell: (info) => <span>{info.getValue() as string}</span>,
+    meta: { className: 'column-vacation-citizenship' },
+  },
+  {
+    header: 'Company',
+    accessorFn: (row) => row.user.company,
+    cell: (info) => <span>{info.getValue() as string}</span>,
+    meta: { className: 'column-company' },
+  },
+  {
+    header: 'Vacation period',
+    accessorFn: (row) => row.vacationDates,
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
+    cell: (info) => {
+      const dates = info.getValue() as string[];
+
+      return (
+        <>
+          {dates.map((date, idx) => (
+            <span key={idx}>
+              {date}
+              {idx !== dates.length - 1 && <span style={{ color: '#A0A0A0', margin: '0 4px' }}>/</span>}
+            </span>
+          ))}
+        </>
+      );
+    },
+    meta: { className: 'column-vacation-period' },
+  },
+
+  {
+    header: 'Action',
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
+    cell: ({ row, hoveredRowId, currentRowId, selectedTable, table }) => {
+      const isHovered = selectedTable === 'vacation-requests' && hoveredRowId === currentRowId;
+
+      return (
+        <div className="employees-table-action-cell" style={{ position: 'relative', width: '100%' }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              opacity: isHovered ? 1 : 0,
+              transition: 'opacity 0.2s ease',
+            }}>
+            <button
+              className="action-cancel-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                (table.options.meta as any)?.onSelectEmployee(row.original, 'rejected');
+              }}>
+              Cancel
+            </button>
+            <button
+              className="action-approve-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                (table.options.meta as any)?.onSelectEmployee(row.original, 'approved');
+              }}>
+              Approve
+            </button>
+          </div>
+        </div>
+      );
+    },
+    meta: { className: 'column-action' },
+  },
+];
 interface EmployeeTableContentProps {
   employees: UserEntity[];
+  vacationRequests: VacationRequestsResponse[];
   setIsDrawerOpen: (isOpen: boolean) => void;
+  selectedTable: 'hired' | 'fired' | 'vacation-requests';
 }
 
 const { setSelectedEmployee } = EmployeeSlice.actions;
-export const EmployeesTableContent = ({ employees, setIsDrawerOpen }: EmployeeTableContentProps): React.ReactNode => {
+
+export const EmployeesTableContent = ({
+  employees,
+  setIsDrawerOpen,
+  selectedTable,
+  vacationRequests,
+}: EmployeeTableContentProps): React.ReactNode => {
   const dispatch = useTypedDispatch();
+  const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
 
-  const table = useReactTable({
-    data: employees,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const [fetchAllVacationRequests] = useLazyFetchVacationRequestsQuery();
 
-  const onSelectEmployee = (employee: UserEntity): void => {
-    setIsDrawerOpen(true);
-    dispatch(setSelectedEmployee(employee));
+  const currentUserData = useTypedSelector((state) => state.userReducer.user);
+  const [handleVacationRequest, { isLoading: isHandleLoading }] = useHandleVacationRequestsMutation();
+
+  const onSelectEmployee = (entity: UserEntity | VacationRequestsResponse, decision?: VacationDecision): void => {
+    if (isUserEntity(entity)) {
+      setIsDrawerOpen(true);
+      dispatch(setSelectedEmployee(entity));
+    } else {
+      handleVacationRequest({
+        vacationRequestId: entity._id,
+        reviewerId: currentUserData?._id || '',
+        userId: entity.userId,
+        decision: decision as VacationDecision,
+      }).then(() => {
+        fetchAllVacationRequests();
+
+        if (decision === 'approved') {
+          toast.success('Vacation request approved successfully');
+        } else if (decision === 'rejected') {
+          toast.success('Vacation request rejected successfully');
+        }
+      });
+    }
   };
 
+  const isVacation = selectedTable === 'vacation-requests';
+
+  type TableData = typeof isVacation extends true ? VacationRequestsResponse : UserEntity;
+
+  const table = useReactTable<TableData>({
+    data: isVacation ? (vacationRequests as unknown as TableData[]) : (employees as TableData[]),
+    columns: isVacation
+      ? (vacationRequestsColumns as ColumnDef<TableData>[])
+      : (employeesColumns as ColumnDef<TableData>[]),
+    getCoreRowModel: getCoreRowModel(),
+    meta: {
+      onSelectEmployee,
+    },
+  });
+
+  if (isHandleLoading) {
+    return <Loader />;
+  }
   return (
     <table className="employees-table">
       <thead className={classNames('employees-table-content-header')}>
@@ -127,12 +289,22 @@ export const EmployeesTableContent = ({ employees, setIsDrawerOpen }: EmployeeTa
       </thead>
       <tbody>
         {table?.getRowModel()?.rows?.map((row) => (
-          <tr onClick={() => onSelectEmployee(row.original)} key={row.id} className="employees-table-row">
+          <tr
+            key={row.id}
+            className="employees-table-row"
+            onMouseEnter={() => setHoveredRowId(row.id)}
+            onMouseLeave={() => setHoveredRowId(null)}
+            onClick={() => onSelectEmployee(row.original)}>
             {row?.getVisibleCells()?.map((cell: any) => (
               <td
                 key={cell.id}
                 className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
-                {flexRender(cell?.column?.columnDef?.cell, cell?.getContext())}
+                {flexRender(cell?.column?.columnDef?.cell, {
+                  ...cell?.getContext(),
+                  hoveredRowId,
+                  currentRowId: row.id,
+                  selectedTable,
+                })}
               </td>
             ))}
           </tr>

@@ -3,6 +3,8 @@ export const API_CONFIG = {
   authMe: (): string => '/auth/me',
 
   fetchEmployees: (): string => '/employee/list',
+  fetchEmployeesRequests: (): string => '/employee/vacations',
+  handleEmployeesRequest: (): string => '/employee/vacation/decision',
   inviteEmployee: (): string => '/employee/add',
   setNewPassword: (): string => '/employee/set-password',
 

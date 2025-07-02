@@ -3,6 +3,7 @@ import { EmployeeSlice } from '@global/store/slices/Employee.slice';
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseEmployeeApi } from '@global/api/employee/base-employee.api';
 import { AddEmployee, UserEntity } from '@shared/interfaces/User.interfaces';
+import { VacationRequestDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 
 const { setEmployees } = EmployeeSlice.actions;
 export const employeeApi = baseEmployeeApi.injectEndpoints({
@@ -30,8 +31,30 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    fetchVacationRequests: builder.query<VacationRequestsResponse[], void>({
+      query: () => ({
+        url: API_CONFIG.fetchEmployeesRequests(),
+        method: 'GET',
+        credentials: 'include',
+      }),
+    }),
+    handleVacationRequests: builder.mutation<void, VacationRequestDecision>({
+      query: (body: VacationRequestDecision) => ({
+        url: API_CONFIG.handleEmployeesRequest(),
+        method: 'PATCH',
+        credentials: 'include',
+        body,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useFetchAllEmployeesQuery, useInviteEmployeeMutation, useLazyFetchAllEmployeesQuery } = employeeApi;
+export const {
+  useFetchAllEmployeesQuery,
+  useInviteEmployeeMutation,
+  useLazyFetchAllEmployeesQuery,
+  useFetchVacationRequestsQuery,
+  useHandleVacationRequestsMutation,
+  useLazyFetchVacationRequestsQuery,
+} = employeeApi;
