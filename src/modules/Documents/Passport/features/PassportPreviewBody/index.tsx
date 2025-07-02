@@ -23,7 +23,7 @@ export const PassportPreviewBody = (): JSX.Element => {
     const getPassportPhotoUrl = async (): Promise<void> => {
       if (!passportData?.passportFileKey) return;
 
-      const { data, error } = await getUploadedPhoto(passportData.passportFileKey);
+      const { data, error } = await getUploadedPhoto(passportData.passportFileKey as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -38,15 +38,15 @@ export const PassportPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('passport-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={passportPreviewPhoto} imageName="Your passport" />
+      <SharedImagePreview imageUrl={passportPreviewPhoto || AlertIcon} imageName="Your passport" />
       <SharedLabel title="PassportNumber:">
-        <span>{passportData?.passportNumber || AlertIcon}</span>
+        <span>{passportData?.passportNumber || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{passportData?.passportDateOfIssue || AlertIcon}</span>
+        <span>{(passportData?.passportDateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{passportData?.passportExpirationDate || AlertIcon}</span>
+        <span>{(passportData?.passportExpirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

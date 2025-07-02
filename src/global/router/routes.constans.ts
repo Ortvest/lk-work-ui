@@ -18,6 +18,13 @@ export const AppRoutes = {
 
   SUPPORT: { path: '/support', isVisible: true, title: 'Support', usageScope: [UsageScopes.HEADER] },
 
+  SET_NEW_PASSWORD: {
+    path: '/set-password',
+    isVisible: true,
+    title: 'Set new password',
+    usageScope: [UsageScopes.NONE],
+  },
+
   PERSONAL_INFO: {
     path: '/personal-info',
     isVisible: true,
@@ -106,6 +113,13 @@ export const AppRoutes = {
     isVisible: false,
     title: 'employees-table',
     usageScope: [UsageScopes.NONE],
+  },
+
+  VACATIONS_TABLE: {
+    path: 'vacations',
+    isVisible: true,
+    title: 'vacations-table',
+    usageScope: [UsageScopes.SIDEBAR],
   },
 };
 

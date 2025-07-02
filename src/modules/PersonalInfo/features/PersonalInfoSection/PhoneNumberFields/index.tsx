@@ -40,7 +40,7 @@ export const PhoneNumberFields = ({
           <SharedInput type="tel" {...register(numberName)} placeholder="00 000 00 00" />
         </fieldset>
       ) : (
-        <span>{personalInfo?.[editModeTitle] || '-'}</span>
+        <span>{(personalInfo?.[editModeTitle] as string) || '-'}</span>
       )}
     </SharedLabel>
   );
