@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -17,14 +19,23 @@ import './style.css';
 import { useCollectUserJobInfoMutation } from '@global/api/updateUserData/collectData.api';
 import { JobInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
+import { datePartsParser } from '@shared/utils/datePartsParser';
 
 export const JobInformation = (): JSX.Element => {
+  const jobInfo = useTypedSelector((state) => state.userReducer.user?.jobInfo);
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const [collectUserJobInfo] = useCollectUserJobInfoMutation();
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
-  const methods = useForm<JobInfo>();
+  const methods = useForm<JobInfo>({
+    defaultValues: {
+      company: jobInfo?.company || '',
+      position: jobInfo?.position || '',
+      employmentStartDate: datePartsParser(jobInfo?.employmentStartDate),
+      employmentEndDate: datePartsParser(jobInfo?.employmentEndDate),
+    },
+  });
 
   const onSaveHandler = async (data: JobInfo): Promise<void> => {
     if (!employeeId) return;
@@ -34,7 +45,6 @@ export const JobInformation = (): JSX.Element => {
       employmentStartDate: dateParser(JSON.stringify(data.employmentStartDate!)),
       employmentEndDate: dateParser(JSON.stringify(data.employmentEndDate!)),
     };
-
     try {
       await collectUserJobInfo({ jobInfo: parsedData, employeeId });
       dispatch(setIsEditModeEnabled(false));
@@ -42,6 +52,17 @@ export const JobInformation = (): JSX.Element => {
       console.error('Failed to save job info:', error);
     }
   };
+
+  useEffect(() => {
+    if (jobInfo) {
+      methods.reset({
+        company: jobInfo.company || '',
+        position: jobInfo.position || '',
+        employmentStartDate: datePartsParser(jobInfo?.employmentStartDate),
+        employmentEndDate: datePartsParser(jobInfo?.employmentEndDate),
+      });
+    }
+  }, [jobInfo]);
 
   return (
     <FormProvider {...methods}>

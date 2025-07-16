@@ -16,14 +16,14 @@ export const DrivingLicenceFormBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('driving-licence-form-fields-wrapper')}>
       <Controller
-        name="drivingLicenceFrontCardFile"
+        name="drivingLicenceFrontCardFileKey"
         control={control}
         render={({ field }) => (
           <SharedFileUpload title="Upload Front Card Photo" onChange={(file) => field.onChange(file)} />
         )}
       />
       <Controller
-        name="drivingLicenceBackCardFile"
+        name="drivingLicenceBackCardFileKey"
         control={control}
         render={({ field }) => (
           <SharedFileUpload title="Upload Back Card Photo" onChange={(file) => field.onChange(file)} />

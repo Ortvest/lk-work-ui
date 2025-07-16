@@ -4,17 +4,35 @@ import classNames from 'classnames';
 
 import './style.css';
 
+import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+
 interface SwitchTableButtonProps {
   text: string;
   isActive: boolean;
-  setSelectedTable: (selectedTable: 'hired' | 'fired') => void;
+  setSelectedTable: (selectedTable: EmployeeTableTab) => void;
+  setVacationType: (selectedType: EmployeeTableTab) => void;
 }
-export const SwitchTableButton = ({ text, isActive, setSelectedTable }: SwitchTableButtonProps): React.ReactNode => {
+export const SwitchTableButton = ({
+  text,
+  isActive,
+  setSelectedTable,
+  setVacationType,
+}: SwitchTableButtonProps): React.ReactNode => {
   const onSetSelectedTable = (): void => {
-    if (text === 'Fired') {
-      setSelectedTable('fired');
-    } else {
-      setSelectedTable('hired');
+    switch (text) {
+      case 'Hired':
+        setSelectedTable(EmployeeTableTabs.HIRED);
+        break;
+      case 'Fired':
+        setSelectedTable(EmployeeTableTabs.FIRED);
+        break;
+      case 'On vacation':
+        setSelectedTable(EmployeeTableTabs.ON_VACATION);
+        setVacationType(EmployeeTableTabs.ON_VACATION);
+        break;
+      default:
+        setSelectedTable(EmployeeTableTabs.VACATION_REQUESTS);
+        setVacationType(EmployeeTableTabs.VACATION_REQUESTS);
     }
   };
   return (

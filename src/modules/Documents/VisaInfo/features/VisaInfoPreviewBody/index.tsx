@@ -23,7 +23,7 @@ export const VisaInfoPreviewBody = (): JSX.Element => {
     const fetchVisaPhoto = async (): Promise<void> => {
       if (!visaData?.visaDocumentFileKey) return;
 
-      const { data, error } = await getUploadedPhoto(visaData.visaDocumentFileKey);
+      const { data, error } = await getUploadedPhoto(visaData.visaDocumentFileKey as string);
 
       if (error || !data) {
         console.error('Failed to fetch visa document preview:', error);
@@ -43,10 +43,10 @@ export const VisaInfoPreviewBody = (): JSX.Element => {
         <span>{visaData?.visaType || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{visaData?.dateOfIssue || '-'}</span>
+        <span>{(visaData?.dateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{visaData?.expirationDate || '-'}</span>
+        <span>{(visaData?.expirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

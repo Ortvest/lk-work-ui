@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classNames from 'classnames';
 
@@ -9,12 +9,22 @@ import { SwitchTableButton } from '@modules/EmployeesTable/features/SwitchTableB
 
 import './style.css';
 
+import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+
 interface EmployeesTableProps {
   setIsOpenedModal: (isOpen: boolean) => void;
+  vacationRequestsNumber?: number;
+  setSelectedTable: (selectedTable: EmployeeTableTab) => void;
+  setVacationType: (selectedType: EmployeeTableTab) => void;
+  selectedTable: EmployeeTableTab;
 }
-export const EmployeeTableHeader = ({ setIsOpenedModal }: EmployeesTableProps): React.ReactNode => {
-  const [selectedTable, setSelectedTable] = useState<'hired' | 'fired'>('hired');
-
+export const EmployeeTableHeader = ({
+  setIsOpenedModal,
+  vacationRequestsNumber,
+  setSelectedTable,
+  selectedTable,
+  setVacationType,
+}: EmployeesTableProps): React.ReactNode => {
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
@@ -22,8 +32,30 @@ export const EmployeeTableHeader = ({ setIsOpenedModal }: EmployeesTableProps): 
           <h1 className={classNames('employees-table-header-title')}>Employees</h1>
         </div>
         <div>
-          <SwitchTableButton setSelectedTable={setSelectedTable} text={'Hired'} isActive={selectedTable === 'hired'} />
-          <SwitchTableButton setSelectedTable={setSelectedTable} text={'Fired'} isActive={selectedTable === 'fired'} />
+          <SwitchTableButton
+            setVacationType={setVacationType}
+            setSelectedTable={setSelectedTable}
+            text={'Hired'}
+            isActive={selectedTable === EmployeeTableTabs.HIRED}
+          />
+          <SwitchTableButton
+            setVacationType={setVacationType}
+            setSelectedTable={setSelectedTable}
+            text={'Fired'}
+            isActive={selectedTable === EmployeeTableTabs.FIRED}
+          />
+          <SwitchTableButton
+            setVacationType={setVacationType}
+            setSelectedTable={setSelectedTable}
+            text={`Vacation requests ${vacationRequestsNumber || 0}`}
+            isActive={selectedTable === EmployeeTableTabs.VACATION_REQUESTS}
+          />
+          <SwitchTableButton
+            setVacationType={setVacationType}
+            setSelectedTable={setSelectedTable}
+            text={'On vacation'}
+            isActive={selectedTable === EmployeeTableTabs.ON_VACATION}
+          />
         </div>
       </section>
       <section className={classNames('employees-table-header-content')}>
