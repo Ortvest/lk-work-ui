@@ -1,19 +1,28 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+import { AppRoutes } from '@global/router/routes.constans';
 
 import { SignInFormBody } from '@modules/SignIn/features/SignInFormBody';
 import { SignInHeader } from '@modules/SignIn/layout/SignInHeader';
 
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import './style.css';
 
 import { useAuthenticateUserMutation, useLazyGetMeQuery } from '@global/api/auth/auth.api';
+import { UserRoles } from '@shared/enums/user.enums';
 import { UserSignInData } from '@shared/interfaces/User.interfaces';
 
 export const SignIn = (): JSX.Element => {
   const methods = useForm<UserSignInData>();
-
+  const navigate = useNavigate();
   const [signIn] = useAuthenticateUserMutation();
   const [getUserData] = useLazyGetMeQuery();
+  const { user } = useTypedSelector((state) => state.userReducer);
 
   const onSubmitHanlder = async (data: UserSignInData): Promise<void> => {
     try {
@@ -23,6 +32,21 @@ export const SignIn = (): JSX.Element => {
       console.error('Login failed:', error);
     }
   };
+
+  useEffect(() => {
+    if (!user) return;
+
+    switch (user.role) {
+      case UserRoles.SUPER_ADMIN:
+        navigate(AppRoutes.EMPLOYEES_TABLE.path);
+        break;
+      case UserRoles.EMPLOYEE:
+        navigate(AppRoutes.PERSONAL_INFO.path);
+        break;
+      default:
+        navigate(AppRoutes.SIGN_IN.path);
+    }
+  }, [user, navigate]);
 
   return (
     <FormProvider {...methods}>

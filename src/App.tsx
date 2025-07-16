@@ -1,26 +1,29 @@
 import { useEffect } from 'react';
 
-import { RouterProvider } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { Router } from '@global/router/AppRouter';
+import { AppRouter } from '@global/router/AppRouter';
+import { AppRoutes } from '@global/router/routes.constans';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import '@shared/config/style.config.css';
 
 import { useGetMeQuery } from '@global/api/auth/auth.api';
-import { UserRoles } from '@shared/enums/user.enums';
 
 export const App = (): JSX.Element => {
   const { refetch } = useGetMeQuery(undefined);
+  const { isAuth } = useTypedSelector((state) => state.userReducer);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     refetch();
+
+    if (!isAuth) {
+      navigate(AppRoutes.SIGN_IN.path);
+    }
   }, []);
 
-  const { isAuth, user } = useTypedSelector((state) => state.userReducer);
-
-  const currentRouter = Router(Boolean(isAuth), user?.role === UserRoles.SUPER_ADMIN);
-
-  return <RouterProvider router={currentRouter} key={String(isAuth)} />;
+  return <AppRouter />;
 };
