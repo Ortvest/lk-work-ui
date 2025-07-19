@@ -63,9 +63,9 @@ const sidebarRoutes = [
   {
     icon: IconGlobe,
     selectedIcon: IconGlobe,
-    label: 'Vacations',
+    label: 'Accommodations',
     scope: RouteScopes.TOP,
-    path: AppRoutes.VACATIONS_TABLE.path,
+    path: AppRoutes.ACCOMMODATIONS.path,
   },
 ];
 export const AdminSidebar = (): JSX.Element => {
@@ -78,9 +78,10 @@ export const AdminSidebar = (): JSX.Element => {
     <section className={classNames('admin-sidebar')}>
       <nav className={classNames('admin-sidebar-navigation')}>
         <div className={classNames('admin-sidebar-top-routes')}>
-          {topRoutes.map(({ icon, label, path, selectedIcon }, i) => (
-            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />
-          ))}
+          {topRoutes.map(({ icon, label, path, selectedIcon }, i) => {
+            console.log(`Label: ${label}, path: ${path}`);
+            return <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />;
+          })}
         </div>
         <div className={classNames('admin-sidebar-bottom-routes')}>
           {bottomRoutes.map(({ icon, label, path, selectedIcon }, i) => (
