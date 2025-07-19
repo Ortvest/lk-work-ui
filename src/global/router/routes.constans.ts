@@ -19,6 +19,7 @@ import JobIcon from '@shared/assets/icons/JobIcon.svg';
 import LocationIcon from '@shared/assets/icons/LocationIcon.svg';
 import PersonalIcon from '@shared/assets/icons/PersonalIcon.svg';
 
+import { AccommodationsPage } from '@pages/Accommodations';
 import { SetNewPassword } from '@pages/SetNewPassword';
 import { UserRole, UserRoles } from '@shared/enums/user.enums';
 
@@ -202,13 +203,13 @@ export const AppRoutes: Record<string, AppRoute> = {
     isPublic: false,
   },
 
-  VACATIONS_TABLE: {
-    path: 'vacations',
+  ACCOMMODATIONS: {
+    path: '/accommodations',
     isVisible: true,
-    title: 'vacations-table',
+    title: 'accommodations',
     usageScope: [UsageScopes.SIDEBAR],
     allowedRoles: [UserRoles.MANAGER, UserRoles.SUPER_ADMIN],
-    element: null,
+    element: AccommodationsPage,
     isPublic: false,
   },
 };

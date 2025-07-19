@@ -1,7 +1,9 @@
+import { AccommodationReducer as accommodationReducer } from '@global/store/slices/Accommodation.slice';
 import { CommonReducer } from '@global/store/slices/Common.slice';
 import { EmployeeReducer as employeeReducer } from '@global/store/slices/Employee.slice';
 import { UserReducer as userReducer } from '@global/store/slices/User.slice';
 
+import { accommodationApi } from '@global/api/accommodations/accommodation.api';
 import { authApi } from '@global/api/auth/auth.api';
 import { employeeApi } from '@global/api/employee/employee.api';
 import { collectDataApi } from '@global/api/updateUserData/collectData.api';
@@ -13,17 +15,20 @@ export const store = configureStore({
     userReducer,
     employeeReducer,
     CommonReducer,
+    accommodationReducer,
     [authApi.reducerPath]: authApi.reducer,
     [employeeApi.reducerPath]: employeeApi.reducer,
     [collectDataApi.reducerPath]: collectDataApi.reducer,
     [uploadPhotoApi.reducerPath]: uploadPhotoApi.reducer,
+    [accommodationApi.reducerPath]: accommodationApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
       .concat(employeeApi.middleware)
       .concat(collectDataApi.middleware)
-      .concat(uploadPhotoApi.middleware),
+      .concat(uploadPhotoApi.middleware)
+      .concat(accommodationApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
