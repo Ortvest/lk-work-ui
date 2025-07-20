@@ -14,4 +14,9 @@ export const API_CONFIG = {
   uploadPhoto: (): string => '/upload',
   uploadUserPhoto: (): string => '/upload/photo',
   getUploadedPhoto: (fileKey: string): string => `/signed-url?fileKey=${fileKey}`,
+
+  getAllAccommodations: (): string => '/accommodation/list',
+  addAccommodations: (): string => '/accommodation/create',
+  editAccommodation: (accommodationId: string): string => `/accommodation/edit?accommodationId=${accommodationId}`,
+  removeAccommodation: (accommodationId: string): string => `/accommodation/remove?accommodationId=${accommodationId}`,
 };
