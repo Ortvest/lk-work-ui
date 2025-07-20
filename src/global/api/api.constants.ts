@@ -17,4 +17,6 @@ export const API_CONFIG = {
 
   getAllAccommodations: (): string => '/accommodation/list',
   addAccommodations: (): string => '/accommodation/create',
+  editAccommodation: (accommodationId: string): string => `/accommodation/edit?accommodationId=${accommodationId}`,
+  removeAccommodation: (accommodationId: string): string => `/accommodation/remove?accommodationId=${accommodationId}`,
 };

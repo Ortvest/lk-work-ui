@@ -5,11 +5,16 @@ import { AccommodationTableContent } from '@modules/Accommodations/layout/TableC
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { useGetAllAccommodationsQuery } from '@global/api/accommodations/accommodation.api';
+import { OpenedPopupType } from "@pages/Accommodations";
 
-export const AccommodationsTable = (): ReactNode => {
+interface AccommodationsTableProps {
+  setOpenedPopupType: (type: OpenedPopupType) => void;
+  setIsOpenedModal: (isOpen: boolean) => void;
+}
+export const AccommodationsTable = ({setOpenedPopupType, setIsOpenedModal}: AccommodationsTableProps): ReactNode => {
   // eslint-disable-next-line no-empty-pattern
   const {} = useGetAllAccommodationsQuery(undefined);
 
   const accommodations = useTypedSelector((state) => state.accommodationReducer.accommodations);
-  return <AccommodationTableContent accommodations={accommodations} />;
+  return <AccommodationTableContent  setIsOpenedModal={setIsOpenedModal} setOpenedPopupType={setOpenedPopupType} accommodations={accommodations} />;
 };

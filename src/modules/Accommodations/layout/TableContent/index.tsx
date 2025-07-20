@@ -6,14 +6,13 @@ import { AccommodationSlice } from '@global/store/slices/Accommodation.slice';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 
-import IconDots from '@shared/assets/icons/IconDots.svg';
-
 import './style.css';
 
+import { OpenedPopupType } from '@pages/Accommodations';
 import { AccommodationEntity } from '@shared/interfaces/Accommodation.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-export const accommodationsColumns: ColumnDef<any>[] = [
+export const accommodationsColumns: ColumnDef<AccommodationEntity>[] = [
   {
     header: 'Name',
     accessorFn: (row) => row.name,
@@ -32,56 +31,38 @@ export const accommodationsColumns: ColumnDef<any>[] = [
     cell: (info) => <span>{`${info.getValue() as string} zl/month`}</span>,
     meta: { className: 'column-accommodation-price' },
   },
-  {
-    header: 'Action',
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type,@typescript-eslint/explicit-module-boundary-types
-    cell: () => {
-      return (
-        <div className="employees-table-action-cell">
-          <button className="action-button">
-            <img src={IconDots} alt="IconDots" />
-          </button>
-        </div>
-      );
-    },
-    meta: { className: 'column-action' },
-  },
 ];
 interface EmployeeTableContentProps {
   accommodations: AccommodationEntity[];
-  // setIsDrawerOpen: (isOpen: boolean) => void;
+  setIsOpenedModal: (isOpen: boolean) => void;
+  setOpenedPopupType: (type: OpenedPopupType) => void;
 }
 
 const { setSelectedAccommodation } = AccommodationSlice.actions;
 
-export const AccommodationTableContent = ({ accommodations }: EmployeeTableContentProps): React.ReactNode => {
+export const AccommodationTableContent = ({ accommodations, setOpenedPopupType, setIsOpenedModal }: EmployeeTableContentProps): React.ReactNode => {
   const dispatch = useTypedDispatch();
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
 
-  // const accommodations = useTypedSelector( state => state.accommodationReducer.accommodations);
-
-  // const currentUserData = useTypedSelector((state) => state.userReducer.user);
-  // const [handleVacationRequest, { isLoading: isHandleLoading }] = useHandleVacationRequestsMutation();
-
-  const onSelectAccommodation = (entity: any): void => {
+  const onSelectAccommodation = (entity: AccommodationEntity): void => {
     dispatch(setSelectedAccommodation(entity));
+    setOpenedPopupType('edit');
+    setIsOpenedModal(true)
   };
 
-  type TableData = any;
+  type TableData = AccommodationEntity[];
 
   const table = useReactTable<TableData>({
-    data: accommodations,
-    columns: accommodationsColumns,
+    data: accommodations as unknown as TableData[],
+    columns: accommodationsColumns as unknown as ColumnDef<TableData>[],
     getCoreRowModel: getCoreRowModel(),
     meta: {
       onSelectAccommodation,
+      setOpenedPopupType,
+      setIsOpenedModal,
     },
   });
 
-  // if (isHandleLoading) {
-  //   return <Loader />;
-  // }
   return (
     <table className="employees-table">
       <thead className={classNames('employees-table-content-header')}>
@@ -104,7 +85,7 @@ export const AccommodationTableContent = ({ accommodations }: EmployeeTableConte
             className="employees-table-row"
             onMouseEnter={() => setHoveredRowId(row.id)}
             onMouseLeave={() => setHoveredRowId(null)}
-            onClick={() => onSelectAccommodation(row.original)}>
+            onClick={() => onSelectAccommodation(row.original as unknown as AccommodationEntity)}>
             {row?.getVisibleCells()?.map((cell: any) => (
               <td
                 key={cell.id}
@@ -113,6 +94,8 @@ export const AccommodationTableContent = ({ accommodations }: EmployeeTableConte
                   ...cell?.getContext(),
                   hoveredRowId,
                   currentRowId: row.id,
+                  setOpenedPopupType,
+                  setIsOpenedModal
                 })}
               </td>
             ))}

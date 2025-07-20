@@ -3,7 +3,6 @@ import ReactModal from 'react-modal';
 
 import { AddAccommodationForm } from '@modules/Accommodations/feature/AddAccommodationForm';
 
-
 import './style.css';
 
 interface AddAccommodationPopupProps {
@@ -23,7 +22,7 @@ export const AddAccommodationPopup = ({ isOpen, setIsOpenedModal }: AddAccommoda
         <h1 className={classNames('add-employee-popup-title')}>Create accommodation</h1>
       </header>
       <main>
-        <AddAccommodationForm setIsOpenedModal={setIsOpenedModal} />
+        <AddAccommodationForm isEditMode={false} setIsOpenedModal={setIsOpenedModal} />
       </main>
     </ReactModal>
   );

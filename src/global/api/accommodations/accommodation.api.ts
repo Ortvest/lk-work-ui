@@ -2,7 +2,7 @@ import { AccommodationSlice } from '@global/store/slices/Accommodation.slice';
 
 import { baseAccommodationApi } from '@global/api/accommodations/base-accommodation.api';
 import { API_CONFIG } from '@global/api/api.constants';
-import { AddAccommodation } from '@shared/interfaces/Accommodation.interfaces';
+import { AddAccommodation, EditAccommodation } from "@shared/interfaces/Accommodation.interfaces";
 
 const { setAccommodations } = AccommodationSlice.actions;
 export const accommodationApi = baseAccommodationApi.injectEndpoints({
@@ -11,6 +11,13 @@ export const accommodationApi = baseAccommodationApi.injectEndpoints({
       query: ({ address, name, price }) => ({
         url: API_CONFIG.addAccommodations(),
         method: 'POST',
+        body: { address, name, price },
+      }),
+    }),
+    editAccommodation: builder.mutation<boolean, EditAccommodation>({
+      query: ({ address, name, price, accommodationId }) => ({
+        url: API_CONFIG.editAccommodation(accommodationId),
+        method: 'PUT',
         body: { address, name, price },
       }),
     }),
@@ -29,8 +36,20 @@ export const accommodationApi = baseAccommodationApi.injectEndpoints({
         }
       },
     }),
+    removeAccommodation: builder.query<boolean, { accommodationId: string }>({
+      query: ({ accommodationId }) => ({
+        url: API_CONFIG.removeAccommodation(accommodationId),
+        method: 'DELETE',
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
-export const { useGetAllAccommodationsQuery, useCreateAccommodationMutation, useLazyGetAllAccommodationsQuery } =
-  accommodationApi;
+export const {
+  useGetAllAccommodationsQuery,
+  useCreateAccommodationMutation,
+  useLazyGetAllAccommodationsQuery,
+  useEditAccommodationMutation,
+  useLazyRemoveAccommodationQuery
+} = accommodationApi;
