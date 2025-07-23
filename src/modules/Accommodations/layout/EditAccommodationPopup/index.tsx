@@ -1,15 +1,19 @@
 import classNames from 'classnames';
+import toast from 'react-hot-toast';
 import ReactModal from 'react-modal';
 
 import { AddAccommodationForm } from '@modules/Accommodations/feature/AddAccommodationForm';
 
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
+import { SharedButton } from '@shared/components/SharedButton';
+
 import './style.css';
-import { SharedButton } from "@shared/components/SharedButton";
+
 import {
-  useLazyGetAllAccommodationsQuery, useLazyRemoveAccommodationQuery,
-} from "@global/api/accommodations/accommodation.api";
-import { useTypedSelector } from "@shared/hooks/useTypedSelector";
-import toast from 'react-hot-toast';
+  useLazyGetAllAccommodationsQuery,
+  useLazyRemoveAccommodationQuery,
+} from '@global/api/accommodations/accommodation.api';
 
 interface EditAccommodationPopupProps {
   isOpen: boolean;
@@ -24,8 +28,8 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
     await removeAccommodation({ accommodationId: selectedAccommodation?._id ?? '' });
     await fetchAllAccommodations(undefined);
     setIsOpenedModal(false);
-    toast.success("Accommodation was deleted successfully.");
-  }
+    toast.success('Accommodation was deleted successfully.');
+  };
   return (
     <ReactModal
       ariaHideApp={false}
@@ -41,7 +45,7 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
         <AddAccommodationForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
       </main>
       <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
-        <SharedButton onClick={onDeleteAccommodation} type={'button'} text={"Delete accommodation"}/>
+        <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete accommodation'} />
       </div>
     </ReactModal>
   );

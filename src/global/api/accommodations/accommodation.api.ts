@@ -2,7 +2,7 @@ import { AccommodationSlice } from '@global/store/slices/Accommodation.slice';
 
 import { baseAccommodationApi } from '@global/api/accommodations/base-accommodation.api';
 import { API_CONFIG } from '@global/api/api.constants';
-import { AddAccommodation, EditAccommodation } from "@shared/interfaces/Accommodation.interfaces";
+import { AddAccommodation, EditAccommodation } from '@shared/interfaces/Accommodation.interfaces';
 
 const { setAccommodations } = AccommodationSlice.actions;
 export const accommodationApi = baseAccommodationApi.injectEndpoints({
@@ -51,5 +51,5 @@ export const {
   useCreateAccommodationMutation,
   useLazyGetAllAccommodationsQuery,
   useEditAccommodationMutation,
-  useLazyRemoveAccommodationQuery
+  useLazyRemoveAccommodationQuery,
 } = accommodationApi;
