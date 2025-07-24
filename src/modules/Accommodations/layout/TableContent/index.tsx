@@ -40,14 +40,18 @@ interface EmployeeTableContentProps {
 
 const { setSelectedAccommodation } = AccommodationSlice.actions;
 
-export const AccommodationTableContent = ({ accommodations, setOpenedPopupType, setIsOpenedModal }: EmployeeTableContentProps): React.ReactNode => {
+export const AccommodationTableContent = ({
+  accommodations,
+  setOpenedPopupType,
+  setIsOpenedModal,
+}: EmployeeTableContentProps): React.ReactNode => {
   const dispatch = useTypedDispatch();
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
 
   const onSelectAccommodation = (entity: AccommodationEntity): void => {
     dispatch(setSelectedAccommodation(entity));
     setOpenedPopupType('edit');
-    setIsOpenedModal(true)
+    setIsOpenedModal(true);
   };
 
   type TableData = AccommodationEntity[];
@@ -95,7 +99,7 @@ export const AccommodationTableContent = ({ accommodations, setOpenedPopupType, 
                   hoveredRowId,
                   currentRowId: row.id,
                   setOpenedPopupType,
-                  setIsOpenedModal
+                  setIsOpenedModal,
                 })}
               </td>
             ))}
