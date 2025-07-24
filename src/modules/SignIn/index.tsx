@@ -45,9 +45,9 @@ export const SignIn = (): JSX.Element => {
         break;
       case UserRoles.EMPLOYEE:
         if (user.documentStatus === UserDocumentsStatuses.WAITING_FOR_BRIEFING) {
-          navigate(AppRoutes.PERSONAL_INFO.path);
-        } else {
           navigate(AppRoutes.QUESTIONNAIRE.path);
+        } else {
+          navigate(AppRoutes.PERSONAL_INFO.path);
         }
         break;
       default:
