@@ -1,5 +1,6 @@
+import { Fragment } from 'react';
+
 import classNames from 'classnames';
-import { Fragment } from 'react/jsx-runtime';
 import { useFormContext } from 'react-hook-form';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';

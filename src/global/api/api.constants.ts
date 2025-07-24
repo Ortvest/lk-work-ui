@@ -7,6 +7,7 @@ export const API_CONFIG = {
   fetchEmployees: (): string => '/employee/list',
   fetchEmployeesRequests: (filter: VacationFilter): string => `/employee/vacations?filter=${filter}`,
   handleEmployeesRequest: (): string => '/employee/vacation/decision',
+  sentVacationRequest: (): string => '/employee/vacation',
   inviteEmployee: (): string => '/employee/add',
   setNewPassword: (): string => '/employee/set-password',
 

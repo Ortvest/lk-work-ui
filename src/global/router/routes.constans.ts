@@ -206,8 +206,8 @@ export const AppRoutes: Record<string, AppRoute> = {
   ACCOMMODATIONS: {
     path: '/accommodations',
     isVisible: true,
-    title: 'accommodations',
-    usageScope: [UsageScopes.SIDEBAR],
+    title: 'Accommodations',
+    usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.MANAGER, UserRoles.SUPER_ADMIN],
     element: AccommodationsPage,
     isPublic: false,

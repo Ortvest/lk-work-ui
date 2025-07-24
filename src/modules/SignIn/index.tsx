@@ -14,7 +14,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import './style.css';
 
 import { useAuthenticateUserMutation, useLazyGetMeQuery } from '@global/api/auth/auth.api';
-import { UserRoles } from '@shared/enums/user.enums';
+import { UserDocumentsStatuses, UserRoles } from '@shared/enums/user.enums';
 import { UserSignInData } from '@shared/interfaces/User.interfaces';
 
 export const SignIn = (): JSX.Element => {
@@ -40,8 +40,15 @@ export const SignIn = (): JSX.Element => {
       case UserRoles.SUPER_ADMIN:
         navigate(AppRoutes.EMPLOYEES_TABLE.path);
         break;
+      case UserRoles.MANAGER:
+        navigate(AppRoutes.EMPLOYEES_TABLE.path);
+        break;
       case UserRoles.EMPLOYEE:
-        navigate(AppRoutes.PERSONAL_INFO.path);
+        if (user.documentStatus === UserDocumentsStatuses.WAITING_FOR_BRIEFING) {
+          navigate(AppRoutes.PERSONAL_INFO.path);
+        } else {
+          navigate(AppRoutes.QUESTIONNAIRE.path);
+        }
         break;
       default:
         navigate(AppRoutes.SIGN_IN.path);

@@ -4,8 +4,8 @@
   justify-content: space-between;
   align-items: center;
 
+  height: 64px;
   max-width: 660px;
-  max-height: fit-content;
   padding: 0 32px;
 
   background-color: var(--white);

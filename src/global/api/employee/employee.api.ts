@@ -47,6 +47,14 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         body,
       }),
     }),
+    sentVacationRequest: builder.mutation<boolean, { userId: string; vacationDates: string[] }>({
+      query: (body: { userId: string; vacationDates: string[] }) => ({
+        url: API_CONFIG.sentVacationRequest(),
+        method: 'POST',
+        credentials: 'include',
+        body,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -58,4 +66,5 @@ export const {
   useFetchVacationRequestsQuery,
   useHandleVacationRequestsMutation,
   useLazyFetchVacationRequestsQuery,
+  useSentVacationRequestMutation,
 } = employeeApi;

@@ -18,3 +18,27 @@
 
   background-color: var(--light-gray);
 }
+
+.sidebar-book-day-off-btn {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  margin: 20px 0 0;
+  padding: 12px 24px;
+
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+
+  border: 1px solid #2f2f2f1a;
+  border-radius: 8px;
+
+  background-color: var(--white);
+}
+
+.sidebar-book-day-off-btn:hover {
+  cursor: pointer;
+}

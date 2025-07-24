@@ -8,6 +8,7 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { AppRoutes } from '@global/router/routes.constans';
 
+import { AddressSection } from '@modules/Questionnaire/features/AddressSection';
 import { ContactSection } from '@modules/Questionnaire/features/ContactsSection';
 import { PersonalInfoSection } from '@modules/Questionnaire/features/PersonalInfoSection';
 import { PrefferedCompaniesSection } from '@modules/Questionnaire/features/PrefferedCompaniesSection';
@@ -20,15 +21,16 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import './style.css';
 
 import {
+  useCollectUserAddressMutation,
   useCollectUserDocumentStatusDataMutation,
   useCollectUserPersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { UserDocumentsStatuses } from '@shared/enums/user.enums';
-import { PersonalInfo } from '@shared/interfaces/User.interfaces';
+import { Address, PersonalInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 
 export const Questionnaire = (): JSX.Element => {
-  const methods = useForm<PersonalInfo>();
+  const methods = useForm<PersonalInfo & Address>();
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const userDocumentStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
@@ -36,11 +38,12 @@ export const Questionnaire = (): JSX.Element => {
   const navigate = useNavigate();
   const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
   const [collectUserDocumentStatus] = useCollectUserDocumentStatusDataMutation();
+  const [collectAddressMutation] = useCollectUserAddressMutation();
 
-  const onSaveHandler = async (data: PersonalInfo): Promise<void> => {
+  const onSaveHandler = async (data: PersonalInfo & Address): Promise<void> => {
     if (!employeeId) return;
 
-    const parsedData: PersonalInfo = {
+    const parsedPersonalInfoData: PersonalInfo = {
       ...data,
       dateOfBirth: dateParser(JSON.stringify(data.dateOfBirth)),
       nationalPhoneNumber:
@@ -53,8 +56,17 @@ export const Questionnaire = (): JSX.Element => {
           : '',
     };
 
+    const parsedAddressData: Address = {
+      city: data.city,
+      postalCode: data.postalCode,
+      street: data.street,
+      houseNumber: data.houseNumber,
+      apartmentNumber: data.apartmentNumber,
+    };
+
     try {
-      await collectUserPersonalInfo({ personalData: parsedData, employeeId });
+      await collectUserPersonalInfo({ personalData: parsedPersonalInfoData, employeeId });
+      await collectAddressMutation({ address: parsedAddressData, employeeId });
       await collectUserDocumentStatus({ documentStatusInfo: UserDocumentsStatuses.TO_CONFIRM, employeeId });
       dispatch(setIsEditModeEnabled(false));
       navigate(AppRoutes.PERSONAL_INFO.path);
@@ -80,6 +92,7 @@ export const Questionnaire = (): JSX.Element => {
           <StatusPanel />
           <PersonalInfoSection />
           <ContactSection />
+          <AddressSection />
           {/* <WorkStartSection /> */}
           <PrefferedCompaniesSection />
         </form>
