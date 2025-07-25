@@ -5,13 +5,14 @@ import { baseEmployeeApi } from '@global/api/employee/base-employee.api';
 import { VacationFilter } from '@shared/enums/vacation.enums';
 import { AddEmployee, UserEntity } from '@shared/interfaces/User.interfaces';
 import { VacationRequestDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
+import { UserWorkStatus } from "@shared/enums/user.enums";
 
 const { setEmployees } = EmployeeSlice.actions;
 export const employeeApi = baseEmployeeApi.injectEndpoints({
   endpoints: (builder) => ({
-    fetchAllEmployees: builder.query<UserEntity[], void>({
-      query: () => ({
-        url: API_CONFIG.fetchEmployees(),
+    fetchAllEmployees: builder.query<UserEntity[], { location?: string, workStatus: UserWorkStatus, company?: string }>({
+      query: ({ location, workStatus, company }) => ({
+        url: API_CONFIG.fetchEmployees(location, workStatus, company),
         method: 'GET',
         credentials: 'include',
       }),

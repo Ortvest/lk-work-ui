@@ -2,6 +2,7 @@ import { AccommodationReducer as accommodationReducer } from '@global/store/slic
 import { CommonReducer } from '@global/store/slices/Common.slice';
 import { EmployeeReducer as employeeReducer } from '@global/store/slices/Employee.slice';
 import { UserReducer as userReducer } from '@global/store/slices/User.slice';
+import { WorkCompanyReducer as workCompanyReducer } from '@global/store/slices/WorkCompany.slice';
 
 import { accommodationApi } from '@global/api/accommodations/accommodation.api';
 import { authApi } from '@global/api/auth/auth.api';
@@ -9,6 +10,7 @@ import { employeeApi } from '@global/api/employee/employee.api';
 import { collectDataApi } from '@global/api/updateUserData/collectData.api';
 import { uploadPhotoApi } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { configureStore } from '@reduxjs/toolkit';
+import { workCompanyApi } from "@global/api/work-company/work-company.api";
 
 export const store = configureStore({
   reducer: {
@@ -16,11 +18,13 @@ export const store = configureStore({
     employeeReducer,
     CommonReducer,
     accommodationReducer,
+    workCompanyReducer,
     [authApi.reducerPath]: authApi.reducer,
     [employeeApi.reducerPath]: employeeApi.reducer,
     [collectDataApi.reducerPath]: collectDataApi.reducer,
     [uploadPhotoApi.reducerPath]: uploadPhotoApi.reducer,
     [accommodationApi.reducerPath]: accommodationApi.reducer,
+    [workCompanyApi.reducerPath]: workCompanyApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -28,7 +32,8 @@ export const store = configureStore({
       .concat(employeeApi.middleware)
       .concat(collectDataApi.middleware)
       .concat(uploadPhotoApi.middleware)
-      .concat(accommodationApi.middleware),
+      .concat(accommodationApi.middleware)
+      .concat(workCompanyApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
