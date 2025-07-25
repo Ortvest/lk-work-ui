@@ -10,9 +10,9 @@ import './styles.css';
 
 import { useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
 import { useLazyGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
+import { EmployeeTableTab } from '@shared/enums/general.enums';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { WorkCompanyEntity } from '@shared/interfaces/WorkCompanies.interfaces';
-import { EmployeeTableTab } from '@shared/enums/general.enums';
 
 interface WorkCompanyFilterProps {
   selectedTable: EmployeeTableTab;
@@ -59,13 +59,13 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
       fetchAllEmployees({
         company: companyName,
         workStatus: UserWorkStatuses.LAID_OFF,
-        location: ''
+        location: '',
       });
     } else {
       fetchAllEmployees({
         company: companyName,
         workStatus: UserWorkStatuses.WORKING,
-        location: ''
+        location: '',
       });
     }
   };
@@ -77,16 +77,16 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
       fetchAllEmployees({
         company: '',
         workStatus: UserWorkStatuses.LAID_OFF,
-        location: ''
+        location: '',
       });
     } else {
       fetchAllEmployees({
         company: '',
         workStatus: UserWorkStatuses.WORKING,
-        location: ''
+        location: '',
       });
     }
-  }
+  };
 
   return (
     <div className="company-dropdown" ref={ref}>

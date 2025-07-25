@@ -4,7 +4,8 @@ export const API_CONFIG = {
   signIn: (): string => '/auth/sign-in',
   authMe: (): string => '/auth/me',
 
-  fetchEmployees: (location?: string, workStatus?: string, company?: string): string => `/employee/list?location=${location}&workStatus=${workStatus}&company=${company}`,
+  fetchEmployees: (location?: string, workStatus?: string, company?: string): string =>
+    `/employee/list?location=${location}&workStatus=${workStatus}&company=${company}`,
   fetchEmployeesRequests: (filter: VacationFilter): string => `/employee/vacations?filter=${filter}`,
   handleEmployeesRequest: (): string => '/employee/vacation/decision',
   inviteEmployee: (): string => '/employee/add',

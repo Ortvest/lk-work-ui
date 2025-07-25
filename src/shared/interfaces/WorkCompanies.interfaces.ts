@@ -16,6 +16,5 @@ export interface WorkCompanyEntity {
   contactPerson: ContactPerson;
 }
 
-
 export type AddWorkCompany = WorkCompanyEntity;
 export type EditWorkCompany = Partial<WorkCompanyEntity>;

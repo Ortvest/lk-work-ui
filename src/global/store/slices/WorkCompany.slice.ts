@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-import { WorkCompanyEntity } from "@shared/interfaces/WorkCompanies.interfaces";
+import { WorkCompanyEntity } from '@shared/interfaces/WorkCompanies.interfaces';
 
 interface WorkCompanyState {
   workCompanies: WorkCompanyEntity[];

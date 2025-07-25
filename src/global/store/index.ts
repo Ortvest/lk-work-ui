@@ -9,8 +9,8 @@ import { authApi } from '@global/api/auth/auth.api';
 import { employeeApi } from '@global/api/employee/employee.api';
 import { collectDataApi } from '@global/api/updateUserData/collectData.api';
 import { uploadPhotoApi } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { workCompanyApi } from '@global/api/work-company/work-company.api';
 import { configureStore } from '@reduxjs/toolkit';
-import { workCompanyApi } from "@global/api/work-company/work-company.api";
 
 export const store = configureStore({
   reducer: {

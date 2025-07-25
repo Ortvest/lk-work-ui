@@ -1,7 +1,8 @@
+import { WorkCompanySlice } from '@global/store/slices/WorkCompany.slice';
+
 import { API_CONFIG } from '@global/api/api.constants';
-import { baseWorkCompanyApi } from "@global/api/work-company/base-work-company.api";
-import { AddWorkCompany, EditWorkCompany } from "@shared/interfaces/WorkCompanies.interfaces";
-import { WorkCompanySlice } from "@global/store/slices/WorkCompany.slice"
+import { baseWorkCompanyApi } from '@global/api/work-company/base-work-company.api';
+import { AddWorkCompany, EditWorkCompany } from '@shared/interfaces/WorkCompanies.interfaces';
 
 const { setWorkCompanies } = WorkCompanySlice.actions;
 
@@ -51,5 +52,5 @@ export const {
   useCreateWorkCompanyMutation,
   useEditWorkCompanyMutation,
   useRemoveWorkCompanyQuery,
-  useLazyGetAllWorkCompaniesQuery
+  useLazyGetAllWorkCompaniesQuery,
 } = workCompanyApi;
