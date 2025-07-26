@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -18,13 +20,16 @@ import { useCollectUserBankInfoMutation } from '@global/api/updateUserData/colle
 import { BankInfo } from '@shared/interfaces/User.interfaces';
 
 export const BankInformation = (): JSX.Element => {
-  const methods = useForm<BankInfo>();
-
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const [collectUserBankInfo] = useCollectUserBankInfoMutation();
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
+  const bankInfo = useTypedSelector((state) => state.userReducer.user?.bankInfo);
+
+  const methods = useForm<BankInfo>({
+    defaultValues: { bankName: bankInfo?.bankName || '', bankAccountNumber: bankInfo?.bankAccountNumber || '' },
+  });
 
   const onSaveHandler = async (data: BankInfo): Promise<void> => {
     if (!employeeId) return;
@@ -36,6 +41,15 @@ export const BankInformation = (): JSX.Element => {
       console.error('Failed to save address:', error);
     }
   };
+
+  useEffect(() => {
+    if (bankInfo) {
+      methods.reset({
+        bankName: bankInfo?.bankName || '',
+        bankAccountNumber: bankInfo?.bankAccountNumber || '',
+      });
+    }
+  }, [bankInfo]);
 
   return (
     <FormProvider {...methods}>

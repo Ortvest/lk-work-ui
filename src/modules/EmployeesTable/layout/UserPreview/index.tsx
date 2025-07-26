@@ -8,6 +8,10 @@ import { UserPreviewToolbar } from '@modules/EmployeesTable/layout/UserPreview/l
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import UserContactDataIcon from '@shared/assets/icons/UserContactDataIcon.svg';
+import UserPersonalInfoIcon from '@shared/assets/icons/UserPersonalInfoIcon.svg';
+import UserWorkInfoIcon from '@shared/assets/icons/UserWorkInfoIcon.svg';
+
 import { UserDocumentsStatus } from '@shared/enums/user.enums';
 
 interface UserPreviewProps {
@@ -30,7 +34,13 @@ export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: U
         documentStatus={selectedEmployee?.documentStatus as UserDocumentsStatus}
       />
       <InfoSection
+        title="Personal Info"
+        iconUrl={UserPersonalInfoIcon}
+        rows={[{ label: 'Pesel', value: selectedEmployee?.personalInfo?.peselNumber as string }]}
+      />
+      <InfoSection
         title="Contact Info"
+        iconUrl={UserContactDataIcon}
         rows={[
           { label: 'Email', value: selectedEmployee?.personalInfo?.email as string },
           { label: 'Polish phone number', value: selectedEmployee?.personalInfo?.polishPhoneNumber as string },
@@ -39,6 +49,7 @@ export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: U
       />
       <InfoSection
         title="Work Info"
+        iconUrl={UserWorkInfoIcon}
         rows={[
           { label: 'Company', value: selectedEmployee?.jobInfo.company as string },
           { label: 'Position', value: selectedEmployee?.jobInfo.position as string },

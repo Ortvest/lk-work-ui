@@ -1,0 +1,11 @@
+.set-new-password-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  margin-right: 32px;
+}

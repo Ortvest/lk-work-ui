@@ -10,6 +10,7 @@ import { NameFields } from '@modules/PersonalInfo/features/PersonalInfoSection/N
 import { NationalityField } from '@modules/PersonalInfo/features/PersonalInfoSection/Nationality';
 import { PhotoField } from '@modules/PersonalInfo/features/PersonalInfoSection/PhotoField';
 import { StudentFields } from '@modules/PersonalInfo/features/PersonalInfoSection/StudentFields';
+import { TimeFromWorkStartDate } from '@modules/PersonalInfo/features/PersonalInfoSection/TimeFromWorkStartDate';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -33,7 +34,7 @@ export const PersonalInfoSection = (): JSX.Element => {
           <SharedDateSelector dateSelectorTitle="Date of Birth:*" namePrefix="dateOfBirth" />
         ) : (
           <SharedLabel title="Date of Birth:">
-            <span>{personalInfo?.dateOfBirth || '-'}</span>
+            <span>{(personalInfo?.dateOfBirth as string) || '-'}</span>
           </SharedLabel>
         )}
         <GenderFields />
@@ -41,6 +42,7 @@ export const PersonalInfoSection = (): JSX.Element => {
         <DocumentsNumberField />
         <StudentFields />
         <DrivingLicenceFields />
+        <TimeFromWorkStartDate />
         <CheckBoxField />
       </fieldset>
     </Fragment>
