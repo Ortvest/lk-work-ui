@@ -4,7 +4,8 @@ export const API_CONFIG = {
   signIn: (): string => '/auth/sign-in',
   authMe: (): string => '/auth/me',
 
-  fetchEmployees: (): string => '/employee/list',
+  fetchEmployees: (location?: string, workStatus?: string, company?: string): string =>
+    `/employee/list?location=${location}&workStatus=${workStatus}&company=${company}`,
   fetchEmployeesRequests: (filter: VacationFilter): string => `/employee/vacations?filter=${filter}`,
   handleEmployeesRequest: (): string => '/employee/vacation/decision',
   sentVacationRequest: (): string => '/employee/vacation',
@@ -20,4 +21,9 @@ export const API_CONFIG = {
   addAccommodations: (): string => '/accommodation/create',
   editAccommodation: (accommodationId: string): string => `/accommodation/edit?accommodationId=${accommodationId}`,
   removeAccommodation: (accommodationId: string): string => `/accommodation/remove?accommodationId=${accommodationId}`,
+
+  getAllWorkCompanies: (): string => '/work-company/list',
+  addWorkCompany: (): string => '/work-company/create',
+  editWorkCompany: (workCompanyId: string): string => `/work-company/edit?accommodationId=${workCompanyId}`,
+  removeWorkCompany: (workCompanyId: string): string => `/work-company/remove?accommodationId=${workCompanyId}`,
 };

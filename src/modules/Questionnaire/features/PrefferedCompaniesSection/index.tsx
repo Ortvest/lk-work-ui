@@ -9,11 +9,12 @@ import { SharedSelect } from '@shared/components/SharedSelect';
 
 import './style.css';
 
-import { companies } from '@shared/mocks/JobInfo.mocks';
+import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 
 export const PrefferedCompaniesSection = (): JSX.Element => {
   const { register } = useFormContext();
 
+  const { data } = useGetAllWorkCompaniesQuery(undefined);
   return (
     <Fragment>
       <SharedSectionHeader
@@ -22,7 +23,7 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
       />
       <fieldset className={classNames('questionnaire-preffered-companies-fields-wrapper')}>
         <SharedLabel title="Select companies:*">
-          <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={companies} />
+          <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={data} />
         </SharedLabel>
       </fieldset>
     </Fragment>

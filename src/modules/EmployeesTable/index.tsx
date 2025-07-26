@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { WorkCompanyFilter } from '@modules/EmployeesTable/features/WorkCompanyFilter';
 import { AddEmployeePopup } from '@modules/EmployeesTable/layout/AddEmployeePopup';
 import { EmployeeTableHeader } from '@modules/EmployeesTable/layout/Header';
 import { EmployeesTableContent } from '@modules/EmployeesTable/layout/TableContent';
@@ -10,26 +11,33 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { Drawer } from '@shared/components/Drawer';
 
-import { useFetchAllEmployeesQuery, useLazyFetchVacationRequestsQuery } from '@global/api/employee/employee.api';
+import { useLazyFetchAllEmployeesQuery, useLazyFetchVacationRequestsQuery } from '@global/api/employee/employee.api';
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { VacationFilters } from '@shared/enums/vacation.enums';
 import { VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 
 export const EmployeesTable = (): JSX.Element => {
-  const { refetch } = useFetchAllEmployeesQuery();
+  const user = useTypedSelector((state) => state.userReducer.user);
+  const [fetchEmployees] = useLazyFetchAllEmployeesQuery();
   const [vacationType, setVacationType] = useState<EmployeeTableTab>(EmployeeTableTabs.VACATION_REQUESTS);
 
   const [fetchAllVacationRequests, { data }] = useLazyFetchVacationRequestsQuery();
 
   const { employees } = useTypedSelector((state) => state.employeeReducer);
+
   const [isUserPreviewDrawerOpen, setIsUserPreviewDrawerOpen] = useState(false);
   const [isUserDocumentsDrawerOpen, setIsUserDocumentsDrawerOpen] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const [selectedTable, setSelectedTable] = useState<EmployeeTableTab>('hired');
 
   useEffect(() => {
-    refetch();
-  }, []);
+    if (selectedTable === 'hired') {
+      fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.WORKING, company: '' });
+    } else {
+      fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.LAID_OFF, company: '' });
+    }
+  }, [selectedTable]);
 
   useEffect(() => {
     if (vacationType === EmployeeTableTabs.VACATION_REQUESTS) {
@@ -38,8 +46,10 @@ export const EmployeesTable = (): JSX.Element => {
       fetchAllVacationRequests(VacationFilters.ON_VACATION);
     }
   }, [vacationType]);
+
   return (
     <div style={{ width: '100%' }}>
+      {user?.role === UserRoles.SUPER_ADMIN && <WorkCompanyFilter selectedTable={selectedTable} />}
       <EmployeeTableHeader
         setSelectedTable={setSelectedTable}
         selectedTable={selectedTable}
