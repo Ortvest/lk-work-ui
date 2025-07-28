@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -14,9 +14,6 @@ export const AccommodationsPage = (): React.ReactNode => {
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);
 
-  useEffect(() => {
-    console.log(openedPopupType, 'type');
-  }, [openedPopupType]);
   return (
     <div className={classNames('set-new-password-container')}>
       <AccommodationsTableHeader setIsOpenedModal={setIsOpenedModal} />

@@ -40,7 +40,7 @@ export const AddAccommodationForm = ({ setIsOpenedModal, isEditMode }: AddAccomm
       if (!isEditMode) {
         await createAccommodation({ ...data, price: Number(data.price) }).unwrap();
       } else {
-        await editAccommodation({ ...data, price: Number(data.price), accommodationId: data._id }).unwrap();
+        await editAccommodation({ ...data, price: Number(data.price), accommodationId: data?._id || '' }).unwrap();
       }
       setIsOpenedModal(false);
       await fetchAllAccommodations(undefined);

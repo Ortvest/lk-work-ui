@@ -3,6 +3,7 @@ export interface ContactPerson {
   personSecondName: string;
   personPosition: string;
   personEmail: string;
+  personPhoneNumber: string;
 }
 
 export interface WorkCompanyEntity {

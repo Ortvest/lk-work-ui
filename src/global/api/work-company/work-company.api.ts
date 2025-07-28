@@ -51,6 +51,6 @@ export const {
   useGetAllWorkCompaniesQuery,
   useCreateWorkCompanyMutation,
   useEditWorkCompanyMutation,
-  useRemoveWorkCompanyQuery,
+  useLazyRemoveWorkCompanyQuery,
   useLazyGetAllWorkCompaniesQuery,
 } = workCompanyApi;

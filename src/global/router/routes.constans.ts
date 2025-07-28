@@ -20,6 +20,7 @@ import LocationIcon from '@shared/assets/icons/LocationIcon.svg';
 import PersonalIcon from '@shared/assets/icons/PersonalIcon.svg';
 
 import { AccommodationsPage } from '@pages/Accommodations';
+import { CompaniesPage } from '@pages/Companies';
 import { SetNewPassword } from '@pages/SetNewPassword';
 import { UserRole, UserRoles } from '@shared/enums/user.enums';
 
@@ -210,6 +211,16 @@ export const AppRoutes: Record<string, AppRoute> = {
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.MANAGER, UserRoles.SUPER_ADMIN],
     element: AccommodationsPage,
+    isPublic: false,
+  },
+
+  COMPANIES: {
+    path: '/companies',
+    isVisible: true,
+    title: 'Companies',
+    usageScope: [UsageScopes.NONE],
+    allowedRoles: [UserRoles.MANAGER, UserRoles.SUPER_ADMIN],
+    element: CompaniesPage,
     isPublic: false,
   },
 };

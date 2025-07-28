@@ -13,6 +13,7 @@ import IconBellWhite from '@shared/assets/icons/IconBellWhite.svg';
 import IconEmployees from '@shared/assets/icons/IconEmployees.svg';
 import IconEmployeesWhite from '@shared/assets/icons/IconEmployeesWhite.svg';
 import IconGlobe from '@shared/assets/icons/IconGlobe.svg';
+import IconHome from '@shared/assets/icons/IconHome.svg';
 import IconUser from '@shared/assets/icons/IconUser.svg';
 import IconUserProfile from '@shared/assets/icons/IconUserProfile.svg';
 import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg';
@@ -61,11 +62,18 @@ const sidebarRoutes = [
     path: AppRoutes.BANK_INFO.path,
   },
   {
-    icon: IconGlobe,
-    selectedIcon: IconGlobe,
+    icon: IconHome,
+    selectedIcon: IconHome,
     label: 'Accommodations',
     scope: RouteScopes.TOP,
     path: AppRoutes.ACCOMMODATIONS.path,
+  },
+  {
+    icon: IconGlobe,
+    selectedIcon: IconGlobe,
+    label: 'Companies',
+    scope: RouteScopes.TOP,
+    path: AppRoutes.COMPANIES.path,
   },
 ];
 export const AdminSidebar = (): JSX.Element => {
