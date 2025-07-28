@@ -17,7 +17,7 @@ export const WorkCompanySlice = createSlice({
     setWorkCompanies(state, action: PayloadAction<WorkCompanyEntity[]>) {
       state.workCompanies = action.payload;
     },
-    setSelectedAccommodation(state, action: PayloadAction<WorkCompanyEntity>) {
+    setSelectedWorkCompany(state, action: PayloadAction<WorkCompanyEntity>) {
       state.selectedWorkCompany = action.payload;
     },
   },

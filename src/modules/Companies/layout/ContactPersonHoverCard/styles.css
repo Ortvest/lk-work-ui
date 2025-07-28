@@ -1,0 +1,40 @@
+.contact-hover-card {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 225px;
+    padding: 12px;
+
+    font-size: 14px;
+
+    border-radius: 6px;
+
+    background: white;
+
+    box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+}
+
+.contact-hover-row {
+    display: flex;
+    gap: 24px; 
+}
+
+.label {
+    min-width: 80px;
+
+    color: rgb(47 47 47 / 56%);
+    font-weight: 500;
+    text-align: left;
+}
+
+.value {
+    color: rgb(47 47 47 / 100%);
+    font-weight: 600;
+    word-break: break-word; /* stylelint-disable-line declaration-property-value-keyword-no-deprecated */
+}

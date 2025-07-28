@@ -24,6 +24,6 @@ export const API_CONFIG = {
 
   getAllWorkCompanies: (): string => '/work-company/list',
   addWorkCompany: (): string => '/work-company/create',
-  editWorkCompany: (workCompanyId: string): string => `/work-company/edit?accommodationId=${workCompanyId}`,
-  removeWorkCompany: (workCompanyId: string): string => `/work-company/remove?accommodationId=${workCompanyId}`,
+  editWorkCompany: (workCompanyId: string): string => `/work-company/edit?workCompanyId=${workCompanyId}`,
+  removeWorkCompany: (workCompanyId: string): string => `/work-company/remove?workCompanyId=${workCompanyId}`,
 };
