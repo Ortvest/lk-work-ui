@@ -22,6 +22,7 @@ import PersonalIcon from '@shared/assets/icons/PersonalIcon.svg';
 import { AccommodationsPage } from '@pages/Accommodations';
 import { CompaniesPage } from '@pages/Companies';
 import { SetNewPassword } from '@pages/SetNewPassword';
+import { StuffPage } from '@pages/Stuff';
 import { UserRole, UserRoles } from '@shared/enums/user.enums';
 
 export const UsageScopes = {
@@ -221,6 +222,16 @@ export const AppRoutes: Record<string, AppRoute> = {
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.MANAGER, UserRoles.SUPER_ADMIN],
     element: CompaniesPage,
+    isPublic: false,
+  },
+
+  STUFF: {
+    path: '/stuff',
+    isVisible: true,
+    title: 'Stuff',
+    usageScope: [UsageScopes.NONE],
+    allowedRoles: [UserRoles.SUPER_ADMIN],
+    element: StuffPage,
     isPublic: false,
   },
 };
