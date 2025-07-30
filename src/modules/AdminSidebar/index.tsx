@@ -36,9 +36,9 @@ const sidebarRoutes = [
   {
     icon: IconUserProfile,
     selectedIcon: IconUserProfileWhite,
-    label: 'Employee profile',
+    label: 'Stuff',
     scope: RouteScopes.TOP,
-    path: AppRoutes.BANK_INFO.path,
+    path: AppRoutes.STUFF.path,
   },
   {
     icon: IconDocument,

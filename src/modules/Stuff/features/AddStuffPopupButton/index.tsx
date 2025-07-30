@@ -6,18 +6,25 @@ import IconPlus from '@shared/assets/icons/IconPlus.svg';
 
 import './style.css';
 
-interface AddCompanyPopupButtonProps {
+import { OpenedPopupType } from '@pages/Accommodations';
+
+interface AddStuffPopupButtonProps {
   setIsOpenedModal: (isOpen: boolean) => void;
+  setOpenedPopupType: (type: OpenedPopupType) => void;
 }
 
-export const AddCompanyPopupButton = ({ setIsOpenedModal }: AddCompanyPopupButtonProps): React.ReactNode => {
+export const AddStuffPopupButton = ({
+  setIsOpenedModal,
+  setOpenedPopupType,
+}: AddStuffPopupButtonProps): React.ReactNode => {
   const onOpenPopup = (): void => {
     setIsOpenedModal(true);
+    setOpenedPopupType('create');
   };
   return (
     <button onClick={onOpenPopup} className={classNames('add-employee-popup-button')}>
       <img src={IconPlus} alt="IconPlus" />
-      <span>Add Company</span>
+      <span>Add Stuff</span>
     </button>
   );
 };

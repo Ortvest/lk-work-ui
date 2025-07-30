@@ -131,11 +131,16 @@ export interface UserEntity {
   _id: string;
 }
 
+export type EditUserData = UserEntity & {
+  employeeId: string;
+};
+
 export interface AddEmployee {
   email: string;
   firstName: string;
   lastName: string;
   role?: UserRole;
+  company?: string;
 }
 
 export interface SetNewPasswordArgs {

@@ -2,35 +2,49 @@ import { EmployeeSlice } from '@global/store/slices/Employee.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseEmployeeApi } from '@global/api/employee/base-employee.api';
-import { UserWorkStatus } from '@shared/enums/user.enums';
+import { UserRole, UserWorkStatus } from '@shared/enums/user.enums';
 import { VacationFilter } from '@shared/enums/vacation.enums';
-import { AddEmployee, UserEntity } from '@shared/interfaces/User.interfaces';
+import { AddEmployee, EditUserData, UserEntity } from '@shared/interfaces/User.interfaces';
 import { VacationRequestDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 
 const { setEmployees } = EmployeeSlice.actions;
 export const employeeApi = baseEmployeeApi.injectEndpoints({
   endpoints: (builder) => ({
-    fetchAllEmployees: builder.query<UserEntity[], { location?: string; workStatus: UserWorkStatus; company?: string }>(
+    fetchAllEmployees: builder.query<
+      UserEntity[],
       {
-        query: ({ location, workStatus, company }) => ({
-          url: API_CONFIG.fetchEmployees(location, workStatus, company),
-          method: 'GET',
-          credentials: 'include',
-        }),
-        async onQueryStarted(_, { dispatch, queryFulfilled }) {
-          try {
-            const { data } = await queryFulfilled;
-            dispatch(setEmployees(data));
-          } catch (error) {
-            console.error('Failed to fetch user data:', error);
-          }
-        },
+        location?: string;
+        workStatus: UserWorkStatus;
+        company?: string;
+        roles?: UserRole[];
       }
-    ),
-    inviteEmployee: builder.mutation<boolean, AddEmployee>({
+    >({
+      query: ({ location, workStatus, company, roles }) => ({
+        url: API_CONFIG.fetchEmployees(location, workStatus, company, roles),
+        method: 'GET',
+        credentials: 'include',
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setEmployees(data));
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      },
+    }),
+    inviteEmployee: builder.mutation<boolean, AddEmployee | Partial<UserEntity>>({
       query: (body: AddEmployee) => ({
         url: API_CONFIG.inviteEmployee(),
         method: 'POST',
+        body,
+        credentials: 'include',
+      }),
+    }),
+    editUserData: builder.mutation<boolean, Partial<EditUserData>>({
+      query: (body: EditUserData) => ({
+        url: API_CONFIG.editUserData(body.employeeId),
+        method: 'PUT',
         body,
         credentials: 'include',
       }),
@@ -58,6 +72,13 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         body,
       }),
     }),
+    removeStuffWorker: builder.query<boolean, { employeeId: string }>({
+      query: ({ employeeId }) => ({
+        url: API_CONFIG.removeStuffWorker(employeeId),
+        method: 'DELETE',
+        credentials: 'include',
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -66,7 +87,8 @@ export const {
   useFetchAllEmployeesQuery,
   useInviteEmployeeMutation,
   useLazyFetchAllEmployeesQuery,
-  useFetchVacationRequestsQuery,
+  useLazyRemoveStuffWorkerQuery,
+  useEditUserDataMutation,
   useHandleVacationRequestsMutation,
   useLazyFetchVacationRequestsQuery,
   useSentVacationRequestMutation,
