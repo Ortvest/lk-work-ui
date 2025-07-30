@@ -6,6 +6,12 @@
   font-weight: 500;
 }
 
+.user-preview-contact-header-icon {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .user-preview-contact-main {
   display: flex;
   flex-direction: column;

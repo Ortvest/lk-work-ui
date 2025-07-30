@@ -11,9 +11,12 @@ import { SharedButton } from '@shared/components/SharedButton';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const StatusPanel = (): JSX.Element => {
   const dispatch = useTypedDispatch();
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const { setIsEditModeEnabled } = CommonSlice.actions;
 
   const onEditModeToggleHanlder = (e: React.MouseEvent): void => {
@@ -25,11 +28,12 @@ export const StatusPanel = (): JSX.Element => {
     <section className={classNames('status-panel')}>
       <div className={classNames('status-panel-wrapper')}>
         <Status />
-        {isEditModeEnabled ? (
-          <SharedButton type="submit" text="Save" />
-        ) : (
-          <SharedButton type="button" text="Edit" onClick={(e) => onEditModeToggleHanlder(e)} />
-        )}
+        {userRole !== UserRoles.EMPLOYEE &&
+          (isEditModeEnabled ? (
+            <SharedButton type="submit" text="Save" />
+          ) : (
+            <SharedButton type="button" text="Edit" onClick={onEditModeToggleHanlder} />
+          ))}
       </div>
     </section>
   );

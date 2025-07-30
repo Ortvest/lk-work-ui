@@ -14,7 +14,7 @@ export const PassportFormBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('passport-form-fields-wrapper')}>
       <Controller
-        name="passportFile"
+        name="passportFileKey"
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />

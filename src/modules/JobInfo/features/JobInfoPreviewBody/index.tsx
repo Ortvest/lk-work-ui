@@ -17,10 +17,10 @@ export const JobInfoPreviewBody = (): JSX.Element => {
         <span>{jobInfo?.position || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of Commencement:">
-        <span>{jobInfo?.employmentStartDate || '-'}</span>
+        <span>{(jobInfo?.employmentStartDate as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of Completion:">
-        <span>{jobInfo?.employmentEndDate || '-'}</span>
+        <span>{(jobInfo?.employmentEndDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );
