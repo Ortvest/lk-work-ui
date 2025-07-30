@@ -42,8 +42,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
 
   const workCompanies = useTypedSelector((state) => state.workCompanyReducer.workCompanies);
 
-  const onSubmit = async (data: any): Promise<void> => {
-    console.log(data, 'data');
+  const onSubmit = async (data: Partial<UserEntity>): Promise<void> => {
     try {
       if (!isEditMode) {
         await inviteStuffWorker({
@@ -54,7 +53,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
           company: data?.jobInfo?.company,
         });
       } else {
-        delete data._id;
+        delete data?._id;
         await editUserData({ ...data, employeeId: selectedEmployee?._id }).unwrap();
       }
       setIsOpenedModal(false);

@@ -18,10 +18,8 @@ export const StuffTable = ({ setOpenedPopupType, setIsOpenedModal, employees }: 
           setOpenedPopupType={setOpenedPopupType}
           employees={employees}
           setIsDrawerOpen={setIsOpenedModal}
-        /> )
-        : null
-
-      }
+        />
+      ) : null}
     </>
   );
 };
