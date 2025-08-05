@@ -29,6 +29,7 @@ export const StatusPanel = (): JSX.Element => {
       <div className={classNames('status-panel-wrapper')}>
         <Status />
         {userRole !== UserRoles.EMPLOYEE &&
+          userRole !== UserRoles.ACCOUNTANT &&
           (isEditModeEnabled ? (
             <SharedButton type="submit" text="Save" />
           ) : (

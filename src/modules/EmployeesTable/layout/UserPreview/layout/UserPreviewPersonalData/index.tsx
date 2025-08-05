@@ -10,44 +10,20 @@ import IconUser from '@shared/assets/icons/IconUser.svg';
 
 import './style.css';
 
-import { UserDocumentsStatus, UserDocumentsStatuses } from '@shared/enums/user.enums';
-
 interface UserPreviewPersonalDataProps {
-  documentStatus: UserDocumentsStatus;
   fullName: string;
   dateOfBirth: string;
   nationality: string;
   avatarUrl: string;
+  workStatus: string;
 }
 
-const documentStatusConfig: Record<
-  (typeof UserDocumentsStatuses)[keyof typeof UserDocumentsStatuses],
-  { text: string; className: string }
-> = {
-  [UserDocumentsStatuses.WAITING_FOR_BRIEFING]: {
-    text: 'Waiting for briefing',
-    className: 'status-waiting',
-  },
-  [UserDocumentsStatuses.TO_CONFIRM]: {
-    text: 'Checking',
-    className: 'status-to-confirm',
-  },
-  [UserDocumentsStatuses.WAITING_FOR_DOCS]: {
-    text: 'Need update',
-    className: 'status-waiting-docs',
-  },
-  [UserDocumentsStatuses.CONFIRMED]: {
-    text: 'Confirmed',
-    className: 'status-confirmed',
-  },
-};
-
 export const UserPreviewPersonalData = ({
-  documentStatus,
   fullName,
   nationality,
   dateOfBirth,
   avatarUrl,
+  workStatus,
 }: UserPreviewPersonalDataProps): React.ReactNode => {
   const dayjs = useDayjs();
   const age = dayjs().diff(dayjs(dateOfBirth, 'DD-MM-YYYY'), 'year');
@@ -58,9 +34,7 @@ export const UserPreviewPersonalData = ({
           <p>Status: </p>
         </div>
         <div>
-          <p className={classNames('user-docs-status', documentStatusConfig[documentStatus]?.className)}>
-            {documentStatusConfig[documentStatus]?.text ?? 'Unknown'}
-          </p>
+          <p className={classNames('work-status')}>{workStatus || '-'}</p>
         </div>
       </header>
       <main className={classNames('user-preview-personal-data-content')}>

@@ -8,11 +8,16 @@ import { ProgressBar } from '@modules/Sidebar/layout/ProgressBar';
 import { SidebarWrapper } from '@modules/Sidebar/layout/SidebarWrapper';
 import { UserData } from '@modules/Sidebar/layout/UserData';
 
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import CalendarIcon from '@shared/assets/icons/CalendarIcon.svg';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const Sidebar = (): JSX.Element => {
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onModalOpenHandler = (): void => {
@@ -33,7 +38,9 @@ export const Sidebar = (): JSX.Element => {
           <img src={CalendarIcon} alt="book-day-off-icon" />
           Book a Day Off
         </button>
-        <BookDayOffModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        {userRole !== UserRoles.ACCOUNTANT ? (
+          <BookDayOffModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        ) : null}
       </SidebarWrapper>
     </section>
   );

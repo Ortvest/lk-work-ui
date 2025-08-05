@@ -12,14 +12,13 @@ import UserContactDataIcon from '@shared/assets/icons/UserContactDataIcon.svg';
 import UserPersonalInfoIcon from '@shared/assets/icons/UserPersonalInfoIcon.svg';
 import UserWorkInfoIcon from '@shared/assets/icons/UserWorkInfoIcon.svg';
 
-import { UserDocumentsStatus } from '@shared/enums/user.enums';
-
 interface UserPreviewProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
   setIsUserDocumentsDrawerOpen: (isOpen: boolean) => void;
 }
 export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: UserPreviewProps): React.ReactNode => {
   const { selectedEmployee } = useTypedSelector((state) => state.employeeReducer);
+  console.log(selectedEmployee);
   return (
     <article style={{ position: 'relative' }}>
       <UserPreviewHeader
@@ -31,7 +30,7 @@ export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: U
         dateOfBirth={selectedEmployee?.personalInfo?.dateOfBirth as string}
         nationality={selectedEmployee?.personalInfo?.nationality as string}
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}
-        documentStatus={selectedEmployee?.documentStatus as UserDocumentsStatus}
+        workStatus={selectedEmployee?.workStatus as string}
       />
       <InfoSection
         title="Personal Info"

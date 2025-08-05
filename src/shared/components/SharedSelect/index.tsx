@@ -22,11 +22,12 @@ export const SharedSelect = forwardRef<HTMLSelectElement, SharedSelectProps>(
         <option value="" disabled selected hidden>
           Select an option
         </option>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options &&
+          options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
       </select>
     );
   }

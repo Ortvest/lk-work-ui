@@ -40,7 +40,10 @@ export const SignIn = (): JSX.Element => {
       case UserRoles.SUPER_ADMIN:
         navigate(AppRoutes.EMPLOYEES_TABLE.path);
         break;
-      case UserRoles.MANAGER:
+      case UserRoles.OFFICE_WORKER:
+        navigate(AppRoutes.EMPLOYEES_TABLE.path);
+        break;
+      case UserRoles.ACCOUNTANT:
         navigate(AppRoutes.EMPLOYEES_TABLE.path);
         break;
       case UserRoles.EMPLOYEE:
