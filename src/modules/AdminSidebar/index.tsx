@@ -12,6 +12,8 @@ import IconBell from '@shared/assets/icons/IconBell.svg';
 import IconBellWhite from '@shared/assets/icons/IconBellWhite.svg';
 import IconEmployees from '@shared/assets/icons/IconEmployees.svg';
 import IconEmployeesWhite from '@shared/assets/icons/IconEmployeesWhite.svg';
+import IconGlobe from '@shared/assets/icons/IconGlobe.svg';
+import IconHome from '@shared/assets/icons/IconHome.svg';
 import IconUser from '@shared/assets/icons/IconUser.svg';
 import IconUserProfile from '@shared/assets/icons/IconUserProfile.svg';
 import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg';
@@ -34,9 +36,9 @@ const sidebarRoutes = [
   {
     icon: IconUserProfile,
     selectedIcon: IconUserProfileWhite,
-    label: 'Employee profile',
+    label: 'Stuff',
     scope: RouteScopes.TOP,
-    path: AppRoutes.BANK_INFO.path,
+    path: AppRoutes.STUFF.path,
   },
   {
     icon: IconDocument,
@@ -59,6 +61,20 @@ const sidebarRoutes = [
     scope: RouteScopes.BOTTOM,
     path: AppRoutes.BANK_INFO.path,
   },
+  {
+    icon: IconHome,
+    selectedIcon: IconHome,
+    label: 'Accommodations',
+    scope: RouteScopes.TOP,
+    path: AppRoutes.ACCOMMODATIONS.path,
+  },
+  {
+    icon: IconGlobe,
+    selectedIcon: IconGlobe,
+    label: 'Companies',
+    scope: RouteScopes.TOP,
+    path: AppRoutes.COMPANIES.path,
+  },
 ];
 export const AdminSidebar = (): JSX.Element => {
   const topRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.TOP), [sidebarRoutes]);
@@ -70,9 +86,10 @@ export const AdminSidebar = (): JSX.Element => {
     <section className={classNames('admin-sidebar')}>
       <nav className={classNames('admin-sidebar-navigation')}>
         <div className={classNames('admin-sidebar-top-routes')}>
-          {topRoutes.map(({ icon, label, path, selectedIcon }, i) => (
-            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />
-          ))}
+          {topRoutes.map(({ icon, label, path, selectedIcon }, i) => {
+            console.log(`Label: ${label}, path: ${path}`);
+            return <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />;
+          })}
         </div>
         <div className={classNames('admin-sidebar-bottom-routes')}>
           {bottomRoutes.map(({ icon, label, path, selectedIcon }, i) => (

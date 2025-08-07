@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
 
@@ -13,12 +13,8 @@ import DocumentsIcon from '@shared/assets/icons/DocumentsIcon.svg';
 import './style.css';
 
 export const Navigation = (): JSX.Element => {
-  const currentPathname = window.location.pathname;
-  const [activeRoute, setActiveRoute] = useState<string | null>(currentPathname);
-
-  const onRouteChangeHanlder = (selectedRoute: string): void => {
-    setActiveRoute(selectedRoute);
-  };
+  const location = useLocation();
+  const currentPathname = location.pathname;
 
   const sidebarNavigationItems: AppRoute[] = useMemo(
     () =>
@@ -28,16 +24,17 @@ export const Navigation = (): JSX.Element => {
     []
   );
 
+  const isDocumentsSectionActive = currentPathname.startsWith(AppRoutes.DOCUMENTS.path);
+
   return (
     <ul className={classNames('sidebar-navigation-list')}>
       {sidebarNavigationItems.map((route: AppRoute, index: number) => (
         <li key={index} className={classNames('sidebar-navigation-item')}>
           <Link
             className={classNames('sidebar-navigation-link', {
-              active: activeRoute === route.path,
+              active: currentPathname === route.path,
             })}
-            to={route.path}
-            onClick={() => onRouteChangeHanlder(route.path)}>
+            to={route.path}>
             <img className={classNames('sidebar-navigation-icon')} src={route.icon} alt="route icon" />
             {route.title}
           </Link>
@@ -45,17 +42,17 @@ export const Navigation = (): JSX.Element => {
         </li>
       ))}
       <li className={classNames('sidebar-navigation-item')}>
-        <a
+        <Link
           className={classNames('sidebar-navigation-link', {
-            active: activeRoute === AppRoutes.DOCUMENTS.path,
+            active: isDocumentsSectionActive,
           })}
-          onClick={() => onRouteChangeHanlder('documents')}>
+          to={AppRoutes.PASSPORT.path}>
           <img className={classNames('sidebar-navigation-icon')} src={DocumentsIcon} alt="route icon" />
           Documents
-        </a>
+        </Link>
         <CurrentStatus />
       </li>
-      {activeRoute === AppRoutes.DOCUMENTS.path ? <DocumentsNavigation /> : null}
+      {isDocumentsSectionActive ? <DocumentsNavigation /> : null}
     </ul>
   );
 };

@@ -12,19 +12,19 @@ export const StudentCardFormBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('student-card-form-fields-wrapper')}>
       <Controller
-        name="studentFrontCardFile"
+        name="studentFrontCardFileKey"
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />
       <Controller
-        name="studentBackCardFile"
+        name="studentBackCardFileKey"
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />
       <SharedDateSelector dateSelectorTitle="Date of issue:*" namePrefix="studentStatusDate" />
       <span className={classNames('student-card-line')}></span>
       <Controller
-        name="studentPermitCardFile"
+        name="studentPermitCardFileKey"
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />

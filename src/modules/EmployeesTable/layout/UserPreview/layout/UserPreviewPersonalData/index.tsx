@@ -10,21 +10,20 @@ import IconUser from '@shared/assets/icons/IconUser.svg';
 
 import './style.css';
 
-import { UserDocumentsStatus } from '@shared/enums/user.enums';
-
 interface UserPreviewPersonalDataProps {
-  documentStatus: UserDocumentsStatus;
   fullName: string;
   dateOfBirth: string;
   nationality: string;
   avatarUrl: string;
+  workStatus: string;
 }
+
 export const UserPreviewPersonalData = ({
-  documentStatus,
   fullName,
   nationality,
   dateOfBirth,
   avatarUrl,
+  workStatus,
 }: UserPreviewPersonalDataProps): React.ReactNode => {
   const dayjs = useDayjs();
   const age = dayjs().diff(dayjs(dateOfBirth, 'DD-MM-YYYY'), 'year');
@@ -35,7 +34,7 @@ export const UserPreviewPersonalData = ({
           <p>Status: </p>
         </div>
         <div>
-          <p>{documentStatus}</p>
+          <p className={classNames('work-status')}>{workStatus || '-'}</p>
         </div>
       </header>
       <main className={classNames('user-preview-personal-data-content')}>

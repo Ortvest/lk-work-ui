@@ -8,7 +8,9 @@ import { UserPreviewToolbar } from '@modules/EmployeesTable/layout/UserPreview/l
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
-import { UserDocumentsStatus } from '@shared/enums/user.enums';
+import UserContactDataIcon from '@shared/assets/icons/UserContactDataIcon.svg';
+import UserPersonalInfoIcon from '@shared/assets/icons/UserPersonalInfoIcon.svg';
+import UserWorkInfoIcon from '@shared/assets/icons/UserWorkInfoIcon.svg';
 
 interface UserPreviewProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
@@ -16,6 +18,7 @@ interface UserPreviewProps {
 }
 export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: UserPreviewProps): React.ReactNode => {
   const { selectedEmployee } = useTypedSelector((state) => state.employeeReducer);
+  console.log(selectedEmployee);
   return (
     <article style={{ position: 'relative' }}>
       <UserPreviewHeader
@@ -27,10 +30,16 @@ export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: U
         dateOfBirth={selectedEmployee?.personalInfo?.dateOfBirth as string}
         nationality={selectedEmployee?.personalInfo?.nationality as string}
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}
-        documentStatus={selectedEmployee?.documentStatus as UserDocumentsStatus}
+        workStatus={selectedEmployee?.workStatus as string}
+      />
+      <InfoSection
+        title="Personal Info"
+        iconUrl={UserPersonalInfoIcon}
+        rows={[{ label: 'Pesel', value: selectedEmployee?.personalInfo?.peselNumber as string }]}
       />
       <InfoSection
         title="Contact Info"
+        iconUrl={UserContactDataIcon}
         rows={[
           { label: 'Email', value: selectedEmployee?.personalInfo?.email as string },
           { label: 'Polish phone number', value: selectedEmployee?.personalInfo?.polishPhoneNumber as string },
@@ -39,6 +48,7 @@ export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: U
       />
       <InfoSection
         title="Work Info"
+        iconUrl={UserWorkInfoIcon}
         rows={[
           { label: 'Company', value: selectedEmployee?.jobInfo.company as string },
           { label: 'Position', value: selectedEmployee?.jobInfo.position as string },
