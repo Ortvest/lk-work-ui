@@ -114,7 +114,7 @@ export const AppRoutes: Record<string, AppRoute> = {
     isPublic: false,
   },
   DOCUMENTS: {
-    path: 'documents',
+    path: '/documents',
     isVisible: false,
     title: 'Documents',
     usageScope: [UsageScopes.NONE],

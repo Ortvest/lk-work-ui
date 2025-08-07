@@ -12,7 +12,6 @@ import { AddressSection } from '@modules/Questionnaire/features/AddressSection';
 import { ContactSection } from '@modules/Questionnaire/features/ContactsSection';
 import { PersonalInfoSection } from '@modules/Questionnaire/features/PersonalInfoSection';
 import { PrefferedCompaniesSection } from '@modules/Questionnaire/features/PrefferedCompaniesSection';
-//import { WorkStartSection } from '@modules/Questionnaire/features/WorkStartSection';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
@@ -20,6 +19,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import './style.css';
 
+import { useLazyGetAllAccommodationsQuery } from '@global/api/accommodations/accommodation.api';
 import {
   useCollectUserAddressMutation,
   useCollectUserDocumentStatusDataMutation,
@@ -39,7 +39,7 @@ export const Questionnaire = (): JSX.Element => {
   const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
   const [collectUserDocumentStatus] = useCollectUserDocumentStatusDataMutation();
   const [collectAddressMutation] = useCollectUserAddressMutation();
-
+  const [fetchAllAccommodations] = useLazyGetAllAccommodationsQuery();
   const onSaveHandler = async (data: PersonalInfo & Address): Promise<void> => {
     if (!employeeId) return;
 
@@ -62,6 +62,8 @@ export const Questionnaire = (): JSX.Element => {
       street: data.street,
       houseNumber: data.houseNumber,
       apartmentNumber: data.apartmentNumber,
+      isLivingInAccommodation: data.isLivingInAccommodation,
+      accommodationAddress: data.accommodationAddress,
     };
 
     try {
@@ -85,6 +87,14 @@ export const Questionnaire = (): JSX.Element => {
     }
   }, [userDocumentStatus]);
 
+  const onFetchAllAccommodationsHanlder = async (): Promise<void> => {
+    await fetchAllAccommodations(undefined);
+  };
+
+  useEffect(() => {
+    onFetchAllAccommodationsHanlder();
+  }, []);
+
   return (
     <FormProvider {...methods}>
       <section className={classNames('questionnaire')}>
@@ -93,7 +103,6 @@ export const Questionnaire = (): JSX.Element => {
           <PersonalInfoSection />
           <ContactSection />
           <AddressSection />
-          {/* <WorkStartSection /> */}
           <PrefferedCompaniesSection />
         </form>
       </section>

@@ -37,6 +37,8 @@ export interface Address {
   street?: string;
   houseNumber?: string;
   apartmentNumber?: string;
+  isLivingInAccommodation: boolean;
+  accommodationAddress: string;
 }
 
 export interface JobInfo {

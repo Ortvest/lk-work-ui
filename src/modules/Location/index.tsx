@@ -16,6 +16,7 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
+import { useLazyGetAllAccommodationsQuery } from '@global/api/accommodations/accommodation.api';
 import { useCollectUserAddressMutation } from '@global/api/updateUserData/collectData.api';
 import { Address } from '@shared/interfaces/User.interfaces';
 
@@ -26,7 +27,7 @@ export const Location = (): React.ReactNode => {
   const [collectUserAddress] = useCollectUserAddressMutation();
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
-
+  const [fetchAllAccommodations] = useLazyGetAllAccommodationsQuery();
   const methods = useForm<Address>({
     defaultValues: {
       city: locationInfo?.city || '',
@@ -34,6 +35,8 @@ export const Location = (): React.ReactNode => {
       street: locationInfo?.street || '',
       houseNumber: locationInfo?.houseNumber || '',
       apartmentNumber: locationInfo?.apartmentNumber || '',
+      accommodationAddress: locationInfo?.accommodationAddress || '',
+      isLivingInAccommodation: locationInfo?.isLivingInAccommodation || false,
     },
   });
 
@@ -56,9 +59,19 @@ export const Location = (): React.ReactNode => {
         street: locationInfo.street || '',
         houseNumber: locationInfo.houseNumber || '',
         apartmentNumber: locationInfo.apartmentNumber || '',
+        accommodationAddress: locationInfo.accommodationAddress || '',
+        isLivingInAccommodation: locationInfo.isLivingInAccommodation || false,
       });
     }
   }, [locationInfo]);
+
+  const onFetchAllAccommodationsHanlder = async (): Promise<void> => {
+    await fetchAllAccommodations(undefined);
+  };
+
+  useEffect(() => {
+    onFetchAllAccommodationsHanlder();
+  }, []);
 
   return (
     <FormProvider {...methods}>
