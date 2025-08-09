@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
 import ReactModal from 'react-modal';
@@ -31,22 +33,24 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
     toast.success('Accommodation was deleted successfully.');
   };
   return (
-    <ReactModal
-      ariaHideApp={false}
-      overlayClassName="add-employee-popup-overlay"
-      className={classNames('add-employee-popup-container')}
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      isOpen={isOpen}>
-      <header>
-        <h1 className={classNames('add-employee-popup-title')}>Edit accommodation</h1>
-      </header>
-      <main>
-        <AddAccommodationForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
-      </main>
-      <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
-        <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete accommodation'} />
-      </div>
-    </ReactModal>
+    <Fragment>
+      <ReactModal
+        ariaHideApp={false}
+        overlayClassName="add-employee-popup-overlay"
+        className={classNames('add-employee-popup-container')}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        isOpen={isOpen}>
+        <header>
+          <h1 className={classNames('add-employee-popup-title')}>Edit accommodation</h1>
+        </header>
+        <main>
+          <AddAccommodationForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
+        </main>
+        <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
+          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete accommodation'} />
+        </div>
+      </ReactModal>
+    </Fragment>
   );
 };

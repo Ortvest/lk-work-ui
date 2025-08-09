@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import ReactModal from 'react-modal';
 
@@ -11,19 +13,21 @@ interface AddStuffPopupProps {
 }
 export const AddStuffPopup = ({ isOpen, setIsOpenedModal }: AddStuffPopupProps): JSX.Element => {
   return (
-    <ReactModal
-      ariaHideApp={false}
-      overlayClassName="add-employee-popup-overlay"
-      className={classNames('add-employee-popup-container')}
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      isOpen={isOpen}>
-      <header>
-        <h1 className={classNames('add-employee-popup-title')}>Add stuff worker</h1>
-      </header>
-      <main>
-        <AddStuffForm isEditMode={false} setIsOpenedModal={setIsOpenedModal} />
-      </main>
-    </ReactModal>
+    <Fragment>
+      <ReactModal
+        ariaHideApp={false}
+        overlayClassName="add-employee-popup-overlay"
+        className={classNames('add-employee-popup-container')}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        isOpen={isOpen}>
+        <header>
+          <h1 className={classNames('add-employee-popup-title')}>Add stuff worker</h1>
+        </header>
+        <main>
+          <AddStuffForm isEditMode={false} setIsOpenedModal={setIsOpenedModal} />
+        </main>
+      </ReactModal>
+    </Fragment>
   );
 };

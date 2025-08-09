@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import classNames from 'classnames';
 import {
@@ -176,31 +176,33 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
   };
 
   return (
-    <ReactModal
-      ariaHideApp={false}
-      overlayClassName="book-day-off-popup-overlay"
-      className={classNames('book-day-off-popup-container')}
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      isOpen={isModalOpen}>
-      <header className={classNames('book-day-off-header')}>
-        <h1 className={classNames('book-day-off-popup-title')}>Book a Day Off</h1>
-      </header>
+    <Fragment>
+      <ReactModal
+        ariaHideApp={false}
+        overlayClassName="book-day-off-popup-overlay"
+        className={classNames('book-day-off-popup-container')}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        isOpen={isModalOpen}>
+        <header className={classNames('book-day-off-header')}>
+          <h1 className={classNames('book-day-off-popup-title')}>Book a Day Off</h1>
+        </header>
 
-      <div className="calendar-container">
-        {renderHeader()}
-        {renderDays()}
-        {renderSelectedRanges()}
-      </div>
+        <div className="calendar-container">
+          {renderHeader()}
+          {renderDays()}
+          {renderSelectedRanges()}
+        </div>
 
-      <footer className={classNames('book-day-off-footer')}>
-        <button className={classNames('book-day-off-cancel')} onClick={onModalCloseHandler}>
-          Cancel
-        </button>
-        <button className={classNames('book-day-off-submit')} onClick={onSentVacationRequestHanlder}>
-          Book
-        </button>
-      </footer>
-    </ReactModal>
+        <footer className={classNames('book-day-off-footer')}>
+          <button className={classNames('book-day-off-cancel')} onClick={onModalCloseHandler}>
+            Cancel
+          </button>
+          <button className={classNames('book-day-off-submit')} onClick={onSentVacationRequestHanlder}>
+            Book
+          </button>
+        </footer>
+      </ReactModal>
+    </Fragment>
   );
 };

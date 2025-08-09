@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
 import ReactModal from 'react-modal';
@@ -36,22 +38,24 @@ export const EditStuffPopup = ({ isOpen, setIsOpenedModal }: EditStuffPopupProps
     );
   };
   return (
-    <ReactModal
-      ariaHideApp={false}
-      overlayClassName="add-employee-popup-overlay"
-      className={classNames('add-employee-popup-container')}
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      isOpen={isOpen}>
-      <header>
-        <h1 className={classNames('add-employee-popup-title')}>Edit company</h1>
-      </header>
-      <main>
-        <AddStuffForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
-      </main>
-      <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
-        <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete worker'} />
-      </div>
-    </ReactModal>
+    <Fragment>
+      <ReactModal
+        ariaHideApp={false}
+        overlayClassName="add-employee-popup-overlay"
+        className={classNames('add-employee-popup-container')}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        isOpen={isOpen}>
+        <header>
+          <h1 className={classNames('add-employee-popup-title')}>Edit company</h1>
+        </header>
+        <main>
+          <AddStuffForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
+        </main>
+        <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
+          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete worker'} />
+        </div>
+      </ReactModal>
+    </Fragment>
   );
 };

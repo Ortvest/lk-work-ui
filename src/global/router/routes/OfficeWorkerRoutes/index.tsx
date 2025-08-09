@@ -10,7 +10,7 @@ import { UserRoles } from '@shared/enums/user.enums';
 
 export const OfficeWorkerRoutes = (): JSX.Element => {
   const routes = Object.values(AppRoutes).filter(
-    (route) => route.allowedRoles?.includes(UserRoles.MANAGER) && typeof route.element === 'function'
+    (route) => route.allowedRoles?.includes(UserRoles.OFFICE_WORKER) && typeof route.element === 'function'
   );
 
   return (
