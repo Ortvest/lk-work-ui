@@ -9,9 +9,19 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const DrivingLicenceFields = (): JSX.Element => {
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   return (
     <div className={classNames('driving-licence-wrapper')}>
@@ -22,7 +32,7 @@ export const DrivingLicenceFields = (): JSX.Element => {
       ) : (
         <Fragment>
           <SharedLabel title="Driving Licence:">
-            <span>{personalInfo?.hasDrivingLicence ? 'Yes' : 'No'}</span>
+            <span>{currentDataOrigin?.hasDrivingLicence ? 'Yes' : 'No'}</span>
           </SharedLabel>
         </Fragment>
       )}

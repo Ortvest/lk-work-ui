@@ -12,6 +12,7 @@ import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const StudentCardPreviewBody = (): JSX.Element => {
   const [studentDocumentsPhotoUrls, setStudentDocumentsPhotoUrls] = useState({
@@ -20,21 +21,26 @@ export const StudentCardPreviewBody = (): JSX.Element => {
     studentPermitCardPhotoUrl: '',
   });
   const studentData = useTypedSelector((state) => state.userReducer.user?.documents.educationDocuments);
+  const selectedEmployeeStudentData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.educationDocuments
+  );
 
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? studentData : selectedEmployeeStudentData;
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
 
   useEffect(() => {
     const getEmbassyPhotosUrl = async (): Promise<void> => {
       const [studentFrontCardPhotoResponse, studentBackCardPhotoResponse, studentPermitCardPhotoResponse] =
         await Promise.all([
-          studentData?.studentFrontCardFileKey
-            ? getUploadedPhoto(studentData?.studentFrontCardFileKey as string).unwrap()
+          currentDataOrigin?.studentFrontCardFileKey
+            ? getUploadedPhoto(currentDataOrigin?.studentFrontCardFileKey as string).unwrap()
             : Promise.resolve(null),
-          studentData?.studentBackCardFileKey
-            ? getUploadedPhoto(studentData?.studentBackCardFileKey as string).unwrap()
+          currentDataOrigin?.studentBackCardFileKey
+            ? getUploadedPhoto(currentDataOrigin?.studentBackCardFileKey as string).unwrap()
             : Promise.resolve(null),
-          studentData?.studentPermitCardFileKey
-            ? getUploadedPhoto(studentData?.studentPermitCardFileKey as string).unwrap()
+          currentDataOrigin?.studentPermitCardFileKey
+            ? getUploadedPhoto(currentDataOrigin?.studentPermitCardFileKey as string).unwrap()
             : Promise.resolve(null),
         ]);
 
@@ -59,7 +65,7 @@ export const StudentCardPreviewBody = (): JSX.Element => {
         imageUrl={studentDocumentsPhotoUrls.studentBackCardPhotoUrl}
       />
       <SharedLabel title="Date of issue:">
-        <span>{(studentData?.studentStatusDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.studentStatusDate as string) || '-'}</span>
       </SharedLabel>
       <span className={classNames('student-card-line')}></span>
       <SharedImagePreview

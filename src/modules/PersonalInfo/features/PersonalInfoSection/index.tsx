@@ -20,9 +20,19 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const PersonalInfoSection = (): JSX.Element => {
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   return (
     <Fragment>
@@ -34,7 +44,7 @@ export const PersonalInfoSection = (): JSX.Element => {
           <SharedDateSelector dateSelectorTitle="Date of Birth:*" namePrefix="dateOfBirth" />
         ) : (
           <SharedLabel title="Date of Birth:">
-            <span>{(personalInfo?.dateOfBirth as string) || '-'}</span>
+            <span>{(currentDataOrigin?.dateOfBirth as string) || '-'}</span>
           </SharedLabel>
         )}
         <GenderFields />

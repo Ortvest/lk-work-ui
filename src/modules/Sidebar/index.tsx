@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 import classNames from 'classnames';
 
 import { BookDayOffModal } from '@modules/Sidebar/features/BookDayOffModal';
 import { Navigation } from '@modules/Sidebar/layout/Navigation';
-import { ProgressBar } from '@modules/Sidebar/layout/ProgressBar';
 import { SidebarWrapper } from '@modules/Sidebar/layout/SidebarWrapper';
 import { UserData } from '@modules/Sidebar/layout/UserData';
 
@@ -29,17 +28,18 @@ export const Sidebar = (): JSX.Element => {
       <SidebarWrapper>
         <header className={classNames('sidebar-header')}>
           <UserData />
-          <ProgressBar totalProgress={9} currentProgress={1} />
         </header>
         <nav className={classNames('sidebar-navigation')}>
           <Navigation />
         </nav>
-        <button className={classNames('sidebar-book-day-off-btn')} onClick={onModalOpenHandler}>
-          <img src={CalendarIcon} alt="book-day-off-icon" />
-          Book a Day Off
-        </button>
-        {userRole !== UserRoles.ACCOUNTANT ? (
-          <BookDayOffModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        {userRole === UserRoles.EMPLOYEE ? (
+          <Fragment>
+            <button className={classNames('sidebar-book-day-off-btn')} onClick={onModalOpenHandler}>
+              <img src={CalendarIcon} alt="book-day-off-icon" />
+              Book a Day Off
+            </button>
+            <BookDayOffModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+          </Fragment>
         ) : null}
       </SidebarWrapper>
     </section>

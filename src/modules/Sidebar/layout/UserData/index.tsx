@@ -16,21 +16,32 @@ import UserIcon from '@shared/assets/icons/UserIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const UserData = (): JSX.Element => {
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
   const [userPhoto, setUserPhoto] = useState('');
-  const [isExitButtonVisible, setIsExitButtonVisible] = useState(false);
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
+
+  const [isExitButtonVisible, setIsExitButtonVisible] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useTypedDispatch();
+
   const { setIsAuth, setCurrentUser } = UserSlice.actions;
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   useEffect(() => {
     const getUserAvatar = async (): Promise<void> => {
-      if (!personalInfo?.avatarUrl) return;
+      if (!currentDataOrigin?.avatarUrl) return;
 
-      const { data, error } = await getUploadedPhoto(personalInfo?.avatarUrl as string);
+      const { data, error } = await getUploadedPhoto(currentDataOrigin?.avatarUrl as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -41,7 +52,7 @@ export const UserData = (): JSX.Element => {
     };
 
     getUserAvatar();
-  }, [personalInfo?.avatarUrl]);
+  }, [currentDataOrigin?.avatarUrl]);
 
   const onLogoutHanlder = (): void => {
     dispatch(setIsAuth(false));
@@ -60,20 +71,22 @@ export const UserData = (): JSX.Element => {
       </div>
       <div className={classNames('user-data-values')}>
         <div className={classNames('user-name')}>
-          {personalInfo?.firstName || ''} {personalInfo?.lastName || ''}
+          {currentDataOrigin?.firstName || ''} {currentDataOrigin?.lastName || ''}
         </div>
-        <div className={classNames('user-email')}>{personalInfo?.email || '-'}</div>
+        <div className={classNames('user-email')}>{currentDataOrigin?.email || '-'}</div>
       </div>
-      <button className={classNames('user-options')} onClick={() => setIsExitButtonVisible(!isExitButtonVisible)}>
-        <img src={DotsIcon} alt="options-icon" />
-        {isExitButtonVisible ? (
-          <div className={classNames('user-exit-button-wrapper')}>
-            <button className={classNames('user-exit-buttun')} onClick={onLogoutHanlder}>
-              Log out
-            </button>
-          </div>
-        ) : null}
-      </button>
+      {userRole === UserRoles.EMPLOYEE ? (
+        <button className={classNames('user-options')} onClick={() => setIsExitButtonVisible(!isExitButtonVisible)}>
+          <img src={DotsIcon} alt="options-icon" />
+          {isExitButtonVisible ? (
+            <div className={classNames('user-exit-button-wrapper')}>
+              <button className={classNames('user-exit-buttun')} onClick={onLogoutHanlder}>
+                Log out
+              </button>
+            </div>
+          ) : null}
+        </button>
+      ) : null}
     </article>
   );
 };

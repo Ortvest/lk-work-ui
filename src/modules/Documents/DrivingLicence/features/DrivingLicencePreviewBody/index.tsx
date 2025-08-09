@@ -12,6 +12,7 @@ import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const DrivingLicencePreviewBody = (): JSX.Element => {
   const [drivingLicencePhotosUrls, setDrivingLicencePhotosUrls] = useState({
@@ -20,16 +21,23 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
   });
   const drivingLicenceData = useTypedSelector((state) => state.userReducer.user?.documents.drivingLicenceDocuments);
 
+  const selectedEmployeeDrivingLicenceData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.drivingLicenceDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? drivingLicenceData : selectedEmployeeDrivingLicenceData;
+
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
 
   useEffect(() => {
     const getDrivingLicencePhotosUrl = async (): Promise<void> => {
       const [drivingLicenceFrontCardPhotoResponse, drivingLicenceBackCardPhotoResponse] = await Promise.all([
-        drivingLicenceData?.drivingLicenceFrontCardFileKey
-          ? getUploadedPhoto(drivingLicenceData?.drivingLicenceFrontCardFileKey as string).unwrap()
+        currentDataOrigin?.drivingLicenceFrontCardFileKey
+          ? getUploadedPhoto(currentDataOrigin?.drivingLicenceFrontCardFileKey as string).unwrap()
           : Promise.resolve(null),
-        drivingLicenceData?.drivingLicenceBackCardFileKey
-          ? getUploadedPhoto(drivingLicenceData?.drivingLicenceBackCardFileKey as string).unwrap()
+        currentDataOrigin?.drivingLicenceBackCardFileKey
+          ? getUploadedPhoto(currentDataOrigin?.drivingLicenceBackCardFileKey as string).unwrap()
           : Promise.resolve(null),
       ]);
 
@@ -53,13 +61,13 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
         imageUrl={drivingLicencePhotosUrls.drivingLicenceBackCardPhotoUrl}
       />
       <SharedLabel title="Driving Licence Categories">
-        <span>{drivingLicenceData?.drivingLicenceCategories || '-'}</span>
+        <span>{currentDataOrigin?.drivingLicenceCategories || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{(drivingLicenceData?.drivingLicenseDateOfIssue as string) || '-'}</span>
+        <span>{(currentDataOrigin?.drivingLicenseDateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{(drivingLicenceData?.drivingLicenseExpirationDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.drivingLicenseExpirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

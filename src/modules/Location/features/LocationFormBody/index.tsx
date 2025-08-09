@@ -27,8 +27,12 @@ export const LocationFormBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('location-form-fields-wrapper')}>
-      <SharedBooleanSelector name="isLivingInAccommodation" label="Do you rent apartment?:*" />
-      {!isLivingInAccommodation ? (
+      <SharedBooleanSelector name="isLivingInAccommodation" label="You live in accommodation?" />
+      {isLivingInAccommodation ? (
+        <SharedLabel title="Choose accommodation:*">
+          <SharedSelect options={options} {...register('accommodationAddress')} />
+        </SharedLabel>
+      ) : (
         <Fragment>
           <SharedLabel title="City:*">
             <SharedSelect {...register('city')} options={citiesMock} />
@@ -46,10 +50,6 @@ export const LocationFormBody = (): JSX.Element => {
             <SharedInput type="text" {...register('apartmentNumber')} placeholder="Enter apartment number" />
           </SharedLabel>
         </Fragment>
-      ) : (
-        <SharedLabel title="Choose accommodation:*">
-          <SharedSelect options={options} {...register('accommodationAddress')} />
-        </SharedLabel>
       )}
     </fieldset>
   );

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -7,17 +7,20 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { DrivingLicenceFormBody } from '@modules/Documents/DrivingLicence/features/DrivingLicenceFormBody';
 import { DrivingLicencePreviewBody } from '@modules/Documents/DrivingLicence/features/DrivingLicencePreviewBody';
+import { Sidebar } from '@modules/Sidebar';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
 import { useCollectUserDrivingLicenceMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 import { DrivingLicenseDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
@@ -25,18 +28,25 @@ import { datePartsParser } from '@shared/utils/datePartsParser';
 export const DrivingLicence = (): JSX.Element => {
   const drivingLicenceData = useTypedSelector((state) => state.userReducer.user?.documents.drivingLicenceDocuments);
 
+  const selectedEmployeeDrivingLicenceData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.drivingLicenceDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? drivingLicenceData : selectedEmployeeDrivingLicenceData;
+
   const methods = useForm<DrivingLicenseDocument>({
     defaultValues: {
-      drivingLicenceCategories: drivingLicenceData?.drivingLicenceCategories || [],
-      drivingLicenceFrontCardFileKey: drivingLicenceData?.drivingLicenceFrontCardFileKey || '',
-      drivingLicenceBackCardFileKey: drivingLicenceData?.drivingLicenceBackCardFileKey || '',
-      drivingLicenseDateOfIssue: datePartsParser(drivingLicenceData?.drivingLicenseDateOfIssue),
-      drivingLicenseExpirationDate: datePartsParser(drivingLicenceData?.drivingLicenseExpirationDate),
+      drivingLicenceCategories: currentDataOrigin?.drivingLicenceCategories || [],
+      drivingLicenceFrontCardFileKey: currentDataOrigin?.drivingLicenceFrontCardFileKey || '',
+      drivingLicenceBackCardFileKey: currentDataOrigin?.drivingLicenceBackCardFileKey || '',
+      drivingLicenseDateOfIssue: datePartsParser(currentDataOrigin?.drivingLicenseDateOfIssue),
+      drivingLicenseExpirationDate: datePartsParser(currentDataOrigin?.drivingLicenseExpirationDate),
     },
   });
   const [uploadfile] = useUploadPhotoMutation();
   const [collectUserDrivingLicenceData] = useCollectUserDrivingLicenceMutation();
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const dispatch = useTypedDispatch();
@@ -71,29 +81,49 @@ export const DrivingLicence = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (drivingLicenceData) {
+    if (currentDataOrigin) {
       methods.reset({
-        drivingLicenceCategories: drivingLicenceData?.drivingLicenceCategories || [],
-        drivingLicenceFrontCardFileKey: drivingLicenceData?.drivingLicenceFrontCardFileKey || '',
-        drivingLicenceBackCardFileKey: drivingLicenceData?.drivingLicenceBackCardFileKey || '',
-        drivingLicenseDateOfIssue: datePartsParser(drivingLicenceData?.drivingLicenseDateOfIssue),
-        drivingLicenseExpirationDate: datePartsParser(drivingLicenceData?.drivingLicenseExpirationDate),
+        drivingLicenceCategories: currentDataOrigin?.drivingLicenceCategories || [],
+        drivingLicenceFrontCardFileKey: currentDataOrigin?.drivingLicenceFrontCardFileKey || '',
+        drivingLicenceBackCardFileKey: currentDataOrigin?.drivingLicenceBackCardFileKey || '',
+        drivingLicenseDateOfIssue: datePartsParser(currentDataOrigin?.drivingLicenseDateOfIssue),
+        drivingLicenseExpirationDate: datePartsParser(currentDataOrigin?.drivingLicenseExpirationDate),
       });
     }
-  }, [drivingLicenceData]);
+  }, [currentDataOrigin]);
 
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('driving-licence')}>
-        <form className={classNames('driving-licence-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <SharedSectionHeader
-            title="Driving Licence"
-            subtitle="Leave a photo of the document. Make sure the document is in good quality."
-          />
-          {isEditModeEnabled ? <DrivingLicenceFormBody /> : <DrivingLicencePreviewBody />}
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('driving-licence')}>
+              <form className={classNames('driving-licence-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <SharedSectionHeader
+                  title="Driving Licence"
+                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                />
+                {isEditModeEnabled ? <DrivingLicenceFormBody /> : <DrivingLicencePreviewBody />}
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('driving-licence')}>
+            <form className={classNames('driving-licence-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <SharedSectionHeader
+                title="Driving Licence"
+                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+              />
+              {isEditModeEnabled ? <DrivingLicenceFormBody /> : <DrivingLicencePreviewBody />}
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };

@@ -12,18 +12,26 @@ import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const ResidenceCardPreviewBody = (): JSX.Element => {
   const [residenceCardPhotoUrl, setResidenceCardPhotoUrl] = useState('');
 
   const residenceData = useTypedSelector((state) => state.userReducer.user?.documents.residenceCardDocuments);
+  const selectedEmployeeResidenceData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.residenceCardDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? residenceData : selectedEmployeeResidenceData;
+
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
 
   useEffect(() => {
     const fetchResidenceCardPhoto = async (): Promise<void> => {
-      if (!residenceData?.residenceCardFileKey) return;
+      if (!currentDataOrigin?.residenceCardFileKey) return;
 
-      const { data, error } = await getUploadedPhoto(residenceData.residenceCardFileKey as string);
+      const { data, error } = await getUploadedPhoto(currentDataOrigin.residenceCardFileKey as string);
 
       if (error || !data) {
         console.error('Failed to fetch residence card photo URL:', error);
@@ -40,19 +48,19 @@ export const ResidenceCardPreviewBody = (): JSX.Element => {
     <fieldset className={classNames('residence-card-preview-fields-wrapper')}>
       <SharedImagePreview imageUrl={residenceCardPhotoUrl || AlertIcon} imageName="Your Residence Card" />
       <SharedLabel title="Card Number:">
-        <span>{residenceData?.cardNumber || '-'}</span>
+        <span>{currentDataOrigin?.cardNumber || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Country of Issue:">
-        <span>{residenceData?.countryOfIssue || '-'}</span>
+        <span>{currentDataOrigin?.countryOfIssue || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{(residenceData?.dateOfIssue as string) || '-'}</span>
+        <span>{(currentDataOrigin?.dateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{(residenceData?.expirationDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.expirationDate as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Reason for issuance:">
-        <span>{residenceData?.reasonForIssuance || '-'}</span>
+        <span>{currentDataOrigin?.reasonForIssuance || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

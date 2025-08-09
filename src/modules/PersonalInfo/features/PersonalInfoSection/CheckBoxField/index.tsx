@@ -9,11 +9,17 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const CheckBoxField = (): JSX.Element => {
   const { register } = useFormContext();
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const userData = useTypedSelector((state) => state.userReducer.user);
+  const selectedEmployeeUserData = useTypedSelector((state) => state.employeeReducer.selectedEmployee);
 
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? userData : selectedEmployeeUserData;
   return (
     <Fragment>
       {isEditModeEnabled ? (
@@ -26,7 +32,7 @@ export const CheckBoxField = (): JSX.Element => {
       ) : (
         <div className={classNames('email-consert-wrapper')}>
           <SharedLabel title="Consent to send the PIT by e-mail:">
-            <span>{userData?.consentToEmailPIT ? 'Yes' : 'No'}</span>
+            <span>{currentDataOrigin?.consentToEmailPIT ? 'Yes' : 'No'}</span>
           </SharedLabel>
         </div>
       )}

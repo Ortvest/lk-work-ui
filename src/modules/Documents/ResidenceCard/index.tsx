@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -7,17 +7,20 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { ResidenceCardFormBody } from '@modules/Documents/ResidenceCard/features/ResidenceCardFormBody';
 import { ResidenceCardPreviewBody } from '@modules/Documents/ResidenceCard/features/ResidenceCardPreviewBody';
+import { Sidebar } from '@modules/Sidebar';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
 import { useCollectUserResidenceDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 import { ResidenceCardDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
@@ -25,20 +28,27 @@ import { datePartsParser } from '@shared/utils/datePartsParser';
 export const ResidenceCard = (): JSX.Element => {
   const residenceCardData = useTypedSelector((state) => state.userReducer.user?.documents.residenceCardDocuments);
 
+  const selectedEmployeeResidenceCardData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.residenceCardDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? residenceCardData : selectedEmployeeResidenceCardData;
+
   const methods = useForm<ResidenceCardDocument>({
     defaultValues: {
-      cardNumber: residenceCardData?.cardNumber ?? '',
-      countryOfIssue: residenceCardData?.countryOfIssue ?? '',
-      dateOfIssue: datePartsParser(residenceCardData?.dateOfIssue),
-      expirationDate: datePartsParser(residenceCardData?.expirationDate),
-      reasonForIssuance: residenceCardData?.reasonForIssuance ?? '',
-      residenceCardFileKey: residenceCardData?.residenceCardFileKey ?? '',
+      cardNumber: currentDataOrigin?.cardNumber ?? '',
+      countryOfIssue: currentDataOrigin?.countryOfIssue ?? '',
+      dateOfIssue: datePartsParser(currentDataOrigin?.dateOfIssue),
+      expirationDate: datePartsParser(currentDataOrigin?.expirationDate),
+      reasonForIssuance: currentDataOrigin?.reasonForIssuance ?? '',
+      residenceCardFileKey: currentDataOrigin?.residenceCardFileKey ?? '',
     },
   });
 
   const [uploadFile] = useUploadPhotoMutation();
   const [collectResidenceCardData] = useCollectUserResidenceDataMutation();
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const dispatch = useTypedDispatch();
@@ -73,30 +83,50 @@ export const ResidenceCard = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (isEditModeEnabled && residenceCardData) {
+    if (isEditModeEnabled && currentDataOrigin) {
       methods.reset({
-        cardNumber: residenceCardData?.cardNumber ?? '',
-        countryOfIssue: residenceCardData?.countryOfIssue ?? '',
-        dateOfIssue: datePartsParser(residenceCardData?.dateOfIssue),
-        expirationDate: datePartsParser(residenceCardData?.expirationDate),
-        reasonForIssuance: residenceCardData?.reasonForIssuance ?? '',
-        residenceCardFileKey: residenceCardData?.residenceCardFileKey ?? '',
+        cardNumber: currentDataOrigin?.cardNumber ?? '',
+        countryOfIssue: currentDataOrigin?.countryOfIssue ?? '',
+        dateOfIssue: datePartsParser(currentDataOrigin?.dateOfIssue),
+        expirationDate: datePartsParser(currentDataOrigin?.expirationDate),
+        reasonForIssuance: currentDataOrigin?.reasonForIssuance ?? '',
+        residenceCardFileKey: currentDataOrigin?.residenceCardFileKey ?? '',
       });
     }
-  }, [isEditModeEnabled, residenceCardData, methods]);
+  }, [isEditModeEnabled, currentDataOrigin, methods]);
 
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('residence-card')}>
-        <form className={classNames('residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <SharedSectionHeader
-            title="Residence Card"
-            subtitle="Leave a photo of the document. Make sure the document is in good quality."
-          />
-          {isEditModeEnabled ? <ResidenceCardFormBody /> : <ResidenceCardPreviewBody />}
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('residence-card')}>
+              <form className={classNames('residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <SharedSectionHeader
+                  title="Residence Card"
+                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                />
+                {isEditModeEnabled ? <ResidenceCardFormBody /> : <ResidenceCardPreviewBody />}
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('residence-card')}>
+            <form className={classNames('residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <SharedSectionHeader
+                title="Residence Card"
+                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+              />
+              {isEditModeEnabled ? <ResidenceCardFormBody /> : <ResidenceCardPreviewBody />}
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };

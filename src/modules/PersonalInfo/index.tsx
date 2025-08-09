@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -8,11 +8,14 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 import { ContactSection } from '@modules/PersonalInfo/features/ContactsSection';
 import { PersonalInfoSection } from '@modules/PersonalInfo/features/PersonalInfoSection';
 import { PrefferedCompaniesSection } from '@modules/PersonalInfo/features/PrefferedCompaniesSection';
+import { Sidebar } from '@modules/Sidebar';
 //import { WorkStartSection } from '@modules/PersonalInfo/features/WorkStartSection';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 
 import './style.css';
 
@@ -21,14 +24,22 @@ import {
   useCollectUserPersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 import { PersonalInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
 import { phoneNumberParser } from '@shared/utils/phoneNumberParser';
 
 export const PersonalInfoForm = (): JSX.Element => {
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const personalDataInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+  const selectedEmployeePersonalData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalDataInfo : selectedEmployeePersonalData;
+
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
 
@@ -39,23 +50,23 @@ export const PersonalInfoForm = (): JSX.Element => {
   const methods = useForm<PersonalInfo>({ defaultValues: {} });
 
   useEffect(() => {
-    if (personalDataInfo) {
+    if (currentDataOrigin) {
       methods.reset({
-        ...personalDataInfo,
-        dateOfBirth: datePartsParser(personalDataInfo.dateOfBirth),
+        ...currentDataOrigin,
+        dateOfBirth: datePartsParser(currentDataOrigin.dateOfBirth),
         polishPhoneNumber:
-          typeof personalDataInfo.polishPhoneNumber === 'string'
-            ? phoneNumberParser(personalDataInfo.polishPhoneNumber)
-            : personalDataInfo.polishPhoneNumber,
+          typeof currentDataOrigin.polishPhoneNumber === 'string'
+            ? phoneNumberParser(currentDataOrigin.polishPhoneNumber)
+            : currentDataOrigin.polishPhoneNumber,
         nationalPhoneNumber:
-          typeof personalDataInfo.nationalPhoneNumber === 'string'
-            ? phoneNumberParser(personalDataInfo.nationalPhoneNumber)
-            : personalDataInfo.nationalPhoneNumber,
-        avatarUrl: personalDataInfo.avatarUrl,
-        consentToEmailPIT: personalDataInfo.consentToEmailPIT ?? true,
+          typeof currentDataOrigin.nationalPhoneNumber === 'string'
+            ? phoneNumberParser(currentDataOrigin.nationalPhoneNumber)
+            : currentDataOrigin.nationalPhoneNumber,
+        avatarUrl: currentDataOrigin.avatarUrl,
+        consentToEmailPIT: currentDataOrigin.consentToEmailPIT ?? true,
       });
     }
-  }, [personalDataInfo]);
+  }, [currentDataOrigin]);
 
   const onSaveHandler = async (data: PersonalInfo): Promise<void> => {
     console.log(data);
@@ -72,10 +83,10 @@ export const PersonalInfoForm = (): JSX.Element => {
     }
 
     const parsedData: PersonalInfo = {
-      ...personalDataInfo,
+      ...currentDataOrigin,
       ...data,
       avatarUrl: fileKey,
-      dateOfBirth: dateParser(JSON.stringify(data.dateOfBirth || personalDataInfo?.dateOfBirth)),
+      dateOfBirth: dateParser(JSON.stringify(data.dateOfBirth || currentDataOrigin?.dateOfBirth)),
       polishPhoneNumber:
         typeof data.polishPhoneNumber === 'object'
           ? data.polishPhoneNumber.prefix + data.polishPhoneNumber.number
@@ -96,19 +107,41 @@ export const PersonalInfoForm = (): JSX.Element => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('personal-info')}>
-        <form
-          className={classNames('personal-info-form')}
-          key={employeeId}
-          onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <PersonalInfoSection />
-          <ContactSection />
-          {/* <WorkStartSection /> */}
-          <PrefferedCompaniesSection />
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('personal-info')}>
+              <form
+                className={classNames('personal-info-form')}
+                key={employeeId}
+                onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <PersonalInfoSection />
+                <ContactSection />
+                {/* <WorkStartSection /> */}
+                <PrefferedCompaniesSection />
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('personal-info')}>
+            <form
+              className={classNames('personal-info-form')}
+              key={employeeId}
+              onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <PersonalInfoSection />
+              <ContactSection />
+              {/* <WorkStartSection /> */}
+              <PrefferedCompaniesSection />
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };

@@ -9,6 +9,8 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const GenderFields = (): JSX.Element => {
   const { register, setValue, watch } = useFormContext();
   const [selectedGender, setSelectedGender] = useState<string | null>('male');
@@ -16,6 +18,14 @@ export const GenderFields = (): JSX.Element => {
   const gender = watch('gender');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   useEffect(() => {
     setSelectedGender(gender);
@@ -52,7 +62,7 @@ export const GenderFields = (): JSX.Element => {
           </label>
         </div>
       ) : (
-        <span className={classNames('gender-value')}>{personalInfo?.gender || '-'}</span>
+        <span className={classNames('gender-value')}>{currentDataOrigin?.gender || '-'}</span>
       )}
     </SharedLabel>
   );

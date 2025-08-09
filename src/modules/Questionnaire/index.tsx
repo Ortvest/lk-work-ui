@@ -21,9 +21,9 @@ import './style.css';
 
 import { useLazyGetAllAccommodationsQuery } from '@global/api/accommodations/accommodation.api';
 import {
-  useCollectUserAddressMutation,
   useCollectUserDocumentStatusDataMutation,
-  useCollectUserPersonalInfoMutation,
+  useCollectUserQuestionnaireAddressMutation,
+  useCollectUserQuestionnairePersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { UserDocumentsStatuses } from '@shared/enums/user.enums';
 import { Address, PersonalInfo } from '@shared/interfaces/User.interfaces';
@@ -36,9 +36,9 @@ export const Questionnaire = (): JSX.Element => {
   const userDocumentStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
-  const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
+  const [collectUserPersonalInfo] = useCollectUserQuestionnairePersonalInfoMutation();
   const [collectUserDocumentStatus] = useCollectUserDocumentStatusDataMutation();
-  const [collectAddressMutation] = useCollectUserAddressMutation();
+  const [collectAddressMutation] = useCollectUserQuestionnaireAddressMutation();
   const [fetchAllAccommodations] = useLazyGetAllAccommodationsQuery();
   const onSaveHandler = async (data: PersonalInfo & Address): Promise<void> => {
     if (!employeeId) return;
@@ -70,6 +70,7 @@ export const Questionnaire = (): JSX.Element => {
       await collectUserPersonalInfo({ personalData: parsedPersonalInfoData, employeeId });
       await collectAddressMutation({ address: parsedAddressData, employeeId });
       await collectUserDocumentStatus({ documentStatusInfo: UserDocumentsStatuses.TO_CONFIRM, employeeId });
+
       dispatch(setIsEditModeEnabled(false));
       navigate(AppRoutes.PERSONAL_INFO.path);
     } catch (error) {

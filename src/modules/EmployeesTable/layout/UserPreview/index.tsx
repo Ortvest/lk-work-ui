@@ -18,7 +18,7 @@ interface UserPreviewProps {
 }
 export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: UserPreviewProps): React.ReactNode => {
   const { selectedEmployee } = useTypedSelector((state) => state.employeeReducer);
-  console.log(selectedEmployee);
+
   return (
     <article style={{ position: 'relative' }}>
       <UserPreviewHeader

@@ -13,12 +13,21 @@ import UserIcon from '@shared/assets/icons/UserIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const PhotoField = (): JSX.Element => {
   const { register, setValue } = useFormContext();
   const [preview, setPreview] = useState('');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const fileKey = useTypedSelector((state) => state.userReducer.user?.personalInfo.avatarUrl);
+  const selectedEmployeefileKey = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo.avatarUrl
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? fileKey : selectedEmployeefileKey;
+
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
   const [userPhoto, setUserPhoto] = useState('');
 
@@ -42,9 +51,9 @@ export const PhotoField = (): JSX.Element => {
 
   useEffect(() => {
     const getUserAvatar = async (): Promise<void> => {
-      if (!fileKey) return;
+      if (!currentDataOrigin) return;
 
-      const { data, error } = await getUploadedPhoto(fileKey as string);
+      const { data, error } = await getUploadedPhoto(currentDataOrigin as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -55,7 +64,7 @@ export const PhotoField = (): JSX.Element => {
     };
 
     getUserAvatar();
-  }, [fileKey]);
+  }, [currentDataOrigin]);
 
   useEffect(() => {
     if (isEditModeEnabled && !preview && userPhoto) {

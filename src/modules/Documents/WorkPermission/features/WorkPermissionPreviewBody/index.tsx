@@ -12,6 +12,7 @@ import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const WorkPermissionPreviewBody = (): JSX.Element => {
   const [workPermitPhotoUrls, setWorkPermitPhotoUrls] = useState({
@@ -21,20 +22,26 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
   });
 
   const workPermitData = useTypedSelector((state) => state.userReducer.user?.documents.workPermissionDocuments);
+  const selectedEmployeeWorkPermitData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.workPermissionDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? workPermitData : selectedEmployeeWorkPermitData;
 
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
 
   useEffect(() => {
     const getWorkPermitPhotosUrl = async (): Promise<void> => {
       const [permitDocRes, paymentDocRes, applicationDocRes] = await Promise.all([
-        workPermitData?.workPermitDocumentFileKey
-          ? getUploadedPhoto(workPermitData.workPermitDocumentFileKey as string).unwrap()
+        currentDataOrigin?.workPermitDocumentFileKey
+          ? getUploadedPhoto(currentDataOrigin.workPermitDocumentFileKey as string).unwrap()
           : Promise.resolve(null),
-        workPermitData?.workPermitPaymentDocumentFileKey
-          ? getUploadedPhoto(workPermitData.workPermitPaymentDocumentFileKey as string).unwrap()
+        currentDataOrigin?.workPermitPaymentDocumentFileKey
+          ? getUploadedPhoto(currentDataOrigin.workPermitPaymentDocumentFileKey as string).unwrap()
           : Promise.resolve(null),
-        workPermitData?.workPermitApplicationFileKey
-          ? getUploadedPhoto(workPermitData.workPermitApplicationFileKey as string).unwrap()
+        currentDataOrigin?.workPermitApplicationFileKey
+          ? getUploadedPhoto(currentDataOrigin.workPermitApplicationFileKey as string).unwrap()
           : Promise.resolve(null),
       ]);
 
@@ -55,7 +62,7 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
         imageUrl={workPermitPhotoUrls.workPermitDocumentPhotoUrl}
       />
       <SharedLabel title="Date of issue:">
-        <span>{(workPermitData?.workPermitExpirationDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.workPermitExpirationDate as string) || '-'}</span>
       </SharedLabel>
       <span className={classNames('work-permission-line')}></span>
       <SharedImagePreview

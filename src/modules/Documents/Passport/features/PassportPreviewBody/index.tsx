@@ -12,18 +12,25 @@ import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 
 export const PassportPreviewBody = (): JSX.Element => {
   const [passportPreviewPhoto, setPassportPreviewPhoto] = useState('');
 
   const passportData = useTypedSelector((state) => state.userReducer.user?.documents.passportDocuments);
+  const selectedEmployeePassportDocumentsData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.passportDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? passportData : selectedEmployeePassportDocumentsData;
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
 
   useEffect(() => {
     const getPassportPhotoUrl = async (): Promise<void> => {
-      if (!passportData?.passportFileKey) return;
+      if (!currentDataOrigin?.passportFileKey) return;
 
-      const { data, error } = await getUploadedPhoto(passportData.passportFileKey as string);
+      const { data, error } = await getUploadedPhoto(currentDataOrigin.passportFileKey as string);
 
       if (error || !data) {
         console.error('Failed to get passport photo url:', error);
@@ -40,13 +47,13 @@ export const PassportPreviewBody = (): JSX.Element => {
     <fieldset className={classNames('passport-preview-fields-wrapper')}>
       <SharedImagePreview imageUrl={passportPreviewPhoto || AlertIcon} imageName="Your passport" />
       <SharedLabel title="PassportNumber:">
-        <span>{passportData?.passportNumber || '-'}</span>
+        <span>{currentDataOrigin?.passportNumber || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of issue:">
-        <span>{(passportData?.passportDateOfIssue as string) || '-'}</span>
+        <span>{(currentDataOrigin?.passportDateOfIssue as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Expiration Date:">
-        <span>{(passportData?.passportExpirationDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.passportExpirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

@@ -29,8 +29,12 @@ export const AddressSection = (): JSX.Element => {
       <SharedSectionHeader title="Address" subtitle="Full Correspondence Address" />
 
       <fieldset className={classNames('questionnaire-address-fields-wrapper')}>
-        <SharedBooleanSelector name="isLivingInAccommodation" label="Do you rent apartment?:*" />
-        {!isLivingInAccommodation ? (
+        <SharedBooleanSelector name="isLivingInAccommodation" label="You live in accommodation?" />
+        {isLivingInAccommodation ? (
+          <SharedLabel title="Choose accommodation:*">
+            <SharedSelect options={options} {...register('accommodationAddress')} />
+          </SharedLabel>
+        ) : (
           <Fragment>
             <SharedLabel title="City:*">
               <SharedInput type="text" {...register('city')} placeholder="Enter City" />
@@ -48,10 +52,6 @@ export const AddressSection = (): JSX.Element => {
               <SharedInput type="text" {...register('apartmentNumber')} placeholder="Enter Room Number" />
             </SharedLabel>
           </Fragment>
-        ) : (
-          <SharedLabel title="Choose accommodation:*">
-            <SharedSelect options={options} {...register('accommodationAddress')} />
-          </SharedLabel>
         )}
       </fieldset>
     </Fragment>

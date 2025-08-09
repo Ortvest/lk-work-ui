@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
@@ -7,17 +7,20 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { EmbassyFormBody } from '@modules/Documents/Embassy/features/EmbassyFormBody';
 import { EmbassyPreviewBody } from '@modules/Documents/Embassy/features/EmbassyPreviewBody';
+import { Sidebar } from '@modules/Sidebar';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
 import { useCollectUserEmbassyDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 import { EmbassyDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
@@ -26,15 +29,22 @@ export const Embassy = (): JSX.Element => {
   const dispatch = useTypedDispatch();
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const isEditModeEnabled = useTypedSelector((state) => state.CommonReducer.isEditModeEnabled);
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const embassyDocuments = useTypedSelector((state) => state.userReducer.user?.documents.embassyDocuments);
+
+  const selectedEmployeeEmbassyDocuments = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.embassyDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? embassyDocuments : selectedEmployeeEmbassyDocuments;
 
   const [uploadfile] = useUploadPhotoMutation();
   const [collectEmbassyData] = useCollectUserEmbassyDataMutation();
 
   const methods = useForm<{ documents: EmbassyDocument[] }>({
     defaultValues: {
-      documents: embassyDocuments?.map((doc) => ({
+      documents: currentDataOrigin?.map((doc) => ({
         embassyFirstDocumentFileKey: doc.embassyFirstDocumentFileKey || '',
         embassySecondDocumentFileKey: doc.embassySecondDocumentFileKey || '',
         embassyDateOfIssue: datePartsParser(doc.embassyDateOfIssue),
@@ -48,16 +58,16 @@ export const Embassy = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (embassyDocuments && embassyDocuments.length) {
+    if (currentDataOrigin && currentDataOrigin.length) {
       methods.reset({
-        documents: embassyDocuments.map((doc) => ({
+        documents: currentDataOrigin.map((doc) => ({
           embassyFirstDocumentFileKey: doc.embassyFirstDocumentFileKey || '',
           embassySecondDocumentFileKey: doc.embassySecondDocumentFileKey || '',
           embassyDateOfIssue: datePartsParser(doc.embassyDateOfIssue),
         })),
       });
     }
-  }, [embassyDocuments]);
+  }, [currentDataOrigin]);
 
   const onSaveHandler = async (data: { documents: EmbassyDocument[] }): Promise<void> => {
     if (!employeeId) return;
@@ -67,7 +77,7 @@ export const Embassy = (): JSX.Element => {
 
       for (let i = 0; i < data.documents.length; i++) {
         const current = data.documents[i];
-        const previous = embassyDocuments?.[i];
+        const previous = currentDataOrigin?.[i];
 
         let firstFileKey =
           typeof current.embassyFirstDocumentFileKey === 'string' ? current.embassyFirstDocumentFileKey : undefined;
@@ -117,8 +127,8 @@ export const Embassy = (): JSX.Element => {
     }
 
     const embassyDataToRender: EmbassyDocument[] =
-      embassyDocuments && embassyDocuments.length > 0
-        ? embassyDocuments
+      currentDataOrigin && currentDataOrigin.length > 0
+        ? currentDataOrigin
         : [
             {
               embassyFirstDocumentFileKey: '',
@@ -142,21 +152,45 @@ export const Embassy = (): JSX.Element => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('embassy')}>
-        <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <SharedSectionHeader title="Embassy" subtitle="Leave information about your work" />
-          {renderEmbassyContent()}
-          {isEditModeEnabled && (
-            <div className="embassy-button-wrapper">
-              <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
-                + Add a document
-              </button>
-            </div>
-          )}
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('embassy')}>
+              <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <SharedSectionHeader title="Embassy" subtitle="Leave information about your work" />
+                {renderEmbassyContent()}
+                {isEditModeEnabled && (
+                  <div className="embassy-button-wrapper">
+                    <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
+                      + Add a document
+                    </button>
+                  </div>
+                )}
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('embassy')}>
+            <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <SharedSectionHeader title="Embassy" subtitle="Leave information about your work" />
+              {renderEmbassyContent()}
+              {isEditModeEnabled && (
+                <div className="embassy-button-wrapper">
+                  <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
+                    + Add a document
+                  </button>
+                </div>
+              )}
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };

@@ -6,21 +6,28 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const JobInfoPreviewBody = (): JSX.Element => {
   const jobInfo = useTypedSelector((state) => state.userReducer.user?.jobInfo);
+  const selectedEmployeeJobInfo = useTypedSelector((state) => state.employeeReducer.selectedEmployee?.jobInfo);
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? jobInfo : selectedEmployeeJobInfo;
   return (
     <fieldset className={classNames('job-info-preview-fields-wrapper')}>
       <SharedLabel title="Company:">
-        <span>{jobInfo?.company || '-'}</span>
+        <span>{currentDataOrigin?.company || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Position:">
-        <span>{jobInfo?.position || '-'}</span>
+        <span>{currentDataOrigin?.position || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of Commencement:">
-        <span>{(jobInfo?.employmentStartDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.employmentStartDate as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title="Date of Completion:">
-        <span>{(jobInfo?.employmentEndDate as string) || '-'}</span>
+        <span>{(currentDataOrigin?.employmentEndDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

@@ -1,3 +1,4 @@
+import { EmployeeSlice } from '@global/store/slices/Employee.slice';
 import { UserSlice } from '@global/store/slices/User.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
@@ -18,6 +19,7 @@ import {
   WorkPermissionDocument,
 } from '@shared/interfaces/User.interfaces';
 
+const { setSelectedEmployee } = EmployeeSlice.actions;
 const { setCurrentUser } = UserSlice.actions;
 
 export const collectDataApi = baseCollectData.injectEndpoints({
@@ -31,7 +33,24 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
+          dispatch(setSelectedEmployee(data));
+        } catch (error) {
+          console.error('Failed to submit personal data info data:', error);
+        }
+      },
+    }),
+    collectUserQuestionnairePersonalInfo: builder.mutation<
+      UserEntity,
+      { personalData: PersonalInfo; employeeId: string }
+    >({
+      query: ({ personalData, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { personalInfo: { ...personalData } },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
           dispatch(setCurrentUser(data));
         } catch (error) {
           console.error('Failed to submit personal data info data:', error);
@@ -47,7 +66,21 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
+          dispatch(setSelectedEmployee(data));
+        } catch (error) {
+          console.error('Failed to submit address data:', error);
+        }
+      },
+    }),
+    collectUserQuestionnaireAddress: builder.mutation<UserEntity, { address: Address; employeeId: string }>({
+      query: ({ address, employeeId }) => ({
+        url: API_CONFIG.collectData(employeeId),
+        method: 'PUT',
+        body: { address: { ...address } },
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
           dispatch(setCurrentUser(data));
         } catch (error) {
           console.error('Failed to submit address data:', error);
@@ -63,8 +96,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit job info data:', error);
         }
@@ -79,8 +111,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit bank info data:', error);
         }
@@ -95,8 +126,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit passport info data:', error);
         }
@@ -111,8 +141,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit embassy info data:', error);
         }
@@ -127,8 +156,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit student info data:', error);
         }
@@ -146,8 +174,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit work permission info data:', error);
         }
@@ -165,8 +192,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit residence info data:', error);
         }
@@ -181,8 +207,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit visa info data:', error);
         }
@@ -200,8 +225,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit driving licence info data:', error);
         }
@@ -216,8 +240,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
-          dispatch(setCurrentUser(data));
+          dispatch(setSelectedEmployee(data));
         } catch (error) {
           console.error('Failed to submit email consert info data:', error);
         }
@@ -235,7 +258,6 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async onQueryStarted(_, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Response data:', data);
           dispatch(setCurrentUser(data));
         } catch (error) {
           console.error('Failed to submit document status info data:', error);
@@ -247,7 +269,9 @@ export const collectDataApi = baseCollectData.injectEndpoints({
 
 export const {
   useCollectUserPersonalInfoMutation,
+  useCollectUserQuestionnairePersonalInfoMutation,
   useCollectUserAddressMutation,
+  useCollectUserQuestionnaireAddressMutation,
   useCollectUserJobInfoMutation,
   useCollectUserBankInfoMutation,
   useCollectUserPassportDataMutation,

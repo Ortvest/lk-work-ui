@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -7,37 +7,46 @@ import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { PassportFormBody } from '@modules/Documents/Passport/features/PassportFormBody';
 import { PassportPreviewBody } from '@modules/Documents/Passport/features/PassportPreviewBody';
+import { Sidebar } from '@modules/Sidebar';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
 import { useCollectUserPassportDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+import { UserRoles } from '@shared/enums/user.enums';
 import { PassportDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
 
 export const Passport = (): JSX.Element => {
   const passportDocumentsData = useTypedSelector((state) => state.userReducer.user?.documents.passportDocuments);
+  const selectedEmployeePassportDocumentsData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.passportDocuments
+  );
 
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin =
+    userRole === UserRoles.EMPLOYEE ? passportDocumentsData : selectedEmployeePassportDocumentsData;
   const [uploadfile] = useUploadPhotoMutation();
   const [collectPassportData] = useCollectUserPassportDataMutation();
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const dispatch = useTypedDispatch();
 
   const methods = useForm<PassportDocument>({
     defaultValues: {
-      passportFileKey: passportDocumentsData?.passportFileKey || '',
-      passportNumber: passportDocumentsData?.passportNumber || '',
-      passportExpirationDate: datePartsParser(passportDocumentsData?.passportExpirationDate),
-      passportDateOfIssue: datePartsParser(passportDocumentsData?.passportDateOfIssue),
+      passportFileKey: currentDataOrigin?.passportFileKey || '',
+      passportNumber: currentDataOrigin?.passportNumber || '',
+      passportExpirationDate: datePartsParser(currentDataOrigin?.passportExpirationDate),
+      passportDateOfIssue: datePartsParser(currentDataOrigin?.passportDateOfIssue),
     },
   });
 
@@ -77,25 +86,42 @@ export const Passport = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (passportDocumentsData) {
+    if (currentDataOrigin) {
       methods.reset({
-        passportFileKey: passportDocumentsData?.passportFileKey || '',
-        passportNumber: passportDocumentsData?.passportNumber,
-        passportExpirationDate: datePartsParser(passportDocumentsData?.passportExpirationDate),
-        passportDateOfIssue: datePartsParser(passportDocumentsData?.passportDateOfIssue),
+        passportFileKey: currentDataOrigin?.passportFileKey || '',
+        passportNumber: currentDataOrigin?.passportNumber,
+        passportExpirationDate: datePartsParser(currentDataOrigin?.passportExpirationDate),
+        passportDateOfIssue: datePartsParser(currentDataOrigin?.passportDateOfIssue),
       });
     }
-  }, [passportDocumentsData]);
+  }, [currentDataOrigin]);
 
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('passport')}>
-        <form className={classNames('passport-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <SharedSectionHeader title="Passport" subtitle="Fill in your passport details" />
-          {isEditModeEnabled ? <PassportFormBody /> : <PassportPreviewBody />}
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('passport')}>
+              <form className={classNames('passport-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <SharedSectionHeader title="Passport" subtitle="Fill in your passport details" />
+                {isEditModeEnabled ? <PassportFormBody /> : <PassportPreviewBody />}
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('passport')}>
+            <form className={classNames('passport-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <SharedSectionHeader title="Passport" subtitle="Fill in your passport details" />
+              {isEditModeEnabled ? <PassportFormBody /> : <PassportPreviewBody />}
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };
