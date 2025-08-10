@@ -7,6 +7,7 @@ import { WorkCompanyReducer as workCompanyReducer } from '@global/store/slices/W
 import { accommodationApi } from '@global/api/accommodations/accommodation.api';
 import { authApi } from '@global/api/auth/auth.api';
 import { employeeApi } from '@global/api/employee/employee.api';
+import { pdfApi } from '@global/api/pdf/pdf.api';
 import { collectDataApi } from '@global/api/updateUserData/collectData.api';
 import { uploadPhotoApi } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { workCompanyApi } from '@global/api/work-company/work-company.api';
@@ -25,6 +26,7 @@ export const store = configureStore({
     [uploadPhotoApi.reducerPath]: uploadPhotoApi.reducer,
     [accommodationApi.reducerPath]: accommodationApi.reducer,
     [workCompanyApi.reducerPath]: workCompanyApi.reducer,
+    [pdfApi.reducerPath]: pdfApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -33,7 +35,8 @@ export const store = configureStore({
       .concat(collectDataApi.middleware)
       .concat(uploadPhotoApi.middleware)
       .concat(accommodationApi.middleware)
-      .concat(workCompanyApi.middleware),
+      .concat(workCompanyApi.middleware)
+      .concat(pdfApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
