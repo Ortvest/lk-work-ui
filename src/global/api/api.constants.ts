@@ -31,4 +31,6 @@ export const API_CONFIG = {
   addWorkCompany: (): string => '/work-company/create',
   editWorkCompany: (workCompanyId: string): string => `/work-company/edit?workCompanyId=${workCompanyId}`,
   removeWorkCompany: (workCompanyId: string): string => `/work-company/remove?workCompanyId=${workCompanyId}`,
+
+  downloadDocument: (): string => '/pdf/generate',
 };
