@@ -3,11 +3,8 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 
-import { UserSlice } from '@global/store/slices/User.slice';
-
 import { AppRoutes } from '@global/router/routes.constans';
 
-import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import DotsIcon from '@shared/assets/icons/DotsIcon.svg';
@@ -15,6 +12,7 @@ import UserIcon from '@shared/assets/icons/UserIcon.svg';
 
 import './style.css';
 
+import { useLogoutMutation } from '@global/api/auth/auth.api';
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
 
@@ -26,13 +24,11 @@ export const UserData = (): JSX.Element => {
 
   const [userPhoto, setUserPhoto] = useState('');
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
+  const [logout] = useLogoutMutation();
 
   const [isExitButtonVisible, setIsExitButtonVisible] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch = useTypedDispatch();
-
-  const { setIsAuth, setCurrentUser } = UserSlice.actions;
 
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
@@ -51,13 +47,20 @@ export const UserData = (): JSX.Element => {
       setUserPhoto(data.url);
     };
 
-    getUserAvatar();
+    (async (): Promise<void> => {
+      await getUserAvatar();
+    })();
   }, [currentDataOrigin?.avatarUrl]);
 
-  const onLogoutHanlder = (): void => {
-    dispatch(setIsAuth(false));
-    dispatch(setCurrentUser(null));
-    navigate(AppRoutes.SIGN_IN.path);
+  const onLogoutHandler = async (): Promise<void> => {
+    try {
+      const result = await logout();
+      if (result?.data?.success) {
+        navigate(AppRoutes.SIGN_IN.path);
+      }
+    } catch (e) {
+      console.error('Logout failed:', e);
+    }
   };
 
   return (
@@ -80,7 +83,7 @@ export const UserData = (): JSX.Element => {
           <img src={DotsIcon} alt="options-icon" />
           {isExitButtonVisible ? (
             <div className={classNames('user-exit-button-wrapper')}>
-              <button className={classNames('user-exit-buttun')} onClick={onLogoutHanlder}>
+              <button className={classNames('user-exit-buttun')} onClick={onLogoutHandler}>
                 Log out
               </button>
             </div>

@@ -6,6 +6,8 @@ import { SetNewPasswordArgs, UserEntity, UserSignInData } from '@shared/interfac
 
 const { setIsAuth, setCurrentUser } = UserSlice.actions;
 
+type LogoutResponse = { success: boolean };
+
 export const authApi = baseAuthApi.injectEndpoints({
   endpoints: (builder) => ({
     authenticateUser: builder.mutation<UserEntity, UserSignInData>({
@@ -53,7 +55,29 @@ export const authApi = baseAuthApi.injectEndpoints({
         },
       }),
     }),
+    logout: builder.mutation<LogoutResponse, void>({
+      query: () => ({
+        url: API_CONFIG.logout(),
+        body: {},
+        method: 'POST',
+        credentials: 'include',
+      }),
+      async onQueryStarted(_, { dispatch }) {
+        try {
+          dispatch(setIsAuth(false));
+          dispatch(setCurrentUser(null));
+        } catch (error) {
+          console.error('Failed to logout:', error);
+        }
+      }
+    }),
   }),
 });
 
-export const { useAuthenticateUserMutation, useGetMeQuery, useLazyGetMeQuery, useSetNewPasswordMutation } = authApi;
+export const {
+  useAuthenticateUserMutation,
+  useGetMeQuery,
+  useLazyGetMeQuery,
+  useSetNewPasswordMutation,
+  useLogoutMutation
+} = authApi;

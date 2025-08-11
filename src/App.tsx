@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { AppRouter } from '@global/router/AppRouter';
 import { AppRoutes } from '@global/router/routes.constans';
@@ -15,12 +15,13 @@ export const App = (): JSX.Element => {
   const { refetch } = useGetMeQuery(undefined);
   const { isAuth } = useTypedSelector((state) => state.userReducer);
 
+  const location = useLocation()
   const navigate = useNavigate();
 
   useEffect(() => {
     refetch();
 
-    if (!isAuth) {
+    if (!isAuth && location.pathname !== AppRoutes.SET_NEW_PASSWORD.path) {
       navigate(AppRoutes.SIGN_IN.path);
     }
   }, []);
