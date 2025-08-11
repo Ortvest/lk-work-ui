@@ -4,6 +4,7 @@ import { VacationFilter } from '@shared/enums/vacation.enums';
 export const API_CONFIG = {
   signIn: (): string => '/auth/sign-in',
   authMe: (): string => '/auth/me',
+  logout: (): string => '/auth/logout',
 
   fetchEmployees: (location?: string, workStatus?: string, company?: string, roles?: UserRole[]): string => {
     const rolesParam = roles?.map((r) => `roles=${encodeURIComponent(r)}`).join('&') ?? '';
