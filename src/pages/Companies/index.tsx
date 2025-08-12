@@ -12,7 +12,7 @@ import { OpenedPopupType } from '@pages/Accommodations';
 
 export const CompaniesPage = (): React.ReactNode => {
   // eslint-disable-next-line no-empty-pattern
-  const { } = useGetAllWorkCompaniesQuery(undefined);
+  const {} = useGetAllWorkCompaniesQuery(undefined);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);
 
