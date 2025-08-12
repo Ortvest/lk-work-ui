@@ -69,7 +69,7 @@ export const authApi = baseAuthApi.injectEndpoints({
         } catch (error) {
           console.error('Failed to logout:', error);
         }
-      }
+      },
     }),
   }),
 });
@@ -79,5 +79,5 @@ export const {
   useGetMeQuery,
   useLazyGetMeQuery,
   useSetNewPasswordMutation,
-  useLogoutMutation
+  useLogoutMutation,
 } = authApi;

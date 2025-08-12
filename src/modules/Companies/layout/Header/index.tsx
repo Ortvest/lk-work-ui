@@ -6,10 +6,16 @@ import { AddCompanyPopupButton } from '@modules/Companies/feature/AddCompanyPopu
 
 import './style.css';
 
+import { OpenedPopupType } from '@pages/Accommodations';
+
 interface AccommodationsTableHeaderProps {
   setIsOpenedModal: (isOpen: boolean) => void;
+  setOpenedPopupType: (type: OpenedPopupType) => void;
 }
-export const CompaniesTableHeader = ({ setIsOpenedModal }: AccommodationsTableHeaderProps): React.ReactNode => {
+export const CompaniesTableHeader = ({
+  setIsOpenedModal,
+  setOpenedPopupType,
+}: AccommodationsTableHeaderProps): React.ReactNode => {
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
@@ -19,7 +25,7 @@ export const CompaniesTableHeader = ({ setIsOpenedModal }: AccommodationsTableHe
       </section>
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>
-          <AddCompanyPopupButton setIsOpenedModal={setIsOpenedModal} />
+          <AddCompanyPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
         </div>
       </section>
     </header>

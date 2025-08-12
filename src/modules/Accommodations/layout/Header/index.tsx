@@ -6,10 +6,16 @@ import { AddAccommodationPopupButton } from '@modules/Accommodations/feature/Add
 
 import './style.css';
 
+import { OpenedPopupType } from '@pages/Accommodations';
+
 interface AccommodationsTableHeaderProps {
   setIsOpenedModal: (isOpen: boolean) => void;
+  setOpenedPopupType: (type: OpenedPopupType) => void;
 }
-export const AccommodationsTableHeader = ({ setIsOpenedModal }: AccommodationsTableHeaderProps): React.ReactNode => {
+export const AccommodationsTableHeader = ({
+  setIsOpenedModal,
+  setOpenedPopupType,
+}: AccommodationsTableHeaderProps): React.ReactNode => {
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
@@ -19,7 +25,7 @@ export const AccommodationsTableHeader = ({ setIsOpenedModal }: AccommodationsTa
       </section>
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>
-          <AddAccommodationPopupButton setIsOpenedModal={setIsOpenedModal} />
+          <AddAccommodationPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
         </div>
       </section>
     </header>
