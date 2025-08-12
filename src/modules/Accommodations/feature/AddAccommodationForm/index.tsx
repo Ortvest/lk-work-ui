@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -26,6 +26,9 @@ interface AddAccommodationFormProps {
 export const AddAccommodationForm = ({ setIsOpenedModal, isEditMode }: AddAccommodationFormProps): React.ReactNode => {
   const selectedAccommodation = useTypedSelector((state) => state.accommodationReducer.selectedAccommodation);
 
+  useEffect(() => {
+    console.log(isEditMode, 'isEditMode');
+  }, [isEditMode]);
   const { handleSubmit, register } = useForm<AddAccommodation | EditAccommodation>({
     resolver: yupResolver(createAccommodationValidator),
     defaultValues: isEditMode ? (selectedAccommodation as EditAccommodation) : ({} as unknown as AddAccommodation),

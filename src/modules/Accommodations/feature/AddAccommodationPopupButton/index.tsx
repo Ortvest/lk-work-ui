@@ -8,15 +8,21 @@ import IconPlus from '@shared/assets/icons/IconPlus.svg';
 
 import './style.css';
 
+import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRoles } from '@shared/enums/user.enums';
 
 interface AddEmployeePopupButton {
   setIsOpenedModal: (isOpen: boolean) => void;
+  setOpenedPopupType: (type: OpenedPopupType) => void;
 }
 
-export const AddAccommodationPopupButton = ({ setIsOpenedModal }: AddEmployeePopupButton): React.ReactNode => {
+export const AddAccommodationPopupButton = ({
+  setIsOpenedModal,
+  setOpenedPopupType,
+}: AddEmployeePopupButton): React.ReactNode => {
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const onOpenPopup = (): void => {
+    setOpenedPopupType('create');
     setIsOpenedModal(true);
   };
   return (

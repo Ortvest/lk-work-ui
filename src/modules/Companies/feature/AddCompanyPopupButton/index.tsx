@@ -8,16 +8,22 @@ import IconPlus from '@shared/assets/icons/IconPlus.svg';
 
 import './style.css';
 
+import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRoles } from '@shared/enums/user.enums';
 
 interface AddCompanyPopupButtonProps {
   setIsOpenedModal: (isOpen: boolean) => void;
+  setOpenedPopupType: (type: OpenedPopupType) => void;
 }
 
-export const AddCompanyPopupButton = ({ setIsOpenedModal }: AddCompanyPopupButtonProps): React.ReactNode => {
+export const AddCompanyPopupButton = ({
+  setIsOpenedModal,
+  setOpenedPopupType,
+}: AddCompanyPopupButtonProps): React.ReactNode => {
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const onOpenPopup = (): void => {
     setIsOpenedModal(true);
+    setOpenedPopupType('create');
   };
   return (
     <Fragment>
