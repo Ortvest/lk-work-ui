@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -17,6 +18,7 @@ import { WorkCompanyEntity } from '@shared/interfaces/WorkCompanies.interfaces';
 interface WorkCompanyFilterProps {
   selectedTable: EmployeeTableTab;
 }
+
 export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): React.ReactNode => {
   const [fetchAllWorkCompanies] = useLazyGetAllWorkCompaniesQuery(undefined);
   const [fetchAllEmployees] = useLazyFetchAllEmployeesQuery(undefined);
@@ -27,71 +29,76 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  const hasCompanyParam = searchParams.has('company');
+  const companyParamValue = (searchParams.get('company') ?? '').trim();
+
   useEffect(() => {
     if (user?.role === UserRoles.SUPER_ADMIN) {
       fetchAllWorkCompanies(undefined);
     }
-  }, [user]);
+  }, [user, fetchAllWorkCompanies]);
 
   useEffect(() => {
-    if (workCompanies.length && !selected) {
-      setSelected(workCompanies[0]);
+    if (!workCompanies.length) return;
+
+    if (hasCompanyParam) {
+      if (companyParamValue) {
+        const found = workCompanies.find((c) => c.name === companyParamValue) || null;
+        setSelected(found);
+      } else {
+        setSelected(null);
+      }
+    } else if (!selected) {
+      const first = workCompanies[0];
+      setSelected(first);
+      const sp = new URLSearchParams(searchParams);
+      sp.set('company', first.name);
+      setSearchParams(sp, { replace: true });
     }
-  }, [workCompanies]);
+  }, [workCompanies, hasCompanyParam, companyParamValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
+      if (ref.current && !ref.current.contains(event.target as Node)) setOpen(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return (): void => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const companyName = selected?.name || '';
+    const workStatus = selectedTable === 'fired' ? UserWorkStatuses.LAID_OFF : UserWorkStatuses.WORKING;
+
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    (async () => {
+      await fetchAllEmployees({
+        company: companyName,
+        workStatus,
+        location: user?.address.city,
+      });
+    })();
+  }, [selected, selectedTable, fetchAllEmployees]);
+
   const handleSelect = (company: WorkCompanyEntity): void => {
     setSelected(company);
     setOpen(false);
-
-    const companyName = company.name;
-
-    if (selectedTable === 'fired') {
-      fetchAllEmployees({
-        company: companyName,
-        workStatus: UserWorkStatuses.LAID_OFF,
-        location: '',
-      });
-    } else {
-      fetchAllEmployees({
-        company: companyName,
-        workStatus: UserWorkStatuses.WORKING,
-        location: '',
-      });
-    }
+    const sp = new URLSearchParams(searchParams);
+    sp.set('company', company.name);
+    setSearchParams(sp);
   };
 
   const onShowAllEmployees = (): void => {
     setSelected(null);
-
-    if (selectedTable === 'fired') {
-      fetchAllEmployees({
-        company: '',
-        workStatus: UserWorkStatuses.LAID_OFF,
-        location: '',
-      });
-    } else {
-      fetchAllEmployees({
-        company: '',
-        workStatus: UserWorkStatuses.WORKING,
-        location: '',
-      });
-    }
+    const sp = new URLSearchParams(searchParams);
+    sp.set('company', '');
+    setSearchParams(sp);
   };
 
   return (
     <div className="company-dropdown" ref={ref}>
       <div className="company-dropdown-header" onClick={() => setOpen((prev) => !prev)}>
-        Employees at <span className="company-name">{selected?.name}</span>
+        Employees at <span className="company-name">{selected?.name || 'All companies'}</span>
         <img className={classNames('dropdown-icon', { open })} src={IconChevron} />
       </div>
 
@@ -110,14 +117,18 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
         </div>
       )}
 
-      {selected && (
-        <div className="company-address">
-          {selected.address}{' '}
-          <button onClick={onShowAllEmployees} className="see-all-btn">
-            See All
-          </button>
-        </div>
-      )}
+      <div className="company-address">
+        {selected ? (
+          <>
+            {selected.address}{' '}
+            <button onClick={onShowAllEmployees} className="see-all-btn">
+              See All
+            </button>
+          </>
+        ) : (
+          'Showing all companies'
+        )}
+      </div>
     </div>
   );
 };
