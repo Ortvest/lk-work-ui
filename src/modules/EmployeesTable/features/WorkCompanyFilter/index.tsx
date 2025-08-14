@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import classNames from 'classnames';
 import { useSearchParams } from 'react-router-dom';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import IconChevron from '@shared/assets/icons/IconChevron.svg';
 
 import './styles.css';
@@ -66,8 +68,7 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
 
   useEffect(() => {
     const companyName = selected?.name || '';
-    const workStatus =
-      selectedTable === 'fired' ? UserWorkStatuses.LAID_OFF : UserWorkStatuses.WORKING;
+    const workStatus = selectedTable === 'fired' ? UserWorkStatuses.LAID_OFF : UserWorkStatuses.WORKING;
 
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     (async () => {
@@ -75,8 +76,8 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
         company: companyName,
         workStatus,
         location: user?.address.city,
-      })
-    })()
+      });
+    })();
   }, [selected, selectedTable, fetchAllEmployees]);
 
   const handleSelect = (company: WorkCompanyEntity): void => {
@@ -109,8 +110,7 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
               className={classNames('company-dropdown-item', {
                 selected: selected?.name === company.name,
               })}
-              onClick={() => handleSelect(company)}
-            >
+              onClick={() => handleSelect(company)}>
               Employees at {company.name}
             </div>
           ))}

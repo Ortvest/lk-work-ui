@@ -20,7 +20,7 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         fullName?: string;
       }
     >({
-      query: ({ location, workStatus, company, roles, fullName}) => ({
+      query: ({ location, workStatus, company, roles, fullName }) => ({
         url: API_CONFIG.fetchEmployees(location, workStatus, company, roles, fullName),
         method: 'GET',
         credentials: 'include',
@@ -80,7 +80,7 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
-    searchEmployers: builder.query<UserEntity[], { fullName: string, workStatus: UserWorkStatus }>({
+    searchEmployers: builder.query<UserEntity[], { fullName: string; workStatus: UserWorkStatus }>({
       query: ({ fullName, workStatus }) => ({
         url: API_CONFIG.searchEmployers(fullName, workStatus),
         method: 'GET',
