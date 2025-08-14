@@ -63,7 +63,7 @@ export const EmployeeTableHeader = ({
           <AddEmployeePopupButton setIsOpenedModal={setIsOpenedModal} />
         </div>
         <div className={classNames('employees-table-header-toolbar')}>
-          <FindEmployeesField />
+          <FindEmployeesField selectedTable={selectedTable} />
           <FilterEmployeesButton />
         </div>
       </section>

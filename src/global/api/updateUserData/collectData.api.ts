@@ -27,10 +27,12 @@ export const collectDataApi = baseCollectData.injectEndpoints({
   endpoints: (builder) => ({
     collectUserPersonalInfo: builder.mutation<UserEntity, { personalData: PersonalInfo; employeeId: string }>({
       async queryFn(arg, _api, _extra, baseQuery) {
-
         const { keyId, publicKeyB64 } = await getServerPublicKey();
 
-        const ciphertext = await encryptForServer({ personalInfo: { ...arg.personalData }, ts: Date.now() }, publicKeyB64);
+        const ciphertext = await encryptForServer(
+          { personalInfo: { ...arg.personalData }, ts: Date.now() },
+          publicKeyB64
+        );
 
         const result = await baseQuery({
           url: API_CONFIG.collectData(arg.employeeId),
@@ -184,7 +186,10 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async queryFn({ passportData, employeeId }, _api, _extra, baseQuery) {
         try {
           const { keyId, publicKeyB64 } = await getServerPublicKey();
-          const ciphertext = await encryptForServer({ documents: { passportDocuments: passportData }, ts: Date.now() }, publicKeyB64);
+          const ciphertext = await encryptForServer(
+            { documents: { passportDocuments: passportData }, ts: Date.now() },
+            publicKeyB64
+          );
           const result = await baseQuery({
             url: API_CONFIG.collectData(employeeId),
             method: 'PUT',
@@ -209,7 +214,10 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async queryFn({ embassyData, employeeId }, _api, _extra, baseQuery) {
         try {
           const { keyId, publicKeyB64 } = await getServerPublicKey();
-          const ciphertext = await encryptForServer({ documents: { embassyDocuments: embassyData }, ts: Date.now() }, publicKeyB64);
+          const ciphertext = await encryptForServer(
+            { documents: { embassyDocuments: embassyData }, ts: Date.now() },
+            publicKeyB64
+          );
           const result = await baseQuery({
             url: API_CONFIG.collectData(employeeId),
             method: 'PUT',
@@ -234,7 +242,10 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async queryFn({ studentData, employeeId }, _api, _extra, baseQuery) {
         try {
           const { keyId, publicKeyB64 } = await getServerPublicKey();
-          const ciphertext = await encryptForServer({ documents: { educationDocuments: studentData }, ts: Date.now() }, publicKeyB64);
+          const ciphertext = await encryptForServer(
+            { documents: { educationDocuments: studentData }, ts: Date.now() },
+            publicKeyB64
+          );
           const result = await baseQuery({
             url: API_CONFIG.collectData(employeeId),
             method: 'PUT',
@@ -321,7 +332,10 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async queryFn({ userVisaData, employeeId }, _api, _extra, baseQuery) {
         try {
           const { keyId, publicKeyB64 } = await getServerPublicKey();
-          const ciphertext = await encryptForServer({ documents: { visaInformationDocuments: userVisaData }, ts: Date.now() }, publicKeyB64);
+          const ciphertext = await encryptForServer(
+            { documents: { visaInformationDocuments: userVisaData }, ts: Date.now() },
+            publicKeyB64
+          );
           const result = await baseQuery({
             url: API_CONFIG.collectData(employeeId),
             method: 'PUT',
@@ -377,7 +391,10 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async queryFn({ consentToEmailPITInfo, employeeId }, _api, _extra, baseQuery) {
         try {
           const { keyId, publicKeyB64 } = await getServerPublicKey();
-          const ciphertext = await encryptForServer({ consentToEmailPIT: consentToEmailPITInfo, ts: Date.now() }, publicKeyB64);
+          const ciphertext = await encryptForServer(
+            { consentToEmailPIT: consentToEmailPITInfo, ts: Date.now() },
+            publicKeyB64
+          );
           const result = await baseQuery({
             url: API_CONFIG.collectData(employeeId),
             method: 'PUT',
@@ -405,7 +422,10 @@ export const collectDataApi = baseCollectData.injectEndpoints({
       async queryFn({ documentStatusInfo, employeeId }, _api, _extra, baseQuery) {
         try {
           const { keyId, publicKeyB64 } = await getServerPublicKey();
-          const ciphertext = await encryptForServer({ documentStatus: documentStatusInfo, ts: Date.now() }, publicKeyB64);
+          const ciphertext = await encryptForServer(
+            { documentStatus: documentStatusInfo, ts: Date.now() },
+            publicKeyB64
+          );
           const result = await baseQuery({
             url: API_CONFIG.collectData(employeeId),
             method: 'PUT',
@@ -425,7 +445,7 @@ export const collectDataApi = baseCollectData.injectEndpoints({
           console.error('Failed to submit document status info data:', error);
         }
       },
-    })
+    }),
   }),
 });
 

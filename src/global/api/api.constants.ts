@@ -1,4 +1,4 @@
-import { UserRole } from '@shared/enums/user.enums';
+import { UserRole, UserWorkStatus } from "@shared/enums/user.enums";
 import { VacationFilter } from '@shared/enums/vacation.enums';
 
 export const API_CONFIG = {
@@ -6,11 +6,12 @@ export const API_CONFIG = {
   authMe: (): string => '/auth/me',
   logout: (): string => '/auth/logout',
 
-  fetchEmployees: (location?: string, workStatus?: string, company?: string, roles?: UserRole[]): string => {
+  fetchEmployees: (location?: string, workStatus?: string, company?: string, roles?: UserRole[], fullName?: string): string => {
     const rolesParam = roles?.map((r) => `roles=${encodeURIComponent(r)}`).join('&') ?? '';
-    return `/employee/list?location=${location}&workStatus=${workStatus}&company=${company}&${rolesParam}`;
+    return `/employee/list?location=${location}&workStatus=${workStatus}&company=${company}&${rolesParam}&fullName=${fullName}`;
   },
   fetchEmployeesRequests: (filter: VacationFilter): string => `/employee/vacations?filter=${filter}`,
+  searchEmployers: (fullName: string, workStatus: UserWorkStatus): string => `/employee/search?fullName=${fullName}&workStatus=${workStatus}`,
   handleEmployeesRequest: (): string => '/employee/vacation/decision',
   sentVacationRequest: (): string => '/employee/vacation',
   inviteEmployee: (): string => '/employee/add',

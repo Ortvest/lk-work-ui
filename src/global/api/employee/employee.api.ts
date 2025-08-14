@@ -17,10 +17,11 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         workStatus: UserWorkStatus;
         company?: string;
         roles?: UserRole[];
+        fullName?: string;
       }
     >({
-      query: ({ location, workStatus, company, roles }) => ({
-        url: API_CONFIG.fetchEmployees(location, workStatus, company, roles),
+      query: ({ location, workStatus, company, roles, fullName}) => ({
+        url: API_CONFIG.fetchEmployees(location, workStatus, company, roles, fullName),
         method: 'GET',
         credentials: 'include',
       }),
@@ -79,6 +80,21 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    searchEmployers: builder.query<UserEntity[], { fullName: string, workStatus: UserWorkStatus }>({
+      query: ({ fullName, workStatus }) => ({
+        url: API_CONFIG.searchEmployers(fullName, workStatus),
+        method: 'GET',
+        credentials: 'include',
+      }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setEmployees(data));
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      },
+    }),
   }),
   overrideExisting: false,
 });
@@ -92,4 +108,5 @@ export const {
   useHandleVacationRequestsMutation,
   useLazyFetchVacationRequestsQuery,
   useSentVacationRequestMutation,
+  useLazySearchEmployersQuery,
 } = employeeApi;
