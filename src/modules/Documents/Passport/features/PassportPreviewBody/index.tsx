@@ -7,7 +7,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
+import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
 
@@ -45,7 +45,7 @@ export const PassportPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('passport-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={passportPreviewPhoto || AlertIcon} imageName="Your passport" />
+      <SharedImagePreview imageUrl={passportPreviewPhoto || FilePreviewIcon} imageName="Your passport information" />
       <SharedLabel title="PassportNumber:">
         <span>{currentDataOrigin?.passportNumber || '-'}</span>
       </SharedLabel>

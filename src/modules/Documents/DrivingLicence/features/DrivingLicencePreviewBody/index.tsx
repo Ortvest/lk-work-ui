@@ -7,7 +7,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
+import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
 
@@ -42,8 +42,8 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
       ]);
 
       setDrivingLicencePhotosUrls({
-        drivingLicenceFrontCardPhotoUrl: drivingLicenceFrontCardPhotoResponse?.url ?? AlertIcon,
-        drivingLicenceBackCardPhotoUrl: drivingLicenceBackCardPhotoResponse?.url ?? AlertIcon,
+        drivingLicenceFrontCardPhotoUrl: drivingLicenceFrontCardPhotoResponse?.url ?? FilePreviewIcon,
+        drivingLicenceBackCardPhotoUrl: drivingLicenceBackCardPhotoResponse?.url ?? FilePreviewIcon,
       });
     };
 
@@ -54,11 +54,11 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
     <fieldset className={classNames('driving-licence-preview-fields-wrapper')}>
       <SharedImagePreview
         imageName="Driving Licence - Front"
-        imageUrl={drivingLicencePhotosUrls.drivingLicenceFrontCardPhotoUrl}
+        imageUrl={drivingLicencePhotosUrls.drivingLicenceFrontCardPhotoUrl || FilePreviewIcon}
       />
       <SharedImagePreview
         imageName="Driving Licence - Back"
-        imageUrl={drivingLicencePhotosUrls.drivingLicenceBackCardPhotoUrl}
+        imageUrl={drivingLicencePhotosUrls.drivingLicenceBackCardPhotoUrl || FilePreviewIcon}
       />
       <SharedLabel title="Driving Licence Categories">
         <span>{currentDataOrigin?.drivingLicenceCategories || '-'}</span>

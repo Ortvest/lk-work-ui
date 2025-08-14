@@ -23,6 +23,7 @@ import { useLazyGetAllAccommodationsQuery } from '@global/api/accommodations/acc
 import {
   useCollectUserDocumentStatusDataMutation,
   useCollectUserQuestionnaireAddressMutation,
+  useCollectUserQuestionnairePassportDataMutation,
   useCollectUserQuestionnairePersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { UserDocumentsStatuses } from '@shared/enums/user.enums';
@@ -30,8 +31,12 @@ import { Address, PersonalInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 
 export const Questionnaire = (): JSX.Element => {
-  const methods = useForm<PersonalInfo & Address>();
+  const methods = useForm<PersonalInfo & Address>({
+    defaultValues: { consentToEmailPIT: true },
+  });
+
   const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const passportData = useTypedSelector((state) => state.userReducer.user?.documents.passportDocuments);
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const userDocumentStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
   const dispatch = useTypedDispatch();
@@ -39,13 +44,21 @@ export const Questionnaire = (): JSX.Element => {
   const [collectUserPersonalInfo] = useCollectUserQuestionnairePersonalInfoMutation();
   const [collectUserDocumentStatus] = useCollectUserDocumentStatusDataMutation();
   const [collectAddressMutation] = useCollectUserQuestionnaireAddressMutation();
+  const [collectPassportData] = useCollectUserQuestionnairePassportDataMutation();
   const [fetchAllAccommodations] = useLazyGetAllAccommodationsQuery();
+
   const onSaveHandler = async (data: PersonalInfo & Address): Promise<void> => {
     if (!employeeId) return;
 
     const parsedPersonalInfoData: PersonalInfo = {
       ...data,
       dateOfBirth: dateParser(JSON.stringify(data.dateOfBirth)),
+      whichCompanyDoYouWantWorkFor:
+        data.whichCompanyDoYouWantWorkFor === undefined
+          ? undefined
+          : Array.isArray(data.whichCompanyDoYouWantWorkFor)
+            ? data.whichCompanyDoYouWantWorkFor
+            : [data.whichCompanyDoYouWantWorkFor],
       nationalPhoneNumber:
         typeof data.nationalPhoneNumber === 'object'
           ? data.nationalPhoneNumber?.prefix + data.nationalPhoneNumber?.number
@@ -69,6 +82,10 @@ export const Questionnaire = (): JSX.Element => {
     try {
       await collectUserPersonalInfo({ personalData: parsedPersonalInfoData, employeeId });
       await collectAddressMutation({ address: parsedAddressData, employeeId });
+      await collectPassportData({
+        passportData: { ...passportData, passportNumber: parsedPersonalInfoData.passportNumber },
+        employeeId,
+      });
       await collectUserDocumentStatus({ documentStatusInfo: UserDocumentsStatuses.TO_CONFIRM, employeeId });
 
       dispatch(setIsEditModeEnabled(false));

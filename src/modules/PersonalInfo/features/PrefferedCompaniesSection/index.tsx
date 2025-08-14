@@ -11,8 +11,8 @@ import { SharedSelect } from '@shared/components/SharedSelect';
 
 import './style.css';
 
+import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 import { UserRoles } from '@shared/enums/user.enums';
-import { companies } from '@shared/mocks/JobInfo.mocks';
 
 export const PrefferedCompaniesSection = (): JSX.Element => {
   const { register } = useFormContext();
@@ -27,6 +27,15 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
 
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
+  useGetAllWorkCompaniesQuery(undefined);
+
+  const companies = useTypedSelector((state) => state.workCompanyReducer.workCompanies);
+
+  const options = companies.map((company) => ({
+    value: company.name,
+    label: company.name,
+  }));
+
   return (
     <Fragment>
       <SharedSectionHeader
@@ -36,7 +45,7 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
       <fieldset className={classNames('preffered-companies-fields-wrapper')}>
         {isEditModeEnabled ? (
           <SharedLabel title="Select companies:*">
-            <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={companies} />
+            <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={options} />
           </SharedLabel>
         ) : (
           <SharedLabel title="Companies:">
@@ -47,7 +56,6 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
                   </span>
                 ))
               : '-'}
-            <span></span>
           </SharedLabel>
         )}
       </fieldset>

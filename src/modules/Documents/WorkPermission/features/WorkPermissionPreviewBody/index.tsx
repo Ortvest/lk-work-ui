@@ -7,7 +7,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
+import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
 
@@ -46,9 +46,9 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
       ]);
 
       setWorkPermitPhotoUrls({
-        workPermitDocumentPhotoUrl: permitDocRes?.url ?? AlertIcon,
-        workPermitPaymentDocumentPhotoUrl: paymentDocRes?.url ?? AlertIcon,
-        workPermitApplicationPhotoUrl: applicationDocRes?.url ?? AlertIcon,
+        workPermitDocumentPhotoUrl: permitDocRes?.url ?? FilePreviewIcon,
+        workPermitPaymentDocumentPhotoUrl: paymentDocRes?.url ?? FilePreviewIcon,
+        workPermitApplicationPhotoUrl: applicationDocRes?.url ?? FilePreviewIcon,
       });
     };
 
@@ -59,7 +59,7 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
     <fieldset className={classNames('work-permission-preview-fields-wrapper')}>
       <SharedImagePreview
         imageName="Scan or Photo Work Permission"
-        imageUrl={workPermitPhotoUrls.workPermitDocumentPhotoUrl}
+        imageUrl={workPermitPhotoUrls.workPermitDocumentPhotoUrl || FilePreviewIcon}
       />
       <SharedLabel title="Date of issue:">
         <span>{(currentDataOrigin?.workPermitExpirationDate as string) || '-'}</span>
@@ -67,11 +67,11 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
       <span className={classNames('work-permission-line')}></span>
       <SharedImagePreview
         imageName="Scan or Photo Payment"
-        imageUrl={workPermitPhotoUrls.workPermitPaymentDocumentPhotoUrl}
+        imageUrl={workPermitPhotoUrls.workPermitPaymentDocumentPhotoUrl || FilePreviewIcon}
       />
       <SharedImagePreview
         imageName="Scan or Photo Application"
-        imageUrl={workPermitPhotoUrls.workPermitApplicationPhotoUrl}
+        imageUrl={workPermitPhotoUrls.workPermitApplicationPhotoUrl || FilePreviewIcon}
       />
     </fieldset>
   );

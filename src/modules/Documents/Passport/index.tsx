@@ -18,7 +18,10 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
-import { useCollectUserPassportDataMutation } from '@global/api/updateUserData/collectData.api';
+import {
+  useCollectUserPassportDataMutation,
+  useCollectUserPersonalInfoMutation,
+} from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { PassportDocument } from '@shared/interfaces/User.interfaces';
@@ -30,12 +33,15 @@ export const Passport = (): JSX.Element => {
   const selectedEmployeePassportDocumentsData = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.passportDocuments
   );
-
+  const selectedEmployeePersonalInfo = useTypedSelector((state) => state.employeeReducer.selectedEmployee);
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
   const currentDataOrigin =
     userRole === UserRoles.EMPLOYEE ? passportDocumentsData : selectedEmployeePassportDocumentsData;
+
   const [uploadfile] = useUploadPhotoMutation();
   const [collectPassportData] = useCollectUserPassportDataMutation();
+  const [collectPersonalInfo] = useCollectUserPersonalInfoMutation();
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const { setIsEditModeEnabled } = CommonSlice.actions;
@@ -79,6 +85,17 @@ export const Passport = (): JSX.Element => {
       };
 
       await collectPassportData({ passportData: parsedData, employeeId });
+      await collectPersonalInfo({
+        personalData: {
+          ...selectedEmployeePersonalInfo?.personalInfo,
+          dateOfBirth: selectedEmployeePersonalInfo?.personalInfo.dateOfBirth as string,
+          consentToEmailPIT: selectedEmployeePersonalInfo?.personalInfo.consentToEmailPIT as boolean,
+          hasDrivingLicence: selectedEmployeePersonalInfo?.personalInfo.hasDrivingLicence as boolean,
+          passportNumber: parsedData.passportNumber,
+        },
+        employeeId,
+      });
+
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {
       console.error('Failed to save passport data:', error);

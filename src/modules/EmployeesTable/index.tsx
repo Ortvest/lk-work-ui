@@ -30,6 +30,13 @@ export const EmployeesTable = (): JSX.Element => {
   const [isUserDocumentsDrawerOpen, setIsUserDocumentsDrawerOpen] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const [selectedTable, setSelectedTable] = useState<EmployeeTableTab>('hired');
+  const [vacationRequestsCount, setVacationRequestsCount] = useState(0);
+
+  useEffect(() => {
+    fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS).then((result) => {
+      setVacationRequestsCount(result.data?.length || 0);
+    });
+  }, []);
 
   useEffect(() => {
     if (selectedTable === 'hired') {
@@ -53,7 +60,7 @@ export const EmployeesTable = (): JSX.Element => {
       <EmployeeTableHeader
         setSelectedTable={setSelectedTable}
         selectedTable={selectedTable}
-        vacationRequestsNumber={data?.length}
+        vacationRequestsNumber={vacationRequestsCount}
         setIsOpenedModal={setIsOpenedModal}
         setVacationType={setVacationType}
       />
@@ -62,6 +69,7 @@ export const EmployeesTable = (): JSX.Element => {
         setIsDrawerOpen={setIsUserPreviewDrawerOpen}
         employees={employees}
         vacationRequests={data as VacationRequestsResponse[]}
+        setVacationRequestsCount={setVacationRequestsCount}
       />
       <AddEmployeePopup setIsOpenedModal={setIsOpenedModal} isOpen={isOpenedModal} />
       <Drawer

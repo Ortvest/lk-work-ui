@@ -21,6 +21,7 @@ import './style.css';
 
 import {
   useCollectUserGlobalDataMutation,
+  useCollectUserPassportDataMutation,
   useCollectUserPersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -33,6 +34,10 @@ import { phoneNumberParser } from '@shared/utils/phoneNumberParser';
 export const PersonalInfoForm = (): JSX.Element => {
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const personalDataInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+
+  const selectedEmployeePassportData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.passportDocuments
+  );
   const selectedEmployeePersonalData = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.personalInfo
   );
@@ -44,6 +49,7 @@ export const PersonalInfoForm = (): JSX.Element => {
   const { setIsEditModeEnabled } = CommonSlice.actions;
 
   const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
+  const [collectPassportData] = useCollectUserPassportDataMutation();
   const [collectUserGlobalData] = useCollectUserGlobalDataMutation();
   const [uploadPhoto] = useUploadPhotoMutation();
 
@@ -69,7 +75,6 @@ export const PersonalInfoForm = (): JSX.Element => {
   }, [currentDataOrigin]);
 
   const onSaveHandler = async (data: PersonalInfo): Promise<void> => {
-    console.log(data);
     if (!employeeId) return;
 
     let fileKey = '';
@@ -99,6 +104,10 @@ export const PersonalInfoForm = (): JSX.Element => {
 
     try {
       await collectUserPersonalInfo({ personalData: parsedData, employeeId });
+      await collectPassportData({
+        passportData: { ...selectedEmployeePassportData, passportNumber: parsedData.passportNumber },
+        employeeId,
+      });
       await collectUserGlobalData({ consentToEmailPITInfo: data.consentToEmailPIT, employeeId });
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {

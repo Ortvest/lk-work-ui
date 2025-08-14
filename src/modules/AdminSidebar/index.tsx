@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import classNames from 'classnames';
 
@@ -6,10 +6,8 @@ import { AppRoutes } from '@global/router/routes.constans';
 
 import { AdminSidebarItem } from '@modules/AdminSidebar/layout/Item';
 
-import IconDocument from '@shared/assets/icons/DocumentsIcon.svg';
-import IconDocumentWhite from '@shared/assets/icons/DocumentsIconWhite.svg';
-import IconBell from '@shared/assets/icons/IconBell.svg';
-import IconBellWhite from '@shared/assets/icons/IconBellWhite.svg';
+import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import IconEmployees from '@shared/assets/icons/IconEmployees.svg';
 import IconEmployeesWhite from '@shared/assets/icons/IconEmployeesWhite.svg';
 import IconGlobe from '@shared/assets/icons/IconGlobe.svg';
@@ -41,25 +39,11 @@ const sidebarRoutes = [
     path: AppRoutes.STUFF.path,
   },
   {
-    icon: IconDocument,
-    selectedIcon: IconDocumentWhite,
-    label: 'Employee documents',
-    scope: RouteScopes.TOP,
-    path: AppRoutes.BANK_INFO.path,
-  },
-  {
-    icon: IconBell,
-    selectedIcon: IconBellWhite,
-    label: 'Notifications',
-    scope: RouteScopes.BOTTOM,
-    path: AppRoutes.BANK_INFO.path,
-  },
-  {
     icon: IconUser,
     selectedIcon: IconUser,
     label: 'My profile',
     scope: RouteScopes.BOTTOM,
-    path: AppRoutes.BANK_INFO.path,
+    path: AppRoutes.EMPLOYEES_TABLE.path,
   },
   {
     icon: IconHome,
@@ -76,25 +60,38 @@ const sidebarRoutes = [
     path: AppRoutes.COMPANIES.path,
   },
 ];
+
 export const AdminSidebar = (): JSX.Element => {
-  const topRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.TOP), [sidebarRoutes]);
-  const bottomRoutes = useMemo(
-    () => sidebarRoutes.filter((route) => route.scope === RouteScopes.BOTTOM),
-    [sidebarRoutes]
-  );
+  const topRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.TOP), []);
+  const bottomRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.BOTTOM), []);
+  const [isWorkerInfoVisible, setIsWorkerInfoVisible] = useState(false);
+  const personalData = useTypedSelector((state) => state.userReducer.user);
+  const onProfileClickHandler = (): void => {
+    setIsWorkerInfoVisible(!isWorkerInfoVisible);
+    console.log(isWorkerInfoVisible);
+  };
+
   return (
     <section className={classNames('admin-sidebar')}>
       <nav className={classNames('admin-sidebar-navigation')}>
         <div className={classNames('admin-sidebar-top-routes')}>
-          {topRoutes.map(({ icon, label, path, selectedIcon }, i) => {
-            console.log(`Label: ${label}, path: ${path}`);
-            return <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />;
-          })}
+          {topRoutes.map(({ icon, label, path, selectedIcon }, i) => (
+            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />
+          ))}
         </div>
-        <div className={classNames('admin-sidebar-bottom-routes')}>
+        <div className={classNames('admin-sidebar-bottom-routes')} onClick={onProfileClickHandler}>
           {bottomRoutes.map(({ icon, label, path, selectedIcon }, i) => (
             <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />
           ))}
+          {isWorkerInfoVisible && (
+            <div className="worker-info-popup">
+              <div className={classNames('worker-info-popup-name')}>
+                {personalData?.personalInfo.firstName + ' ' + personalData?.personalInfo.lastName}
+              </div>
+              <div className={classNames('worker-info-popup-role')}>{personalData?.role.toUpperCase()}</div>
+              <div className={classNames('worker-info-popup-email')}>{personalData?.personalInfo.email}</div>
+            </div>
+          )}
         </div>
       </nav>
     </section>
