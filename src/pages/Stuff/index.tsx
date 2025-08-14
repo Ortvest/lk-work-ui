@@ -18,6 +18,7 @@ export const StuffPage = (): React.ReactNode => {
     roles: [UserRoles.OFFICE_WORKER, UserRoles.ACCOUNTANT],
     location: '',
     company: '',
+    fullName: '',
   });
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);

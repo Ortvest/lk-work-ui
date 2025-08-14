@@ -3,7 +3,6 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { AddEmployeePopupButton } from '@modules/EmployeesTable/features/AddEmployeePopupButton';
-import { FilterEmployeesButton } from '@modules/EmployeesTable/features/FilterEmployeesButton';
 import { FindEmployeesField } from '@modules/EmployeesTable/features/FindEmployeesField';
 import { SwitchTableButton } from '@modules/EmployeesTable/features/SwitchTableButton';
 
@@ -64,7 +63,6 @@ export const EmployeeTableHeader = ({
         </div>
         <div className={classNames('employees-table-header-toolbar')}>
           <FindEmployeesField selectedTable={selectedTable} />
-          <FilterEmployeesButton />
         </div>
       </section>
     </header>
