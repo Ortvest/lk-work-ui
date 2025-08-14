@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { Toaster } from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
 
 import { AppRoutes } from '@global/router/routes.constans';
@@ -24,6 +25,7 @@ export const EmployeeLayout = ({ children }: EmployeeLayoutProps): JSX.Element =
       <GlobalContainer>
         {shouldShowSidebar && <Sidebar />}
         {children}
+        <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
       </GlobalContainer>
     </div>
   );

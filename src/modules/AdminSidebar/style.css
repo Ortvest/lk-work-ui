@@ -28,5 +28,32 @@
 }
 
 .admin-sidebar-bottom-routes {
+  position: relative;
+
   gap: 24px;
+}
+
+.worker-info-popup {
+  position: absolute;
+  bottom: 40px;
+  right: -260px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  width: 240px;
+  padding: 16px;
+
+  border: 1px solid #eee;
+  border-radius: 8px;
+
+  background: #fff;
+
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+}
+
+.worker-info-popup-email {
+  color: #888;
+  font-size: 12px;
 }

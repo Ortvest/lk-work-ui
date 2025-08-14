@@ -14,6 +14,7 @@ import {
   startOfWeek,
   subMonths,
 } from 'date-fns';
+import toast from 'react-hot-toast';
 import ReactModal from 'react-modal';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
@@ -172,6 +173,7 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
     };
     const formattedRanges = formatRanges(selectedRanges);
     await sentVacationRequest({ userId: employeeId, vacationDates: formattedRanges });
+    toast.success('Vacation request sent successfully!');
     setIsModalOpen(false);
   };
 

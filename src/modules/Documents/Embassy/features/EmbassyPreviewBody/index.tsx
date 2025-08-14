@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
+import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
 
@@ -37,8 +37,8 @@ export const EmbassyPreviewBody = ({
       ]);
 
       setEmbassyPhotoUrls({
-        firstPhotoUrl: firstPhotoResponse?.url ?? AlertIcon,
-        seсondPhotoUrl: secondPhotoResponse?.url ?? AlertIcon,
+        firstPhotoUrl: firstPhotoResponse?.url ?? FilePreviewIcon,
+        seсondPhotoUrl: secondPhotoResponse?.url ?? FilePreviewIcon,
       });
     };
 
@@ -47,8 +47,14 @@ export const EmbassyPreviewBody = ({
 
   return (
     <fieldset className={classNames('embassy-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={embassyPhotoUrls.firstPhotoUrl} imageName="Embassy first document" />
-      <SharedImagePreview imageUrl={embassyPhotoUrls.seсondPhotoUrl} imageName="Embassy second document" />
+      <SharedImagePreview
+        imageUrl={embassyPhotoUrls.firstPhotoUrl || FilePreviewIcon}
+        imageName="Embassy first document"
+      />
+      <SharedImagePreview
+        imageUrl={embassyPhotoUrls.seсondPhotoUrl || FilePreviewIcon}
+        imageName="Embassy second document"
+      />
       <SharedLabel title="Date of issue:">
         <span>{embassyDateOfIssue || '-'}</span>
       </SharedLabel>

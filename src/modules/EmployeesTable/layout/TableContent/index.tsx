@@ -216,6 +216,7 @@ interface EmployeeTableContentProps {
   vacationRequests: VacationRequestsResponse[];
   setIsDrawerOpen: (isOpen: boolean) => void;
   selectedTable: EmployeeTableTab;
+  setVacationRequestsCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const { setSelectedEmployee } = EmployeeSlice.actions;
@@ -225,6 +226,7 @@ export const EmployeesTableContent = ({
   setIsDrawerOpen,
   selectedTable,
   vacationRequests,
+  setVacationRequestsCount,
 }: EmployeeTableContentProps): React.ReactNode => {
   const dispatch = useTypedDispatch();
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
@@ -245,7 +247,9 @@ export const EmployeesTableContent = ({
         userId: entity.userId,
         decision: decision as VacationDecision,
       }).then(() => {
-        fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS);
+        fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS).then((response) =>
+          setVacationRequestsCount(response.data?.length as number)
+        );
 
         if (decision === 'approved') {
           toast.success('Vacation request approved successfully');

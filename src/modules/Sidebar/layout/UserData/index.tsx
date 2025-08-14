@@ -8,7 +8,6 @@ import { AppRoutes } from '@global/router/routes.constans';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import DotsIcon from '@shared/assets/icons/DotsIcon.svg';
-import UserIcon from '@shared/assets/icons/UserIcon.svg';
 
 import './style.css';
 
@@ -52,6 +51,12 @@ export const UserData = (): JSX.Element => {
     })();
   }, [currentDataOrigin?.avatarUrl]);
 
+  const getUserInitials = (firstName: string, lastName: string): string => {
+    if (!firstName || !lastName) return '';
+
+    return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+  };
+
   const onLogoutHandler = async (): Promise<void> => {
     try {
       const result = await logout();
@@ -69,7 +74,7 @@ export const UserData = (): JSX.Element => {
         {userPhoto ? (
           <img className={classNames('user-avatar-photo')} src={userPhoto} alt="user-icon" />
         ) : (
-          <img className={classNames('user-avatar-icon')} src={UserIcon} alt="user-icon" />
+          <p>{getUserInitials(currentDataOrigin?.firstName as string, currentDataOrigin?.lastName as string)}</p>
         )}
       </div>
       <div className={classNames('user-data-values')}>

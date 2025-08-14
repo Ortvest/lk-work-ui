@@ -7,7 +7,7 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
+import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
 
@@ -45,9 +45,9 @@ export const StudentCardPreviewBody = (): JSX.Element => {
         ]);
 
       setStudentDocumentsPhotoUrls({
-        studentFrontCardPhotoUrl: studentFrontCardPhotoResponse?.url ?? AlertIcon,
-        studentBackCardPhotoUrl: studentBackCardPhotoResponse?.url ?? AlertIcon,
-        studentPermitCardPhotoUrl: studentPermitCardPhotoResponse?.url ?? AlertIcon,
+        studentFrontCardPhotoUrl: studentFrontCardPhotoResponse?.url ?? FilePreviewIcon,
+        studentBackCardPhotoUrl: studentBackCardPhotoResponse?.url ?? FilePreviewIcon,
+        studentPermitCardPhotoUrl: studentPermitCardPhotoResponse?.url ?? FilePreviewIcon,
       });
     };
 
@@ -58,11 +58,11 @@ export const StudentCardPreviewBody = (): JSX.Element => {
     <fieldset className={classNames('student-card-preview-fields-wrapper')}>
       <SharedImagePreview
         imageName="Student Card - Side 1"
-        imageUrl={studentDocumentsPhotoUrls.studentFrontCardPhotoUrl}
+        imageUrl={studentDocumentsPhotoUrls.studentFrontCardPhotoUrl || FilePreviewIcon}
       />
       <SharedImagePreview
         imageName="Student Card - Side 1"
-        imageUrl={studentDocumentsPhotoUrls.studentBackCardPhotoUrl}
+        imageUrl={studentDocumentsPhotoUrls.studentBackCardPhotoUrl || FilePreviewIcon}
       />
       <SharedLabel title="Date of issue:">
         <span>{(currentDataOrigin?.studentStatusDate as string) || '-'}</span>
@@ -70,7 +70,7 @@ export const StudentCardPreviewBody = (): JSX.Element => {
       <span className={classNames('student-card-line')}></span>
       <SharedImagePreview
         imageName="Scan or Photo Statement"
-        imageUrl={studentDocumentsPhotoUrls.studentPermitCardPhotoUrl}
+        imageUrl={studentDocumentsPhotoUrls.studentPermitCardPhotoUrl || FilePreviewIcon}
       />
     </fieldset>
   );

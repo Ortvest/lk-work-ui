@@ -8,7 +8,6 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
 import AlertIcon from '@shared/assets/icons/AlertIcon.svg';
-import UserIcon from '@shared/assets/icons/UserIcon.svg';
 
 import './style.css';
 
@@ -24,9 +23,16 @@ export const PhotoField = (): JSX.Element => {
     (state) => state.employeeReducer.selectedEmployee?.personalInfo.avatarUrl
   );
 
+  const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
 
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? fileKey : selectedEmployeefileKey;
+  const currentPersonalDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
   const [userPhoto, setUserPhoto] = useState('');
@@ -72,6 +78,12 @@ export const PhotoField = (): JSX.Element => {
     }
   }, [isEditModeEnabled, userPhoto, preview]);
 
+  const getUserInitials = (firstName: string, lastName: string): string => {
+    if (!firstName || !lastName) return '';
+
+    return `${firstName[0].toUpperCase()}${lastName[0].toUpperCase()}`;
+  };
+
   return (
     <Fragment>
       {isEditModeEnabled ? (
@@ -79,9 +91,14 @@ export const PhotoField = (): JSX.Element => {
           <div className={classNames('photo-field-wrapper')}>
             <div className={classNames('photo-field-preview')}>
               {preview ? (
-                <img className={classNames('photo-field-img')} src={preview} alt="user icon" />
+                <img className={classNames('photo-field-img')} src={preview} alt="user-photo" />
               ) : (
-                <img className={classNames('photo-field-icon')} src={UserIcon} alt="user icon" />
+                <span className={classNames('photo-field-initials')}>
+                  {getUserInitials(
+                    currentPersonalDataOrigin?.firstName as string,
+                    currentPersonalDataOrigin?.lastName as string
+                  )}
+                </span>
               )}
             </div>
             <input
@@ -100,7 +117,16 @@ export const PhotoField = (): JSX.Element => {
       ) : (
         <SharedLabel title="User photo:">
           <span>
-            <img className={classNames('photo-field-img')} src={userPhoto || AlertIcon} alt="user-photo" />
+            {userPhoto ? (
+              <img className={classNames('photo-field-img')} src={userPhoto || AlertIcon} alt="user-photo" />
+            ) : (
+              <span className={classNames('photo-field-initials')}>
+                {getUserInitials(
+                  currentPersonalDataOrigin?.firstName as string,
+                  currentPersonalDataOrigin?.lastName as string
+                )}
+              </span>
+            )}
           </span>
         </SharedLabel>
       )}
