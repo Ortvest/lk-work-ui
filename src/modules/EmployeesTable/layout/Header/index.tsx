@@ -3,13 +3,13 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { AddEmployeePopupButton } from '@modules/EmployeesTable/features/AddEmployeePopupButton';
-import { FilterEmployeesButton } from '@modules/EmployeesTable/features/FilterEmployeesButton';
 import { FindEmployeesField } from '@modules/EmployeesTable/features/FindEmployeesField';
 import { SwitchTableButton } from '@modules/EmployeesTable/features/SwitchTableButton';
 
 import './style.css';
 
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+
 
 interface EmployeesTableProps {
   setIsOpenedModal: (isOpen: boolean) => void;
@@ -25,6 +25,9 @@ export const EmployeeTableHeader = ({
   selectedTable,
   setVacationType,
 }: EmployeesTableProps): React.ReactNode => {
+
+
+  const hasSearchBar = selectedTable === EmployeeTableTabs.HIRED || selectedTable === EmployeeTableTabs.FIRED;
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
@@ -62,10 +65,11 @@ export const EmployeeTableHeader = ({
         <div style={{ alignSelf: 'flex-end' }}>
           <AddEmployeePopupButton setIsOpenedModal={setIsOpenedModal} />
         </div>
-        <div className={classNames('employees-table-header-toolbar')}>
-          <FindEmployeesField />
-          <FilterEmployeesButton />
-        </div>
+        {hasSearchBar ? (
+          <div className={classNames('employees-table-header-toolbar')}>
+            <FindEmployeesField selectedTable={selectedTable} />
+          </div>
+        ) : null}
       </section>
     </header>
   );
