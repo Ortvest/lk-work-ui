@@ -4,6 +4,7 @@ import { Embassy } from '@modules/Documents/Embassy';
 import { Passport } from '@modules/Documents/Passport';
 import { ResidenceCard } from '@modules/Documents/ResidenceCard';
 import { StudentCard } from '@modules/Documents/StudentCard';
+import { UkrainianStatementDocuments } from '@modules/Documents/UkrainianDocs';
 import { VisaInfo } from '@modules/Documents/VisaInfo';
 import { WorkPermission } from '@modules/Documents/WorkPermission';
 import { EmployeesTable } from '@modules/EmployeesTable';
@@ -166,6 +167,15 @@ export const AppRoutes: Record<string, AppRoute> = {
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: ResidenceCard,
+    isPublic: false,
+  },
+  UKRAINIAN_STATEMENT_DOCUMENT: {
+    path: '/documents/ukrainian-statement-document',
+    isVisible: true,
+    title: 'Ukrainian Statement Document',
+    usageScope: [UsageScopes.DOCUMENTS],
+    allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
+    element: UkrainianStatementDocuments,
     isPublic: false,
   },
   VISA_INFO: {

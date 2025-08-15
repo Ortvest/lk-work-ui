@@ -34,4 +34,6 @@ export const API_CONFIG = {
   removeWorkCompany: (workCompanyId: string): string => `/work-company/remove?workCompanyId=${workCompanyId}`,
 
   downloadDocument: (): string => '/pdf/generate',
+  layOffEmployee: (employeeId: string, layOffDate: string): string =>
+    `/employee/lay-off?employeeId=${employeeId}&layoffDate=${layOffDate}`,
 };

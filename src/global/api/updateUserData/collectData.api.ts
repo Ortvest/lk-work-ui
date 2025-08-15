@@ -14,6 +14,7 @@ import {
   PassportDocument,
   PersonalInfo,
   ResidenceCardDocument,
+  UkrainianStatementDocument,
   UserEntity,
   VisaInformationDocument,
   WorkPermissionDocument,
@@ -359,6 +360,37 @@ export const collectDataApi = baseCollectData.injectEndpoints({
         }
       },
     }),
+    collectUserUkrainianStatementDocument: builder.mutation<
+      UserEntity,
+      { userUkrainianStatementDocument: UkrainianStatementDocument; employeeId: string }
+    >({
+      async queryFn({ userUkrainianStatementDocument, employeeId }, _api, _extra, baseQuery) {
+        try {
+          const { keyId, publicKeyB64 } = await getServerPublicKey();
+          const ciphertext = await encryptForServer(
+            { documents: { ukrainianStatementDocument: userUkrainianStatementDocument }, ts: Date.now() },
+            publicKeyB64
+          );
+          const result = await baseQuery({
+            url: API_CONFIG.collectData(employeeId),
+            method: 'PUT',
+            body: { ciphertext, keyId },
+          });
+          if ('error' in result && result.error) return { error: result.error as any };
+          return { data: result.data as UserEntity };
+        } catch (e) {
+          return { error: { status: 'CUSTOM_ERROR', error: e } as any };
+        }
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setSelectedEmployee(data));
+        } catch (error) {
+          console.error('Failed to submit residence info data:', error);
+        }
+      },
+    }),
     collectUserVisaData: builder.mutation<UserEntity, { userVisaData: VisaInformationDocument; employeeId: string }>({
       async queryFn({ userVisaData, employeeId }, _api, _extra, baseQuery) {
         try {
@@ -493,6 +525,7 @@ export const {
   useCollectUserStudentDataMutation,
   useCollectUserWorkPermitDataMutation,
   useCollectUserResidenceDataMutation,
+  useCollectUserUkrainianStatementDocumentMutation,
   useCollectUserVisaDataMutation,
   useCollectUserDrivingLicenceMutation,
   useCollectUserGlobalDataMutation,

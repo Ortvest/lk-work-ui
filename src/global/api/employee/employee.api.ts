@@ -79,6 +79,13 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    layOffEmployee: builder.mutation<boolean, { employeeId: string; layOffDate: string }>({
+      query: ({ employeeId, layOffDate }) => ({
+        url: API_CONFIG.layOffEmployee(employeeId, layOffDate),
+        method: 'PATCH',
+        credentials: 'include',
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -92,4 +99,5 @@ export const {
   useHandleVacationRequestsMutation,
   useLazyFetchVacationRequestsQuery,
   useSentVacationRequestMutation,
+  useLayOffEmployeeMutation,
 } = employeeApi;

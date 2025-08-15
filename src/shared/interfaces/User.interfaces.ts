@@ -106,7 +106,7 @@ export interface DrivingLicenseDocument {
 }
 
 export interface UkrainianStatementDocument {
-  statementDocumentFileKey?: string;
+  statementDocumentFileKey?: string | File;
 }
 
 export interface Documents {

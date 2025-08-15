@@ -15,14 +15,20 @@ import UserWorkInfoIcon from '@shared/assets/icons/UserWorkInfoIcon.svg';
 interface UserPreviewProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
   setIsUserDocumentsDrawerOpen: (isOpen: boolean) => void;
+  setIsFireUserDrawerOpen: (isOpen: boolean) => void;
 }
-export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: UserPreviewProps): React.ReactNode => {
+export const UserPreview = ({
+  setIsDrawerOpen,
+  setIsUserDocumentsDrawerOpen,
+  setIsFireUserDrawerOpen,
+}: UserPreviewProps): React.ReactNode => {
   const { selectedEmployee } = useTypedSelector((state) => state.employeeReducer);
 
   return (
     <article style={{ position: 'relative' }}>
       <UserPreviewHeader
         setIsDrawerOpen={setIsDrawerOpen}
+        setIsFireUserDrawerOpen={setIsFireUserDrawerOpen}
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}
       />
       <UserPreviewPersonalData

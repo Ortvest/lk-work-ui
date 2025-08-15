@@ -6,6 +6,7 @@ import { EmployeeTableHeader } from '@modules/EmployeesTable/layout/Header';
 import { EmployeesTableContent } from '@modules/EmployeesTable/layout/TableContent';
 import { UserDocuments } from '@modules/EmployeesTable/layout/UserDocuments';
 import { UserPreview } from '@modules/EmployeesTable/layout/UserPreview';
+import { FireUser } from '@modules/EmployeesTable/layout/UserPreview/layout/FireUser';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -28,10 +29,11 @@ export const EmployeesTable = (): JSX.Element => {
 
   const [isUserPreviewDrawerOpen, setIsUserPreviewDrawerOpen] = useState(false);
   const [isUserDocumentsDrawerOpen, setIsUserDocumentsDrawerOpen] = useState(false);
+  const [isFireUserDrawerOpen, setIsFireUserDrawerOpen] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
   const [selectedTable, setSelectedTable] = useState<EmployeeTableTab>('hired');
   const [vacationRequestsCount, setVacationRequestsCount] = useState(0);
-
+  const selectedEmployee = useTypedSelector((state) => state.employeeReducer.selectedEmployee);
   useEffect(() => {
     fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS).then((result) => {
       setVacationRequestsCount(result.data?.length || 0);
@@ -79,6 +81,7 @@ export const EmployeesTable = (): JSX.Element => {
         <UserPreview
           setIsUserDocumentsDrawerOpen={setIsUserDocumentsDrawerOpen}
           setIsDrawerOpen={setIsUserPreviewDrawerOpen}
+          setIsFireUserDrawerOpen={setIsFireUserDrawerOpen}
         />
       </Drawer>
 
@@ -87,6 +90,14 @@ export const EmployeesTable = (): JSX.Element => {
         isOpen={isUserDocumentsDrawerOpen}
         onClose={() => setIsUserDocumentsDrawerOpen(false)}>
         <UserDocuments setIsUserDocumentsDrawerOpen={setIsUserDocumentsDrawerOpen} />
+      </Drawer>
+
+      <Drawer
+        containerExtraStyles={{ background: 'rgba(234, 234, 236, 1)' }}
+        width={460}
+        isOpen={isFireUserDrawerOpen}
+        onClose={() => setIsFireUserDrawerOpen(false)}>
+        <FireUser selectedEmployee={selectedEmployee} setIsFireUserDrawerOpen={setIsFireUserDrawerOpen} />
       </Drawer>
     </div>
   );
