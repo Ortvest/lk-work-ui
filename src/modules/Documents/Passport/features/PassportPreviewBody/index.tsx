@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import classNames from 'classnames';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
@@ -13,17 +12,23 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from 'react-i18next';
 
 export const PassportPreviewBody = (): JSX.Element => {
   const [passportPreviewPhoto, setPassportPreviewPhoto] = useState('');
+  const { t } = useTranslation('employee-sidebar');
 
-  const passportData = useTypedSelector((state) => state.userReducer.user?.documents.passportDocuments);
+  const passportData = useTypedSelector(
+    (state) => state.userReducer.user?.documents.passportDocuments
+  );
   const selectedEmployeePassportDocumentsData = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.passportDocuments
   );
 
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
-  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? passportData : selectedEmployeePassportDocumentsData;
+  const currentDataOrigin =
+    userRole === UserRoles.EMPLOYEE ? passportData : selectedEmployeePassportDocumentsData;
+
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
 
   useEffect(() => {
@@ -45,14 +50,17 @@ export const PassportPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('passport-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={passportPreviewPhoto || FilePreviewIcon} imageName="Your passport information" />
-      <SharedLabel title="PassportNumber:">
+      <SharedImagePreview
+        imageUrl={passportPreviewPhoto || FilePreviewIcon}
+        imageName={t('passportInformation')}
+      />
+      <SharedLabel title={t('passportNumber')}>
         <span>{currentDataOrigin?.passportNumber || '-'}</span>
       </SharedLabel>
-      <SharedLabel title="Date of issue:">
+      <SharedLabel title={t('passportDateOfIssue')}>
         <span>{(currentDataOrigin?.passportDateOfIssue as string) || '-'}</span>
       </SharedLabel>
-      <SharedLabel title="Expiration Date:">
+      <SharedLabel title={t('passportExpirationDate')}>
         <span>{(currentDataOrigin?.passportExpirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>

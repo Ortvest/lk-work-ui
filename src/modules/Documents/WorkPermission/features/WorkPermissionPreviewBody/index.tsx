@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import classNames from 'classnames';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
@@ -13,6 +12,7 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from 'react-i18next';
 
 export const WorkPermissionPreviewBody = (): JSX.Element => {
   const [workPermitPhotoUrls, setWorkPermitPhotoUrls] = useState({
@@ -30,6 +30,7 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? workPermitData : selectedEmployeeWorkPermitData;
 
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
+  const { t } = useTranslation('employee-sidebar');
 
   useEffect(() => {
     const getWorkPermitPhotosUrl = async (): Promise<void> => {
@@ -58,19 +59,19 @@ export const WorkPermissionPreviewBody = (): JSX.Element => {
   return (
     <fieldset className={classNames('work-permission-preview-fields-wrapper')}>
       <SharedImagePreview
-        imageName="Scan or Photo Work Permission"
+        imageName={t('workPermissionScan')}
         imageUrl={workPermitPhotoUrls.workPermitDocumentPhotoUrl || FilePreviewIcon}
       />
-      <SharedLabel title="Date of issue:">
+      <SharedLabel title={t('workPermissionDateOfIssue')}>
         <span>{(currentDataOrigin?.workPermitExpirationDate as string) || '-'}</span>
       </SharedLabel>
       <span className={classNames('work-permission-line')}></span>
       <SharedImagePreview
-        imageName="Scan or Photo Payment"
+        imageName={t('workPermissionPayment')}
         imageUrl={workPermitPhotoUrls.workPermitPaymentDocumentPhotoUrl || FilePreviewIcon}
       />
       <SharedImagePreview
-        imageName="Scan or Photo Application"
+        imageName={t('workPermissionApplication')}
         imageUrl={workPermitPhotoUrls.workPermitApplicationPhotoUrl || FilePreviewIcon}
       />
     </fieldset>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { SharedLabel } from '@shared/components/SharedLabel';
 
@@ -9,6 +9,7 @@ import './style.css';
 
 export const GenderFields = (): JSX.Element => {
   const { register, setValue, watch } = useFormContext();
+  const { t } = useTranslation('employee-sidebar');
   const [selectedGender, setSelectedGender] = useState<string | null>('male');
 
   const gender = watch('gender');
@@ -23,9 +24,13 @@ export const GenderFields = (): JSX.Element => {
   };
 
   return (
-    <SharedLabel title="Gender:*">
+    <SharedLabel title={t('gender')}>
       <div className={classNames('questionnaire-gender-options')}>
-        <label className={classNames('questionnaire-gender-option', { active: selectedGender === 'male' })}>
+        <label
+          className={classNames('questionnaire-gender-option', {
+            active: selectedGender === 'male',
+          })}
+        >
           <input
             type="radio"
             value="male"
@@ -33,9 +38,13 @@ export const GenderFields = (): JSX.Element => {
             checked={selectedGender === 'male'}
             onChange={handleGenderChange}
           />
-          Male
+          {t('genderMale')}
         </label>
-        <label className={classNames('questionnaire-gender-option', { active: selectedGender === 'female' })}>
+        <label
+          className={classNames('questionnaire-gender-option', {
+            active: selectedGender === 'female',
+          })}
+        >
           <input
             type="radio"
             value="female"
@@ -43,7 +52,7 @@ export const GenderFields = (): JSX.Element => {
             checked={selectedGender === 'female'}
             onChange={handleGenderChange}
           />
-          Female
+          {t('genderFemale')}
         </label>
       </div>
     </SharedLabel>

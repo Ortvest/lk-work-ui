@@ -6,18 +6,20 @@ import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
+import { useTranslation } from "react-i18next";
 
 export const SignInFormBody = (): JSX.Element => {
   const { register } = useFormContext();
+  const { t } = useTranslation('login');
   return (
     <fieldset className={classNames('sign-in-fields-wrapper')}>
-      <SharedLabel title="Email:">
-        <SharedInput type="email" placeholder="Enter your email here..." {...register('email')} />
+      <SharedLabel title={`${t('emailLabel')}:`}>
+        <SharedInput type="email" placeholder={t("emailPlaceholder")} {...register('email')} />
       </SharedLabel>
-      <SharedLabel title="Passoword:">
-        <SharedInput type="password" placeholder="Enter your passoword here..." {...register('password')} />
+      <SharedLabel title={`${t('passwordLabel')}:`}>
+        <SharedInput type="password" placeholder={t("passwordPlaceholder")} {...register('password')} />
       </SharedLabel>
-      <SharedButton type="submit" text="Enter to system" />
+      <SharedButton type="submit" text={t("signInButton")} />
     </fieldset>
   );
 };

@@ -13,8 +13,10 @@ import './styles.css';
 
 import { useSetNewPasswordMutation } from '@global/api/auth/auth.api';
 import { NewPassword } from '@shared/interfaces/User.interfaces';
+import { useTranslation } from "react-i18next";
 
 export const SetNewPasswordForm = (): React.ReactNode => {
+  const { t } = useTranslation('reset-password');
   const { handleSubmit, register } = useForm<NewPassword>({});
   const [setNewPassword] = useSetNewPasswordMutation();
   const [searchParams] = useSearchParams();
@@ -41,18 +43,18 @@ export const SetNewPasswordForm = (): React.ReactNode => {
         style={{ fontSize: '16px', borderRadius: '8px' }}
         type="password"
         {...register('password')}
-        placeholder="Enter the password"
+        placeholder={t("enterPasswordPlaceholder")}
       />
       <SharedInput
         style={{ fontSize: '16px', borderRadius: '8px' }}
         type="password"
         {...register('confirmPassword')}
-        placeholder="Re-enter the password"
+        placeholder={t("reenterPasswordPlaceholder")}
       />
       <SharedButton
         sx={{ borderRadius: '8px', backgroundColor: 'rgba(47, 47, 47, 1)', height: '52px' }}
         type={'submit'}
-        text={'Set password'}
+        text={t("setPasswordButton")}
       />
     </form>
   );

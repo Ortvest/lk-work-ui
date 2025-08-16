@@ -22,8 +22,10 @@ import { useCollectUserUkrainianStatementDocumentMutation } from '@global/api/up
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { UkrainianStatementDocument } from '@shared/interfaces/User.interfaces';
+import { useTranslation } from "react-i18next";
 
 export const UkrainianStatementDocuments = (): JSX.Element => {
+  const {t} = useTranslation('employee-sidebar')
   const ukrainianStatementDocument = useTypedSelector(
     (state) => state.userReducer.user?.documents.ukrainianStatementDocument
   );
@@ -91,8 +93,8 @@ export const UkrainianStatementDocuments = (): JSX.Element => {
               <form className={classNames('statement-document-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Ukrainian statement document"
-                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                  title={t("routeUkrainianStatementDocument")}
+                  subtitle={t("ukrainianStatementSubtitle")}
                 />
                 {isEditModeEnabled ? <UkrainianDocsFormBody /> : <UkrainianDocsPreviewBody />}
               </form>
@@ -105,8 +107,8 @@ export const UkrainianStatementDocuments = (): JSX.Element => {
             <form className={classNames('statement-document-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Ukrainian statement document"
-                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                title={t("routeUkrainianStatementDocument")}
+                subtitle={t("ukrainianStatementSubtitle")}
               />
               {isEditModeEnabled ? <UkrainianDocsFormBody /> : <UkrainianDocsPreviewBody />}
             </form>

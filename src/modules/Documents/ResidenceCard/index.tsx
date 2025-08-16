@@ -24,10 +24,12 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { ResidenceCardDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const ResidenceCard = (): JSX.Element => {
   const residenceCardData = useTypedSelector((state) => state.userReducer.user?.documents.residenceCardDocuments);
 
+  const {t} = useTranslation("employee-sidebar")
   const selectedEmployeeResidenceCardData = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.residenceCardDocuments
   );
@@ -105,8 +107,8 @@ export const ResidenceCard = (): JSX.Element => {
               <form className={classNames('residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Residence Card"
-                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                  title={t("routeResidenceCard")}
+                  subtitle={t("residenceCardSubtitle")}
                 />
                 {isEditModeEnabled ? <ResidenceCardFormBody /> : <ResidenceCardPreviewBody />}
               </form>
@@ -119,8 +121,8 @@ export const ResidenceCard = (): JSX.Element => {
             <form className={classNames('residence-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Residence Card"
-                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                title={t("routeResidenceCard")}
+                subtitle={t("residenceCardSubtitle")}
               />
               {isEditModeEnabled ? <ResidenceCardFormBody /> : <ResidenceCardPreviewBody />}
             </form>

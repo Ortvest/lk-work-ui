@@ -10,6 +10,7 @@ import './style.css';
 
 import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 interface AddCompanyPopupButtonProps {
   setIsOpenedModal: (isOpen: boolean) => void;
@@ -20,6 +21,7 @@ export const AddCompanyPopupButton = ({
   setIsOpenedModal,
   setOpenedPopupType,
 }: AddCompanyPopupButtonProps): React.ReactNode => {
+  const {t} = useTranslation('companies');
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const onOpenPopup = (): void => {
     setIsOpenedModal(true);
@@ -30,7 +32,7 @@ export const AddCompanyPopupButton = ({
       {userRole !== UserRoles.ACCOUNTANT ? (
         <button onClick={onOpenPopup} className={classNames('add-employee-popup-button')}>
           <img src={IconPlus} alt="IconPlus" />
-          <span>Add Company</span>
+          <span>{t("btnAddCompany")}</span>
         </button>
       ) : null}
     </Fragment>

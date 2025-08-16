@@ -23,8 +23,10 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { JobInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const JobInformation = (): JSX.Element => {
+  const { t } = useTranslation("employee-sidebar");
   const jobInfo = useTypedSelector((state) => state.userReducer.user?.jobInfo);
   const selectedEmployeeJobInfo = useTypedSelector((state) => state.employeeReducer.selectedEmployee?.jobInfo);
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
@@ -82,7 +84,7 @@ export const JobInformation = (): JSX.Element => {
             <section className={classNames('job-info')}>
               <form className={classNames('job-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader title="Job Info" subtitle="Leave information about your work" />
+                <SharedSectionHeader title={t("routeJobInfo")} subtitle={t("jobInfoSubtitle")} />
                 {isEditModeEnabled ? <JobInfoFormBody /> : <JobInfoPreviewBody />}
               </form>
             </section>
@@ -93,7 +95,7 @@ export const JobInformation = (): JSX.Element => {
           <section className={classNames('job-info')}>
             <form className={classNames('job-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader title="Job Info" subtitle="Leave information about your work" />
+              <SharedSectionHeader title={t("routeJobInfo")} subtitle={t("jobInfoSubtitle")} />
               {isEditModeEnabled ? <JobInfoFormBody /> : <JobInfoPreviewBody />}
             </form>
           </section>

@@ -10,6 +10,7 @@ import { CompaniesTableHeader } from '@modules/Companies/layout/Header';
 import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 import { OpenedPopupType } from '@pages/Accommodations';
 
+import './styles.css'
 export const CompaniesPage = (): React.ReactNode => {
   // eslint-disable-next-line no-empty-pattern
   const {} = useGetAllWorkCompaniesQuery(undefined);
@@ -17,7 +18,7 @@ export const CompaniesPage = (): React.ReactNode => {
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);
 
   return (
-    <div className={classNames('set-new-password-container')}>
+    <div className={classNames('companies-container')}>
       <CompaniesTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
       <CompaniesTable setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
       {openedPopupType === 'create' ? (

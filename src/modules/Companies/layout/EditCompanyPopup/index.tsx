@@ -1,13 +1,11 @@
 import { Fragment } from 'react';
-
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
 import ReactModal from 'react-modal';
+import { useTranslation } from 'react-i18next';
 
 import { AddCompanyForm } from '@modules/Companies/feature/AddCompanyForm';
-
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
-
 import { SharedButton } from '@shared/components/SharedButton';
 
 import './style.css';
@@ -21,17 +19,25 @@ interface EditCompanyPopupProps {
   isOpen: boolean;
   setIsOpenedModal: (isOpen: boolean) => void;
 }
+
 export const EditCompanyPopup = ({ isOpen, setIsOpenedModal }: EditCompanyPopupProps): JSX.Element => {
+  const { t } = useTranslation('companies');
   const [removeWorkCompany] = useLazyRemoveWorkCompanyQuery();
   const selectedWorkCompany = useTypedSelector((state) => state.workCompanyReducer.selectedWorkCompany);
   const [fetchAllWorkCompanies] = useLazyGetAllWorkCompaniesQuery();
 
-  const onDeleteAccommodation = async (): Promise<void> => {
-    await removeWorkCompany({ workCompanyId: selectedWorkCompany?._id || '' });
-    await fetchAllWorkCompanies(undefined);
-    setIsOpenedModal(false);
-    toast.success('Accommodation was deleted successfully.');
+  const onDeleteCompany = async (): Promise<void> => {
+    try {
+      await removeWorkCompany({ workCompanyId: selectedWorkCompany?._id || '' }).unwrap();
+      await fetchAllWorkCompanies(undefined);
+      setIsOpenedModal(false);
+      toast.success(t('toastCompanyDeleted'));
+    } catch (error) {
+      toast.error(t('toastCompanyDeleteFailed'));
+      console.error(error);
+    }
   };
+
   return (
     <Fragment>
       <ReactModal
@@ -42,13 +48,13 @@ export const EditCompanyPopup = ({ isOpen, setIsOpenedModal }: EditCompanyPopupP
         shouldCloseOnEsc={true}
         isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>Edit company</h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t('popupEditCompanyTitle')}</h1>
         </header>
         <main>
           <AddCompanyForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
         </main>
         <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
-          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete company'} />
+          <SharedButton onClick={onDeleteCompany} type="button" text={t('btnDeleteCompany')} />
         </div>
       </ReactModal>
     </Fragment>

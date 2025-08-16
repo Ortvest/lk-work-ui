@@ -25,6 +25,7 @@ import CalendarArrowRightIcon from '@shared/assets/icons/CalendarArrowRightIcon.
 import './style.css';
 
 import { useSentVacationRequestMutation } from '@global/api/employee/employee.api';
+import { useTranslation } from "react-i18next";
 
 interface BookDayOffModalProps {
   isModalOpen: boolean;
@@ -37,6 +38,7 @@ interface DateRange {
 }
 
 export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModalProps): JSX.Element => {
+  const { t } = useTranslation('employee-sidebar');
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedRanges, setSelectedRanges] = useState<DateRange[]>([]);
   const [tempRange, setTempRange] = useState<{ from?: Date; to?: Date }>({});
@@ -173,7 +175,7 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
     };
     const formattedRanges = formatRanges(selectedRanges);
     await sentVacationRequest({ userId: employeeId, vacationDates: formattedRanges });
-    toast.success('Vacation request sent successfully!');
+    toast.success(t('toastVacationRequestSent'));
     setIsModalOpen(false);
   };
 
@@ -187,7 +189,7 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
         shouldCloseOnEsc={true}
         isOpen={isModalOpen}>
         <header className={classNames('book-day-off-header')}>
-          <h1 className={classNames('book-day-off-popup-title')}>Book a Day Off</h1>
+          <h1 className={classNames('book-day-off-popup-title')}>{t('bookDayOffTitle')}</h1>
         </header>
 
         <div className="calendar-container">
@@ -198,10 +200,10 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
 
         <footer className={classNames('book-day-off-footer')}>
           <button className={classNames('book-day-off-cancel')} onClick={onModalCloseHandler}>
-            Cancel
+            {t("calendarCancelBtn")}
           </button>
           <button className={classNames('book-day-off-submit')} onClick={onSentVacationRequestHanlder}>
-            Book
+            {t("calendarBookBtn")}
           </button>
         </footer>
       </ReactModal>

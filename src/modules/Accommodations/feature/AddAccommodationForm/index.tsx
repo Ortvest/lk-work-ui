@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { AddAccommodationButton } from '@modules/Accommodations/feature/AddAccommodationButton';
 
@@ -24,6 +25,7 @@ interface AddAccommodationFormProps {
 }
 
 export const AddAccommodationForm = ({ setIsOpenedModal, isEditMode }: AddAccommodationFormProps): React.ReactNode => {
+  const { t } = useTranslation('accommodations');
   const selectedAccommodation = useTypedSelector((state) => state.accommodationReducer.selectedAccommodation);
 
   const { handleSubmit, register } = useForm<AddAccommodation | EditAccommodation>({
@@ -39,19 +41,15 @@ export const AddAccommodationForm = ({ setIsOpenedModal, isEditMode }: AddAccomm
     try {
       if (!isEditMode) {
         await createAccommodation({ ...data, price: Number(data.price) }).unwrap();
+        toast.success(t('toastAccommodationAdded'));
       } else {
         await editAccommodation({ ...data, price: Number(data.price), accommodationId: data?._id || '' }).unwrap();
+        toast.success(t('toastAccommodationEdited'));
       }
       setIsOpenedModal(false);
       await fetchAllAccommodations(undefined);
-
-      if (!isEditMode) {
-        toast.success('Accommodation successfully added');
-      } else {
-        toast.success('Accommodation successfully edited');
-      }
     } catch (error) {
-      toast.error('Failed to add accommodation');
+      toast.error(t('toastAccommodationAddFailed'));
       console.error(error);
     }
   };
@@ -59,50 +57,55 @@ export const AddAccommodationForm = ({ setIsOpenedModal, isEditMode }: AddAccomm
   const onCancelHandler = (): void => {
     setIsOpenedModal(false);
   };
+
   return (
     <form className="add-employee-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-email">
-          Accommodation name*
+        <label className="form-field-label" htmlFor="accommodation-name">
+          {t('modalAccommodationNameLabel')}
         </label>
         <input
-          placeholder={'Enter name of accommodation'}
+          placeholder={t('modalAccommodationNamePlaceholder')}
           className="form-field-field"
           {...register('name')}
-          id={'employee-email'}
+          id="accommodation-name"
           type="text"
         />
       </div>
+
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-first-name">
-          Accommodation address*
+        <label className="form-field-label" htmlFor="accommodation-address">
+          {t('modalAccommodationAddressLabel')}
         </label>
         <input
-          placeholder={'Enter address of accommodation'}
+          placeholder={t('modalAccommodationAddressPlaceholder')}
           className="form-field-field"
           {...register('address')}
-          id={'employee-first-name'}
+          id="accommodation-address"
           type="text"
         />
       </div>
+
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Accommodation price*
+        <label className="form-field-label" htmlFor="accommodation-price">
+          {t('modalAccommodationPriceLabel')}
         </label>
         <input
-          placeholder={'Enter price of accommodation'}
+          placeholder={t('modalAccommodationPricePlaceholder')}
           className="form-field-field"
           {...register('price')}
-          id={'employee-second-name'}
+          id="accommodation-price"
           type="text"
         />
       </div>
 
       <div className="form-buttons-wrapper">
-        <button onClick={onCancelHandler} className="cancel-button">
-          Cancel
+        <button onClick={onCancelHandler} className="cancel-button" type="button">
+          {t('modalCancelBtn')}
         </button>
-        <AddAccommodationButton title={isEditMode ? 'Edit Accommodation' : 'Add Accommodation'} />
+        <AddAccommodationButton
+          title={isEditMode ? t('btnEditAccommodation') : t('btnAddAccommodation')}
+        />
       </div>
     </form>
   );

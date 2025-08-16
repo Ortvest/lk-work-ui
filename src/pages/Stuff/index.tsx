@@ -12,6 +12,7 @@ import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 
+import './styles.css'
 export const StuffPage = (): React.ReactNode => {
   const { data } = useFetchAllEmployeesQuery({
     workStatus: UserWorkStatuses.WORKING,
@@ -24,7 +25,7 @@ export const StuffPage = (): React.ReactNode => {
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);
 
   return (
-    <div className={classNames('set-new-password-container')}>
+    <div className={classNames('stuff-container')}>
       <StuffTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
       <StuffTableContent
         setOpenedPopupType={setOpenedPopupType}

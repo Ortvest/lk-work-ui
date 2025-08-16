@@ -11,10 +11,12 @@ import './style.css';
 
 import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 import { positions } from '@shared/mocks/JobInfo.mocks';
+import { useTranslation } from 'react-i18next';
 
 export const JobInfoFormBody = (): JSX.Element => {
   const { register } = useFormContext();
   useGetAllWorkCompaniesQuery(undefined);
+  const { t } = useTranslation("employee-sidebar");
 
   const companies = useTypedSelector((state) => state.workCompanyReducer.workCompanies);
 
@@ -25,14 +27,14 @@ export const JobInfoFormBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('job-info-form-fields-wrapper')}>
-      <SharedLabel title="Company:">
+      <SharedLabel title={t("jobCompany")}>
         <SharedSelect {...register('company')} options={options} />
       </SharedLabel>
-      <SharedLabel title="Position:">
+      <SharedLabel title={t("jobPosition")}>
         <SharedSelect {...register('position')} options={positions} />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle="Date of Commencement:" namePrefix="employmentStartDate" />
-      <SharedDateSelector dateSelectorTitle="Date of Completion:" namePrefix="employmentEndDate" />
+      <SharedDateSelector dateSelectorTitle={t("jobDateOfCommencement")} namePrefix="employmentStartDate" />
+      <SharedDateSelector dateSelectorTitle={t("jobDateOfCompletion")} namePrefix="employmentEndDate" />
     </fieldset>
   );
 };

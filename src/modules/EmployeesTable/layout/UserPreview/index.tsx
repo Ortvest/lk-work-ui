@@ -39,26 +39,32 @@ export const UserPreview = ({
         workStatus={selectedEmployee?.workStatus as string}
       />
       <InfoSection
-        title="Personal Info"
+        titleKey="cardPersonalInfo"
         iconUrl={UserPersonalInfoIcon}
-        rows={[{ label: 'Pesel', value: selectedEmployee?.personalInfo?.peselNumber as string }]}
-      />
-      <InfoSection
-        title="Contact Info"
-        iconUrl={UserContactDataIcon}
         rows={[
-          { label: 'Email', value: selectedEmployee?.personalInfo?.email as string },
-          { label: 'Polish phone number', value: selectedEmployee?.personalInfo?.polishPhoneNumber as string },
-          { label: 'National phone number', value: selectedEmployee?.personalInfo?.nationalPhoneNumber as string },
+          {
+            labelKey: 'cardPesel',
+            value: selectedEmployee?.personalInfo?.peselNumber as string
+          }
         ]}
       />
       <InfoSection
-        title="Work Info"
+        titleKey="cardContactInfo"
+        iconUrl={UserContactDataIcon}
+        rows={[
+          { labelKey: 'cardEmail', value: selectedEmployee?.personalInfo?.email as string },
+          { labelKey: 'cardPolishPhone', value: selectedEmployee?.personalInfo?.polishPhoneNumber as string },
+          { labelKey: 'cardNationalPhone', value: selectedEmployee?.personalInfo?.nationalPhoneNumber as string },
+        ]}
+      />
+
+      <InfoSection
+        titleKey="cardWorkInfo"
         iconUrl={UserWorkInfoIcon}
         rows={[
-          { label: 'Company', value: selectedEmployee?.jobInfo.company as string },
-          { label: 'Position', value: selectedEmployee?.jobInfo.position as string },
-          { label: 'Hire Date', value: selectedEmployee?.jobInfo.employmentStartDate as string },
+          { labelKey: 'cardCompany', value: selectedEmployee?.jobInfo.company as string },
+          { labelKey: 'cardPosition', value: selectedEmployee?.jobInfo.position as string },
+          { labelKey: 'cardHireDate', value: selectedEmployee?.jobInfo.employmentStartDate as string },
         ]}
       />
       <PrintDocumentsButton setIsUserDocumentsDrawerOpen={setIsUserDocumentsDrawerOpen} />

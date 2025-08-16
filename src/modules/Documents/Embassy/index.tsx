@@ -24,9 +24,11 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { EmbassyDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const Embassy = (): JSX.Element => {
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation('employee-sidebar');
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const isEditModeEnabled = useTypedSelector((state) => state.CommonReducer.isEditModeEnabled);
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
@@ -160,12 +162,12 @@ export const Embassy = (): JSX.Element => {
             <section className={classNames('embassy')}>
               <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader title="Embassy" subtitle="Leave information about your work" />
+                <SharedSectionHeader title={t('routeEmbassy')} subtitle={t('embassyInfoSubtitle')} />
                 {renderEmbassyContent()}
                 {isEditModeEnabled && (
                   <div className="embassy-button-wrapper">
                     <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
-                      + Add a document
+                      + {t('embassyAddDocument')}
                     </button>
                   </div>
                 )}
@@ -178,12 +180,12 @@ export const Embassy = (): JSX.Element => {
           <section className={classNames('embassy')}>
             <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader title="Embassy" subtitle="Leave information about your work" />
+              <SharedSectionHeader title={t('routeEmbassy')} subtitle={t('embassyInfoSubtitle')} />
               {renderEmbassyContent()}
               {isEditModeEnabled && (
                 <div className="embassy-button-wrapper">
                   <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
-                    + Add a document
+                    + {t('embassyAddDocument')}
                   </button>
                 </div>
               )}

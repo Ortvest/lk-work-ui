@@ -6,12 +6,14 @@ import ReactModal from 'react-modal';
 import { AddAccommodationForm } from '@modules/Accommodations/feature/AddAccommodationForm';
 
 import './style.css';
+import { useTranslation } from "react-i18next";
 
 interface AddAccommodationPopupProps {
   isOpen: boolean;
   setIsOpenedModal: (isOpen: boolean) => void;
 }
 export const AddAccommodationPopup = ({ isOpen, setIsOpenedModal }: AddAccommodationPopupProps): JSX.Element => {
+  const { t } = useTranslation('accommodations');
   return (
     <Fragment>
       <ReactModal
@@ -22,7 +24,7 @@ export const AddAccommodationPopup = ({ isOpen, setIsOpenedModal }: AddAccommoda
         shouldCloseOnEsc={true}
         isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>Create accommodation</h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t("btnAddAccommodation")}</h1>
         </header>
         <main>
           <AddAccommodationForm isEditMode={false} setIsOpenedModal={setIsOpenedModal} />

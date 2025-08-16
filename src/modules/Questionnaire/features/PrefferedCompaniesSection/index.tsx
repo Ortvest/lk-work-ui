@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
-
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -15,6 +15,7 @@ import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-compa
 
 export const PrefferedCompaniesSection = (): JSX.Element => {
   const { register } = useFormContext();
+  const { t } = useTranslation('employee-sidebar');
 
   useGetAllWorkCompaniesQuery(undefined);
 
@@ -28,11 +29,11 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
   return (
     <Fragment>
       <SharedSectionHeader
-        title="Which company do you want to work for?"
-        subtitle="Indicate your preferences, choose one or more companies"
+        title={t('whichCompanyWorkFor')}
+        subtitle={t('indicatePreferences')}
       />
       <fieldset className={classNames('questionnaire-preffered-companies-fields-wrapper')}>
-        <SharedLabel title="Select companies:*">
+        <SharedLabel title={t('companiesSelectLabel')}>
           <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={options} />
         </SharedLabel>
       </fieldset>

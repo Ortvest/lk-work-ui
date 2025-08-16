@@ -22,8 +22,10 @@ import { useLazyGetAllAccommodationsQuery } from '@global/api/accommodations/acc
 import { useCollectUserAddressMutation } from '@global/api/updateUserData/collectData.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { Address } from '@shared/interfaces/User.interfaces';
+import { useTranslation } from "react-i18next";
 
 export const Location = (): React.ReactNode => {
+  const {t} = useTranslation("employee-sidebar")
   const locationInfo = useTypedSelector((state) => state.userReducer.user?.address);
   const selectedEmployeeLocationInfo = useTypedSelector((state) => state.employeeReducer.selectedEmployee?.address);
 
@@ -81,7 +83,9 @@ export const Location = (): React.ReactNode => {
   };
 
   useEffect(() => {
-    onFetchAllAccommodationsHanlder();
+    (async (): Promise<void> => {
+      await onFetchAllAccommodationsHanlder();
+    })()
   }, []);
 
   return (
@@ -94,8 +98,8 @@ export const Location = (): React.ReactNode => {
               <form className={classNames('location-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Location"
-                  subtitle="Fill in information about your actual place of residence"
+                  title={t("routeLocation")}
+                  subtitle={t("routeLocationDescription")}
                 />
                 {isEditModeEnabled ? <LocationFormBody /> : <LocationPreviewBody />}
               </form>
@@ -108,8 +112,8 @@ export const Location = (): React.ReactNode => {
             <form className={classNames('location-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Location"
-                subtitle="Fill in information about your actual place of residence"
+                title={t("routeLocation")}
+                subtitle={t("routeLocationDescription")}
               />
               {isEditModeEnabled ? <LocationFormBody /> : <LocationPreviewBody />}
             </form>

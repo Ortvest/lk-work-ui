@@ -27,8 +27,10 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { PassportDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const Passport = (): JSX.Element => {
+  const {t} = useTranslation('employee-sidebar')
   const passportDocumentsData = useTypedSelector((state) => state.userReducer.user?.documents.passportDocuments);
   const selectedEmployeePassportDocumentsData = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.passportDocuments
@@ -122,7 +124,7 @@ export const Passport = (): JSX.Element => {
             <section className={classNames('passport')}>
               <form className={classNames('passport-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader title="Passport" subtitle="Fill in your passport details" />
+                <SharedSectionHeader title={t("routePassport")} subtitle={t("passportDetailsSubtitle")} />
                 {isEditModeEnabled ? <PassportFormBody /> : <PassportPreviewBody />}
               </form>
             </section>
@@ -133,7 +135,7 @@ export const Passport = (): JSX.Element => {
           <section className={classNames('passport')}>
             <form className={classNames('passport-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader title="Passport" subtitle="Fill in your passport details" />
+              <SharedSectionHeader title={t("routePassport")} subtitle={t("passportDetailsSubtitle")} />
               {isEditModeEnabled ? <PassportFormBody /> : <PassportPreviewBody />}
             </form>
           </section>

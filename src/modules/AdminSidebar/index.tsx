@@ -1,11 +1,7 @@
 import { useMemo, useState } from 'react';
-
 import classNames from 'classnames';
-
 import { AppRoutes } from '@global/router/routes.constans';
-
 import { AdminSidebarItem } from '@modules/AdminSidebar/layout/Item';
-
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import IconEmployees from '@shared/assets/icons/IconEmployees.svg';
@@ -17,6 +13,8 @@ import IconUserProfile from '@shared/assets/icons/IconUserProfile.svg';
 import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg';
 
 import './style.css';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcherDropdown } from "@shared/components/LanguageSwitcherDropdown";
 
 export const RouteScopes = {
   TOP: 'top',
@@ -62,26 +60,28 @@ const sidebarRoutes = [
 ];
 
 export const AdminSidebar = (): JSX.Element => {
+  const { t } = useTranslation();
   const topRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.TOP), []);
   const bottomRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.BOTTOM), []);
   const [isWorkerInfoVisible, setIsWorkerInfoVisible] = useState(false);
   const personalData = useTypedSelector((state) => state.userReducer.user);
+
   const onProfileClickHandler = (): void => {
     setIsWorkerInfoVisible(!isWorkerInfoVisible);
-    console.log(isWorkerInfoVisible);
   };
 
   return (
     <section className={classNames('admin-sidebar')}>
       <nav className={classNames('admin-sidebar-navigation')}>
         <div className={classNames('admin-sidebar-top-routes')}>
+          <LanguageSwitcherDropdown/>
           {topRoutes.map(({ icon, label, path, selectedIcon }, i) => (
-            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />
+            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={t(label)} key={i} />
           ))}
         </div>
         <div className={classNames('admin-sidebar-bottom-routes')} onClick={onProfileClickHandler}>
           {bottomRoutes.map(({ icon, label, path, selectedIcon }, i) => (
-            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={label} key={i} />
+            <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={t(label)} key={i} />
           ))}
           {isWorkerInfoVisible && (
             <div className="worker-info-popup">

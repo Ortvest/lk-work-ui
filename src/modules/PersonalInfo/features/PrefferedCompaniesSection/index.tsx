@@ -13,9 +13,11 @@ import './style.css';
 
 import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const PrefferedCompaniesSection = (): JSX.Element => {
   const { register } = useFormContext();
+  const {t} = useTranslation("employee-sidebar")
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
 
@@ -39,8 +41,8 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
   return (
     <Fragment>
       <SharedSectionHeader
-        title="Which company do you want to work for?"
-        subtitle="Indicate your preferences, choose one or more companies"
+        title={t("whichCompanyWorkFor")}
+        subtitle={t("indicatePreferences")}
       />
       <fieldset className={classNames('preffered-companies-fields-wrapper')}>
         {isEditModeEnabled ? (
@@ -48,7 +50,7 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
             <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={options} />
           </SharedLabel>
         ) : (
-          <SharedLabel title="Companies:">
+          <SharedLabel title={t("companies")}>
             {currentDataOrigin?.whichCompanyDoYouWantWorkFor
               ? currentDataOrigin?.whichCompanyDoYouWantWorkFor?.map((company, index: number) => (
                   <span className={classNames('preffered-companies-text')} key={index}>

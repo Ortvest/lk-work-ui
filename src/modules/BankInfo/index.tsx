@@ -21,8 +21,10 @@ import './style.css';
 import { useCollectUserBankInfoMutation } from '@global/api/updateUserData/collectData.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { BankInfo } from '@shared/interfaces/User.interfaces';
+import { useTranslation } from "react-i18next";
 
 export const BankInformation = (): JSX.Element => {
+  const { t } = useTranslation("employee-sidebar");
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const [collectUserBankInfo] = useCollectUserBankInfoMutation();
@@ -70,7 +72,7 @@ export const BankInformation = (): JSX.Element => {
             <section className={classNames('bank-info')}>
               <form className={classNames('bank-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader title="Bank Info" subtitle="Leave information about your bank" />
+                <SharedSectionHeader title={t("routeBankInfo")} subtitle={t("bankSubtitle")} />
                 {isEditModeEnabled ? <BankInfoFormBody /> : <BankInfoPreviewBody />}
               </form>
             </section>
@@ -81,7 +83,7 @@ export const BankInformation = (): JSX.Element => {
           <section className={classNames('bank-info')}>
             <form className={classNames('bank-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader title="Bank Info" subtitle="Leave information about your bank" />
+              <SharedSectionHeader title={t("routeBankInfo")} subtitle={t("bankSubtitle")} />
               {isEditModeEnabled ? <BankInfoFormBody /> : <BankInfoPreviewBody />}
             </form>
           </section>

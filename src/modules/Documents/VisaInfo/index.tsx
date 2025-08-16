@@ -24,10 +24,12 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { VisaInformationDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const VisaInfo = (): JSX.Element => {
   const visaInformation = useTypedSelector((state) => state.userReducer.user?.documents.visaInformationDocuments);
 
+  const {t} = useTranslation('employee-sidebar');
   const selectedEmployeeVisaInformation = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.visaInformationDocuments
   );
@@ -98,8 +100,8 @@ export const VisaInfo = (): JSX.Element => {
               <form className={classNames('visa-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Visa Information"
-                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                  title={t("routeVisaInfo")}
+                  subtitle={t("visaInfoSubtitle")}
                 />
                 {isEditModeEnabled ? <VisaInfoFormBody /> : <VisaInfoPreviewBody />}
               </form>
@@ -112,8 +114,8 @@ export const VisaInfo = (): JSX.Element => {
             <form className={classNames('visa-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Visa Information"
-                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                title={t("routeVisaInfo")}
+                subtitle={t("visaInfoSubtitle")}
               />
               {isEditModeEnabled ? <VisaInfoFormBody /> : <VisaInfoPreviewBody />}
             </form>

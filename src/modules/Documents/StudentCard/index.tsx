@@ -24,8 +24,10 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { EducationDocuments } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const StudentCard = (): JSX.Element => {
+  const {t} = useTranslation('employee-sidebar')
   const studentCardData = useTypedSelector((state) => state.userReducer.user?.documents.educationDocuments);
 
   const selectedEmployeeStudentCardData = useTypedSelector(
@@ -101,8 +103,8 @@ export const StudentCard = (): JSX.Element => {
               <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Student Card"
-                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                  title={t("routeStudentCard")}
+                  subtitle={t("studentCardSubtitle")}
                 />
                 {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
               </form>
@@ -115,8 +117,8 @@ export const StudentCard = (): JSX.Element => {
             <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Student Card"
-                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                title={t("routeStudentCard")}
+                subtitle={t("studentCardSubtitle")}
               />
               {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
             </form>

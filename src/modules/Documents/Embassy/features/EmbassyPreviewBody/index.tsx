@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
@@ -8,7 +8,6 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
-
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 
 interface EmbassyPreviewBodyProps {
@@ -18,10 +17,11 @@ interface EmbassyPreviewBodyProps {
 }
 
 export const EmbassyPreviewBody = ({
-  embassyFirstDocumentFileKey,
-  embassySecondDocumentFileKey,
-  embassyDateOfIssue,
-}: EmbassyPreviewBodyProps): JSX.Element => {
+                                     embassyFirstDocumentFileKey,
+                                     embassySecondDocumentFileKey,
+                                     embassyDateOfIssue,
+                                   }: EmbassyPreviewBodyProps): JSX.Element => {
+  const { t } = useTranslation('employee-sidebar');
   const [embassyPhotoUrls, setEmbassyPhotoUrls] = useState({
     firstPhotoUrl: '',
     seсondPhotoUrl: '',
@@ -49,13 +49,13 @@ export const EmbassyPreviewBody = ({
     <fieldset className={classNames('embassy-preview-fields-wrapper')}>
       <SharedImagePreview
         imageUrl={embassyPhotoUrls.firstPhotoUrl || FilePreviewIcon}
-        imageName="Embassy first document"
+        imageName={t('embassyFirstDocument')}
       />
       <SharedImagePreview
         imageUrl={embassyPhotoUrls.seсondPhotoUrl || FilePreviewIcon}
-        imageName="Embassy second document"
+        imageName={t('embassySecondDocument')}
       />
-      <SharedLabel title="Date of issue:">
+      <SharedLabel title={t('dateOfIssue')}>
         <span>{embassyDateOfIssue || '-'}</span>
       </SharedLabel>
     </fieldset>

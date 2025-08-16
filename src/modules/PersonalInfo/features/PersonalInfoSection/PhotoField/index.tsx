@@ -13,8 +13,10 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const PhotoField = (): JSX.Element => {
+  const {t} = useTranslation("employee-sidebar")
   const { register, setValue } = useFormContext();
   const [preview, setPreview] = useState('');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
@@ -87,7 +89,7 @@ export const PhotoField = (): JSX.Element => {
   return (
     <Fragment>
       {isEditModeEnabled ? (
-        <SharedLabel title="Photo:*">
+        <SharedLabel title={t('userPhoto')}>
           <div className={classNames('photo-field-wrapper')}>
             <div className={classNames('photo-field-preview')}>
               {preview ? (
@@ -110,12 +112,12 @@ export const PhotoField = (): JSX.Element => {
               accept="image/*"
             />
             <button type="button" className={classNames('photo-field-button')} onClick={handleUploadButtonClick}>
-              Upload Photo
+              {t('uploadPhoto')}
             </button>
           </div>
         </SharedLabel>
       ) : (
-        <SharedLabel title="User photo:">
+        <SharedLabel title={t('userPhoto')}>
           <span>
             {userPhoto ? (
               <img className={classNames('photo-field-img')} src={userPhoto || AlertIcon} alt="user-photo" />

@@ -7,6 +7,7 @@ import { AddAccommodationPopupButton } from '@modules/Accommodations/feature/Add
 import './style.css';
 
 import { OpenedPopupType } from '@pages/Accommodations';
+import { useTranslation } from "react-i18next";
 
 interface AccommodationsTableHeaderProps {
   setIsOpenedModal: (isOpen: boolean) => void;
@@ -16,11 +17,12 @@ export const AccommodationsTableHeader = ({
   setIsOpenedModal,
   setOpenedPopupType,
 }: AccommodationsTableHeaderProps): React.ReactNode => {
+  const { t } = useTranslation('accommodations');
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
         <div>
-          <h1 className={classNames('employees-table-header-title')}>Accommodations</h1>
+          <h1 className={classNames('employees-table-header-title')}>{t("accommodationsTitle")}</h1>
         </div>
       </section>
       <section className={classNames('employees-table-header-content')}>

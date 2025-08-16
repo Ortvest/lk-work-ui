@@ -24,10 +24,12 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { DrivingLicenseDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const DrivingLicence = (): JSX.Element => {
   const drivingLicenceData = useTypedSelector((state) => state.userReducer.user?.documents.drivingLicenceDocuments);
 
+  const {t} = useTranslation('employee-sidebar')
   const selectedEmployeeDrivingLicenceData = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.drivingLicenceDocuments
   );
@@ -102,8 +104,8 @@ export const DrivingLicence = (): JSX.Element => {
               <form className={classNames('driving-licence-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Driving Licence"
-                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                  title={t("routeDrivingLicence")}
+                  subtitle={t("drivingLicenceSubtitle")}
                 />
                 {isEditModeEnabled ? <DrivingLicenceFormBody /> : <DrivingLicencePreviewBody />}
               </form>
@@ -116,8 +118,8 @@ export const DrivingLicence = (): JSX.Element => {
             <form className={classNames('driving-licence-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Driving Licence"
-                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                title={t("routeDrivingLicence")}
+                subtitle={t("drivingLicenceSubtitle")}
               />
               {isEditModeEnabled ? <DrivingLicenceFormBody /> : <DrivingLicencePreviewBody />}
             </form>

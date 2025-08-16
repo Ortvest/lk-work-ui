@@ -24,9 +24,11 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { WorkPermissionDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
+import { useTranslation } from "react-i18next";
 
 export const WorkPermission = (): JSX.Element => {
   const dispatch = useTypedDispatch();
+  const {t} = useTranslation('employee-sidebar')
   const [uploadfile] = useUploadPhotoMutation();
   const [collectUserWorkPermissionData] = useCollectUserWorkPermitDataMutation();
 
@@ -107,8 +109,8 @@ export const WorkPermission = (): JSX.Element => {
               <form className={classNames('work-permission-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title="Work Permission"
-                  subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                  title={t("routeWorkPermission")}
+                  subtitle={t("workPermissionSubtitle")}
                 />
                 {isEditModeEnabled ? <WorkPermissionFormBody /> : <WorkPermissionPreviewBody />}
               </form>
@@ -121,8 +123,8 @@ export const WorkPermission = (): JSX.Element => {
             <form className={classNames('work-permission-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title="Work Permission"
-                subtitle="Leave a photo of the document. Make sure the document is in good quality."
+                title={t("routeWorkPermission")}
+                subtitle={t("workPermissionSubtitle")}
               />
               {isEditModeEnabled ? <WorkPermissionFormBody /> : <WorkPermissionPreviewBody />}
             </form>

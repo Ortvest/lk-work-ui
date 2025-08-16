@@ -16,12 +16,14 @@ import {
   useLazyGetAllAccommodationsQuery,
   useLazyRemoveAccommodationQuery,
 } from '@global/api/accommodations/accommodation.api';
+import { useTranslation } from "react-i18next";
 
 interface EditAccommodationPopupProps {
   isOpen: boolean;
   setIsOpenedModal: (isOpen: boolean) => void;
 }
 export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommodationPopupProps): JSX.Element => {
+  const { t } = useTranslation('accommodations');
   const [removeAccommodation] = useLazyRemoveAccommodationQuery();
   const selectedAccommodation = useTypedSelector((state) => state.accommodationReducer.selectedAccommodation);
   const [fetchAllAccommodations] = useLazyGetAllAccommodationsQuery();
@@ -30,7 +32,8 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
     await removeAccommodation({ accommodationId: selectedAccommodation?._id ?? '' });
     await fetchAllAccommodations(undefined);
     setIsOpenedModal(false);
-    toast.success('Accommodation was deleted successfully.');
+    toast.success(t('toastAccommodationDeleted'));
+
   };
   return (
     <Fragment>
@@ -42,13 +45,13 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
         shouldCloseOnEsc={true}
         isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>Edit accommodation</h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t("modalEditAccommodation")}</h1>
         </header>
         <main>
           <AddAccommodationForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
         </main>
         <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
-          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={'Delete accommodation'} />
+          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={t("deleteAccommodation")} />
         </div>
       </ReactModal>
     </Fragment>

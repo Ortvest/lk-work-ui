@@ -6,9 +6,11 @@ import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const EmailField = (): JSX.Element => {
   const { register } = useFormContext();
+  const {t} = useTranslation("employee-sidebar")
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
 
@@ -21,9 +23,9 @@ export const EmailField = (): JSX.Element => {
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   return (
-    <SharedLabel title="Email:*">
+    <SharedLabel title={t("email")}>
       {isEditModeEnabled ? (
-        <SharedInput type="email" {...register('email')} placeholder="Enter your first email..." />
+        <SharedInput type="email" {...register('email')} placeholder={t("placeholderFirstEmail")} />
       ) : (
         <span>{currentDataOrigin?.email || '-'}</span>
       )}

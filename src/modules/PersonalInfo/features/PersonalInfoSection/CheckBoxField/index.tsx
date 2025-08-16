@@ -10,8 +10,10 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const CheckBoxField = (): JSX.Element => {
+  const {t} = useTranslation("employee-sidebar")
   const { register } = useFormContext();
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const userData = useTypedSelector((state) => state.userReducer.user);
@@ -31,8 +33,8 @@ export const CheckBoxField = (): JSX.Element => {
         </section>
       ) : (
         <div className={classNames('email-consert-wrapper')}>
-          <SharedLabel title="Consent to send the PIT by e-mail:">
-            <span>{currentDataOrigin?.consentToEmailPIT ? 'Yes' : 'No'}</span>
+          <SharedLabel title={t("consentToSendPit")}>
+            <span>{currentDataOrigin?.consentToEmailPIT ? t("yes") : t("no")}</span>
           </SharedLabel>
         </div>
       )}
