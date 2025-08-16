@@ -111,5 +111,7 @@
   "passwordReset": "Resetuj hasło",
   "resetButton": "Resetuj",
   "resetSubtitle": "Po kliknięciu „Resetuj” otrzymasz e-mail z linkiem do zmiany hasła.",
-  "logout": "Wyloguj się"
+  "logout": "Wyloguj się",
+  "routeStuff": "Personel"
+
 }
