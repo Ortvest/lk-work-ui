@@ -8,18 +8,27 @@ import { UserPreviewToolbar } from '@modules/EmployeesTable/layout/UserPreview/l
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
-import { UserDocumentsStatus } from '@shared/enums/user.enums';
+import UserContactDataIcon from '@shared/assets/icons/UserContactDataIcon.svg';
+import UserPersonalInfoIcon from '@shared/assets/icons/UserPersonalInfoIcon.svg';
+import UserWorkInfoIcon from '@shared/assets/icons/UserWorkInfoIcon.svg';
 
 interface UserPreviewProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
   setIsUserDocumentsDrawerOpen: (isOpen: boolean) => void;
+  setIsFireUserDrawerOpen: (isOpen: boolean) => void;
 }
-export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: UserPreviewProps): React.ReactNode => {
+export const UserPreview = ({
+  setIsDrawerOpen,
+  setIsUserDocumentsDrawerOpen,
+  setIsFireUserDrawerOpen,
+}: UserPreviewProps): React.ReactNode => {
   const { selectedEmployee } = useTypedSelector((state) => state.employeeReducer);
+
   return (
     <article style={{ position: 'relative' }}>
       <UserPreviewHeader
         setIsDrawerOpen={setIsDrawerOpen}
+        setIsFireUserDrawerOpen={setIsFireUserDrawerOpen}
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}
       />
       <UserPreviewPersonalData
@@ -27,22 +36,35 @@ export const UserPreview = ({ setIsDrawerOpen, setIsUserDocumentsDrawerOpen }: U
         dateOfBirth={selectedEmployee?.personalInfo?.dateOfBirth as string}
         nationality={selectedEmployee?.personalInfo?.nationality as string}
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}
-        documentStatus={selectedEmployee?.documentStatus as UserDocumentsStatus}
+        workStatus={selectedEmployee?.workStatus as string}
       />
       <InfoSection
-        title="Contact Info"
+        titleKey="cardPersonalInfo"
+        iconUrl={UserPersonalInfoIcon}
         rows={[
-          { label: 'Email', value: selectedEmployee?.personalInfo?.email as string },
-          { label: 'Polish phone number', value: selectedEmployee?.personalInfo?.polishPhoneNumber as string },
-          { label: 'National phone number', value: selectedEmployee?.personalInfo?.nationalPhoneNumber as string },
+          {
+            labelKey: 'cardPesel',
+            value: selectedEmployee?.personalInfo?.peselNumber as string,
+          },
         ]}
       />
       <InfoSection
-        title="Work Info"
+        titleKey="cardContactInfo"
+        iconUrl={UserContactDataIcon}
         rows={[
-          { label: 'Company', value: selectedEmployee?.jobInfo.company as string },
-          { label: 'Position', value: selectedEmployee?.jobInfo.position as string },
-          { label: 'Hire Date', value: selectedEmployee?.jobInfo.employmentStartDate as string },
+          { labelKey: 'cardEmail', value: selectedEmployee?.personalInfo?.email as string },
+          { labelKey: 'cardPolishPhone', value: selectedEmployee?.personalInfo?.polishPhoneNumber as string },
+          { labelKey: 'cardNationalPhone', value: selectedEmployee?.personalInfo?.nationalPhoneNumber as string },
+        ]}
+      />
+
+      <InfoSection
+        titleKey="cardWorkInfo"
+        iconUrl={UserWorkInfoIcon}
+        rows={[
+          { labelKey: 'cardCompany', value: selectedEmployee?.jobInfo.company as string },
+          { labelKey: 'cardPosition', value: selectedEmployee?.jobInfo.position as string },
+          { labelKey: 'cardHireDate', value: selectedEmployee?.jobInfo.employmentStartDate as string },
         ]}
       />
       <PrintDocumentsButton setIsUserDocumentsDrawerOpen={setIsUserDocumentsDrawerOpen} />

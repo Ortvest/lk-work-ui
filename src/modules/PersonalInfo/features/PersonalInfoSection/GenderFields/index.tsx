@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -9,13 +10,23 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 
 import './style.css';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const GenderFields = (): JSX.Element => {
   const { register, setValue, watch } = useFormContext();
   const [selectedGender, setSelectedGender] = useState<string | null>('male');
-
+  const { t } = useTranslation('employee-sidebar');
   const gender = watch('gender');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   useEffect(() => {
     setSelectedGender(gender);
@@ -26,8 +37,10 @@ export const GenderFields = (): JSX.Element => {
     setValue('gender', event.target.value);
   };
 
+  const genderKey =
+    currentDataOrigin?.gender === 'male' ? 'genderMale' : currentDataOrigin?.gender === 'female' ? 'genderFemale' : '-';
   return (
-    <SharedLabel title="Gender:*">
+    <SharedLabel title={t('gender')}>
       {isEditModeEnabled ? (
         <div className={classNames('gender-options')}>
           <label className={classNames('gender-option', { active: selectedGender === 'male' })}>
@@ -38,8 +51,9 @@ export const GenderFields = (): JSX.Element => {
               checked={selectedGender === 'male'}
               onChange={handleGenderChange}
             />
-            Male
+            {t('genderMale')}
           </label>
+
           <label className={classNames('gender-option', { active: selectedGender === 'female' })}>
             <input
               type="radio"
@@ -48,11 +62,11 @@ export const GenderFields = (): JSX.Element => {
               checked={selectedGender === 'female'}
               onChange={handleGenderChange}
             />
-            Female
+            {t('genderFemale')}
           </label>
         </div>
       ) : (
-        <span className={classNames('gender-value')}>{personalInfo?.gender || '-'}</span>
+        <span className={classNames('gender-value')}>{genderKey === '-' ? '-' : t(genderKey)}</span>
       )}
     </SharedLabel>
   );

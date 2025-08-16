@@ -1,25 +1,41 @@
 import React from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import './style.css';
 
+import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+
 interface SwitchTableButtonProps {
-  text: string;
+  translationKey: string; // ключ у JSON, напр. "hired", "fired", "onVacation", "vacationRequests"
+  targetTab: EmployeeTableTab; // яку вкладку вмикаємо при кліку
   isActive: boolean;
-  setSelectedTable: (selectedTable: 'hired' | 'fired') => void;
+  setSelectedTable: (selectedTable: EmployeeTableTab) => void;
+  setVacationType: (selectedType: EmployeeTableTab) => void;
+  count?: number; // опційно — для "vacationRequests"
 }
-export const SwitchTableButton = ({ text, isActive, setSelectedTable }: SwitchTableButtonProps): React.ReactNode => {
-  const onSetSelectedTable = (): void => {
-    if (text === 'Fired') {
-      setSelectedTable('fired');
-    } else {
-      setSelectedTable('hired');
+
+export const SwitchTableButton = ({
+  translationKey,
+  targetTab,
+  isActive,
+  setSelectedTable,
+  setVacationType,
+  count,
+}: SwitchTableButtonProps): React.ReactNode => {
+  const { t } = useTranslation('employees-table');
+
+  const onClick = (): void => {
+    setSelectedTable(targetTab);
+    if (targetTab === EmployeeTableTabs.ON_VACATION || targetTab === EmployeeTableTabs.VACATION_REQUESTS) {
+      setVacationType(targetTab);
     }
   };
+
   return (
-    <button onClick={onSetSelectedTable} className={classNames('switch-table-button', { active: isActive })}>
-      {text}
+    <button onClick={onClick} className={classNames('switch-table-button', { active: isActive })}>
+      {typeof count === 'number' ? t(translationKey, { count }) : t(translationKey)}
     </button>
   );
 };

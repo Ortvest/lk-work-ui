@@ -1,131 +1,198 @@
+import { Fragment, useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { EmbassyFormBody } from '@modules/Documents/Embassy/features/EmbassyFormBody';
 import { EmbassyPreviewBody } from '@modules/Documents/Embassy/features/EmbassyPreviewBody';
+import { Sidebar } from '@modules/Sidebar';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
 import { useCollectUserEmbassyDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
-import { EmbassyDocument, EmbassyNotUploadedData } from '@shared/interfaces/User.interfaces';
+import { UserRoles } from '@shared/enums/user.enums';
+import { EmbassyDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
+import { datePartsParser } from '@shared/utils/datePartsParser';
 
 export const Embassy = (): JSX.Element => {
-  const methods = useForm<EmbassyNotUploadedData>({
-    defaultValues: {
-      documents: [{}],
-    },
-  });
+  const dispatch = useTypedDispatch();
+  const { t } = useTranslation('employee-sidebar');
+  const { setIsEditModeEnabled } = CommonSlice.actions;
+  const isEditModeEnabled = useTypedSelector((state) => state.CommonReducer.isEditModeEnabled);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
+  const embassyDocuments = useTypedSelector((state) => state.userReducer.user?.documents.embassyDocuments);
+
+  const selectedEmployeeEmbassyDocuments = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.embassyDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? embassyDocuments : selectedEmployeeEmbassyDocuments;
+
   const [uploadfile] = useUploadPhotoMutation();
   const [collectEmbassyData] = useCollectUserEmbassyDataMutation();
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
-  const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
-  const { setIsEditModeEnabled } = CommonSlice.actions;
-  const dispatch = useTypedDispatch();
-  const embassyDocuments = useTypedSelector((state) => state.userReducer.user?.documents.embassyDocuments);
+
+  const methods = useForm<{ documents: EmbassyDocument[] }>({
+    defaultValues: {
+      documents: currentDataOrigin?.map((doc) => ({
+        embassyFirstDocumentFileKey: doc.embassyFirstDocumentFileKey || '',
+        embassySecondDocumentFileKey: doc.embassySecondDocumentFileKey || '',
+        embassyDateOfIssue: datePartsParser(doc.embassyDateOfIssue),
+      })) || [{}],
+    },
+  });
+
   const { fields, append } = useFieldArray({
     control: methods.control,
     name: 'documents',
   });
 
-  const onSaveHandler = async (data: EmbassyNotUploadedData): Promise<void> => {
+  useEffect(() => {
+    if (currentDataOrigin && currentDataOrigin.length) {
+      methods.reset({
+        documents: currentDataOrigin.map((doc) => ({
+          embassyFirstDocumentFileKey: doc.embassyFirstDocumentFileKey || '',
+          embassySecondDocumentFileKey: doc.embassySecondDocumentFileKey || '',
+          embassyDateOfIssue: datePartsParser(doc.embassyDateOfIssue),
+        })),
+      });
+    }
+  }, [currentDataOrigin]);
+
+  const onSaveHandler = async (data: { documents: EmbassyDocument[] }): Promise<void> => {
     if (!employeeId) return;
 
     try {
       const result: EmbassyDocument[] = [];
 
-      for (const document of data.documents) {
-        let firstFileKey;
-        if (document.embassyFirstDocumentPhoto) {
+      for (let i = 0; i < data.documents.length; i++) {
+        const current = data.documents[i];
+        const previous = currentDataOrigin?.[i];
+
+        let firstFileKey =
+          typeof current.embassyFirstDocumentFileKey === 'string' ? current.embassyFirstDocumentFileKey : undefined;
+
+        if (current.embassyFirstDocumentFileKey instanceof File) {
           const formData = new FormData();
-          formData.append('file', document.embassyFirstDocumentPhoto);
-          const response = await uploadfile(formData).unwrap();
-          firstFileKey = response?.fileKey;
+          formData.append('file', current.embassyFirstDocumentFileKey);
+          const res = await uploadfile(formData).unwrap();
+          firstFileKey = res.fileKey;
+        } else if (!firstFileKey && previous?.embassyFirstDocumentFileKey) {
+          firstFileKey = previous.embassyFirstDocumentFileKey as string;
         }
 
-        let secondFileKey;
-        if (document.embassySecondDocumentPhoto) {
+        let secondFileKey =
+          typeof current.embassySecondDocumentFileKey === 'string' ? current.embassySecondDocumentFileKey : undefined;
+
+        if (current.embassySecondDocumentFileKey instanceof File) {
           const formData = new FormData();
-          formData.append('file', document.embassySecondDocumentPhoto);
-          const response = await uploadfile(formData).unwrap();
-          secondFileKey = response?.fileKey;
+          formData.append('file', current.embassySecondDocumentFileKey);
+          const res = await uploadfile(formData).unwrap();
+          secondFileKey = res.fileKey;
+        } else if (!secondFileKey && previous?.embassySecondDocumentFileKey) {
+          secondFileKey = previous.embassySecondDocumentFileKey as string;
         }
 
-        const parsedDate = dateParser(JSON.stringify(document.embassyDateOfIssue));
+        const dateOfIssue = current.embassyDateOfIssue
+          ? dateParser(JSON.stringify(current.embassyDateOfIssue))
+          : previous?.embassyDateOfIssue || '';
 
         result.push({
           embassyFirstDocumentFileKey: firstFileKey,
           embassySecondDocumentFileKey: secondFileKey,
-          embassyDateOfIssue: parsedDate,
+          embassyDateOfIssue: dateOfIssue,
         });
       }
 
-      await collectEmbassyData({
-        embassyData: result,
-        employeeId,
-      });
-
+      await collectEmbassyData({ embassyData: result, employeeId });
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {
       console.error('Failed to save embassy data:', error);
     }
   };
 
-  const onAddFormBodyHandler = (): void => {
-    append({});
-  };
-
   const renderEmbassyContent = (): JSX.Element[] => {
     if (isEditModeEnabled) {
-      return fields.map((field, index: number) => <EmbassyFormBody key={field.id} index={index} />);
+      return fields.map((field, index) => <EmbassyFormBody key={field.id} index={index} />);
     }
 
-    if (embassyDocuments && embassyDocuments.length > 0) {
-      return embassyDocuments.map((embassy, index: number) => (
-        <EmbassyPreviewBody
-          key={index}
-          embassyFirstDocumentFileKey={embassy.embassyFirstDocumentFileKey || ''}
-          embassySecondDocumentFileKey={embassy.embassySecondDocumentFileKey || ''}
-          embassyDateOfIssue={embassy.embassyDateOfIssue || ''}
-        />
-      ));
-    }
+    const embassyDataToRender: EmbassyDocument[] =
+      currentDataOrigin && currentDataOrigin.length > 0
+        ? currentDataOrigin
+        : [
+            {
+              embassyFirstDocumentFileKey: '',
+              embassySecondDocumentFileKey: '',
+              embassyDateOfIssue: '',
+            },
+          ];
 
-    return fields.map((field) => (
+    return embassyDataToRender.map((embassy, index) => (
       <EmbassyPreviewBody
-        key={field.id}
-        embassyFirstDocumentFileKey=""
-        embassySecondDocumentFileKey=""
-        embassyDateOfIssue=""
+        key={index}
+        embassyFirstDocumentFileKey={
+          typeof embassy.embassyFirstDocumentFileKey === 'string' ? embassy.embassyFirstDocumentFileKey : ''
+        }
+        embassySecondDocumentFileKey={
+          typeof embassy.embassySecondDocumentFileKey === 'string' ? embassy.embassySecondDocumentFileKey : ''
+        }
+        embassyDateOfIssue={(embassy.embassyDateOfIssue as string) || ''}
       />
     ));
   };
 
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('embassy')}>
-        <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <SharedSectionHeader title="Embassy" subtitle="Leave information about your work" />
-          {renderEmbassyContent()}
-          <div className={classNames('embassy-button-wrapper')}>
-            {isEditModeEnabled ? (
-              <button type="button" className={classNames('embassy-button')} onClick={onAddFormBodyHandler}>
-                + Add a document
-              </button>
-            ) : null}
-          </div>
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('embassy')}>
+              <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <SharedSectionHeader title={t('routeEmbassy')} subtitle={t('embassyInfoSubtitle')} />
+                {renderEmbassyContent()}
+                {isEditModeEnabled && (
+                  <div className="embassy-button-wrapper">
+                    <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
+                      + {t('embassyAddDocument')}
+                    </button>
+                  </div>
+                )}
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('embassy')}>
+            <form className={classNames('embassy-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <SharedSectionHeader title={t('routeEmbassy')} subtitle={t('embassyInfoSubtitle')} />
+              {renderEmbassyContent()}
+              {isEditModeEnabled && (
+                <div className="embassy-button-wrapper">
+                  <button type="button" className={classNames('embassy-button')} onClick={() => append({})}>
+                    + {t('embassyAddDocument')}
+                  </button>
+                </div>
+              )}
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };

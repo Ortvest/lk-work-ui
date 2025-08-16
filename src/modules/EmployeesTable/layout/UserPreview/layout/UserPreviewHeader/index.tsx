@@ -10,9 +10,15 @@ import './style.css';
 interface UserPreviewHeaderProps {
   fullName: string;
   setIsDrawerOpen: (isOpen: boolean) => void;
+  setIsFireUserDrawerOpen: (isOpen: boolean) => void;
 }
-export const UserPreviewHeader = ({ fullName, setIsDrawerOpen }: UserPreviewHeaderProps): React.ReactNode => {
+export const UserPreviewHeader = ({
+  fullName,
+  setIsDrawerOpen,
+  setIsFireUserDrawerOpen,
+}: UserPreviewHeaderProps): React.ReactNode => {
   const onClosePreview = (): void => setIsDrawerOpen(false);
+  const onOpenFireDrawer = (): void => setIsFireUserDrawerOpen(true);
   return (
     <header className={classNames('user-preview-header')}>
       <div>
@@ -24,7 +30,7 @@ export const UserPreviewHeader = ({ fullName, setIsDrawerOpen }: UserPreviewHead
         <p>{fullName}</p>
       </div>
       <div>
-        <button className={classNames('user-preview-header-button')}>
+        <button className={classNames('user-preview-header-button')} onClick={onOpenFireDrawer}>
           <img src={IconDots} alt="IconDots" />
         </button>
       </div>

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
@@ -13,25 +14,26 @@ import { countries, reasons } from '@shared/mocks/ResidenceCard.mocks';
 
 export const ResidenceCardFormBody = (): JSX.Element => {
   const { register, control } = useFormContext();
+  const { t } = useTranslation('employee-sidebar');
 
   return (
     <fieldset className={classNames('residence-card-form-fields-wrapper')}>
       <Controller
-        name="residenceCardFile"
+        name="residenceCardFileKey"
         control={control}
         render={({ field }) => (
-          <SharedFileUpload title="Add a Scan or Photo Residence Card" onChange={(file) => field.onChange(file)} />
+          <SharedFileUpload title={t('residenceCardUpload')} onChange={(file) => field.onChange(file)} />
         )}
       />
-      <SharedLabel title="Card Number:*">
-        <SharedInput {...register('cardNumber')} type="number" placeholder="Enter card number..." />
+      <SharedLabel title={t('residenceCardNumberRequired')}>
+        <SharedInput {...register('cardNumber')} type="number" placeholder={t('residenceCardNumberPlaceholder')} />
       </SharedLabel>
-      <SharedLabel title="Country of Issue:*">
+      <SharedLabel title={t('residenceCardCountryRequired')}>
         <SharedSelect {...register('countryOfIssue')} options={countries} />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle="Date of issue:*" namePrefix="dateOfIssue" />
-      <SharedDateSelector dateSelectorTitle="Expiration Date::*" namePrefix="expirationDate" />
-      <SharedLabel title="Reason for issuance:*">
+      <SharedDateSelector dateSelectorTitle={t('residenceCardDateOfIssueRequired')} namePrefix="dateOfIssue" />
+      <SharedDateSelector dateSelectorTitle={t('residenceCardExpirationDateRequired')} namePrefix="expirationDate" />
+      <SharedLabel title={t('residenceCardReasonRequired')}>
         <SharedSelect {...register('reasonForIssuance')} options={reasons} />
       </SharedLabel>
     </fieldset>

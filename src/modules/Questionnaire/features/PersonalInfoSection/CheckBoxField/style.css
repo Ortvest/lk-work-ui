@@ -1,0 +1,21 @@
+.questionnaire-checkbox-wrapper {
+  margin: 0 0 24px;
+  padding: 20px 0 20px 16px;
+
+  background-color: #f4f4f4;
+}
+
+.questionnaire-checkbox-input {
+  width: 16px;
+  height: 16px;
+
+  accent-color: var(--black);
+
+  outline: none;
+}
+
+.questionnaire-checkbox-label {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}

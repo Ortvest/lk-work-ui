@@ -16,12 +16,12 @@ export const EmbassyFormBody = ({ index }: EmbassyFormBodyProps): JSX.Element =>
   return (
     <fieldset className={classNames('embassy-form-fields-wrapper')}>
       <Controller
-        name={`documents.${index}.embassyFirstDocumentPhoto`}
+        name={`documents.${index}.embassyFirstDocumentFileKey`}
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />
       <Controller
-        name={`documents.${index}.embassySecondDocumentPhoto`}
+        name={`documents.${index}.embassySecondDocumentFileKey`}
         control={control}
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />
