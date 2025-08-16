@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { CheckBoxField } from '@modules/Questionnaire/features/PersonalInfoSection/CheckBoxField';
 import { DocumentsNumberField } from '@modules/Questionnaire/features/PersonalInfoSection/DocumetsNumberFields';
@@ -16,12 +17,14 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 import './style.css';
 
 export const PersonalInfoSection = (): JSX.Element => {
+  const { t } = useTranslation(['employee-sidebar', 'questionnaire']);
+
   return (
     <Fragment>
-      <SharedSectionHeader title="Questionnaire" subtitle="Niewielki opis funkcji strony" />
+      <SharedSectionHeader title={t('questionnaire:title')} subtitle={t('questionnaire:subtitle')} />
       <fieldset className={classNames('questionnaire-fields-wrapper')}>
         <NameFields />
-        <SharedDateSelector dateSelectorTitle="Date of Birth:*" namePrefix="dateOfBirth" />
+        <SharedDateSelector dateSelectorTitle={t('dateOfBirth')} namePrefix="dateOfBirth" />
         <GenderFields />
         <NationalityField />
         <DocumentsNumberField />

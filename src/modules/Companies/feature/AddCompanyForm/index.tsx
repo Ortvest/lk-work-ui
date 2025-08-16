@@ -1,11 +1,10 @@
 import React from 'react';
-
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { AddAccommodationButton } from '@modules/Accommodations/feature/AddAccommodationButton';
-
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import './style.css';
@@ -23,34 +22,30 @@ interface AddCompanyFormProps {
 }
 
 export const AddCompanyForm = ({ setIsOpenedModal, isEditMode }: AddCompanyFormProps): React.ReactNode => {
+  const { t } = useTranslation('companies');
   const selectedCompany = useTypedSelector((state) => state.workCompanyReducer.selectedWorkCompany);
 
   const { handleSubmit, register } = useForm<AddWorkCompany | EditWorkCompany>({
-    // resolver: yupResolver(createAccommodationValidator),
     defaultValues: isEditMode ? (selectedCompany as EditWorkCompany) : ({} as unknown as AddWorkCompany),
   });
+
   const [createWorkCompany] = useCreateWorkCompanyMutation();
   const [editWorkCompany] = useEditWorkCompanyMutation();
-
   const [fetchAllWorkCompanies] = useLazyGetAllWorkCompaniesQuery();
 
   const onSubmit = async (data: AddWorkCompany | EditWorkCompany): Promise<void> => {
     try {
       if (!isEditMode) {
-        await createWorkCompany({ ...data, nip: Number(data.nip) } as unknown as AddWorkCompany).unwrap();
+        await createWorkCompany({ ...data, nip: Number(data.nip) } as AddWorkCompany).unwrap();
+        toast.success(t('toastCompanyAdded'));
       } else {
         await editWorkCompany(data).unwrap();
+        toast.success(t('toastCompanyEdited'));
       }
       setIsOpenedModal(false);
       await fetchAllWorkCompanies(undefined);
-
-      if (!isEditMode) {
-        toast.success('Company successfully added');
-      } else {
-        toast.success('Company successfully edited');
-      }
     } catch (error) {
-      toast.error('Failed to add company');
+      toast.error(t('toastCompanyAddFailed'));
       console.error(error);
     }
   };
@@ -58,146 +53,69 @@ export const AddCompanyForm = ({ setIsOpenedModal, isEditMode }: AddCompanyFormP
   const onCancelHandler = (): void => {
     setIsOpenedModal(false);
   };
+
   return (
     <form className={classNames('add-company-form', 'scrolled')} onSubmit={handleSubmit(onSubmit)}>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-email">
-          Name Company
-        </label>
-        <input
-          placeholder={'Enter Name Company'}
-          className="form-field-field"
-          {...register('name')}
-          id={'employee-email'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-first-name">
-          NIP
-        </label>
-        <input
-          placeholder={'Enter NIP'}
-          className="form-field-field"
-          {...register('nip')}
-          id={'employee-first-name'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Address Company
-        </label>
-        <input
-          placeholder={'Enter Address Company'}
-          className="form-field-field"
-          {...register('address')}
-          id={'employee-second-name'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Phone Number
-        </label>
-        <input
-          placeholder={'Enter Phone Number Company'}
-          className="form-field-field"
-          {...register('phoneNumber')}
-          id={'employee-second-name'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Email
-        </label>
-        <input
-          placeholder={'Enter Email Company'}
-          className="form-field-field"
-          {...register('email')}
-          id={'employee-second-name'}
-          type="email"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          City
-        </label>
-        <input
-          placeholder={'Enter Company City'}
-          className="form-field-field"
-          {...register('city')}
-          id={'employee-second-name'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          First Name Contact Person
-        </label>
-        <input
-          placeholder={'Enter First Name Contact Person'}
-          className="form-field-field"
-          {...register('contactPerson.personFirstName')}
-          id={'employee-second-name'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Surname Contact Person
-        </label>
-        <input
-          placeholder={'Enter Surname Contact Person'}
-          className="form-field-field"
-          {...register('contactPerson.personSecondName')}
-          id={'employee-second-name'}
-          type="text"
-        />
-      </div>
-      <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Position
-        </label>
-        <input
-          placeholder={'Enter Position'}
-          className="form-field-field"
-          {...register('contactPerson.personPosition')}
-          id={'employee-second-name'}
-          type="text"
-        />
+        <label className="form-field-label">{t('modalCompanyNameLabel')}</label>
+        <input placeholder={t('modalCompanyNamePlaceholder')} className="form-field-field" {...register('name')} />
       </div>
 
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Phone Number
-        </label>
-        <input
-          placeholder={'Enter Phone Number Company'}
-          className="form-field-field"
-          {...register('contactPerson.personPhoneNumber')}
-          id={'employee-second-name'}
-          type="text"
-        />
+        <label className="form-field-label">{t('modalCompanyNipLabel')}</label>
+        <input placeholder={t('modalCompanyNipPlaceholder')} className="form-field-field" {...register('nip')} />
       </div>
+
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Email
-        </label>
-        <input
-          placeholder={'Enter Contact Email'}
-          className="form-field-field"
-          {...register('contactPerson.personEmail')}
-          id={'employee-second-name'}
-          type="text"
-        />
+        <label className="form-field-label">{t('modalCompanyAddressLabel')}</label>
+        <input placeholder={t('modalCompanyAddressPlaceholder')} className="form-field-field" {...register('address')} />
       </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalCompanyPhoneLabel')}</label>
+        <input placeholder={t('modalCompanyPhonePlaceholder')} className="form-field-field" {...register('phoneNumber')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalCompanyEmailLabel')}</label>
+        <input placeholder={t('modalCompanyEmailPlaceholder')} className="form-field-field" {...register('email')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalCompanyCityLabel')}</label>
+        <input placeholder={t('modalCompanyCityPlaceholder')} className="form-field-field" {...register('city')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalContactFirstNameLabel')}</label>
+        <input placeholder={t('modalContactFirstNamePlaceholder')} className="form-field-field" {...register('contactPerson.personFirstName')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalContactLastNameLabel')}</label>
+        <input placeholder={t('modalContactLastNamePlaceholder')} className="form-field-field" {...register('contactPerson.personSecondName')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalContactPositionLabel')}</label>
+        <input placeholder={t('modalContactPositionPlaceholder')} className="form-field-field" {...register('contactPerson.personPosition')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalContactPhoneLabel')}</label>
+        <input placeholder={t('modalContactPhonePlaceholder')} className="form-field-field" {...register('contactPerson.personPhoneNumber')} />
+      </div>
+
+      <div className="form-field">
+        <label className="form-field-label">{t('modalContactEmailLabel')}</label>
+        <input placeholder={t('modalContactEmailPlaceholder')} className="form-field-field" {...register('contactPerson.personEmail')} />
+      </div>
+
       <div className="form-buttons-wrapper">
         <button onClick={onCancelHandler} className="cancel-button">
-          Cancel
+          {t('btnCancel')}
         </button>
-        <AddAccommodationButton title={isEditMode ? 'Edit Company' : 'Add Company'} />
+        <AddAccommodationButton title={isEditMode ? t('btnEditCompany') : t('btnAddCompany')} />
       </div>
     </form>
   );

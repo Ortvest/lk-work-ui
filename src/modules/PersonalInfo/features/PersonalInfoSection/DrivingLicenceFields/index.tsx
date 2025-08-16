@@ -10,8 +10,10 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const DrivingLicenceFields = (): JSX.Element => {
+  const {t} = useTranslation("employee-sidebar")
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
 
@@ -27,12 +29,12 @@ export const DrivingLicenceFields = (): JSX.Element => {
     <div className={classNames('driving-licence-wrapper')}>
       {isEditModeEnabled ? (
         <Fragment>
-          <SharedBooleanSelector name="hasDrivingLicence" label="Driving Licence:*" />
+          <SharedBooleanSelector name="hasDrivingLicence" label={t("drivingLicence")} />
         </Fragment>
       ) : (
         <Fragment>
-          <SharedLabel title="Driving Licence:">
-            <span>{currentDataOrigin?.hasDrivingLicence ? 'Yes' : 'No'}</span>
+          <SharedLabel title={t("drivingLicence")}>
+            <span>{currentDataOrigin?.hasDrivingLicence ? t("yes") : t("no")}</span>
           </SharedLabel>
         </Fragment>
       )}

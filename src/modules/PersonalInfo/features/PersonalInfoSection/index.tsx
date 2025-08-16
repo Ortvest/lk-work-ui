@@ -21,8 +21,10 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const PersonalInfoSection = (): JSX.Element => {
+  const {t} = useTranslation("employee-sidebar")
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
 
@@ -36,14 +38,14 @@ export const PersonalInfoSection = (): JSX.Element => {
 
   return (
     <Fragment>
-      <SharedSectionHeader title="Personal info" subtitle="Niewielki opis funkcji strony" />
+      <SharedSectionHeader title={t("routePersonalInfo")} subtitle={t("personalInfoSubtitle")} />
       <fieldset className={classNames('personal-info-fields-wrapper')}>
         <PhotoField />
         <NameFields />
         {isEditModeEnabled ? (
-          <SharedDateSelector dateSelectorTitle="Date of Birth:*" namePrefix="dateOfBirth" />
+          <SharedDateSelector dateSelectorTitle={t("dateOfBirth")} namePrefix="dateOfBirth" />
         ) : (
-          <SharedLabel title="Date of Birth:">
+          <SharedLabel title={t("dateOfBirth")}>
             <span>{(currentDataOrigin?.dateOfBirth as string) || '-'}</span>
           </SharedLabel>
         )}

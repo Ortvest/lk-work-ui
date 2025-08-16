@@ -9,8 +9,10 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const TimeFromWorkStartDate = (): JSX.Element => {
+  const {t} = useTranslation("employee-sidebar")
   const userData = useTypedSelector((state) => state.userReducer.user);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const selectedEmployeeuserData = useTypedSelector((state) => state.employeeReducer.selectedEmployee);
@@ -22,8 +24,8 @@ export const TimeFromWorkStartDate = (): JSX.Element => {
     <Fragment>
       {!isEditModeEnabled ? (
         <div className={classNames('work-start-day-wrapper')}>
-          <SharedLabel title="Time from work start date:">
-            <span>{currentDataOrigin?.personalInfo.timeFromWorkStartDate as string} days</span>
+          <SharedLabel title={t("timeFromWorkStartDate")}>
+            <span>{currentDataOrigin?.personalInfo.timeFromWorkStartDate as string} {t("days")}</span>
           </SharedLabel>
         </div>
       ) : null}

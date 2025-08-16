@@ -13,6 +13,7 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from 'react-i18next';
 
 export const VisaInfoPreviewBody = (): JSX.Element => {
   const [visaPreviewPhoto, setVisaPreviewPhoto] = useState('');
@@ -26,6 +27,7 @@ export const VisaInfoPreviewBody = (): JSX.Element => {
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? visaData : selectedEmployeeVisaData;
 
   const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
+  const { t } = useTranslation('employee-sidebar');
 
   useEffect(() => {
     const fetchVisaPhoto = async (): Promise<void> => {
@@ -46,14 +48,17 @@ export const VisaInfoPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('visa-info-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={visaPreviewPhoto || FilePreviewIcon} imageName="Visa Document" />
-      <SharedLabel title="Visa Type:">
+      <SharedImagePreview
+        imageUrl={visaPreviewPhoto || FilePreviewIcon}
+        imageName={t('visaInfoFile')}
+      />
+      <SharedLabel title={t('visaInfoType')}>
         <span>{currentDataOrigin?.visaType || '-'}</span>
       </SharedLabel>
-      <SharedLabel title="Date of issue:">
+      <SharedLabel title={t('visaInfoDateOfIssue')}>
         <span>{(currentDataOrigin?.dateOfIssue as string) || '-'}</span>
       </SharedLabel>
-      <SharedLabel title="Expiration Date:">
+      <SharedLabel title={t('visaInfoExpirationDate')}>
         <span>{(currentDataOrigin?.expirationDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>

@@ -9,7 +9,7 @@ import { SwitchTableButton } from '@modules/EmployeesTable/features/SwitchTableB
 import './style.css';
 
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
-
+import { useTranslation } from "react-i18next";
 
 interface EmployeesTableProps {
   setIsOpenedModal: (isOpen: boolean) => void;
@@ -25,41 +25,47 @@ export const EmployeeTableHeader = ({
   selectedTable,
   setVacationType,
 }: EmployeesTableProps): React.ReactNode => {
-
-
   const hasSearchBar = selectedTable === EmployeeTableTabs.HIRED || selectedTable === EmployeeTableTabs.FIRED;
+  const { t } = useTranslation('employees-table');
+
   return (
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
         <div>
-          <h1 className={classNames('employees-table-header-title')}>Employees</h1>
+          <h1 className={classNames('employees-table-header-title')}>{t("employeesTitle")}</h1>
         </div>
         <div>
           <SwitchTableButton
-            setVacationType={setVacationType}
-            setSelectedTable={setSelectedTable}
-            text={'Hired'}
+            translationKey="hired"
+            targetTab={EmployeeTableTabs.HIRED}
             isActive={selectedTable === EmployeeTableTabs.HIRED}
+            setSelectedTable={setSelectedTable}
+            setVacationType={setVacationType}
           />
           <SwitchTableButton
-            setVacationType={setVacationType}
-            setSelectedTable={setSelectedTable}
-            text={'Fired'}
+            translationKey="fired"
+            targetTab={EmployeeTableTabs.FIRED}
             isActive={selectedTable === EmployeeTableTabs.FIRED}
+            setSelectedTable={setSelectedTable}
+            setVacationType={setVacationType}
           />
           <SwitchTableButton
-            setVacationType={setVacationType}
-            setSelectedTable={setSelectedTable}
-            text={`Vacation requests ${vacationRequestsNumber || 0}`}
+            translationKey="vacationRequests"
+            targetTab={EmployeeTableTabs.VACATION_REQUESTS}
             isActive={selectedTable === EmployeeTableTabs.VACATION_REQUESTS}
+            setSelectedTable={setSelectedTable}
+            setVacationType={setVacationType}
+            count={vacationRequestsNumber || 0}
           />
           <SwitchTableButton
-            setVacationType={setVacationType}
-            setSelectedTable={setSelectedTable}
-            text={'On vacation'}
+            translationKey="onVacation"
+            targetTab={EmployeeTableTabs.ON_VACATION}
             isActive={selectedTable === EmployeeTableTabs.ON_VACATION}
+            setSelectedTable={setSelectedTable}
+            setVacationType={setVacationType}
           />
         </div>
+
       </section>
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>

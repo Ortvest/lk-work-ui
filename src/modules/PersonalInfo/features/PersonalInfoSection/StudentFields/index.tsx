@@ -10,8 +10,10 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const StudentFields = (): JSX.Element => {
+  const {t} = useTranslation("employee-sidebar")
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
 
@@ -27,12 +29,12 @@ export const StudentFields = (): JSX.Element => {
     <div className={classNames('student-info-wrapper')}>
       {isEditModeEnabled ? (
         <Fragment>
-          <SharedBooleanSelector name="isStudent" label="Student:*" />
+          <SharedBooleanSelector name="isStudent" label={t("student")} />
         </Fragment>
       ) : (
         <Fragment>
-          <SharedLabel title="Student:">
-            <span> {currentDataOrigin?.isStudent ? 'Yes' : 'No'}</span>
+          <SharedLabel title={t("student")}>
+            <span> {currentDataOrigin?.isStudent ? t("yes") : t("no")}</span>
           </SharedLabel>
         </Fragment>
       )}

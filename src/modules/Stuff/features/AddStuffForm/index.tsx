@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { AddAccommodationButton } from '@modules/Accommodations/feature/AddAccommodationButton';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
-
 import { SharedSelect } from '@shared/components/SharedSelect';
 
 import './style.css';
@@ -27,6 +27,7 @@ interface AddStuffFormProps {
 }
 
 export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps): React.ReactNode => {
+  const { t } = useTranslation('employees-table');
   const selectedEmployee = useTypedSelector((state) => state.employeeReducer.selectedEmployee);
 
   const [departments, setDepartments] = useState<{ label: string; value: string }[]>([]);
@@ -34,8 +35,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
     defaultValues: isEditMode ? (selectedEmployee as UserEntity) : ({} as unknown as UserEntity),
   });
 
-  // eslint-disable-next-line no-empty-pattern
-  const {} = useGetAllWorkCompaniesQuery(undefined);
+  useGetAllWorkCompaniesQuery(undefined);
   const [inviteStuffWorker] = useInviteEmployeeMutation();
   const [editUserData] = useEditUserDataMutation();
   const [fetchAllStuffWorkers] = useLazyFetchAllEmployeesQuery(undefined);
@@ -64,13 +64,11 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
         company: '',
       });
 
-      if (!isEditMode) {
-        toast.success('Worker successfully added');
-      } else {
-        toast.success('Worker successfully edited');
-      }
+      toast.success(
+        isEditMode ? t('toastStuffEdited') : t('toastStuffAdded')
+      );
     } catch (error) {
-      toast.error('Failed to add Worker');
+      toast.error(t('toastStuffAddFailed'));
       console.error(error);
     }
   };
@@ -81,72 +79,71 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
 
   useEffect(() => {
     if (workCompanies) {
-      workCompanies.map((company) =>
-        setDepartments((prevState) => [...prevState, { label: company.name, value: company.name }])
-      );
+      setDepartments(workCompanies.map((company) => ({ label: company.name, value: company.name })));
     }
-  }, []);
+  }, [workCompanies]);
+
   return (
     <form className={classNames('add-stuff-worker-form')} onSubmit={handleSubmit(onSubmit)}>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-email">
-          First Name
+        <label className="form-field-label" htmlFor="stuff-first-name">
+          {t('modalStuffFirstNameLabel')}
         </label>
         <input
-          placeholder={'Enter First Name'}
+          placeholder={t('modalStuffFirstNamePlaceholder')}
           className="form-field-field"
           {...register('personalInfo.firstName')}
-          id={'employee-email'}
+          id="stuff-first-name"
           type="text"
         />
       </div>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-first-name">
-          Last Name
+        <label className="form-field-label" htmlFor="stuff-last-name">
+          {t('modalStuffLastNameLabel')}
         </label>
         <input
-          placeholder={'Enter Last Name'}
+          placeholder={t('modalStuffLastNamePlaceholder')}
           className="form-field-field"
           {...register('personalInfo.lastName')}
-          id={'employee-first-name'}
+          id="stuff-last-name"
           type="text"
         />
       </div>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-first-name">
-          Email
+        <label className="form-field-label" htmlFor="stuff-email">
+          {t('modalStuffEmailLabel')}
         </label>
         <input
-          placeholder={'Enter Email'}
+          placeholder={t('modalStuffEmailPlaceholder')}
           className="form-field-field"
           {...register('personalInfo.email')}
-          id={'employee-first-name'}
+          id="stuff-email"
           type="text"
         />
       </div>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-first-name">
-          Role
+        <label className="form-field-label" htmlFor="stuff-role">
+          {t('modalStuffRoleLabel')}
         </label>
         <SharedSelect
           register={register('role')}
           options={[
-            { value: UserRoles.ACCOUNTANT, label: 'Accountant' },
-            { value: UserRoles.OFFICE_WORKER, label: 'Office Worker' },
+            { value: UserRoles.ACCOUNTANT, label: t('roleAccountant') },
+            { value: UserRoles.OFFICE_WORKER, label: t('roleOfficeWorker') },
           ]}
         />
       </div>
       <div className="form-field">
-        <label className="form-field-label" htmlFor="employee-second-name">
-          Department
+        <label className="form-field-label" htmlFor="stuff-department">
+          {t('modalStuffDepartmentLabel')}
         </label>
         <SharedSelect register={register('jobInfo.company')} options={departments} />
       </div>
       <div className="form-buttons-wrapper">
         <button onClick={onCancelHandler} className="cancel-button">
-          Cancel
+          {t('modalCancelBtn')}
         </button>
-        <AddAccommodationButton title={isEditMode ? 'Edit Stuff Worker Data' : 'Add Stuff Worker'} />
+        <AddAccommodationButton title={isEditMode ? t('modalEditStuffBtn') : t('modalAddStuffBtn')} />
       </div>
     </form>
   );

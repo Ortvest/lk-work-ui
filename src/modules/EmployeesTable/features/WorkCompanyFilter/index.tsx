@@ -14,6 +14,7 @@ import { useLazyGetAllWorkCompaniesQuery } from '@global/api/work-company/work-c
 import { EmployeeTableTab } from '@shared/enums/general.enums';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { WorkCompanyEntity } from '@shared/interfaces/WorkCompanies.interfaces';
+import { useTranslation } from "react-i18next";
 
 interface WorkCompanyFilterProps {
   selectedTable: EmployeeTableTab;
@@ -29,6 +30,7 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const { t } = useTranslation('employees-table');
   const [searchParams, setSearchParams] = useSearchParams();
   const hasCompanyParam = searchParams.has('company');
   const companyParamValue = (searchParams.get('company') ?? '').trim();
@@ -98,7 +100,7 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
   return (
     <div className="company-dropdown" ref={ref}>
       <div className="company-dropdown-header" onClick={() => setOpen((prev) => !prev)}>
-        Employees at <span className="company-name">{selected?.name || 'All companies'}</span>
+        {t('employeesAt', { location: selected?.name || t('allCompanies') })}
         <img className={classNames('dropdown-icon', { open })} src={IconChevron} />
       </div>
 
@@ -110,23 +112,25 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
               className={classNames('company-dropdown-item', {
                 selected: selected?.name === company.name,
               })}
-              onClick={() => handleSelect(company)}>
-              Employees at {company.name}
+              onClick={() => handleSelect(company)}
+            >
+              {t('employeesAt', { location: company.name })}
             </div>
           ))}
         </div>
       )}
+
 
       <div className="company-address">
         {selected ? (
           <>
             {selected.address}{' '}
             <button onClick={onShowAllEmployees} className="see-all-btn">
-              See All
+              {t('seeAll')}
             </button>
           </>
         ) : (
-          'Showing all companies'
+          t('showingAllCompanies')
         )}
       </div>
     </div>

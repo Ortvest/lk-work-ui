@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { BookDayOffModal } from '@modules/Sidebar/features/BookDayOffModal';
 import { Navigation } from '@modules/Sidebar/layout/Navigation';
@@ -16,6 +17,7 @@ import './style.css';
 import { UserRoles } from '@shared/enums/user.enums';
 
 export const Sidebar = (): JSX.Element => {
+  const { t } = useTranslation('employee-sidebar');
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -36,7 +38,7 @@ export const Sidebar = (): JSX.Element => {
           <Fragment>
             <button className={classNames('sidebar-book-day-off-btn')} onClick={onModalOpenHandler}>
               <img src={CalendarIcon} alt="book-day-off-icon" />
-              Book a Day Off
+              {t('bookDayOffTitle')}
             </button>
             <BookDayOffModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
           </Fragment>

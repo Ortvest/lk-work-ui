@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
 
 import { AppRoutes } from '@global/router/routes.constans';
@@ -16,6 +17,7 @@ import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPh
 import { UserRoles } from '@shared/enums/user.enums';
 
 export const UserData = (): JSX.Element => {
+  const { t } = useTranslation('employee-sidebar');
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
   const selectedEmployeePersonalInfo = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.personalInfo
@@ -89,7 +91,7 @@ export const UserData = (): JSX.Element => {
           {isExitButtonVisible ? (
             <div className={classNames('user-exit-button-wrapper')}>
               <button className={classNames('user-exit-buttun')} onClick={onLogoutHandler}>
-                Log out
+                {t('logout')}
               </button>
             </div>
           ) : null}

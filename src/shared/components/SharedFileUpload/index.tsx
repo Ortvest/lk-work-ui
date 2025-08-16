@@ -1,11 +1,11 @@
 import { forwardRef, Fragment, useState } from 'react';
-
 import classNames from 'classnames';
 
 import FileIcon from '@shared/assets/icons/FileIcon.svg';
 import VerticalDotsIcon from '@shared/assets/icons/VerticalDotsIcon.svg';
 
 import './style.css';
+import { useTranslation } from "react-i18next";
 
 type SharedFileUploadProps = {
   title?: string;
@@ -13,9 +13,11 @@ type SharedFileUploadProps = {
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 export const SharedFileUpload = forwardRef<HTMLInputElement, SharedFileUploadProps>(
-  ({ title = 'Add a Scan or Photo Document', onChange, ...props }, ref) => {
+  ({ title, onChange, ...props }, ref) => {
     const [preview, setPreview] = useState<string | null>(null);
     const [fileInfo, setFileInfo] = useState<{ name: string; size: string } | null>(null);
+
+    const { t } = useTranslation('employee-sidebar');
 
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>): void => {
       const file = event.target.files?.[0];
@@ -58,9 +60,11 @@ export const SharedFileUpload = forwardRef<HTMLInputElement, SharedFileUploadPro
         ) : (
           <Fragment>
             <img className={classNames('shared-file-icon')} src={FileIcon} alt="file-icon" />
-            <h3 className={classNames('shared-file-title')}>{title}</h3>
+            <h3 className={classNames('shared-file-title')}>
+              {title || t('fileUploadDefaultTitle')}
+            </h3>
             <p className={classNames('shared-file-subtitle')}>
-              You can add a document in the following formats: .pdf, .png, .jpg — optimal file size 5–7 MB
+              {t('fileUploadSubtitle')}
             </p>
           </Fragment>
         )}

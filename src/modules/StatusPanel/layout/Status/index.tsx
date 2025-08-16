@@ -1,12 +1,13 @@
 import classNames from 'classnames';
-
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+import { useTranslation } from 'react-i18next';
 
 import './style.css';
-
 import { UserDocumentsStatuses, UserRoles } from '@shared/enums/user.enums';
 
 export const Status = (): JSX.Element => {
+  const { t } = useTranslation("employee-sidebar");
+
   const documentStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
   const selectedEmployeeDocumentsStatus = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documentStatus
@@ -17,31 +18,34 @@ export const Status = (): JSX.Element => {
 
   const documentStatusConfig: Record<
     (typeof UserDocumentsStatuses)[keyof typeof UserDocumentsStatuses],
-    { text: string; className: string }
+    { key: string; className: string }
   > = {
     [UserDocumentsStatuses.WAITING_FOR_BRIEFING]: {
-      text: 'Waiting for briefing',
+      key: 'statusWaitingForBriefing',
       className: 'status-waiting',
     },
     [UserDocumentsStatuses.TO_CONFIRM]: {
-      text: 'Checking',
+      key: 'statusToConfirm',
       className: 'status-to-confirm',
     },
     [UserDocumentsStatuses.WAITING_FOR_DOCS]: {
-      text: 'Need update',
+      key: 'statusWaitingForDocs',
       className: 'status-waiting-docs',
     },
     [UserDocumentsStatuses.CONFIRMED]: {
-      text: 'Confirmed',
+      key: 'statusConfirmed',
       className: 'status-confirmed',
     },
   };
+
+  const statusKey = documentStatusConfig[currentDataOrigin!]?.key || "statusUnknown";
+
   return (
     <div className={classNames('status-panel-value')}>
-      Status:
+      {t("statusLabel")}:
       <div>
         <p className={classNames('user-docs-status', documentStatusConfig[currentDataOrigin!]?.className)}>
-          {documentStatusConfig[currentDataOrigin!]?.text ?? 'Unknown'}
+          {t(statusKey)}
         </p>
       </div>
     </div>

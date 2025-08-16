@@ -1,0 +1,9 @@
+{
+  "signInTitle": "Sign In",
+  "signInSubTitle": "You can start using the system`s features after logging in. You should have received your credentials in your email.",
+  "signInButton": "Enter to system",
+  "emailLabel": "Email",
+  "passwordLabel": "Password",
+  "emailPlaceholder": "Enter your email here...",
+  "passwordPlaceholder": "Enter your password here..."
+}

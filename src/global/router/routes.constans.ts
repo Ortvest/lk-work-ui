@@ -37,7 +37,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   MAIN: {
     path: '/',
     isVisible: false,
-    title: 'Main',
+    title: 'routeMain',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: null,
@@ -47,7 +47,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   SIGN_IN: {
     path: '/sign-in',
     isVisible: false,
-    title: 'Sign In',
+    title: 'routeSignIn',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: SignIn,
@@ -57,7 +57,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   SUPPORT: {
     path: '/support',
     isVisible: true,
-    title: 'Support',
+    title: 'routeSupport',
     usageScope: [UsageScopes.HEADER],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: null,
@@ -67,7 +67,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   SET_NEW_PASSWORD: {
     path: '/set-password',
     isVisible: true,
-    title: 'Set new password',
+    title: 'routeSetNewPassword',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: SetNewPassword,
@@ -77,7 +77,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   PERSONAL_INFO: {
     path: '/personal-info',
     isVisible: true,
-    title: 'Personal info',
+    title: 'routePersonalInfo',
     usageScope: [UsageScopes.SIDEBAR],
     icon: PersonalIcon,
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
@@ -87,7 +87,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   LOCATION: {
     path: '/location',
     isVisible: true,
-    title: 'Location',
+    title: 'routeLocation',
     usageScope: [UsageScopes.SIDEBAR],
     icon: LocationIcon,
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
@@ -97,7 +97,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   JOB_INFO: {
     path: '/job-info',
     isVisible: true,
-    title: 'Job Info',
+    title: 'routeJobInfo',
     usageScope: [UsageScopes.SIDEBAR],
     icon: JobIcon,
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
@@ -107,7 +107,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   BANK_INFO: {
     path: '/bank-info',
     isVisible: true,
-    title: 'Bank info',
+    title: 'routeBankInfo',
     usageScope: [UsageScopes.SIDEBAR],
     icon: BankIcon,
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
@@ -117,7 +117,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   DOCUMENTS: {
     path: '/documents',
     isVisible: false,
-    title: 'Documents',
+    title: 'routeDocuments',
     usageScope: [UsageScopes.NONE],
     icon: DocumentsIcon,
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
@@ -127,7 +127,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   PASSPORT: {
     path: '/documents/passport',
     isVisible: true,
-    title: 'Passport',
+    title: 'routePassport',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: Passport,
@@ -136,7 +136,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   EMBASSY: {
     path: '/documents/embassy',
     isVisible: true,
-    title: 'Embassy',
+    title: 'routeEmbassy',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: Embassy,
@@ -145,7 +145,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   WORK_PERMISSION: {
     path: '/documents/work-permission',
     isVisible: true,
-    title: 'Work Permission',
+    title: 'routeWorkPermission',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: WorkPermission,
@@ -154,7 +154,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   STUDENT_CARD: {
     path: '/documents/student-card',
     isVisible: true,
-    title: 'Student Card',
+    title: 'routeStudentCard',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: StudentCard,
@@ -163,7 +163,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   RESIDENCE_CARD: {
     path: '/documents/residence-card',
     isVisible: true,
-    title: 'Residence Card',
+    title: 'routeResidenceCard',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: ResidenceCard,
@@ -172,7 +172,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   UKRAINIAN_STATEMENT_DOCUMENT: {
     path: '/documents/ukrainian-statement-document',
     isVisible: true,
-    title: 'Ukrainian Statement Document',
+    title: 'routeUkrainianStatementDocument',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: UkrainianStatementDocuments,
@@ -181,7 +181,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   VISA_INFO: {
     path: '/documents/visa-info',
     isVisible: true,
-    title: 'Visa Info',
+    title: 'routeVisaInfo',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: VisaInfo,
@@ -190,7 +190,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   DRIVING_LICENCE: {
     path: '/documents/driving-licence',
     isVisible: true,
-    title: 'Driving Licence',
+    title: 'routeDrivingLicence',
     usageScope: [UsageScopes.DOCUMENTS],
     allowedRoles: [UserRoles.EMPLOYEE, UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: DrivingLicence,
@@ -199,7 +199,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   QUESTIONNAIRE: {
     path: '/questionnaire',
     isVisible: false,
-    title: 'Questionnaire',
+    title: 'routeQuestionnaire',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.EMPLOYEE],
     element: Questionnaire,
@@ -208,7 +208,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   EMPLOYEES_TABLE: {
     path: '/employees-table',
     isVisible: false,
-    title: 'employees-table',
+    title: 'routeEmployeesTable',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: EmployeesTable,
@@ -218,7 +218,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   ACCOMMODATIONS: {
     path: '/accommodations',
     isVisible: true,
-    title: 'Accommodations',
+    title: 'routeAccommodations',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: AccommodationsPage,
@@ -228,7 +228,7 @@ export const AppRoutes: Record<string, AppRoute> = {
   COMPANIES: {
     path: '/companies',
     isVisible: true,
-    title: 'Companies',
+    title: 'routeCompanies',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
     element: CompaniesPage,
@@ -238,13 +238,14 @@ export const AppRoutes: Record<string, AppRoute> = {
   STUFF: {
     path: '/stuff',
     isVisible: true,
-    title: 'Stuff',
+    title: 'routeStuff',
     usageScope: [UsageScopes.NONE],
     allowedRoles: [UserRoles.SUPER_ADMIN],
     element: StuffPage,
     isPublic: false,
   },
 };
+
 
 export type AppRoute = {
   path: string;

@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
-
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -15,6 +15,7 @@ import './style.css';
 
 export const AddressSection = (): JSX.Element => {
   const { register, watch } = useFormContext();
+  const { t } = useTranslation('employee-sidebar');
 
   const isLivingInAccommodation = watch('isLivingInAccommodation');
   const accommodations = useTypedSelector((state) => state.accommodationReducer.accommodations);
@@ -26,30 +27,57 @@ export const AddressSection = (): JSX.Element => {
 
   return (
     <Fragment>
-      <SharedSectionHeader title="Address" subtitle="Full Correspondence Address" />
+      <SharedSectionHeader
+        title={t('routeLocation')}
+        subtitle={t('routeLocationDescription')}
+      />
 
       <fieldset className={classNames('questionnaire-address-fields-wrapper')}>
-        <SharedBooleanSelector name="isLivingInAccommodation" label="You live in accommodation?" />
+        <SharedBooleanSelector
+          name="isLivingInAccommodation"
+          label={t('locationIsLivingInAccommodation')}
+        />
+
         {isLivingInAccommodation ? (
-          <SharedLabel title="Choose accommodation:*">
+          <SharedLabel title={t('locationChooseAccommodation')}>
             <SharedSelect options={options} {...register('accommodationAddress')} />
           </SharedLabel>
         ) : (
           <Fragment>
-            <SharedLabel title="City:*">
-              <SharedInput type="text" {...register('city')} placeholder="Enter City" />
+            <SharedLabel title={t('locationCityLabel')}>
+              <SharedInput
+                type="text"
+                {...register('city')}
+                placeholder={t('locationCityPlaceholder')}
+              />
             </SharedLabel>
-            <SharedLabel title="Postal Code:*">
-              <SharedInput type="text" {...register('postalCode')} placeholder="Enter Postal Code" />
+            <SharedLabel title={t('locationPostalCodeLabel')}>
+              <SharedInput
+                type="text"
+                {...register('postalCode')}
+                placeholder={t('locationPostalCodePlaceholder')}
+              />
             </SharedLabel>
-            <SharedLabel title="Street:*">
-              <SharedInput type="text" {...register('street')} placeholder="Enter Street" />
+            <SharedLabel title={t('locationStreetLabel')}>
+              <SharedInput
+                type="text"
+                {...register('street')}
+                placeholder={t('locationStreetPlaceholder')}
+              />
             </SharedLabel>
-            <SharedLabel title="House Number:*">
-              <SharedInput type="text" {...register('houseNumber')} placeholder="Enter House Number" />
+            <SharedLabel title={t('locationHouseNumberLabel')}>
+              <SharedInput
+                type="text"
+                {...register('houseNumber')}
+                placeholder={t('locationHouseNumberPlaceholder')}
+              />
             </SharedLabel>
-            <SharedLabel title="Room Number:*">
-              <SharedInput type="text" {...register('apartmentNumber')} placeholder="Enter Room Number" />
+            <SharedLabel title={t('locationApartmentNumberLabel')}>
+              <SharedInput
+                type="text"
+                {...register('apartmentNumber')}
+                placeholder={t('locationApartmentNumberPlaceholder')}
+              />
             </SharedLabel>
           </Fragment>
         )}

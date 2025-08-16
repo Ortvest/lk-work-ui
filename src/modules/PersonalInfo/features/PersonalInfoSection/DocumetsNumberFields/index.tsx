@@ -8,9 +8,11 @@ import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
 import { UserRoles } from '@shared/enums/user.enums';
+import { useTranslation } from "react-i18next";
 
 export const DocumentsNumberField = (): JSX.Element => {
   const { register } = useFormContext();
+  const {t} = useTranslation("employee-sidebar")
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
   const selectedEmployeePersonalInfo = useTypedSelector(
@@ -22,20 +24,20 @@ export const DocumentsNumberField = (): JSX.Element => {
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
   return (
     <Fragment>
-      <SharedLabel title="Passport Number:*">
+      <SharedLabel title={t("passportNumber")}>
         {isEditModeEnabled ? (
-          <SharedInput type="text" {...register('passportNumber')} placeholder="Enter your passport number..." />
+          <SharedInput type="text" {...register('passportNumber')} placeholder={t("passportPlaceholder")} />
         ) : (
           <span>{currentDataOrigin?.passportNumber || '-'}</span>
         )}
       </SharedLabel>
-      <SharedLabel title="PESEL Number:*">
+      <SharedLabel title={t("peselNumber")}>
         {isEditModeEnabled ? (
           <SharedInput
             type="text"
             maxLength={11}
             {...register('peselNumber')}
-            placeholder="Enter your pesel number..."
+            placeholder={t("peselPlaceholder")}
           />
         ) : (
           <span>{currentDataOrigin?.peselNumber || '-'}</span>
