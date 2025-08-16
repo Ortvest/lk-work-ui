@@ -41,7 +41,6 @@
   "toastEmployeeAdded": "Employee successfully added",
   "toastEmployeeAddFailed": "Failed to add employee",
 
-
   "cardStatus": "Status:",
   "statusWorking": "WORKING",
   "statusLaidOff": "LAID OFF",
@@ -101,5 +100,12 @@
   "columnAccommodationName": "Name",
   "columnAccommodationAddress": "Address",
   "columnAccommodationPrice": "Price",
-  "btnAddAccommodation": "Add Accommodation"
+  "btnAddAccommodation": "Add Accommodation",
+  "name": "Name",
+  "myAccountTitle": "My account",
+  "myAccountSubtitle": "User details",
+  "passwordReset": "Reset password",
+  "resetButton": "Reset",
+  "resetSubtitle": "After clicking “Reset” you will receive an email with a link to change password.",
+  "logout": "Log out"
 }

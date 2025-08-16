@@ -246,7 +246,6 @@ export const AppRoutes: Record<string, AppRoute> = {
   },
 };
 
-
 export type AppRoute = {
   path: string;
   isVisible: boolean;

@@ -9,7 +9,6 @@ import { ContactSection } from '@modules/PersonalInfo/features/ContactsSection';
 import { PersonalInfoSection } from '@modules/PersonalInfo/features/PersonalInfoSection';
 import { PrefferedCompaniesSection } from '@modules/PersonalInfo/features/PrefferedCompaniesSection';
 import { Sidebar } from '@modules/Sidebar';
-
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
@@ -30,6 +29,7 @@ import { PersonalInfo } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
 import { phoneNumberParser } from '@shared/utils/phoneNumberParser';
+
 export const PersonalInfoForm = (): JSX.Element => {
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const personalDataInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);

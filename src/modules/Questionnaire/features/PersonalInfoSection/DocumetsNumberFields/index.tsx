@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -12,20 +13,11 @@ export const DocumentsNumberField = (): JSX.Element => {
   return (
     <Fragment>
       <SharedLabel title={t('passportNumber')}>
-        <SharedInput
-          type="text"
-          {...register('passportNumber')}
-          placeholder={t('passportPlaceholder')}
-        />
+        <SharedInput type="text" {...register('passportNumber')} placeholder={t('passportPlaceholder')} />
       </SharedLabel>
 
       <SharedLabel title={t('peselNumber')}>
-        <SharedInput
-          type="text"
-          maxLength={11}
-          {...register('peselNumber')}
-          placeholder={t('peselPlaceholder')}
-        />
+        <SharedInput type="text" maxLength={11} {...register('peselNumber')} placeholder={t('peselPlaceholder')} />
       </SharedLabel>
     </Fragment>
   );

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -12,7 +14,6 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from 'react-i18next';
 
 export const WorkPermissionPreviewBody = (): JSX.Element => {
   const [workPermitPhotoUrls, setWorkPermitPhotoUrls] = useState({

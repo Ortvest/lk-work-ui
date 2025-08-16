@@ -2,6 +2,7 @@
   "routeMain": "Main",
   "routeSignIn": "Sign In",
   "routeSupport": "Support",
+  "headerSupportText": "If you have any questions or find an error, please contact our manager on this phone: ",
   "routeSetNewPassword": "Set new password",
   "routePersonalInfo": "Personal info",
   "routeLocation": "Location",
@@ -149,6 +150,5 @@
   "fileUploadDefaultTitle": "Add a Scan or Photo Document",
   "fileUploadSubtitle": "You can add a document in the following formats: .png, .jpg — optimal file size 5–7 MB",
   "companiesSelectLabel": "Select company:*",
-  "locationAccommodationAddress": "Accommodation address",
-
+  "locationAccommodationAddress": "Accommodation address"
 }

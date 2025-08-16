@@ -1,7 +1,10 @@
 import React from 'react';
-import { DataWrapper } from '@modules/EmployeesTable/layout/UserPreview/layout/DataWrapper';
-import './style.css';
+
 import { useTranslation } from 'react-i18next';
+
+import { DataWrapper } from '@modules/EmployeesTable/layout/UserPreview/layout/DataWrapper';
+
+import './style.css';
 
 interface InfoRow {
   label?: string;
@@ -30,9 +33,7 @@ export const InfoSection = ({ title, titleKey, rows, iconUrl }: InfoSectionProps
       <main className="user-preview-contact-main">
         {rows.map((row, index) => (
           <div key={index} className="contact-row">
-            <span className="contact-label">
-              {(row.labelKey ? t(row.labelKey) : row.label) + ':'}
-            </span>
+            <span className="contact-label">{(row.labelKey ? t(row.labelKey) : row.label) + ':'}</span>
             <span className="contact-value">{row.value || t('notProvided')}</span>
           </div>
         ))}

@@ -103,9 +103,7 @@ export const AddAccommodationForm = ({ setIsOpenedModal, isEditMode }: AddAccomm
         <button onClick={onCancelHandler} className="cancel-button" type="button">
           {t('modalCancelBtn')}
         </button>
-        <AddAccommodationButton
-          title={isEditMode ? t('btnEditAccommodation') : t('btnAddAccommodation')}
-        />
+        <AddAccommodationButton title={isEditMode ? t('btnEditAccommodation') : t('btnAddAccommodation')} />
       </div>
     </form>
   );

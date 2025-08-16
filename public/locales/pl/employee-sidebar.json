@@ -2,6 +2,7 @@
   "routeMain": "Strona główna",
   "routeSignIn": "Zaloguj się",
   "routeSupport": "Wsparcie",
+  "headerSupportText": "Jeśli masz jakieś pytania lub znalazłeś błąd, skontaktuj się z naszym kierownikiem pod tym numerem telefonu: ",
   "routeSetNewPassword": "Ustaw nowe hasło",
   "routePersonalInfo": "Dane osobowe",
   "routeLocation": "Lokalizacja",
@@ -148,6 +149,4 @@
   "residenceCardReasonRequired": "Powód wydania:*",
   "companiesSelectLabel": "Wybierz firmę:*",
   "locationAccommodationAddress": "Adres zakwaterowania"
-
-
 }

@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -28,10 +29,7 @@ export const PrefferedCompaniesSection = (): JSX.Element => {
 
   return (
     <Fragment>
-      <SharedSectionHeader
-        title={t('whichCompanyWorkFor')}
-        subtitle={t('indicatePreferences')}
-      />
+      <SharedSectionHeader title={t('whichCompanyWorkFor')} subtitle={t('indicatePreferences')} />
       <fieldset className={classNames('questionnaire-preffered-companies-fields-wrapper')}>
         <SharedLabel title={t('companiesSelectLabel')}>
           <SharedSelect {...register('whichCompanyDoYouWantWorkFor')} options={options} />

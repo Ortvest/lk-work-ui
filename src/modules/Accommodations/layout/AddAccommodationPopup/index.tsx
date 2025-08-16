@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 
 import { AddAccommodationForm } from '@modules/Accommodations/feature/AddAccommodationForm';
 
 import './style.css';
-import { useTranslation } from "react-i18next";
 
 interface AddAccommodationPopupProps {
   isOpen: boolean;
@@ -24,7 +24,7 @@ export const AddAccommodationPopup = ({ isOpen, setIsOpenedModal }: AddAccommoda
         shouldCloseOnEsc={true}
         isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>{t("btnAddAccommodation")}</h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t('btnAddAccommodation')}</h1>
         </header>
         <main>
           <AddAccommodationForm isEditMode={false} setIsOpenedModal={setIsOpenedModal} />

@@ -2,6 +2,7 @@
   "routeMain": "Головна",
   "routeSignIn": "Увійти",
   "routeSupport": "Підтримка",
+  "headerSupportText": "Якщо у вас є питання або ви виявили помилку, будь ласка, зв'яжіться з нашим менеджером за цим номером телефону: ",
   "routeSetNewPassword": "Встановити новий пароль",
   "routePersonalInfo": "Особиста інформація",
   "routeLocation": "Місцезнаходження",
@@ -148,7 +149,4 @@
   "residenceCardReasonRequired": "Причина видачі:*",
   "companiesSelectLabel": "Виберіть компанію:*",
   "locationAccommodationAddress": "Адреса проживання"
-
-
-
 }

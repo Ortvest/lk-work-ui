@@ -1,11 +1,14 @@
 import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
-import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
+import ReactModal from 'react-modal';
 
 import { AddStuffForm } from '@modules/Stuff/features/AddStuffForm';
+
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import { SharedButton } from '@shared/components/SharedButton';
 
 import './style.css';
@@ -36,10 +39,7 @@ export const EditStuffPopup = ({ isOpen, setIsOpenedModal }: EditStuffPopupProps
 
     toast.success(
       t('toastWorkerDeleted', {
-        role:
-          selectedStuffWorker?.role === UserRoles.ACCOUNTANT
-            ? t('roleAccountant')
-            : t('roleOfficeWorker'),
+        role: selectedStuffWorker?.role === UserRoles.ACCOUNTANT ? t('roleAccountant') : t('roleOfficeWorker'),
       })
     );
   };
@@ -52,12 +52,9 @@ export const EditStuffPopup = ({ isOpen, setIsOpenedModal }: EditStuffPopupProps
         className={classNames('add-employee-popup-container')}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        isOpen={isOpen}
-      >
+        isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>
-            {t('modalEditStuffWorker')}
-          </h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t('modalEditStuffWorker')}</h1>
         </header>
         <main>
           <AddStuffForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />

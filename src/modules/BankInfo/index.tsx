@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -21,10 +22,9 @@ import './style.css';
 import { useCollectUserBankInfoMutation } from '@global/api/updateUserData/collectData.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { BankInfo } from '@shared/interfaces/User.interfaces';
-import { useTranslation } from "react-i18next";
 
 export const BankInformation = (): JSX.Element => {
-  const { t } = useTranslation("employee-sidebar");
+  const { t } = useTranslation('employee-sidebar');
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const [collectUserBankInfo] = useCollectUserBankInfoMutation();
@@ -72,7 +72,7 @@ export const BankInformation = (): JSX.Element => {
             <section className={classNames('bank-info')}>
               <form className={classNames('bank-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader title={t("routeBankInfo")} subtitle={t("bankSubtitle")} />
+                <SharedSectionHeader title={t('routeBankInfo')} subtitle={t('bankSubtitle')} />
                 {isEditModeEnabled ? <BankInfoFormBody /> : <BankInfoPreviewBody />}
               </form>
             </section>
@@ -83,7 +83,7 @@ export const BankInformation = (): JSX.Element => {
           <section className={classNames('bank-info')}>
             <form className={classNames('bank-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader title={t("routeBankInfo")} subtitle={t("bankSubtitle")} />
+              <SharedSectionHeader title={t('routeBankInfo')} subtitle={t('bankSubtitle')} />
               {isEditModeEnabled ? <BankInfoFormBody /> : <BankInfoPreviewBody />}
             </form>
           </section>

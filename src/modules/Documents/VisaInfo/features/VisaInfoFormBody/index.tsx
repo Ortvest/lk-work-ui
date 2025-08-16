@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
 import { SharedLabel } from '@shared/components/SharedLabel';
 import { SharedSelect } from '@shared/components/SharedSelect';
-
-import { useTranslation } from 'react-i18next';
 
 import './style.css';
 
@@ -21,12 +20,7 @@ export const VisaInfoFormBody = (): JSX.Element => {
       <Controller
         name="visaDocumentFileKey"
         control={control}
-        render={({ field }) => (
-          <SharedFileUpload
-            title={t('visaInfoFile')}
-            onChange={(file) => field.onChange(file)}
-          />
-        )}
+        render={({ field }) => <SharedFileUpload title={t('visaInfoFile')} onChange={(file) => field.onChange(file)} />}
       />
       <SharedLabel title={`${t('visaInfoType')}*`}>
         <SharedSelect {...register('visaType')} options={visaTypes} />

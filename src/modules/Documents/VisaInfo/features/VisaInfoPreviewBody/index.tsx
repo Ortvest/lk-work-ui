@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -13,7 +14,6 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from 'react-i18next';
 
 export const VisaInfoPreviewBody = (): JSX.Element => {
   const [visaPreviewPhoto, setVisaPreviewPhoto] = useState('');
@@ -48,10 +48,7 @@ export const VisaInfoPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('visa-info-preview-fields-wrapper')}>
-      <SharedImagePreview
-        imageUrl={visaPreviewPhoto || FilePreviewIcon}
-        imageName={t('visaInfoFile')}
-      />
+      <SharedImagePreview imageUrl={visaPreviewPhoto || FilePreviewIcon} imageName={t('visaInfoFile')} />
       <SharedLabel title={t('visaInfoType')}>
         <span>{currentDataOrigin?.visaType || '-'}</span>
       </SharedLabel>

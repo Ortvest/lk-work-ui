@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -12,11 +13,10 @@ import { SharedButton } from '@shared/components/SharedButton';
 import './style.css';
 
 import { UserDocumentsStatuses, UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 export const StatusPanel = (): JSX.Element => {
   const dispatch = useTypedDispatch();
-  const {t} = useTranslation('employee-sidebar');
+  const { t } = useTranslation('employee-sidebar');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const userDocumentsStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
@@ -38,9 +38,9 @@ export const StatusPanel = (): JSX.Element => {
         <Status />
         {shouldShowEditOrSaveButton &&
           (isEditModeEnabled ? (
-              <SharedButton type="submit" text={t("buttonSave")} />
-            ) : (
-              <SharedButton type="button" text={t('buttonEdit')} onClick={onEditModeToggleHanlder} />
+            <SharedButton type="submit" text={t('buttonSave')} />
+          ) : (
+            <SharedButton type="button" text={t('buttonEdit')} onClick={onEditModeToggleHanlder} />
           ))}
       </div>
     </section>

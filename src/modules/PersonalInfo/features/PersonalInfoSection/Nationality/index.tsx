@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -10,11 +11,10 @@ import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
 import { citizenshipMock } from '@shared/mocks/Citizenship.mocks';
-import { useTranslation } from "react-i18next";
 
 export const NationalityField = (): JSX.Element => {
   const { register } = useFormContext();
-  const {t} = useTranslation("employee-sidebar")
+  const { t } = useTranslation('employee-sidebar');
 
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
@@ -27,9 +27,9 @@ export const NationalityField = (): JSX.Element => {
 
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
-  console.log(currentDataOrigin)
+  console.log(currentDataOrigin);
   return (
-    <SharedLabel title={t("nationality")}>
+    <SharedLabel title={t('nationality')}>
       {isEditModeEnabled ? (
         <SharedSelect {...register('nationality')} options={citizenshipMock} />
       ) : (

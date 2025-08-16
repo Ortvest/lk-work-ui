@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +9,7 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
+
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 
 interface EmbassyPreviewBodyProps {
@@ -17,10 +19,10 @@ interface EmbassyPreviewBodyProps {
 }
 
 export const EmbassyPreviewBody = ({
-                                     embassyFirstDocumentFileKey,
-                                     embassySecondDocumentFileKey,
-                                     embassyDateOfIssue,
-                                   }: EmbassyPreviewBodyProps): JSX.Element => {
+  embassyFirstDocumentFileKey,
+  embassySecondDocumentFileKey,
+  embassyDateOfIssue,
+}: EmbassyPreviewBodyProps): JSX.Element => {
   const { t } = useTranslation('employee-sidebar');
   const [embassyPhotoUrls, setEmbassyPhotoUrls] = useState({
     firstPhotoUrl: '',

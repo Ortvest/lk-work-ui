@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -22,10 +23,9 @@ import { useCollectUserUkrainianStatementDocumentMutation } from '@global/api/up
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { UkrainianStatementDocument } from '@shared/interfaces/User.interfaces';
-import { useTranslation } from "react-i18next";
 
 export const UkrainianStatementDocuments = (): JSX.Element => {
-  const {t} = useTranslation('employee-sidebar')
+  const { t } = useTranslation('employee-sidebar');
   const ukrainianStatementDocument = useTypedSelector(
     (state) => state.userReducer.user?.documents.ukrainianStatementDocument
   );
@@ -93,8 +93,8 @@ export const UkrainianStatementDocuments = (): JSX.Element => {
               <form className={classNames('statement-document-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
                 <SharedSectionHeader
-                  title={t("routeUkrainianStatementDocument")}
-                  subtitle={t("ukrainianStatementSubtitle")}
+                  title={t('routeUkrainianStatementDocument')}
+                  subtitle={t('ukrainianStatementSubtitle')}
                 />
                 {isEditModeEnabled ? <UkrainianDocsFormBody /> : <UkrainianDocsPreviewBody />}
               </form>
@@ -107,8 +107,8 @@ export const UkrainianStatementDocuments = (): JSX.Element => {
             <form className={classNames('statement-document-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
               <SharedSectionHeader
-                title={t("routeUkrainianStatementDocument")}
-                subtitle={t("ukrainianStatementSubtitle")}
+                title={t('routeUkrainianStatementDocument')}
+                subtitle={t('ukrainianStatementSubtitle')}
               />
               {isEditModeEnabled ? <UkrainianDocsFormBody /> : <UkrainianDocsPreviewBody />}
             </form>

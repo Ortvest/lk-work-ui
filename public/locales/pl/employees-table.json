@@ -41,7 +41,6 @@
   "toastEmployeeAdded": "Pracownik został pomyślnie dodany",
   "toastEmployeeAddFailed": "Nie udało się dodać pracownika",
 
-
   "cardStatus": "Status:",
   "statusWorking": "PRACUJE",
   "statusLaidOff": "ZWOLNIONY",
@@ -105,6 +104,12 @@
   "toastAccommodationAdded": "Zakwaterowanie zostało pomyślnie dodane",
   "toastAccommodationEdited": "Zakwaterowanie zostało pomyślnie zaktualizowane",
   "toastAccommodationAddFailed": "Nie udało się dodać zakwaterowania",
-  "btnEditAccommodation": "Edytuj zakwaterowanie"
-
+  "btnEditAccommodation": "Edytuj zakwaterowanie",
+  "name": "Imię",
+  "myAccountTitle": "Moje konto",
+  "myAccountSubtitle": "Dane użytkownika",
+  "passwordReset": "Resetuj hasło",
+  "resetButton": "Resetuj",
+  "resetSubtitle": "Po kliknięciu „Resetuj” otrzymasz e-mail z linkiem do zmiany hasła.",
+  "logout": "Wyloguj się"
 }

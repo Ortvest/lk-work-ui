@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -11,12 +12,11 @@ import './style.css';
 
 import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 import { positions } from '@shared/mocks/JobInfo.mocks';
-import { useTranslation } from 'react-i18next';
 
 export const JobInfoFormBody = (): JSX.Element => {
   const { register } = useFormContext();
   useGetAllWorkCompaniesQuery(undefined);
-  const { t } = useTranslation("employee-sidebar");
+  const { t } = useTranslation('employee-sidebar');
 
   const companies = useTypedSelector((state) => state.workCompanyReducer.workCompanies);
 
@@ -27,14 +27,14 @@ export const JobInfoFormBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('job-info-form-fields-wrapper')}>
-      <SharedLabel title={t("jobCompany")}>
+      <SharedLabel title={t('jobCompany')}>
         <SharedSelect {...register('company')} options={options} />
       </SharedLabel>
-      <SharedLabel title={t("jobPosition")}>
+      <SharedLabel title={t('jobPosition')}>
         <SharedSelect {...register('position')} options={positions} />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle={t("jobDateOfCommencement")} namePrefix="employmentStartDate" />
-      <SharedDateSelector dateSelectorTitle={t("jobDateOfCompletion")} namePrefix="employmentEndDate" />
+      <SharedDateSelector dateSelectorTitle={t('jobDateOfCommencement')} namePrefix="employmentStartDate" />
+      <SharedDateSelector dateSelectorTitle={t('jobDateOfCompletion')} namePrefix="employmentEndDate" />
     </fieldset>
   );
 };

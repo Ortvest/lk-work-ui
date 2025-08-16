@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
+
 import classNames from 'classnames';
-import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
+import ReactModal from 'react-modal';
 
 import { AddStuffForm } from '@modules/Stuff/features/AddStuffForm';
 
@@ -23,12 +24,9 @@ export const AddStuffPopup = ({ isOpen, setIsOpenedModal }: AddStuffPopupProps):
         className={classNames('add-employee-popup-container')}
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        isOpen={isOpen}
-      >
+        isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>
-            {t('modalAddStuffWorker')}
-          </h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t('modalAddStuffWorker')}</h1>
         </header>
         <main>
           <AddStuffForm isEditMode={false} setIsOpenedModal={setIsOpenedModal} />

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { AppRoutes } from '@global/router/routes.constans';
@@ -13,7 +14,6 @@ import './styles.css';
 
 import { useSetNewPasswordMutation } from '@global/api/auth/auth.api';
 import { NewPassword } from '@shared/interfaces/User.interfaces';
-import { useTranslation } from "react-i18next";
 
 export const SetNewPasswordForm = (): React.ReactNode => {
   const { t } = useTranslation('reset-password');
@@ -43,18 +43,18 @@ export const SetNewPasswordForm = (): React.ReactNode => {
         style={{ fontSize: '16px', borderRadius: '8px' }}
         type="password"
         {...register('password')}
-        placeholder={t("enterPasswordPlaceholder")}
+        placeholder={t('enterPasswordPlaceholder')}
       />
       <SharedInput
         style={{ fontSize: '16px', borderRadius: '8px' }}
         type="password"
         {...register('confirmPassword')}
-        placeholder={t("reenterPasswordPlaceholder")}
+        placeholder={t('reenterPasswordPlaceholder')}
       />
       <SharedButton
         sx={{ borderRadius: '8px', backgroundColor: 'rgba(47, 47, 47, 1)', height: '52px' }}
         type={'submit'}
-        text={t("setPasswordButton")}
+        text={t('setPasswordButton')}
       />
     </form>
   );

@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -24,10 +25,9 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { EducationDocuments } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
-import { useTranslation } from "react-i18next";
 
 export const StudentCard = (): JSX.Element => {
-  const {t} = useTranslation('employee-sidebar')
+  const { t } = useTranslation('employee-sidebar');
   const studentCardData = useTypedSelector((state) => state.userReducer.user?.documents.educationDocuments);
 
   const selectedEmployeeStudentCardData = useTypedSelector(
@@ -102,10 +102,7 @@ export const StudentCard = (): JSX.Element => {
             <section className={classNames('student-card')}>
               <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader
-                  title={t("routeStudentCard")}
-                  subtitle={t("studentCardSubtitle")}
-                />
+                <SharedSectionHeader title={t('routeStudentCard')} subtitle={t('studentCardSubtitle')} />
                 {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
               </form>
             </section>
@@ -116,10 +113,7 @@ export const StudentCard = (): JSX.Element => {
           <section className={classNames('student-card')}>
             <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader
-                title={t("routeStudentCard")}
-                subtitle={t("studentCardSubtitle")}
-              />
+              <SharedSectionHeader title={t('routeStudentCard')} subtitle={t('studentCardSubtitle')} />
               {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
             </form>
           </section>

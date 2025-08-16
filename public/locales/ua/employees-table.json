@@ -100,5 +100,12 @@
   "columnAccommodationName": "Назва",
   "columnAccommodationAddress": "Адреса",
   "columnAccommodationPrice": "Ціна",
-  "btnAddAccommodation": "Додати житло"
+  "btnAddAccommodation": "Додати житло",
+  "name": "Ім'я",
+  "myAccountTitle": "Мій аккаунт",
+  "myAccountSubtitle": "Дані користувача",
+  "passwordReset": "Скинути пароль",
+  "resetButton": "Скинути",
+  "resetSubtitle": "Після натискання «Скинути» ви отримаєте електронний лист з посиланням для зміни пароля.",
+  "logout": "Вийти"
 }

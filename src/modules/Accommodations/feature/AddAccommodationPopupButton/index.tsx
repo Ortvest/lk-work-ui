@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -10,7 +11,6 @@ import './style.css';
 
 import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 interface AddEmployeePopupButton {
   setIsOpenedModal: (isOpen: boolean) => void;
@@ -32,7 +32,7 @@ export const AddAccommodationPopupButton = ({
       {userRole !== UserRoles.ACCOUNTANT ? (
         <button onClick={onOpenPopup} className={classNames('add-employee-popup-button')}>
           <img src={IconPlus} alt="IconPlus" />
-          <span>{t("btnAddAccommodation")}</span>
+          <span>{t('btnAddAccommodation')}</span>
         </button>
       ) : null}
     </Fragment>

@@ -1,11 +1,12 @@
 import { forwardRef, Fragment, useState } from 'react';
+
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import FileIcon from '@shared/assets/icons/FileIcon.svg';
 import VerticalDotsIcon from '@shared/assets/icons/VerticalDotsIcon.svg';
 
 import './style.css';
-import { useTranslation } from "react-i18next";
 
 type SharedFileUploadProps = {
   title?: string;
@@ -60,12 +61,8 @@ export const SharedFileUpload = forwardRef<HTMLInputElement, SharedFileUploadPro
         ) : (
           <Fragment>
             <img className={classNames('shared-file-icon')} src={FileIcon} alt="file-icon" />
-            <h3 className={classNames('shared-file-title')}>
-              {title || t('fileUploadDefaultTitle')}
-            </h3>
-            <p className={classNames('shared-file-subtitle')}>
-              {t('fileUploadSubtitle')}
-            </p>
+            <h3 className={classNames('shared-file-title')}>{title || t('fileUploadDefaultTitle')}</h3>
+            <p className={classNames('shared-file-subtitle')}>{t('fileUploadSubtitle')}</p>
           </Fragment>
         )}
       </label>

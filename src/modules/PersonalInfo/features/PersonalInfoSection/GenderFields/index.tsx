@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -10,12 +11,11 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 export const GenderFields = (): JSX.Element => {
   const { register, setValue, watch } = useFormContext();
   const [selectedGender, setSelectedGender] = useState<string | null>('male');
-  const {t} = useTranslation("employee-sidebar")
+  const { t } = useTranslation('employee-sidebar');
   const gender = watch('gender');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
@@ -38,13 +38,9 @@ export const GenderFields = (): JSX.Element => {
   };
 
   const genderKey =
-    currentDataOrigin?.gender === 'male'
-      ? 'genderMale'
-      : currentDataOrigin?.gender === 'female'
-        ? 'genderFemale'
-        : '-';
+    currentDataOrigin?.gender === 'male' ? 'genderMale' : currentDataOrigin?.gender === 'female' ? 'genderFemale' : '-';
   return (
-    <SharedLabel title={t("gender")}>
+    <SharedLabel title={t('gender')}>
       {isEditModeEnabled ? (
         <div className={classNames('gender-options')}>
           <label className={classNames('gender-option', { active: selectedGender === 'male' })}>

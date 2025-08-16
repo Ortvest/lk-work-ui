@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
 import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
-
-import { useTranslation } from 'react-i18next';
 
 import './style.css';
 
@@ -22,20 +21,10 @@ export const PassportFormBody = (): JSX.Element => {
         render={({ field }) => <SharedFileUpload onChange={(file) => field.onChange(file)} />}
       />
       <SharedLabel title={t('passportNumberRequired')}>
-        <SharedInput
-          {...register('passportNumber')}
-          type="text"
-          placeholder={t('enterPassportNumber')}
-        />
+        <SharedInput {...register('passportNumber')} type="text" placeholder={t('enterPassportNumber')} />
       </SharedLabel>
-      <SharedDateSelector
-        dateSelectorTitle={t('passportDateOfIssueRequired')}
-        namePrefix="passportDateOfIssue"
-      />
-      <SharedDateSelector
-        dateSelectorTitle={t('passportExpirationDateRequired')}
-        namePrefix="passportExpirationDate"
-      />
+      <SharedDateSelector dateSelectorTitle={t('passportDateOfIssueRequired')} namePrefix="passportDateOfIssue" />
+      <SharedDateSelector dateSelectorTitle={t('passportExpirationDateRequired')} namePrefix="passportExpirationDate" />
     </fieldset>
   );
 };
