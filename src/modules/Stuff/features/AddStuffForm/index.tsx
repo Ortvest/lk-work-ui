@@ -63,6 +63,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
         roles: [UserRoles.OFFICE_WORKER, UserRoles.ACCOUNTANT],
         location: '',
         company: '',
+        fullName: '',
       });
 
       toast.success(isEditMode ? t('toastStuffEdited') : t('toastStuffAdded'));

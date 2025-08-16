@@ -34,6 +34,7 @@ export const EditStuffPopup = ({ isOpen, setIsOpenedModal }: EditStuffPopupProps
       roles: [UserRoles.OFFICE_WORKER, UserRoles.ACCOUNTANT],
       location: '',
       company: '',
+      fullName: '',
     });
     setIsOpenedModal(false);
 

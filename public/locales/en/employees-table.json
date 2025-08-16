@@ -107,5 +107,6 @@
   "passwordReset": "Reset password",
   "resetButton": "Reset",
   "resetSubtitle": "After clicking “Reset” you will receive an email with a link to change password.",
-  "logout": "Log out"
+  "logout": "Log out",
+  "routeStuff": "Stuff"
 }
