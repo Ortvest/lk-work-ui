@@ -28,7 +28,7 @@ export const CheckBoxField = (): JSX.Element => {
         <section className={classNames('checkbox-wrapper')}>
           <label className={classNames('checkbox-label')}>
             <input className={classNames('checkbox-input')} type="checkbox" {...register('consentToEmailPIT')} />
-            <span>Consent to send the PIT by e-mail</span>
+            <span>{t('consentToSendPit')}</span>
           </label>
         </section>
       ) : (
