@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { useDebounce } from 'use-debounce';
 
@@ -10,7 +11,6 @@ import './style.css';
 import { useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
 import { EmployeeTableTab } from '@shared/enums/general.enums';
 import { UserWorkStatuses } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 interface FindEmployeesFieldProps {
   selectedTable: EmployeeTableTab;
@@ -44,7 +44,12 @@ export const FindEmployeesField = ({ selectedTable }: FindEmployeesFieldProps): 
   return (
     <div className="search-field">
       <img src={IconSearch} alt="Search" className="search-icon" />
-      <input onChange={(e) => setQuery(e.target.value)} type="text" placeholder={t("search")} className="search-input" />
+      <input
+        onChange={(e) => setQuery(e.target.value)}
+        type="text"
+        placeholder={t('search')}
+        className="search-input"
+      />
     </div>
   );
 };

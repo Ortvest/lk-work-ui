@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { AddAccommodationButton } from '@modules/Accommodations/feature/AddAccommodationButton';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import { SharedSelect } from '@shared/components/SharedSelect';
 
 import './style.css';
@@ -64,9 +65,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
         company: '',
       });
 
-      toast.success(
-        isEditMode ? t('toastStuffEdited') : t('toastStuffAdded')
-      );
+      toast.success(isEditMode ? t('toastStuffEdited') : t('toastStuffAdded'));
     } catch (error) {
       toast.error(t('toastStuffAddFailed'));
       console.error(error);

@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 
 import { AddAccommodationForm } from '@modules/Accommodations/feature/AddAccommodationForm';
@@ -16,7 +17,6 @@ import {
   useLazyGetAllAccommodationsQuery,
   useLazyRemoveAccommodationQuery,
 } from '@global/api/accommodations/accommodation.api';
-import { useTranslation } from "react-i18next";
 
 interface EditAccommodationPopupProps {
   isOpen: boolean;
@@ -33,7 +33,6 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
     await fetchAllAccommodations(undefined);
     setIsOpenedModal(false);
     toast.success(t('toastAccommodationDeleted'));
-
   };
   return (
     <Fragment>
@@ -45,13 +44,13 @@ export const EditAccommodationPopup = ({ isOpen, setIsOpenedModal }: EditAccommo
         shouldCloseOnEsc={true}
         isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>{t("modalEditAccommodation")}</h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t('modalEditAccommodation')}</h1>
         </header>
         <main>
           <AddAccommodationForm isEditMode={true} setIsOpenedModal={setIsOpenedModal} />
         </main>
         <div className={classNames('edit-accommodation-delete-btn-wrapper')}>
-          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={t("deleteAccommodation")} />
+          <SharedButton onClick={onDeleteAccommodation} type={'button'} text={t('deleteAccommodation')} />
         </div>
       </ReactModal>
     </Fragment>

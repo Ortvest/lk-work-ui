@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -24,7 +25,6 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { EmbassyDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
-import { useTranslation } from "react-i18next";
 
 export const Embassy = (): JSX.Element => {
   const dispatch = useTypedDispatch();

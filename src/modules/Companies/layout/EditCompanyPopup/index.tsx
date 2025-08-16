@@ -1,11 +1,14 @@
 import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import toast from 'react-hot-toast';
-import ReactModal from 'react-modal';
 import { useTranslation } from 'react-i18next';
+import ReactModal from 'react-modal';
 
 import { AddCompanyForm } from '@modules/Companies/feature/AddCompanyForm';
+
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import { SharedButton } from '@shared/components/SharedButton';
 
 import './style.css';

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Controller, useFormContext } from 'react-hook-form';
-
+import { useTranslation } from 'react-i18next';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
@@ -10,7 +10,6 @@ import { SharedSelect } from '@shared/components/SharedSelect';
 import './style.css';
 
 import { drivingCategories } from '@shared/mocks/DrivingCategories.mocks';
-import { useTranslation } from "react-i18next";
 
 export const DrivingLicenceFormBody = (): JSX.Element => {
   const { register, control } = useFormContext();
@@ -22,27 +21,24 @@ export const DrivingLicenceFormBody = (): JSX.Element => {
         name="drivingLicenceFrontCardFileKey"
         control={control}
         render={({ field }) => (
-          <SharedFileUpload
-            title={t('drivingLicenceFront')}
-            onChange={(file) => field.onChange(file)}
-          />
+          <SharedFileUpload title={t('drivingLicenceFront')} onChange={(file) => field.onChange(file)} />
         )}
       />
       <Controller
         name="drivingLicenceBackCardFileKey"
         control={control}
         render={({ field }) => (
-          <SharedFileUpload
-            title={t('drivingLicenceBack')}
-            onChange={(file) => field.onChange(file)}
-          />
+          <SharedFileUpload title={t('drivingLicenceBack')} onChange={(file) => field.onChange(file)} />
         )}
       />
       <SharedLabel title={t('drivingLicenceCategories')}>
         <SharedSelect {...register('drivingLicenceCategories')} options={drivingCategories} />
       </SharedLabel>
       <SharedDateSelector dateSelectorTitle={t('drivingLicenceDateOfIssue')} namePrefix="drivingLicenceDateOfIssue" />
-      <SharedDateSelector dateSelectorTitle={t('drivingLicenceExpirationDate')} namePrefix="drivingLicenceExpirationDate" />
+      <SharedDateSelector
+        dateSelectorTitle={t('drivingLicenceExpirationDate')}
+        namePrefix="drivingLicenceExpirationDate"
+      />
     </fieldset>
   );
 };

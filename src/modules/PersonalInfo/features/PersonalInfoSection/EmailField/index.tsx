@@ -1,4 +1,5 @@
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -6,11 +7,10 @@ import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 export const EmailField = (): JSX.Element => {
   const { register } = useFormContext();
-  const {t} = useTranslation("employee-sidebar")
+  const { t } = useTranslation('employee-sidebar');
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
 
@@ -23,9 +23,9 @@ export const EmailField = (): JSX.Element => {
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   return (
-    <SharedLabel title={t("email")}>
+    <SharedLabel title={t('email')}>
       {isEditModeEnabled ? (
-        <SharedInput type="email" {...register('email')} placeholder={t("placeholderFirstEmail")} />
+        <SharedInput type="email" {...register('email')} placeholder={t('placeholderFirstEmail')} />
       ) : (
         <span>{currentDataOrigin?.email || '-'}</span>
       )}

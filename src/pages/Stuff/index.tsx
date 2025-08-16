@@ -7,12 +7,13 @@ import { EditStuffPopup } from '@modules/Stuff/layout/EditStuffPopup';
 import { StuffTableHeader } from '@modules/Stuff/layout/Header';
 import { StuffTableContent } from '@modules/Stuff/layout/TableContent';
 
+import './styles.css';
+
 import { useFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
 import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 
-import './styles.css'
 export const StuffPage = (): React.ReactNode => {
   const { data } = useFetchAllEmployeesQuery({
     workStatus: UserWorkStatuses.WORKING,

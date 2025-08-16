@@ -1,16 +1,17 @@
 import React from 'react';
+
 import classNames from 'classnames';
-import IconPrint from '@shared/assets/icons/IconPrint.svg';
-import './style.css';
 import { useTranslation } from 'react-i18next';
+
+import IconPrint from '@shared/assets/icons/IconPrint.svg';
+
+import './style.css';
 
 interface PrintDocumentsButtonProps {
   setIsUserDocumentsDrawerOpen: (isOpen: boolean) => void;
 }
 
-export const PrintDocumentsButton = ({
-                                       setIsUserDocumentsDrawerOpen,
-                                     }: PrintDocumentsButtonProps): React.ReactNode => {
+export const PrintDocumentsButton = ({ setIsUserDocumentsDrawerOpen }: PrintDocumentsButtonProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
 
   const onOpenUserDocuments = (): void => setIsUserDocumentsDrawerOpen(true);
@@ -19,8 +20,7 @@ export const PrintDocumentsButton = ({
     <button
       onClick={onOpenUserDocuments}
       className={classNames('print-documents-button')}
-      aria-label={t('cardPrintDocument')}
-    >
+      aria-label={t('cardPrintDocument')}>
       <img src={IconPrint} alt="" />
       <span>{t('cardPrintDocument')}</span>
     </button>

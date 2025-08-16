@@ -1,16 +1,17 @@
 import { useMemo } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
 
 import './style.css';
+
 import { availableLanguages } from '@global/i18n/languages';
-import { useTranslation } from "react-i18next";
 
 export const Menu = (): JSX.Element => {
-  const {t} = useTranslation('employee-sidebar')
+  const { t } = useTranslation('employee-sidebar');
   const headerMenuItems: AppRoute[] = useMemo(
     () =>
       Object.values(AppRoutes).filter(
@@ -30,20 +31,12 @@ export const Menu = (): JSX.Element => {
           </li>
         ))}
       </ul>
-      <select
-        className={classNames('header-navigation-select')}
-        name="lang-switch"
-      >
-        {
-          availableLanguages.map(((lang: { code: string; label: string }) => (
-          <option
-            key={lang.code}
-            className={classNames('header-navigation-option')}
-            value={lang.code}
-          >
+      <select className={classNames('header-navigation-select')} name="lang-switch">
+        {availableLanguages.map((lang: { code: string; label: string }) => (
+          <option key={lang.code} className={classNames('header-navigation-option')} value={lang.code}>
             {lang.label}
           </option>
-        )))}
+        ))}
       </select>
     </nav>
   );

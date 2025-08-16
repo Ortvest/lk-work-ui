@@ -1,10 +1,15 @@
 import React from 'react';
+
 import classNames from 'classnames';
-import { DataWrapper } from '@modules/EmployeesTable/layout/UserPreview/layout/DataWrapper';
-import { useDayjs } from '@shared/hooks/useDayjs';
-import IconUser from '@shared/assets/icons/IconUser.svg';
-import './style.css';
 import { useTranslation } from 'react-i18next';
+
+import { DataWrapper } from '@modules/EmployeesTable/layout/UserPreview/layout/DataWrapper';
+
+import { useDayjs } from '@shared/hooks/useDayjs';
+
+import IconUser from '@shared/assets/icons/IconUser.svg';
+
+import './style.css';
 
 interface UserPreviewPersonalDataProps {
   fullName: string;
@@ -15,12 +20,12 @@ interface UserPreviewPersonalDataProps {
 }
 
 export const UserPreviewPersonalData = ({
-                                          fullName,
-                                          nationality,
-                                          dateOfBirth,
-                                          avatarUrl,
-                                          workStatus,
-                                        }: UserPreviewPersonalDataProps): React.ReactNode => {
+  fullName,
+  nationality,
+  dateOfBirth,
+  avatarUrl,
+  workStatus,
+}: UserPreviewPersonalDataProps): React.ReactNode => {
   const dayjs = useDayjs();
   const { t } = useTranslation('employees-table');
 
@@ -33,18 +38,13 @@ export const UserPreviewPersonalData = ({
           <p>{t('cardStatus')}</p>
         </div>
         <div>
-          <p className={classNames('work-status')}>
-            {workStatus || t('notProvided')}
-          </p>
+          <p className={classNames('work-status')}>{workStatus || t('notProvided')}</p>
         </div>
       </header>
 
       <main className={classNames('user-preview-personal-data-content')}>
         <section className={classNames('user-preview-avatar', { 'has-background': !avatarUrl })}>
-          <img
-            src={avatarUrl ? avatarUrl : IconUser}
-            alt={t('userAvatarAlt')}
-          />
+          <img src={avatarUrl ? avatarUrl : IconUser} alt={t('userAvatarAlt')} />
         </section>
 
         <section>
@@ -53,8 +53,7 @@ export const UserPreviewPersonalData = ({
           </div>
           <div>
             <span className={classNames('user-preview-personal-data-meta-info')}>
-              {age !== null ? `${age}` : t('notProvided')},{" "}
-              {nationality || t('unknownNationality')}
+              {age !== null ? `${age}` : t('notProvided')}, {nationality || t('unknownNationality')}
             </span>
           </div>
         </section>

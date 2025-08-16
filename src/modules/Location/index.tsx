@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -22,10 +23,9 @@ import { useLazyGetAllAccommodationsQuery } from '@global/api/accommodations/acc
 import { useCollectUserAddressMutation } from '@global/api/updateUserData/collectData.api';
 import { UserRoles } from '@shared/enums/user.enums';
 import { Address } from '@shared/interfaces/User.interfaces';
-import { useTranslation } from "react-i18next";
 
 export const Location = (): React.ReactNode => {
-  const {t} = useTranslation("employee-sidebar")
+  const { t } = useTranslation('employee-sidebar');
   const locationInfo = useTypedSelector((state) => state.userReducer.user?.address);
   const selectedEmployeeLocationInfo = useTypedSelector((state) => state.employeeReducer.selectedEmployee?.address);
 
@@ -85,7 +85,7 @@ export const Location = (): React.ReactNode => {
   useEffect(() => {
     (async (): Promise<void> => {
       await onFetchAllAccommodationsHanlder();
-    })()
+    })();
   }, []);
 
   return (
@@ -97,10 +97,7 @@ export const Location = (): React.ReactNode => {
             <section className={classNames('location')}>
               <form className={classNames('location-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader
-                  title={t("routeLocation")}
-                  subtitle={t("routeLocationDescription")}
-                />
+                <SharedSectionHeader title={t('routeLocation')} subtitle={t('routeLocationDescription')} />
                 {isEditModeEnabled ? <LocationFormBody /> : <LocationPreviewBody />}
               </form>
             </section>
@@ -111,10 +108,7 @@ export const Location = (): React.ReactNode => {
           <section className={classNames('location')}>
             <form className={classNames('location-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader
-                title={t("routeLocation")}
-                subtitle={t("routeLocationDescription")}
-              />
+              <SharedSectionHeader title={t('routeLocation')} subtitle={t('routeLocationDescription')} />
               {isEditModeEnabled ? <LocationFormBody /> : <LocationPreviewBody />}
             </form>
           </section>

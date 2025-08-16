@@ -1,10 +1,12 @@
 import React from 'react';
+
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { AddAccommodationButton } from '@modules/Accommodations/feature/AddAccommodationButton';
+
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import './style.css';
@@ -68,12 +70,20 @@ export const AddCompanyForm = ({ setIsOpenedModal, isEditMode }: AddCompanyFormP
 
       <div className="form-field">
         <label className="form-field-label">{t('modalCompanyAddressLabel')}</label>
-        <input placeholder={t('modalCompanyAddressPlaceholder')} className="form-field-field" {...register('address')} />
+        <input
+          placeholder={t('modalCompanyAddressPlaceholder')}
+          className="form-field-field"
+          {...register('address')}
+        />
       </div>
 
       <div className="form-field">
         <label className="form-field-label">{t('modalCompanyPhoneLabel')}</label>
-        <input placeholder={t('modalCompanyPhonePlaceholder')} className="form-field-field" {...register('phoneNumber')} />
+        <input
+          placeholder={t('modalCompanyPhonePlaceholder')}
+          className="form-field-field"
+          {...register('phoneNumber')}
+        />
       </div>
 
       <div className="form-field">
@@ -88,27 +98,47 @@ export const AddCompanyForm = ({ setIsOpenedModal, isEditMode }: AddCompanyFormP
 
       <div className="form-field">
         <label className="form-field-label">{t('modalContactFirstNameLabel')}</label>
-        <input placeholder={t('modalContactFirstNamePlaceholder')} className="form-field-field" {...register('contactPerson.personFirstName')} />
+        <input
+          placeholder={t('modalContactFirstNamePlaceholder')}
+          className="form-field-field"
+          {...register('contactPerson.personFirstName')}
+        />
       </div>
 
       <div className="form-field">
         <label className="form-field-label">{t('modalContactLastNameLabel')}</label>
-        <input placeholder={t('modalContactLastNamePlaceholder')} className="form-field-field" {...register('contactPerson.personSecondName')} />
+        <input
+          placeholder={t('modalContactLastNamePlaceholder')}
+          className="form-field-field"
+          {...register('contactPerson.personSecondName')}
+        />
       </div>
 
       <div className="form-field">
         <label className="form-field-label">{t('modalContactPositionLabel')}</label>
-        <input placeholder={t('modalContactPositionPlaceholder')} className="form-field-field" {...register('contactPerson.personPosition')} />
+        <input
+          placeholder={t('modalContactPositionPlaceholder')}
+          className="form-field-field"
+          {...register('contactPerson.personPosition')}
+        />
       </div>
 
       <div className="form-field">
         <label className="form-field-label">{t('modalContactPhoneLabel')}</label>
-        <input placeholder={t('modalContactPhonePlaceholder')} className="form-field-field" {...register('contactPerson.personPhoneNumber')} />
+        <input
+          placeholder={t('modalContactPhonePlaceholder')}
+          className="form-field-field"
+          {...register('contactPerson.personPhoneNumber')}
+        />
       </div>
 
       <div className="form-field">
         <label className="form-field-label">{t('modalContactEmailLabel')}</label>
-        <input placeholder={t('modalContactEmailPlaceholder')} className="form-field-field" {...register('contactPerson.personEmail')} />
+        <input
+          placeholder={t('modalContactEmailPlaceholder')}
+          className="form-field-field"
+          {...register('contactPerson.personEmail')}
+        />
       </div>
 
       <div className="form-buttons-wrapper">

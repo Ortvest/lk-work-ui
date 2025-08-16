@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -13,10 +14,9 @@ import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 export const PhotoField = (): JSX.Element => {
-  const {t} = useTranslation("employee-sidebar")
+  const { t } = useTranslation('employee-sidebar');
   const { register, setValue } = useFormContext();
   const [preview, setPreview] = useState('');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);

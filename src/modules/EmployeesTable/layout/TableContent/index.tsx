@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+
 import classNames from 'classnames';
 import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { EmployeeSlice } from '@global/store/slices/Employee.slice';
+
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { Loader } from '@shared/components/Loader';
+
 import IconDots from '@shared/assets/icons/IconDots.svg';
 
 import './style.css';
@@ -22,7 +26,6 @@ import { isUserEntity } from '@shared/guards/isUserEntity';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 import { VacationDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useTranslation } from 'react-i18next';
 
 const { setSelectedEmployee } = EmployeeSlice.actions;
 
@@ -35,12 +38,12 @@ interface EmployeeTableContentProps {
 }
 
 export const EmployeesTableContent = ({
-                                        employees,
-                                        setIsDrawerOpen,
-                                        selectedTable,
-                                        vacationRequests,
-                                        setVacationRequestsCount,
-                                      }: EmployeeTableContentProps): React.ReactNode => {
+  employees,
+  setIsDrawerOpen,
+  selectedTable,
+  vacationRequests,
+  setVacationRequestsCount,
+}: EmployeeTableContentProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
 
   const dispatch = useTypedDispatch();
@@ -90,6 +93,7 @@ export const EmployeesTableContent = ({
     {
       header: t('columnStatus'),
       accessorKey: 'workStatus',
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       cell: (info) => {
         const value = info.getValue() as string;
         return <span className={`status ${value.replace(/\s/g, '-').toLowerCase()}`}>{value.toUpperCase()}</span>;
@@ -103,6 +107,7 @@ export const EmployeesTableContent = ({
     },
     {
       header: t('columnContractExpire'),
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       cell: ({ row }) => {
         const end = new Date(row.original.jobInfo.employmentEndDate as string);
         const today = new Date();
@@ -145,8 +150,8 @@ export const EmployeesTableContent = ({
     },
     {
       header: t('columnAction'),
-      // @ts-ignore
-      cell: ({ hoveredRowId, currentRowId, selectedTable }) => {
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      cell: ({ hoveredRowId, currentRowId, selectedTable }: any) => {
         if (selectedTable === 'vacation-requests' && hoveredRowId === currentRowId) {
           return (
             <div className="employees-table-row-actions" style={{ display: 'flex', gap: '8px' }}>
@@ -172,6 +177,7 @@ export const EmployeesTableContent = ({
     {
       header: t('columnRequestsDate'),
       accessorKey: 'createdAt',
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       cell: (info) => {
         const date = info.getValue() as string;
         return <span>{dayjs(date).format('DD.MM.YYYY')}</span>;
@@ -205,6 +211,7 @@ export const EmployeesTableContent = ({
     {
       header: t('columnVacationPeriod'),
       accessorFn: (row) => row.vacationDates,
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       cell: (info) => {
         const dates = info.getValue() as string[];
         return (
@@ -222,8 +229,8 @@ export const EmployeesTableContent = ({
     },
     {
       header: t('columnAction'),
-      // @ts-ignore
-      cell: ({ row, hoveredRowId, currentRowId, selectedTable, table }) => {
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      cell: ({ row, hoveredRowId, currentRowId, selectedTable, table }: any) => {
         const isHovered = selectedTable === 'vacation-requests' && hoveredRowId === currentRowId;
 
         return (
@@ -234,15 +241,13 @@ export const EmployeesTableContent = ({
                 gap: '8px',
                 opacity: isHovered ? 1 : 0,
                 transition: 'opacity 0.2s ease',
-              }}
-            >
+              }}>
               <button
                 className="action-cancel-btn"
                 onClick={(e) => {
                   e.stopPropagation();
                   (table.options.meta as any)?.onSelectEmployee(row.original, 'rejected');
-                }}
-              >
+                }}>
                 {t('btnCancel')}
               </button>
               <button
@@ -250,8 +255,7 @@ export const EmployeesTableContent = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   (table.options.meta as any)?.onSelectEmployee(row.original, 'approved');
-                }}
-              >
+                }}>
                 {t('btnApprove')}
               </button>
             </div>
@@ -278,43 +282,40 @@ export const EmployeesTableContent = ({
   return (
     <table className="employees-table">
       <thead className={classNames('employees-table-content-header')}>
-      {table.getHeaderGroups().map((headerGroup) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header: any) => (
-            <th
-              key={header.id}
-              className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}
-            >
-              {flexRender(header.column.columnDef.header, header.getContext())}
-            </th>
-          ))}
-        </tr>
-      ))}
+        {table.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header: any) => (
+              <th
+                key={header.id}
+                className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </th>
+            ))}
+          </tr>
+        ))}
       </thead>
       <tbody>
-      {table?.getRowModel()?.rows?.map((row) => (
-        <tr
-          key={row.id}
-          className="employees-table-row"
-          onMouseEnter={() => setHoveredRowId(row.id)}
-          onMouseLeave={() => setHoveredRowId(null)}
-          onClick={() => onSelectEmployee(row.original)}
-        >
-          {row?.getVisibleCells()?.map((cell: any) => (
-            <td
-              key={cell.id}
-              className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}
-            >
-              {flexRender(cell?.column?.columnDef?.cell, {
-                ...cell?.getContext(),
-                hoveredRowId,
-                currentRowId: row.id,
-                selectedTable,
-              })}
-            </td>
-          ))}
-        </tr>
-      ))}
+        {table?.getRowModel()?.rows?.map((row) => (
+          <tr
+            key={row.id}
+            className="employees-table-row"
+            onMouseEnter={() => setHoveredRowId(row.id)}
+            onMouseLeave={() => setHoveredRowId(null)}
+            onClick={() => onSelectEmployee(row.original)}>
+            {row?.getVisibleCells()?.map((cell: any) => (
+              <td
+                key={cell.id}
+                className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
+                {flexRender(cell?.column?.columnDef?.cell, {
+                  ...cell?.getContext(),
+                  hoveredRowId,
+                  currentRowId: row.id,
+                  selectedTable,
+                })}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

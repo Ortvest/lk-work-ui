@@ -41,7 +41,6 @@
   "toastEmployeeAdded": "Employee successfully added",
   "toastEmployeeAddFailed": "Failed to add employee",
 
-
   "cardStatus": "Status:",
   "statusWorking": "WORKING",
   "statusLaidOff": "LAID OFF",

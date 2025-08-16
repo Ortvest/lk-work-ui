@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { CheckBoxField } from '@modules/PersonalInfo/features/PersonalInfoSection/CheckBoxField';
 import { DocumentsNumberField } from '@modules/PersonalInfo/features/PersonalInfoSection/DocumetsNumberFields';
@@ -21,10 +22,9 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 export const PersonalInfoSection = (): JSX.Element => {
-  const {t} = useTranslation("employee-sidebar")
+  const { t } = useTranslation('employee-sidebar');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
 
@@ -38,14 +38,14 @@ export const PersonalInfoSection = (): JSX.Element => {
 
   return (
     <Fragment>
-      <SharedSectionHeader title={t("routePersonalInfo")} subtitle={t("personalInfoSubtitle")} />
+      <SharedSectionHeader title={t('routePersonalInfo')} subtitle={t('personalInfoSubtitle')} />
       <fieldset className={classNames('personal-info-fields-wrapper')}>
         <PhotoField />
         <NameFields />
         {isEditModeEnabled ? (
-          <SharedDateSelector dateSelectorTitle={t("dateOfBirth")} namePrefix="dateOfBirth" />
+          <SharedDateSelector dateSelectorTitle={t('dateOfBirth')} namePrefix="dateOfBirth" />
         ) : (
-          <SharedLabel title={t("dateOfBirth")}>
+          <SharedLabel title={t('dateOfBirth')}>
             <span>{(currentDataOrigin?.dateOfBirth as string) || '-'}</span>
           </SharedLabel>
         )}

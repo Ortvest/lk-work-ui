@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { AddEmployeePopupButton } from '@modules/EmployeesTable/features/AddEmployeePopupButton';
 import { FindEmployeesField } from '@modules/EmployeesTable/features/FindEmployeesField';
@@ -9,7 +10,6 @@ import { SwitchTableButton } from '@modules/EmployeesTable/features/SwitchTableB
 import './style.css';
 
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
-import { useTranslation } from "react-i18next";
 
 interface EmployeesTableProps {
   setIsOpenedModal: (isOpen: boolean) => void;
@@ -32,7 +32,7 @@ export const EmployeeTableHeader = ({
     <header className={classNames('employees-table-header')}>
       <section className={classNames('employees-table-header-content')}>
         <div>
-          <h1 className={classNames('employees-table-header-title')}>{t("employeesTitle")}</h1>
+          <h1 className={classNames('employees-table-header-title')}>{t('employeesTitle')}</h1>
         </div>
         <div>
           <SwitchTableButton
@@ -65,7 +65,6 @@ export const EmployeeTableHeader = ({
             setVacationType={setVacationType}
           />
         </div>
-
       </section>
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>

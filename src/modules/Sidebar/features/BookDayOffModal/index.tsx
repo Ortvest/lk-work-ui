@@ -15,6 +15,7 @@ import {
   subMonths,
 } from 'date-fns';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
@@ -25,7 +26,6 @@ import CalendarArrowRightIcon from '@shared/assets/icons/CalendarArrowRightIcon.
 import './style.css';
 
 import { useSentVacationRequestMutation } from '@global/api/employee/employee.api';
-import { useTranslation } from "react-i18next";
 
 interface BookDayOffModalProps {
   isModalOpen: boolean;
@@ -200,10 +200,10 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
 
         <footer className={classNames('book-day-off-footer')}>
           <button className={classNames('book-day-off-cancel')} onClick={onModalCloseHandler}>
-            {t("calendarCancelBtn")}
+            {t('calendarCancelBtn')}
           </button>
           <button className={classNames('book-day-off-submit')} onClick={onSentVacationRequestHanlder}>
-            {t("calendarBookBtn")}
+            {t('calendarBookBtn')}
           </button>
         </footer>
       </ReactModal>

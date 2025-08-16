@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import classNames from 'classnames';
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { AppRoutes } from '@global/router/routes.constans';

@@ -1,8 +1,15 @@
 import { useMemo, useState } from 'react';
+
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+
 import { AppRoutes } from '@global/router/routes.constans';
+
 import { AdminSidebarItem } from '@modules/AdminSidebar/layout/Item';
+
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
+import { LanguageSwitcherDropdown } from '@shared/components/LanguageSwitcherDropdown';
 
 import IconEmployees from '@shared/assets/icons/IconEmployees.svg';
 import IconEmployeesWhite from '@shared/assets/icons/IconEmployeesWhite.svg';
@@ -13,8 +20,6 @@ import IconUserProfile from '@shared/assets/icons/IconUserProfile.svg';
 import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg';
 
 import './style.css';
-import { useTranslation } from 'react-i18next';
-import { LanguageSwitcherDropdown } from "@shared/components/LanguageSwitcherDropdown";
 
 export const RouteScopes = {
   TOP: 'top',
@@ -74,7 +79,7 @@ export const AdminSidebar = (): JSX.Element => {
     <section className={classNames('admin-sidebar')}>
       <nav className={classNames('admin-sidebar-navigation')}>
         <div className={classNames('admin-sidebar-top-routes')}>
-          <LanguageSwitcherDropdown/>
+          <LanguageSwitcherDropdown />
           {topRoutes.map(({ icon, label, path, selectedIcon }, i) => (
             <AdminSidebarItem selectedIcon={selectedIcon} path={path} icon={icon} label={t(label)} key={i} />
           ))}

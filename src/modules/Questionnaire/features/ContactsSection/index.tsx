@@ -1,8 +1,10 @@
 import { Fragment } from 'react';
+
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { PhoneNumberFields } from '@modules/PersonalInfo/features/PersonalInfoSection/PhoneNumberFields';
+
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
@@ -12,10 +14,7 @@ export const ContactSection = (): JSX.Element => {
 
   return (
     <Fragment>
-      <SharedSectionHeader
-        title={t('contacts')}
-        subtitle={t('contactsSubtitle')}
-      />
+      <SharedSectionHeader title={t('contacts')} subtitle={t('contactsSubtitle')} />
       <fieldset className={classNames('questionnaire-contacts-fields-wrapper')}>
         <PhoneNumberFields
           prefixName="nationalPhoneNumber.prefix"

@@ -1,12 +1,12 @@
 import { Fragment } from 'react';
 
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 
 import { AddEmployeeForm } from '@modules/EmployeesTable/features/AddEmployeeForm';
 
 import './style.css';
-import { useTranslation } from "react-i18next";
 
 interface AddEmployeePopupProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export const AddEmployeePopup = ({ isOpen, setIsOpenedModal }: AddEmployeePopupP
         shouldCloseOnEsc={true}
         isOpen={isOpen}>
         <header>
-          <h1 className={classNames('add-employee-popup-title')}>{t("addEmployeeBtn")}</h1>
+          <h1 className={classNames('add-employee-popup-title')}>{t('addEmployeeBtn')}</h1>
         </header>
         <main>
           <AddEmployeeForm setIsOpenedModal={setIsOpenedModal} />

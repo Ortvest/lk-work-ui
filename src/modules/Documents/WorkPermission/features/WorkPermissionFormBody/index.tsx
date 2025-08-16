@@ -1,10 +1,9 @@
 import classNames from 'classnames';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
 import { SharedFileUpload } from '@shared/components/SharedFileUpload';
-
-import { useTranslation } from 'react-i18next';
 
 import './style.css';
 
@@ -18,35 +17,23 @@ export const WorkPermissionFormBody = (): JSX.Element => {
         name="workPermitDocumentFileKey"
         control={control}
         render={({ field }) => (
-          <SharedFileUpload
-            title={t('workPermissionScan')}
-            onChange={(file) => field.onChange(file)}
-          />
+          <SharedFileUpload title={t('workPermissionScan')} onChange={(file) => field.onChange(file)} />
         )}
       />
-      <SharedDateSelector
-        dateSelectorTitle={t('workPermissionDateOfIssue')}
-        namePrefix="workPermitExpirationDate"
-      />
+      <SharedDateSelector dateSelectorTitle={t('workPermissionDateOfIssue')} namePrefix="workPermitExpirationDate" />
       <span className={classNames('work-permission-line')}></span>
       <Controller
         name="workPermitPaymentDocumentFileKey"
         control={control}
         render={({ field }) => (
-          <SharedFileUpload
-            title={t('workPermissionPayment')}
-            onChange={(file) => field.onChange(file)}
-          />
+          <SharedFileUpload title={t('workPermissionPayment')} onChange={(file) => field.onChange(file)} />
         )}
       />
       <Controller
         name="workPermitApplicationFileKey"
         control={control}
         render={({ field }) => (
-          <SharedFileUpload
-            title={t('workPermissionApplication')}
-            onChange={(file) => field.onChange(file)}
-          />
+          <SharedFileUpload title={t('workPermissionApplication')} onChange={(file) => field.onChange(file)} />
         )}
       />
     </fieldset>

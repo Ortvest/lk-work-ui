@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -24,12 +25,11 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { VisaInformationDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
-import { useTranslation } from "react-i18next";
 
 export const VisaInfo = (): JSX.Element => {
   const visaInformation = useTypedSelector((state) => state.userReducer.user?.documents.visaInformationDocuments);
 
-  const {t} = useTranslation('employee-sidebar');
+  const { t } = useTranslation('employee-sidebar');
   const selectedEmployeeVisaInformation = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.documents.visaInformationDocuments
   );
@@ -99,10 +99,7 @@ export const VisaInfo = (): JSX.Element => {
             <section className={classNames('visa-info')}>
               <form className={classNames('visa-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader
-                  title={t("routeVisaInfo")}
-                  subtitle={t("visaInfoSubtitle")}
-                />
+                <SharedSectionHeader title={t('routeVisaInfo')} subtitle={t('visaInfoSubtitle')} />
                 {isEditModeEnabled ? <VisaInfoFormBody /> : <VisaInfoPreviewBody />}
               </form>
             </section>
@@ -113,10 +110,7 @@ export const VisaInfo = (): JSX.Element => {
           <section className={classNames('visa-info')}>
             <form className={classNames('visa-info-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader
-                title={t("routeVisaInfo")}
-                subtitle={t("visaInfoSubtitle")}
-              />
+              <SharedSectionHeader title={t('routeVisaInfo')} subtitle={t('visaInfoSubtitle')} />
               {isEditModeEnabled ? <VisaInfoFormBody /> : <VisaInfoPreviewBody />}
             </form>
           </section>

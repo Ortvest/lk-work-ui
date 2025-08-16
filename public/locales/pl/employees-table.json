@@ -41,7 +41,6 @@
   "toastEmployeeAdded": "Pracownik został pomyślnie dodany",
   "toastEmployeeAddFailed": "Nie udało się dodać pracownika",
 
-
   "cardStatus": "Status:",
   "statusWorking": "PRACUJE",
   "statusLaidOff": "ZWOLNIONY",
@@ -106,5 +105,4 @@
   "toastAccommodationEdited": "Zakwaterowanie zostało pomyślnie zaktualizowane",
   "toastAccommodationAddFailed": "Nie udało się dodać zakwaterowania",
   "btnEditAccommodation": "Edytuj zakwaterowanie"
-
 }

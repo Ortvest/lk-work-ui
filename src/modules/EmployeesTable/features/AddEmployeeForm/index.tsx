@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { AddEmployeeButton } from '@modules/EmployeesTable/features/AddEmployeeButton';
 
@@ -9,7 +11,6 @@ import './style.css';
 import { useInviteEmployeeMutation, useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { AddEmployee } from '@shared/interfaces/User.interfaces';
-import { useTranslation } from 'react-i18next';
 
 interface AddEmployeeFormProps {
   setIsOpenedModal: (isOpen: boolean) => void;

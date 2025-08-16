@@ -7,10 +7,11 @@ import { CompaniesTable } from '@modules/Companies/layout/CompaniesTable';
 import { EditCompanyPopup } from '@modules/Companies/layout/EditCompanyPopup';
 import { CompaniesTableHeader } from '@modules/Companies/layout/Header';
 
+import './styles.css';
+
 import { useGetAllWorkCompaniesQuery } from '@global/api/work-company/work-company.api';
 import { OpenedPopupType } from '@pages/Accommodations';
 
-import './styles.css'
 export const CompaniesPage = (): React.ReactNode => {
   // eslint-disable-next-line no-empty-pattern
   const {} = useGetAllWorkCompaniesQuery(undefined);

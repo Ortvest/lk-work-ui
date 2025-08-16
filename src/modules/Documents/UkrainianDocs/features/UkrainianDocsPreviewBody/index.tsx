@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
+
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
+
 import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
+
 import './style.css';
+
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from 'react-i18next';
 
 export const UkrainianDocsPreviewBody = (): JSX.Element => {
   const [ukrainianDocsPhotoUrl, setUkrainianDocsPhotoUrl] = useState('');
@@ -41,10 +47,7 @@ export const UkrainianDocsPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('ukrainian-docs-preview-fields-wrapper')}>
-      <SharedImagePreview
-        imageUrl={ukrainianDocsPhotoUrl || FilePreviewIcon}
-        imageName={t('ukrainianStatementFile')}
-      />
+      <SharedImagePreview imageUrl={ukrainianDocsPhotoUrl || FilePreviewIcon} imageName={t('ukrainianStatementFile')} />
     </fieldset>
   );
 };

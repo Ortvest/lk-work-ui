@@ -11,13 +11,11 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
-import { useTranslation } from "react-i18next";
 
 export const WorkStartSection = (): JSX.Element => {
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
 
-  const {t} = useTranslation("employee-sidebar");
   const selectedEmployeePersonalInfo = useTypedSelector(
     (state) => state.employeeReducer.selectedEmployee?.personalInfo
   );

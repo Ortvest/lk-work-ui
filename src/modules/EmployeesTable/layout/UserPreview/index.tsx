@@ -44,8 +44,8 @@ export const UserPreview = ({
         rows={[
           {
             labelKey: 'cardPesel',
-            value: selectedEmployee?.personalInfo?.peselNumber as string
-          }
+            value: selectedEmployee?.personalInfo?.peselNumber as string,
+          },
         ]}
       />
       <InfoSection

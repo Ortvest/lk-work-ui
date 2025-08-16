@@ -1,9 +1,11 @@
 import { useMemo } from 'react';
+
 import classNames from 'classnames';
-import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
 
 import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
+
 import { CurrentStatus } from '@modules/Sidebar/layout/CurrentStatus';
 import { DocumentsNavigation } from '@modules/Sidebar/layout/DocumentsNavigation';
 

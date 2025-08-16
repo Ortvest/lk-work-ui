@@ -1,26 +1,29 @@
 import React from 'react';
+
 import classNames from 'classnames';
-import './style.css';
-import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
 import { useTranslation } from 'react-i18next';
 
+import './style.css';
+
+import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
+
 interface SwitchTableButtonProps {
-  translationKey: string;                 // ключ у JSON, напр. "hired", "fired", "onVacation", "vacationRequests"
-  targetTab: EmployeeTableTab;            // яку вкладку вмикаємо при кліку
+  translationKey: string; // ключ у JSON, напр. "hired", "fired", "onVacation", "vacationRequests"
+  targetTab: EmployeeTableTab; // яку вкладку вмикаємо при кліку
   isActive: boolean;
   setSelectedTable: (selectedTable: EmployeeTableTab) => void;
   setVacationType: (selectedType: EmployeeTableTab) => void;
-  count?: number;                         // опційно — для "vacationRequests"
+  count?: number; // опційно — для "vacationRequests"
 }
 
 export const SwitchTableButton = ({
-                                    translationKey,
-                                    targetTab,
-                                    isActive,
-                                    setSelectedTable,
-                                    setVacationType,
-                                    count,
-                                  }: SwitchTableButtonProps): React.ReactNode => {
+  translationKey,
+  targetTab,
+  isActive,
+  setSelectedTable,
+  setVacationType,
+  count,
+}: SwitchTableButtonProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
 
   const onClick = (): void => {

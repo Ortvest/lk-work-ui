@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+
 import { EmployeeSlice } from '@global/store/slices/Employee.slice';
+
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
+
 import './style.css';
+
 import { OpenedPopupType } from '@pages/Accommodations';
 import { UserRole } from '@shared/enums/user.enums';
 import { isUserEntity } from '@shared/guards/isUserEntity';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 import { getRoleLabel } from '@shared/utils/roleTransformer';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useTranslation } from 'react-i18next';
 
 interface EmployeeTableContentProps {
   employees: UserEntity[];
@@ -26,10 +31,10 @@ type CustomColumnDef<TData> = ColumnDef<TData> & {
 const { setSelectedEmployee } = EmployeeSlice.actions;
 
 export const StuffTableContent = ({
-                                    employees,
-                                    setIsDrawerOpen,
-                                    setOpenedPopupType,
-                                  }: EmployeeTableContentProps): React.ReactNode => {
+  employees,
+  setIsDrawerOpen,
+  setOpenedPopupType,
+}: EmployeeTableContentProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
   const dispatch = useTypedDispatch();
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
@@ -87,48 +92,45 @@ export const StuffTableContent = ({
   return (
     <table className="employees-table">
       <thead className={classNames('employees-table-content-header')}>
-      {table.getHeaderGroups().map((headerGroup) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header) => (
-            <th
-              key={header.id}
-              className={classNames(
-                (header.column.columnDef.meta as ColumnMetaWithClassName)?.className,
-                'employees-table-content-header-item'
-              )}
-            >
-              {flexRender(header.column.columnDef.header, header.getContext())}
-            </th>
-          ))}
-        </tr>
-      ))}
+        {table.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <th
+                key={header.id}
+                className={classNames(
+                  (header.column.columnDef.meta as ColumnMetaWithClassName)?.className,
+                  'employees-table-content-header-item'
+                )}>
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </th>
+            ))}
+          </tr>
+        ))}
       </thead>
       <tbody>
-      {table.getRowModel().rows.map((row) => (
-        <tr
-          key={row.id}
-          className="employees-table-row"
-          onMouseEnter={() => setHoveredRowId(row.id)}
-          onMouseLeave={() => setHoveredRowId(null)}
-          onClick={() => onSelectEmployee(row.original)}
-        >
-          {row.getVisibleCells().map((cell) => (
-            <td
-              key={cell.id}
-              className={classNames(
-                (cell.column.columnDef.meta as ColumnMetaWithClassName)?.className,
-                'employees-table-content-header-cell'
-              )}
-            >
-              {flexRender(cell.column.columnDef.cell, {
-                ...cell.getContext(),
-                hoveredRowId,
-                currentRowId: row.id,
-              })}
-            </td>
-          ))}
-        </tr>
-      ))}
+        {table.getRowModel().rows.map((row) => (
+          <tr
+            key={row.id}
+            className="employees-table-row"
+            onMouseEnter={() => setHoveredRowId(row.id)}
+            onMouseLeave={() => setHoveredRowId(null)}
+            onClick={() => onSelectEmployee(row.original)}>
+            {row.getVisibleCells().map((cell) => (
+              <td
+                key={cell.id}
+                className={classNames(
+                  (cell.column.columnDef.meta as ColumnMetaWithClassName)?.className,
+                  'employees-table-content-header-cell'
+                )}>
+                {flexRender(cell.column.columnDef.cell, {
+                  ...cell.getContext(),
+                  hoveredRowId,
+                  currentRowId: row.id,
+                })}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

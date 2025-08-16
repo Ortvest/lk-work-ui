@@ -1,15 +1,21 @@
 import React, { Fragment } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
+
 import { SharedDateSelector } from '@shared/components/SharedDateSelector';
+
 import IconArrowLeft from '@shared/assets/icons/IconArrowLeft.svg';
+
 import './style.css';
+
 import { useLayOffEmployeeMutation, useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
 import { UserWorkStatuses } from '@shared/enums/user.enums';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
-import { useTranslation } from 'react-i18next';
 
 interface UserPreviewHeaderProps {
   selectedEmployee: UserEntity | null;
@@ -55,9 +61,7 @@ export const FireUser = ({ selectedEmployee, setIsFireUserDrawerOpen }: UserPrev
     }
 
     await layOffEmployee({ employeeId, layOffDate }).then((response) =>
-      response.data
-        ? toast.success(t('toastFireUserSuccess'))
-        : toast.error(t('toastFireUserError'))
+      response.data ? toast.success(t('toastFireUserSuccess')) : toast.error(t('toastFireUserError'))
     );
 
     await fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.WORKING, company: '' });
@@ -68,11 +72,18 @@ export const FireUser = ({ selectedEmployee, setIsFireUserDrawerOpen }: UserPrev
   return (
     <Fragment>
       <header className={classNames('fire-user-preview-header')}>
-        <button onClick={onClosePreview} className={classNames('user-preview-header-button')} aria-label={t('userPreviewBack')}>
+        <button
+          onClick={onClosePreview}
+          className={classNames('user-preview-header-button')}
+          aria-label={t('userPreviewBack')}>
           <img src={IconArrowLeft} alt="" />
         </button>
         <div className="fire-user-preview-header-center">
-          <p>{t('fireUserTitle', { name: `${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}` })}</p>
+          <p>
+            {t('fireUserTitle', {
+              name: `${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`,
+            })}
+          </p>
         </div>
       </header>
       <section className="fire-user-preview-data">

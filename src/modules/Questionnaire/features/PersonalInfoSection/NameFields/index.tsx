@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -12,18 +13,10 @@ export const NameFields = (): JSX.Element => {
   return (
     <Fragment>
       <SharedLabel title={t('firstName')}>
-        <SharedInput
-          type="text"
-          {...register('firstName')}
-          placeholder={t('enterFirstNamePlaceholder')}
-        />
+        <SharedInput type="text" {...register('firstName')} placeholder={t('enterFirstNamePlaceholder')} />
       </SharedLabel>
       <SharedLabel title={t('lastName')}>
-        <SharedInput
-          type="text"
-          {...register('lastName')}
-          placeholder={t('enterLastNamePlaceholder')}
-        />
+        <SharedInput type="text" {...register('lastName')} placeholder={t('enterLastNamePlaceholder')} />
       </SharedLabel>
     </Fragment>
   );

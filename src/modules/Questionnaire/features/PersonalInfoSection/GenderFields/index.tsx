@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -29,8 +30,7 @@ export const GenderFields = (): JSX.Element => {
         <label
           className={classNames('questionnaire-gender-option', {
             active: selectedGender === 'male',
-          })}
-        >
+          })}>
           <input
             type="radio"
             value="male"
@@ -43,8 +43,7 @@ export const GenderFields = (): JSX.Element => {
         <label
           className={classNames('questionnaire-gender-option', {
             active: selectedGender === 'female',
-          })}
-        >
+          })}>
           <input
             type="radio"
             value="female"

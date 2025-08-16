@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { WorkCompanySlice } from '@global/store/slices/WorkCompany.slice';
+
 import { ContactPersonHoverCard } from '@modules/Companies/layout/ContactPersonHoverCard';
+
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 
 import './style.css';
@@ -13,10 +16,10 @@ import { WorkCompanyEntity } from '@shared/interfaces/WorkCompanies.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
 export const CompanyTableContent = ({
-                                      companies,
-                                      setOpenedPopupType,
-                                      setIsOpenedModal,
-                                    }: {
+  companies,
+  setOpenedPopupType,
+  setIsOpenedModal,
+}: {
   companies: WorkCompanyEntity[];
   setIsOpenedModal: (isOpen: boolean) => void;
   setOpenedPopupType: (type: OpenedPopupType) => void;
@@ -116,41 +119,41 @@ export const CompanyTableContent = ({
   return (
     <table className="employees-table">
       <thead className={classNames('employees-table-content-header')}>
-      {table.getHeaderGroups().map((headerGroup) => (
-        <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header: any) => (
-            <th
-              key={header.id}
-              className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
-              {flexRender(header.column.columnDef.header, header.getContext())}
-            </th>
-          ))}
-        </tr>
-      ))}
+        {table.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header: any) => (
+              <th
+                key={header.id}
+                className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
+                {flexRender(header.column.columnDef.header, header.getContext())}
+              </th>
+            ))}
+          </tr>
+        ))}
       </thead>
       <tbody>
-      {table?.getRowModel()?.rows?.map((row) => (
-        <tr
-          key={row.id}
-          className="employees-table-row"
-          onMouseEnter={() => setHoveredRowId(row.id)}
-          onMouseLeave={() => setHoveredRowId(null)}
-          onClick={() => onSelectCompany(row.original as unknown as WorkCompanyEntity)}>
-          {row?.getVisibleCells()?.map((cell: any) => (
-            <td
-              key={cell.id}
-              className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
-              {flexRender(cell?.column?.columnDef?.cell, {
-                ...cell?.getContext(),
-                hoveredRowId,
-                currentRowId: row.id,
-                setOpenedPopupType,
-                setIsOpenedModal,
-              })}
-            </td>
-          ))}
-        </tr>
-      ))}
+        {table?.getRowModel()?.rows?.map((row) => (
+          <tr
+            key={row.id}
+            className="employees-table-row"
+            onMouseEnter={() => setHoveredRowId(row.id)}
+            onMouseLeave={() => setHoveredRowId(null)}
+            onClick={() => onSelectCompany(row.original as unknown as WorkCompanyEntity)}>
+            {row?.getVisibleCells()?.map((cell: any) => (
+              <td
+                key={cell.id}
+                className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
+                {flexRender(cell?.column?.columnDef?.cell, {
+                  ...cell?.getContext(),
+                  hoveredRowId,
+                  currentRowId: row.id,
+                  setOpenedPopupType,
+                  setIsOpenedModal,
+                })}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

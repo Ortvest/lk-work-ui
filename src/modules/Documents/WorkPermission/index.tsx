@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
@@ -24,11 +25,10 @@ import { UserRoles } from '@shared/enums/user.enums';
 import { WorkPermissionDocument } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
 import { datePartsParser } from '@shared/utils/datePartsParser';
-import { useTranslation } from "react-i18next";
 
 export const WorkPermission = (): JSX.Element => {
   const dispatch = useTypedDispatch();
-  const {t} = useTranslation('employee-sidebar')
+  const { t } = useTranslation('employee-sidebar');
   const [uploadfile] = useUploadPhotoMutation();
   const [collectUserWorkPermissionData] = useCollectUserWorkPermitDataMutation();
 
@@ -108,10 +108,7 @@ export const WorkPermission = (): JSX.Element => {
             <section className={classNames('work-permission')}>
               <form className={classNames('work-permission-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
                 <StatusPanel />
-                <SharedSectionHeader
-                  title={t("routeWorkPermission")}
-                  subtitle={t("workPermissionSubtitle")}
-                />
+                <SharedSectionHeader title={t('routeWorkPermission')} subtitle={t('workPermissionSubtitle')} />
                 {isEditModeEnabled ? <WorkPermissionFormBody /> : <WorkPermissionPreviewBody />}
               </form>
             </section>
@@ -122,10 +119,7 @@ export const WorkPermission = (): JSX.Element => {
           <section className={classNames('work-permission')}>
             <form className={classNames('work-permission-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
               <StatusPanel />
-              <SharedSectionHeader
-                title={t("routeWorkPermission")}
-                subtitle={t("workPermissionSubtitle")}
-              />
+              <SharedSectionHeader title={t('routeWorkPermission')} subtitle={t('workPermissionSubtitle')} />
               {isEditModeEnabled ? <WorkPermissionFormBody /> : <WorkPermissionPreviewBody />}
             </form>
           </section>
