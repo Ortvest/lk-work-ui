@@ -18,7 +18,8 @@ import './style.css';
 
 import {
   useHandleVacationRequestsMutation,
-  useLazyFetchVacationRequestsQuery, useLazyRemoveVacationQuery
+  useLazyFetchVacationRequestsQuery,
+  useLazyRemoveVacationQuery,
 } from '@global/api/employee/employee.api';
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
 import { VacationFilters } from '@shared/enums/vacation.enums';
@@ -50,14 +51,14 @@ export const EmployeesTableContent = ({
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
 
   const [fetchAllVacationRequests] = useLazyFetchVacationRequestsQuery();
-  const [removeVacation] = useLazyRemoveVacationQuery()
+  const [removeVacation] = useLazyRemoveVacationQuery();
   const currentUserData = useTypedSelector((state) => state.userReducer.user);
   const [handleVacationRequest, { isLoading: isHandleLoading }] = useHandleVacationRequestsMutation();
 
   const onRemoveVacation = async (id: string): Promise<void> => {
     await removeVacation({ vacationId: id });
     await fetchAllVacationRequests(VacationFilters.ON_VACATION);
-  }
+  };
   const onSelectEmployee = (entity: UserEntity | VacationRequestsResponse, decision?: VacationDecision): void => {
     if (isUserEntity(entity)) {
       setIsDrawerOpen(true);
@@ -216,11 +217,11 @@ export const EmployeesTableContent = ({
       header: t('columnVacationPeriod'),
       // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
       accessorFn: (row) => {
-        console.log(row, "ROW")
-        return row.vacationDates
+        console.log(row, 'ROW');
+        return row.vacationDates;
       },
       cell: (info): JSX.Element => {
-        console.log(info, "INFO")
+        console.log(info, 'INFO');
         const dates = info.getValue() as string[];
         return (
           <>
@@ -250,8 +251,7 @@ export const EmployeesTableContent = ({
                 gap: '8px',
                 opacity: isHovered ? 1 : 0,
                 transition: 'opacity 0.2s ease',
-              }}
-            >
+              }}>
               {selectedTable === 'vacation-requests' && (
                 <>
                   <button
@@ -259,8 +259,7 @@ export const EmployeesTableContent = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       (table.options.meta as any)?.onSelectEmployee(row.original, 'rejected');
-                    }}
-                  >
+                    }}>
                     {t('btnCancel')}
                   </button>
                   <button
@@ -268,8 +267,7 @@ export const EmployeesTableContent = ({
                     onClick={(e) => {
                       e.stopPropagation();
                       (table.options.meta as any)?.onSelectEmployee(row.original, 'approved');
-                    }}
-                  >
+                    }}>
                     {t('btnApprove')}
                   </button>
                 </>
@@ -280,9 +278,8 @@ export const EmployeesTableContent = ({
                   className="action-approve-btn"
                   onClick={(e) => {
                     e.stopPropagation();
-                    (table.options.meta as any)?.onRemoveVacation(row.original?._id || "");
-                  }}
-                >
+                    (table.options.meta as any)?.onRemoveVacation(row.original?._id || '');
+                  }}>
                   {t('btnDelete')}
                 </button>
               )}

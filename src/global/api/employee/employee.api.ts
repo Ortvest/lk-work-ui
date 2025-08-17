@@ -125,5 +125,5 @@ export const {
   useSentVacationRequestMutation,
   useLayOffEmployeeMutation,
   useLazySearchEmployersQuery,
-  useLazyRemoveVacationQuery
+  useLazyRemoveVacationQuery,
 } = employeeApi;
