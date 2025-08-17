@@ -26,7 +26,7 @@ export const TimeFromWorkStartDate = (): JSX.Element => {
         <div className={classNames('work-start-day-wrapper')}>
           <SharedLabel title={t('timeFromWorkStartDate')}>
             <span>
-              {currentDataOrigin?.personalInfo.timeFromWorkStartDate as string} {t('days')}
+              {(currentDataOrigin?.personalInfo.timeFromWorkStartDate as string) || '0'} {t('days')}
             </span>
           </SharedLabel>
         </div>

@@ -34,10 +34,10 @@ export const DrivingLicenceFormBody = (): JSX.Element => {
       <SharedLabel title={t('drivingLicenceCategories')}>
         <SharedSelect {...register('drivingLicenceCategories')} options={drivingCategories} />
       </SharedLabel>
-      <SharedDateSelector dateSelectorTitle={t('drivingLicenceDateOfIssue')} namePrefix="drivingLicenceDateOfIssue" />
+      <SharedDateSelector dateSelectorTitle={t('drivingLicenceDateOfIssue')} namePrefix="drivingLicenseDateOfIssue" />
       <SharedDateSelector
         dateSelectorTitle={t('drivingLicenceExpirationDate')}
-        namePrefix="drivingLicenceExpirationDate"
+        namePrefix="drivingLicenseExpirationDate"
       />
     </fieldset>
   );

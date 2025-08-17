@@ -4,7 +4,12 @@
 }
 
 .gender-option {
-  padding: 8px 63px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 174px;
+  padding: 8px 0;
 
   color: var(--dark-gray);
 

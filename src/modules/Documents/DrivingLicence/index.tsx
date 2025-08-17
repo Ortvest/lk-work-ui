@@ -46,6 +46,7 @@ export const DrivingLicence = (): JSX.Element => {
       drivingLicenseExpirationDate: datePartsParser(currentDataOrigin?.drivingLicenseExpirationDate),
     },
   });
+
   const [uploadfile] = useUploadPhotoMutation();
   const [collectUserDrivingLicenceData] = useCollectUserDrivingLicenceMutation();
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
@@ -76,6 +77,7 @@ export const DrivingLicence = (): JSX.Element => {
       };
 
       await collectUserDrivingLicenceData({ drivingLicenceData: parsedData, employeeId });
+
       dispatch(setIsEditModeEnabled(false));
     } catch (error) {
       console.error('Failed to save driving licence data:', error);

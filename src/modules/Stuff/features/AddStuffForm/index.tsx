@@ -127,6 +127,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
         </label>
         <SharedSelect
           register={register('role')}
+          style={{ maxWidth: '382px' }}
           options={[
             { value: UserRoles.ACCOUNTANT, label: t('roleAccountant') },
             { value: UserRoles.OFFICE_WORKER, label: t('roleOfficeWorker') },
@@ -137,7 +138,7 @@ export const AddStuffForm = ({ setIsOpenedModal, isEditMode }: AddStuffFormProps
         <label className="form-field-label" htmlFor="stuff-department">
           {t('modalStuffDepartmentLabel')}
         </label>
-        <SharedSelect register={register('jobInfo.company')} options={departments} />
+        <SharedSelect register={register('jobInfo.company')} options={departments} style={{ maxWidth: '382px' }} />
       </div>
       <div className="form-buttons-wrapper">
         <button onClick={onCancelHandler} className="cancel-button">

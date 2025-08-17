@@ -50,7 +50,7 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
     };
 
     fetchDrivingLicencePhotos();
-  }, []);
+  }, [currentDataOrigin, getUploadedPhoto]);
 
   return (
     <fieldset className={classNames('driving-licence-preview-fields-wrapper')}>

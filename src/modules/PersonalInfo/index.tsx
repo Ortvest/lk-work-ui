@@ -19,8 +19,8 @@ import { GlobalContainer } from '@shared/components/GlobalContainer';
 import './style.css';
 
 import {
+  useCollectSelectedEmployeePassportDataMutation,
   useCollectUserGlobalDataMutation,
-  useCollectUserPassportDataMutation,
   useCollectUserPersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -48,7 +48,7 @@ export const PersonalInfoForm = (): JSX.Element => {
   const { setIsEditModeEnabled } = CommonSlice.actions;
 
   const [collectUserPersonalInfo] = useCollectUserPersonalInfoMutation();
-  const [collectPassportData] = useCollectUserPassportDataMutation();
+  const [collectPassportData] = useCollectSelectedEmployeePassportDataMutation();
   const [collectUserGlobalData] = useCollectUserGlobalDataMutation();
   const [uploadPhoto] = useUploadPhotoMutation();
 

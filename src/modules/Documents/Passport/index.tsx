@@ -20,7 +20,7 @@ import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 import './style.css';
 
 import {
-  useCollectUserPassportDataMutation,
+  useCollectSelectedEmployeePassportDataMutation,
   useCollectUserPersonalInfoMutation,
 } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -42,7 +42,7 @@ export const Passport = (): JSX.Element => {
     userRole === UserRoles.EMPLOYEE ? passportDocumentsData : selectedEmployeePassportDocumentsData;
 
   const [uploadfile] = useUploadPhotoMutation();
-  const [collectPassportData] = useCollectUserPassportDataMutation();
+  const [collectPassportData] = useCollectSelectedEmployeePassportDataMutation();
   const [collectPersonalInfo] = useCollectUserPersonalInfoMutation();
   const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);

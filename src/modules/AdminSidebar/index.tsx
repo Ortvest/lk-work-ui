@@ -25,6 +25,7 @@ import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg'
 import './style.css';
 
 import { useLogoutMutation } from '@global/api/auth/auth.api';
+import { UserRole, UserRoles } from '@shared/enums/user.enums';
 
 export const RouteScopes = {
   TOP: 'top',
@@ -38,6 +39,7 @@ const sidebarRoutes = [
     label: 'Employees',
     scope: RouteScopes.TOP,
     path: AppRoutes.EMPLOYEES_TABLE.path,
+    roles: [UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT, UserRoles.OFFICE_WORKER],
   },
   {
     icon: IconUserProfile,
@@ -45,6 +47,7 @@ const sidebarRoutes = [
     label: 'Stuff',
     scope: RouteScopes.TOP,
     path: AppRoutes.STUFF.path,
+    roles: [UserRoles.SUPER_ADMIN],
   },
   {
     icon: IconUser,
@@ -59,6 +62,7 @@ const sidebarRoutes = [
     label: 'Accommodations',
     scope: RouteScopes.TOP,
     path: AppRoutes.ACCOMMODATIONS.path,
+    roles: [UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT, UserRoles.OFFICE_WORKER],
   },
   {
     icon: IconGlobe,
@@ -66,12 +70,23 @@ const sidebarRoutes = [
     label: 'Companies',
     scope: RouteScopes.TOP,
     path: AppRoutes.COMPANIES.path,
+    roles: [UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT, UserRoles.OFFICE_WORKER],
   },
 ];
 
 export const AdminSidebar = (): JSX.Element => {
   const { t } = useTranslation('employees-table');
-  const topRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.TOP), []);
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role) as Extract<
+    UserRole,
+    'super-admin' | 'office-worker' | 'accountant'
+  >;
+  const topRoutes = useMemo(
+    () =>
+      sidebarRoutes.filter(
+        (route) => route.scope === RouteScopes.TOP && (!route.roles || route.roles.includes(userRole))
+      ),
+    [userRole]
+  );
   const bottomRoutes = useMemo(() => sidebarRoutes.filter((route) => route.scope === RouteScopes.BOTTOM), []);
   const [isWorkerInfoVisible, setIsWorkerInfoVisible] = useState(false);
   const personalData = useTypedSelector((state) => state.userReducer.user);

@@ -101,7 +101,10 @@ export const EmployeesTableContent = ({
     },
     {
       header: t('columnCitizenship'),
-      accessorFn: (row) => row.personalInfo.nationality,
+      accessorFn: (row): string => {
+        const nationality = row.personalInfo.nationality ?? '';
+        return nationality.charAt(0).toUpperCase() + nationality.slice(1);
+      },
       meta: { className: 'column-citizenship' },
     },
     {

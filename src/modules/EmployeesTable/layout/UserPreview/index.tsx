@@ -69,7 +69,7 @@ export const UserPreview = ({
       />
       <PrintDocumentsButton setIsUserDocumentsDrawerOpen={setIsUserDocumentsDrawerOpen} />
 
-      <UserPreviewToolbar />
+      <UserPreviewToolbar setIsDrawerOpen={setIsDrawerOpen} />
     </article>
   );
 };

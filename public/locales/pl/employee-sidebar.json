@@ -72,7 +72,7 @@
   "locationStreet": "Ulica",
   "locationHouseNumber": "Numer domu",
   "locationApartmentNumber": "Numer mieszkania",
-  "locationIsLivingInAccommodation": "Mieszkasz w zakwaterowaniu?",
+  "locationIsLivingInAccommodation": "Masz zakwaterowanie?",
   "locationChooseAccommodation": "Wybierz zakwaterowanie:*",
   "locationCityLabel": "Miasto:*",
   "locationCityPlaceholder": "Wybierz swoje miasto",
