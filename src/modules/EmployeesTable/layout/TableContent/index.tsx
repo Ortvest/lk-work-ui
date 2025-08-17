@@ -18,7 +18,7 @@ import './style.css';
 
 import {
   useHandleVacationRequestsMutation,
-  useLazyFetchVacationRequestsQuery,
+  useLazyFetchVacationRequestsQuery, useLazyRemoveVacationQuery
 } from '@global/api/employee/employee.api';
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
 import { VacationFilters } from '@shared/enums/vacation.enums';
@@ -50,9 +50,14 @@ export const EmployeesTableContent = ({
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
 
   const [fetchAllVacationRequests] = useLazyFetchVacationRequestsQuery();
+  const [removeVacation] = useLazyRemoveVacationQuery()
   const currentUserData = useTypedSelector((state) => state.userReducer.user);
   const [handleVacationRequest, { isLoading: isHandleLoading }] = useHandleVacationRequestsMutation();
 
+  const onRemoveVacation = async (id: string): Promise<void> => {
+    await removeVacation({ vacationId: id });
+    await fetchAllVacationRequests(VacationFilters.ON_VACATION);
+  }
   const onSelectEmployee = (entity: UserEntity | VacationRequestsResponse, decision?: VacationDecision): void => {
     if (isUserEntity(entity)) {
       setIsDrawerOpen(true);
@@ -82,7 +87,6 @@ export const EmployeesTableContent = ({
 
   type TableData = typeof isVacation extends true ? VacationRequestsResponse : UserEntity;
 
-  // --- COLUMNS WITH i18n ---
   const employeesColumns: ColumnDef<UserEntity>[] = [
     {
       header: t('columnEmployee'),
@@ -210,8 +214,13 @@ export const EmployeesTableContent = ({
     },
     {
       header: t('columnVacationPeriod'),
-      accessorFn: (row) => row.vacationDates,
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      accessorFn: (row) => {
+        console.log(row, "ROW")
+        return row.vacationDates
+      },
       cell: (info): JSX.Element => {
+        console.log(info, "INFO")
         const dates = info.getValue() as string[];
         return (
           <>
@@ -230,7 +239,8 @@ export const EmployeesTableContent = ({
       header: t('columnAction'),
       // @ts-ignore
       cell: ({ row, hoveredRowId, currentRowId, selectedTable, table }): JSX.Element => {
-        const isHovered = selectedTable === 'vacation-requests' && hoveredRowId === currentRowId;
+        const isHovered =
+          (selectedTable === 'vacation-requests' && hoveredRowId === currentRowId) || selectedTable === 'on-vacation';
 
         return (
           <div className="employees-table-action-cell" style={{ position: 'relative', width: '100%' }}>
@@ -240,23 +250,42 @@ export const EmployeesTableContent = ({
                 gap: '8px',
                 opacity: isHovered ? 1 : 0,
                 transition: 'opacity 0.2s ease',
-              }}>
-              <button
-                className="action-cancel-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  (table.options.meta as any)?.onSelectEmployee(row.original, 'rejected');
-                }}>
-                {t('btnCancel')}
-              </button>
-              <button
-                className="action-approve-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  (table.options.meta as any)?.onSelectEmployee(row.original, 'approved');
-                }}>
-                {t('btnApprove')}
-              </button>
+              }}
+            >
+              {selectedTable === 'vacation-requests' && (
+                <>
+                  <button
+                    className="action-cancel-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      (table.options.meta as any)?.onSelectEmployee(row.original, 'rejected');
+                    }}
+                  >
+                    {t('btnCancel')}
+                  </button>
+                  <button
+                    className="action-approve-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      (table.options.meta as any)?.onSelectEmployee(row.original, 'approved');
+                    }}
+                  >
+                    {t('btnApprove')}
+                  </button>
+                </>
+              )}
+
+              {selectedTable === 'on-vacation' && (
+                <button
+                  className="action-approve-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    (table.options.meta as any)?.onRemoveVacation(row.original?._id || "");
+                  }}
+                >
+                  {t('btnDelete')}
+                </button>
+              )}
             </div>
           </div>
         );
@@ -264,16 +293,14 @@ export const EmployeesTableContent = ({
       meta: { className: 'column-action' },
     },
   ];
-  // --- END COLUMNS ---
 
-  // типи для таблиці
   type AnyCols = ColumnDef<TableData>[];
 
   const table = useReactTable<TableData>({
     data: isVacation ? (vacationRequests as unknown as TableData[]) : (employees as TableData[]),
     columns: (isVacation ? vacationRequestsColumns : employeesColumns) as AnyCols,
     getCoreRowModel: getCoreRowModel(),
-    meta: { onSelectEmployee },
+    meta: { onSelectEmployee, onRemoveVacation },
   });
 
   if (isHandleLoading) return <Loader />;

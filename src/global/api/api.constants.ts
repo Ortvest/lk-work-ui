@@ -23,6 +23,7 @@ export const API_CONFIG = {
   sentVacationRequest: (): string => '/employee/vacation',
   inviteEmployee: (): string => '/employee/add',
   setNewPassword: (): string => '/employee/set-password',
+  removeVacation: (vacationId: string): string => `/employee/vacation?vacationId=${vacationId}`,
   editUserData: (employeeId: string): string => `/employee/edit-user-data?employeeId=${employeeId}`,
   removeStuffWorker: (employeeId: string): string => `/employee/remove-worker?employeeId=${employeeId}`,
 
