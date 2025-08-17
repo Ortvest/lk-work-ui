@@ -26,6 +26,7 @@
   "columnAction": "Action",
   "btnCancel": "Cancel",
   "btnApprove": "Approve",
+  "btnDelete": "Delete",
   "expireDays": "{{days}} days",
   "expireMonths": "{{months}} months",
   "columnCompany": "Company",

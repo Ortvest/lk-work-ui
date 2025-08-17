@@ -102,7 +102,15 @@ export const employeeApi = baseEmployeeApi.injectEndpoints({
         }
       },
     }),
+    removeVacation: builder.query<boolean, { vacationId: string }>({
+      query: ({ vacationId }) => ({
+        url: API_CONFIG.removeVacation(vacationId),
+        method: 'DELETE',
+        credentials: 'include',
+      }),
+    }),
   }),
+
   overrideExisting: false,
 });
 
@@ -117,4 +125,5 @@ export const {
   useSentVacationRequestMutation,
   useLayOffEmployeeMutation,
   useLazySearchEmployersQuery,
+  useLazyRemoveVacationQuery
 } = employeeApi;
