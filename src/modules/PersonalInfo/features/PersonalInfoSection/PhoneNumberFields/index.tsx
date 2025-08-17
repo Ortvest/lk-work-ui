@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
+
 import classNames from 'classnames';
 import { useFormContext } from 'react-hook-form';
 
+import { usePhonePrefixes } from '@shared/hooks/usePhonePrefixes';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { SharedInput } from '@shared/components/SharedInput';
@@ -9,8 +12,6 @@ import { SharedLabel } from '@shared/components/SharedLabel';
 import './style.css';
 
 import { UserRoles } from '@shared/enums/user.enums';
-import { usePhonePrefixes } from '@shared/hooks/usePhonePrefixes';
-import { useEffect, useState } from "react";
 
 interface PhoneNumberProps {
   prefixName: string;
@@ -20,11 +21,11 @@ interface PhoneNumberProps {
 }
 
 export const PhoneNumberFields = ({
-                                    prefixName,
-                                    numberName,
-                                    phoneNumberTitle,
-                                    editModeTitle,
-                                  }: PhoneNumberProps): JSX.Element => {
+  prefixName,
+  numberName,
+  phoneNumberTitle,
+  editModeTitle,
+}: PhoneNumberProps): JSX.Element => {
   const { register, setValue, watch } = useFormContext();
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
@@ -32,8 +33,7 @@ export const PhoneNumberFields = ({
     (state) => state.employeeReducer.selectedEmployee?.personalInfo
   );
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
-  const currentDataOrigin =
-    userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
 
   const { prefixes, loading, error } = usePhonePrefixes();
 
@@ -51,11 +51,7 @@ export const PhoneNumberFields = ({
       {isEditModeEnabled ? (
         <fieldset className={classNames('phone-wrapper')}>
           <div className="phone-select-wrapper">
-            <select
-              className="phone-select"
-              value={selectedPrefix}
-              onChange={(e) => setSelectedPrefix(e.target.value)}
-            >
+            <select className="phone-select" value={selectedPrefix} onChange={(e) => setSelectedPrefix(e.target.value)}>
               {loading && <option>Loading...</option>}
               {error && <option>Error loading</option>}
               {!loading &&

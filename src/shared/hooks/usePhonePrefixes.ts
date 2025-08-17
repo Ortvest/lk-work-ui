@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface Prefix {
   country: string;
@@ -30,7 +30,7 @@ export function usePhonePrefixes() {
 
         setPrefixes(mapped);
       } catch (err: any) {
-        setError(err.message || "Unknown error");
+        setError(err.message || 'Unknown error');
       } finally {
         setLoading(false);
       }

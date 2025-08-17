@@ -15,7 +15,6 @@
   flex: 1;
 }
 
-
 .questionnaire-phone-select {
   width: 100%;
   padding: 10px 40px 10px 16px;
@@ -31,13 +30,12 @@
 
   outline: none;
 
-  appearance: none; 
+  appearance: none;
 }
 
 .questionnaire-phone-select:hover {
   cursor: pointer;
 }
-
 
 .questionnaire-phone-select-overlay {
   position: absolute;

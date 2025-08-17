@@ -12,7 +12,7 @@ interface SharedImagePreviewProps {
 export const SharedImagePreview = ({ imageName, imageUrl }: SharedImagePreviewProps): JSX.Element => {
   const handleDownload = async (): Promise<void> => {
     try {
-      const response = await fetch(imageUrl, { credentials: 'omit' }); // качаем файл
+      const response = await fetch(imageUrl, { credentials: 'omit' });
       if (!response.ok) throw new Error('Не удалось скачать файл');
       const blob = await response.blob();
 
@@ -20,7 +20,7 @@ export const SharedImagePreview = ({ imageName, imageUrl }: SharedImagePreviewPr
 
       const link = document.createElement('a');
       link.href = objectUrl;
-      link.download = imageName || 'file.png'; // 👈 именно это имя и заставит скачать
+      link.download = imageName || 'file.png';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
