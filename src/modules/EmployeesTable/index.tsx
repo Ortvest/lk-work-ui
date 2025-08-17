@@ -41,29 +41,28 @@ export const EmployeesTable = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    console.log(user, "USER")
     if (selectedTable === 'hired') {
-     if(user?.role === UserRoles.SUPER_ADMIN){
-       (async (): Promise<void> => {
-         await fetchEmployees({
-           location: "",
-           workStatus: UserWorkStatuses.WORKING,
-           company: '',
-           fullName: '',
-         });
-       })();
-     }else {
-       (async (): Promise<void> => {
-         await fetchEmployees({
-           location: "",
-           workStatus: UserWorkStatuses.WORKING,
-           company: user?.jobInfo.company,
-           fullName: '',
-         });
-       })();
-     }
+      if (user?.role === UserRoles.SUPER_ADMIN) {
+        (async (): Promise<void> => {
+          await fetchEmployees({
+            location: '',
+            workStatus: UserWorkStatuses.WORKING,
+            company: '',
+            fullName: '',
+          });
+        })();
+      } else {
+        (async (): Promise<void> => {
+          await fetchEmployees({
+            location: '',
+            workStatus: UserWorkStatuses.WORKING,
+            company: user?.jobInfo.company,
+            fullName: '',
+          });
+        })();
+      }
     } else {
-      if(user?.role === UserRoles.SUPER_ADMIN){
+      if (user?.role === UserRoles.SUPER_ADMIN) {
         (async (): Promise<void> => {
           await fetchEmployees({
             location: '',
