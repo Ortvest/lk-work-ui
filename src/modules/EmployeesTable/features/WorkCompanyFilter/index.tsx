@@ -37,7 +37,9 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
 
   useEffect(() => {
     if (user?.role === UserRoles.SUPER_ADMIN) {
-      fetchAllWorkCompanies(undefined);
+      (async (): Promise<void> => {
+        await fetchAllWorkCompanies(undefined);
+      })()
     }
   }, [user, fetchAllWorkCompanies]);
 
@@ -51,7 +53,7 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
       } else {
         setSelected(null);
       }
-    } else if (!selected) {
+    } else if (!selected && user?.role !== UserRoles.SUPER_ADMIN) {
       const first = workCompanies[0];
       setSelected(first);
       const sp = new URLSearchParams(searchParams);
@@ -75,9 +77,10 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     (async () => {
       await fetchAllEmployees({
-        company: companyName,
+        company: companyName || "",
         workStatus,
         location: user?.address.city,
+        fullName: ""
       });
     })();
   }, [selected, selectedTable, fetchAllEmployees]);

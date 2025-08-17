@@ -42,17 +42,26 @@ export const EmployeesTable = (): JSX.Element => {
 
   useEffect(() => {
     if (selectedTable === 'hired') {
-      fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.WORKING, company: '' });
+      (async (): Promise<void> => {
+        await fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.WORKING, company: '', fullName: "" })
+      })()
     } else {
-      fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.LAID_OFF, company: '' });
+      (async (): Promise<void> => {
+        await fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.LAID_OFF, company: '', fullName: "" })
+      })()
     }
   }, [selectedTable]);
 
   useEffect(() => {
     if (vacationType === EmployeeTableTabs.VACATION_REQUESTS) {
-      fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS);
+      (async (): Promise<void> => {
+        await fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS);
+      })()
+
     } else {
-      fetchAllVacationRequests(VacationFilters.ON_VACATION);
+      (async (): Promise<void> => {
+        await fetchAllVacationRequests(VacationFilters.ON_VACATION);
+      })()
     }
   }, [vacationType]);
 
