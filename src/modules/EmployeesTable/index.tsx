@@ -42,26 +42,57 @@ export const EmployeesTable = (): JSX.Element => {
 
   useEffect(() => {
     if (selectedTable === 'hired') {
-      (async (): Promise<void> => {
-        await fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.WORKING, company: '', fullName: "" })
-      })()
+      if (user?.role === UserRoles.SUPER_ADMIN) {
+        (async (): Promise<void> => {
+          await fetchEmployees({
+            location: '',
+            workStatus: UserWorkStatuses.WORKING,
+            company: '',
+            fullName: '',
+          });
+        })();
+      } else {
+        (async (): Promise<void> => {
+          await fetchEmployees({
+            location: '',
+            workStatus: UserWorkStatuses.WORKING,
+            company: user?.jobInfo.company,
+            fullName: '',
+          });
+        })();
+      }
     } else {
-      (async (): Promise<void> => {
-        await fetchEmployees({ location: user?.address.city, workStatus: UserWorkStatuses.LAID_OFF, company: '', fullName: "" })
-      })()
+      if (user?.role === UserRoles.SUPER_ADMIN) {
+        (async (): Promise<void> => {
+          await fetchEmployees({
+            location: '',
+            workStatus: UserWorkStatuses.LAID_OFF,
+            company: '',
+            fullName: '',
+          });
+        })();
+      } else {
+        (async (): Promise<void> => {
+          await fetchEmployees({
+            location: '',
+            workStatus: UserWorkStatuses.LAID_OFF,
+            company: user?.jobInfo.company,
+            fullName: '',
+          });
+        })();
+      }
     }
-  }, [selectedTable]);
+  }, [selectedTable, user?.role]);
 
   useEffect(() => {
     if (vacationType === EmployeeTableTabs.VACATION_REQUESTS) {
       (async (): Promise<void> => {
         await fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS);
-      })()
-
+      })();
     } else {
       (async (): Promise<void> => {
         await fetchAllVacationRequests(VacationFilters.ON_VACATION);
-      })()
+      })();
     }
   }, [vacationType]);
 

@@ -39,7 +39,7 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
     if (user?.role === UserRoles.SUPER_ADMIN) {
       (async (): Promise<void> => {
         await fetchAllWorkCompanies(undefined);
-      })()
+      })();
     }
   }, [user, fetchAllWorkCompanies]);
 
@@ -77,10 +77,10 @@ export const WorkCompanyFilter = ({ selectedTable }: WorkCompanyFilterProps): Re
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     (async () => {
       await fetchAllEmployees({
-        company: companyName || "",
+        company: companyName || '',
         workStatus,
         location: user?.address.city,
-        fullName: ""
+        fullName: '',
       });
     })();
   }, [selected, selectedTable, fetchAllEmployees]);
