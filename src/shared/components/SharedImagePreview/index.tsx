@@ -15,22 +15,15 @@ interface SharedImagePreviewProps {
 export const SharedImagePreview = ({ imageName, imageUrl }: SharedImagePreviewProps): JSX.Element => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
-  const handleDownload = async (): Promise<void> => {
+  const handleDownload = (): void => {
     try {
-      const response = await fetch(imageUrl, { credentials: 'omit' });
-      if (!response.ok) throw new Error('Unable to download file');
-      const blob = await response.blob();
-
-      const objectUrl = URL.createObjectURL(blob);
-
       const link = document.createElement('a');
-      link.href = objectUrl;
+      link.href = imageUrl;
       link.download = imageName || 'file.png';
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-
-      URL.revokeObjectURL(objectUrl);
     } catch (err) {
       console.error('Download error', err);
     }
