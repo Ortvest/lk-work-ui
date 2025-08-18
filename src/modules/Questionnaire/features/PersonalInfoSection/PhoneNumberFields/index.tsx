@@ -24,7 +24,6 @@ export const PhoneNumberFields = ({ prefixName, numberName, phoneNumberTitle }: 
   const currentValue = watch(prefixName);
   const [selectedPrefix, setSelectedPrefix] = useState(currentValue || '');
 
-
   useEffect(() => {
     if (selectedPrefix) {
       setValue(prefixName, selectedPrefix);

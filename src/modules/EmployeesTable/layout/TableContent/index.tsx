@@ -126,23 +126,23 @@ export const EmployeesTableContent = ({
       header: t('columnContractExpire'),
       cell: ({ row }): JSX.Element => {
         const rawDate = row.original.jobInfo.employmentEndDate as string;
-        const end = dayjs(rawDate, 'DD-MM-YYYY'); // 👈 парсим в нормальную дату
+        const end = dayjs(rawDate, 'DD-MM-YYYY');
         const today = dayjs();
 
-        const diffDays = end.diff(today, 'day'); // разница в днях
+        const diffDays = end.diff(today, 'day');
 
         let label = '—';
         let dotColor = 'dot-gray';
 
         if (!isNaN(diffDays)) {
           if (diffDays < 0) {
-            label = t('expireDays', { days: Math.abs(diffDays) }); 
+            label = t('expireDays', { days: Math.abs(diffDays) });
             dotColor = 'dot-red';
           } else if (diffDays < 30) {
             label = t('expireDays', { days: diffDays });
             dotColor = 'dot-orange';
           } else {
-            const months = end.diff(today, 'month'); 
+            const months = end.diff(today, 'month');
             label = t('expireMonths', { months });
             dotColor = diffDays < 60 ? 'dot-yellow' : 'dot-green';
           }
