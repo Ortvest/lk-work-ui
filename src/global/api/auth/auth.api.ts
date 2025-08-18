@@ -6,8 +6,8 @@ import {
   SendResetPasswordEmail,
   SetNewPasswordArgs,
   UserEntity,
-  UserSignInData
-} from "@shared/interfaces/User.interfaces";
+  UserSignInData,
+} from '@shared/interfaces/User.interfaces';
 
 const { setIsAuth, setCurrentUser } = UserSlice.actions;
 
@@ -92,5 +92,5 @@ export const {
   useLazyGetMeQuery,
   useSetNewPasswordMutation,
   useLogoutMutation,
-  useSendResetPasswordEmailMutation
+  useSendResetPasswordEmailMutation,
 } = authApi;

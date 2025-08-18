@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 import classNames from 'classnames';
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg'
 
 import './style.css';
 
-import { useLogoutMutation, useSendResetPasswordEmailMutation } from "@global/api/auth/auth.api";
+import { useLogoutMutation, useSendResetPasswordEmailMutation } from '@global/api/auth/auth.api';
 import { UserRole, UserRoles } from '@shared/enums/user.enums';
 
 export const RouteScopes = {
@@ -194,7 +194,9 @@ export const AdminSidebar = (): JSX.Element => {
               <div className="worker-info-section">
                 <div className="worker-info-reset">
                   <span>{t('passwordReset')}</span>
-                  <button onClick={onSendResetPasswordEmail} className="reset-btn">{t('resetButton')}</button>
+                  <button onClick={onSendResetPasswordEmail} className="reset-btn">
+                    {t('resetButton')}
+                  </button>
                 </div>
                 <div className="reset-description">{t('resetSubtitle')}</div>
               </div>
