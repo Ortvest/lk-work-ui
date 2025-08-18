@@ -121,30 +121,30 @@ export const EmployeesTableContent = ({
       },
       meta: { className: 'column-citizenship' },
     },
+
     {
       header: t('columnContractExpire'),
       cell: ({ row }): JSX.Element => {
-        const end = new Date(row.original.jobInfo.employmentEndDate as string);
-        const today = new Date();
-        const diffMs = end.getTime() - today.getTime();
-        const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+        const rawDate = row.original.jobInfo.employmentEndDate as string;
+        const end = dayjs(rawDate, 'DD-MM-YYYY'); // 👈 парсим в нормальную дату
+        const today = dayjs();
+
+        const diffDays = end.diff(today, 'day'); // разница в днях
 
         let label = '—';
         let dotColor = 'dot-gray';
 
         if (!isNaN(diffDays)) {
           if (diffDays < 0) {
-            label = t('expireDays', { days: diffDays });
+            label = t('expireDays', { days: Math.abs(diffDays) }); 
             dotColor = 'dot-red';
           } else if (diffDays < 30) {
             label = t('expireDays', { days: diffDays });
             dotColor = 'dot-orange';
-          } else if (diffDays < 60) {
-            label = t('expireMonths', { months: Math.round(diffDays / 30) });
-            dotColor = 'dot-yellow';
           } else {
-            label = t('expireMonths', { months: Math.round(diffDays / 30) });
-            dotColor = 'dot-green';
+            const months = end.diff(today, 'month'); 
+            label = t('expireMonths', { months });
+            dotColor = diffDays < 60 ? 'dot-yellow' : 'dot-green';
           }
         }
 

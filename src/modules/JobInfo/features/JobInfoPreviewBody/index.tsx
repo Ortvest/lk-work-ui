@@ -39,7 +39,7 @@ export const JobInfoPreviewBody = (): JSX.Element => {
         <span>{formatDate(currentDataOrigin?.employmentStartDate as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title={t('jobDateOfCompletion')}>
-        <span>{formatDate(currentDataOrigin?.employmentStartDate as string) || '-'}</span>
+        <span>{formatDate(currentDataOrigin?.employmentEndDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );
