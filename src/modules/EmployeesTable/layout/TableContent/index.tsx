@@ -83,6 +83,15 @@ export const EmployeesTableContent = ({
     }
   };
 
+  const formatDate = (date: string | undefined | null): string => {
+    if (!date) return '-';
+    const [day, month, year] = date.split('-');
+    if ((day === '00' && month === '00') || !year) {
+      return '-';
+    }
+    return date;
+  };
+
   const isVacation =
     selectedTable === EmployeeTableTabs.VACATION_REQUESTS || selectedTable === EmployeeTableTabs.ON_VACATION;
 
@@ -150,7 +159,7 @@ export const EmployeesTableContent = ({
     },
     {
       header: t('columnHireDate'),
-      accessorFn: (row) => row.jobInfo.employmentStartDate,
+      accessorFn: (row) => formatDate(row.jobInfo.employmentStartDate as string),
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-hire-date' },
     },

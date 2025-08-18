@@ -24,6 +24,10 @@
   height: 37px;
 }
 
+.shared-img-preview:hover {
+  cursor: pointer;
+}
+
 .shared-img-preview-name-wrapper {
   display: flex;
   flex-direction: column;
@@ -42,4 +46,27 @@
 
 .shared-img-preview-download-icon:hover {
   cursor: pointer;
+}
+
+.shared-img-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgb(0 0 0 / 70%);
+
+  cursor: zoom-out;
+}
+
+.shared-img-lightbox-img {
+  max-width: 90%;
+  max-height: 90%;
+
+  border-radius: 12px;
+
+  box-shadow: 0 4px 20px rgb(0 0 0 / 50%);
 }

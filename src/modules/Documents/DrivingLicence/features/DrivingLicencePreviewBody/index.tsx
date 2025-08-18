@@ -8,8 +8,6 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
-
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -44,8 +42,8 @@ export const DrivingLicencePreviewBody = (): JSX.Element => {
       ]);
 
       setDrivingLicencePhotosUrls({
-        front: frontPhoto?.url ?? FilePreviewIcon,
-        back: backPhoto?.url ?? FilePreviewIcon,
+        front: frontPhoto?.url ?? '',
+        back: backPhoto?.url ?? '',
       });
     };
 

@@ -18,6 +18,15 @@ export const JobInfoPreviewBody = (): JSX.Element => {
 
   const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? jobInfo : selectedEmployeeJobInfo;
 
+  const formatDate = (date: string | undefined | null): string => {
+    if (!date) return '-';
+    const [day, month, year] = date.split('-');
+    if ((day === '00' && month === '00') || !year) {
+      return '-';
+    }
+    return date;
+  };
+
   return (
     <fieldset className={classNames('job-info-preview-fields-wrapper')}>
       <SharedLabel title={t('jobCompany')}>
@@ -27,10 +36,10 @@ export const JobInfoPreviewBody = (): JSX.Element => {
         <span>{currentDataOrigin?.position || '-'}</span>
       </SharedLabel>
       <SharedLabel title={t('jobDateOfCommencement')}>
-        <span>{(currentDataOrigin?.employmentStartDate as string) || '-'}</span>
+        <span>{formatDate(currentDataOrigin?.employmentStartDate as string) || '-'}</span>
       </SharedLabel>
       <SharedLabel title={t('jobDateOfCompletion')}>
-        <span>{(currentDataOrigin?.employmentEndDate as string) || '-'}</span>
+        <span>{formatDate(currentDataOrigin?.employmentStartDate as string) || '-'}</span>
       </SharedLabel>
     </fieldset>
   );

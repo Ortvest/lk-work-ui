@@ -8,8 +8,6 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
-
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -48,7 +46,7 @@ export const ResidenceCardPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('residence-card-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={residenceCardPhotoUrl || FilePreviewIcon} imageName={t('residenceCardFile')} />
+      <SharedImagePreview imageUrl={residenceCardPhotoUrl} imageName={t('residenceCardFile')} />
       <SharedLabel title={t('residenceCardNumber')}>
         <span>{currentDataOrigin?.cardNumber || '-'}</span>
       </SharedLabel>

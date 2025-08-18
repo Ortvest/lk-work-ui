@@ -6,8 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
-
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -39,8 +37,8 @@ export const EmbassyPreviewBody = ({
       ]);
 
       setEmbassyPhotoUrls({
-        firstPhotoUrl: firstPhotoResponse?.url ?? FilePreviewIcon,
-        seсondPhotoUrl: secondPhotoResponse?.url ?? FilePreviewIcon,
+        firstPhotoUrl: firstPhotoResponse?.url || '',
+        seсondPhotoUrl: secondPhotoResponse?.url || '',
       });
     };
 
@@ -49,14 +47,8 @@ export const EmbassyPreviewBody = ({
 
   return (
     <fieldset className={classNames('embassy-preview-fields-wrapper')}>
-      <SharedImagePreview
-        imageUrl={embassyPhotoUrls.firstPhotoUrl || FilePreviewIcon}
-        imageName={t('embassyFirstDocument')}
-      />
-      <SharedImagePreview
-        imageUrl={embassyPhotoUrls.seсondPhotoUrl || FilePreviewIcon}
-        imageName={t('embassySecondDocument')}
-      />
+      <SharedImagePreview imageUrl={embassyPhotoUrls.firstPhotoUrl} imageName={t('embassyFirstDocument')} />
+      <SharedImagePreview imageUrl={embassyPhotoUrls.seсondPhotoUrl} imageName={t('embassySecondDocument')} />
       <SharedLabel title={t('dateOfIssue')}>
         <span>{embassyDateOfIssue || '-'}</span>
       </SharedLabel>

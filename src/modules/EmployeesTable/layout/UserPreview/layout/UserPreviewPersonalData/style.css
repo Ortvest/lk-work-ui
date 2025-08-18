@@ -4,6 +4,13 @@
   align-items: center;
 }
 
+.user-preview-avatar > img {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 100%;
+}
+
 .user-preview-avatar.has-background {
   display: flex;
   justify-content: center;

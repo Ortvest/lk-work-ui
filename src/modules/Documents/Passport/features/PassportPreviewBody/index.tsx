@@ -8,8 +8,6 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
-
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -48,7 +46,7 @@ export const PassportPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('passport-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={passportPreviewPhoto || FilePreviewIcon} imageName={t('passportInformation')} />
+      <SharedImagePreview imageUrl={passportPreviewPhoto} imageName={t('passportInformation')} />
       <SharedLabel title={t('passportNumber')}>
         <span>{currentDataOrigin?.passportNumber || '-'}</span>
       </SharedLabel>

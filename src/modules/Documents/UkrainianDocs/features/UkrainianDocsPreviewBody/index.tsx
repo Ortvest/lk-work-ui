@@ -7,8 +7,6 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 
-import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
-
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -47,7 +45,7 @@ export const UkrainianDocsPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('ukrainian-docs-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={ukrainianDocsPhotoUrl || FilePreviewIcon} imageName={t('ukrainianStatementFile')} />
+      <SharedImagePreview imageUrl={ukrainianDocsPhotoUrl} imageName={t('ukrainianStatementFile')} />
     </fieldset>
   );
 };

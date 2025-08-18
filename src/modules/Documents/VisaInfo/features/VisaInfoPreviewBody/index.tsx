@@ -8,8 +8,6 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 import { SharedImagePreview } from '@shared/components/SharedImagePreview';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
-import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
-
 import './style.css';
 
 import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
@@ -48,7 +46,7 @@ export const VisaInfoPreviewBody = (): JSX.Element => {
 
   return (
     <fieldset className={classNames('visa-info-preview-fields-wrapper')}>
-      <SharedImagePreview imageUrl={visaPreviewPhoto || FilePreviewIcon} imageName={t('visaInfoFile')} />
+      <SharedImagePreview imageUrl={visaPreviewPhoto} imageName={t('visaInfoFile')} />
       <SharedLabel title={t('visaInfoType')}>
         <span>{currentDataOrigin?.visaType || '-'}</span>
       </SharedLabel>

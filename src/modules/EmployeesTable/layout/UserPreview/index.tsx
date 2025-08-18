@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { InfoSection } from '@modules/EmployeesTable/layout/UserPreview/layout/InfoSection';
 import { PrintDocumentsButton } from '@modules/EmployeesTable/layout/UserPreview/layout/PrintDocumentsButton';
@@ -12,6 +12,8 @@ import UserContactDataIcon from '@shared/assets/icons/UserContactDataIcon.svg';
 import UserPersonalInfoIcon from '@shared/assets/icons/UserPersonalInfoIcon.svg';
 import UserWorkInfoIcon from '@shared/assets/icons/UserWorkInfoIcon.svg';
 
+import { useGetUploadedPhotoUrlMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
+
 interface UserPreviewProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
   setIsUserDocumentsDrawerOpen: (isOpen: boolean) => void;
@@ -24,6 +26,32 @@ export const UserPreview = ({
 }: UserPreviewProps): React.ReactNode => {
   const { selectedEmployee } = useTypedSelector((state) => state.employeeReducer);
 
+  const [userPhoto, setUserPhoto] = useState('');
+
+  const [getUploadedPhoto] = useGetUploadedPhotoUrlMutation();
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
+
+  useEffect(() => {
+    const getUserAvatar = async (): Promise<void> => {
+      if (!selectedEmployeePersonalInfo?.avatarUrl) setUserPhoto('');
+
+      const { data, error } = await getUploadedPhoto(selectedEmployeePersonalInfo?.avatarUrl as string);
+
+      if (error || !data) {
+        console.error('Failed to get passport photo url:', error);
+        return;
+      }
+
+      setUserPhoto(data.url);
+    };
+
+    (async (): Promise<void> => {
+      await getUserAvatar();
+    })();
+  }, [selectedEmployeePersonalInfo?.avatarUrl]);
+
   return (
     <article style={{ position: 'relative' }}>
       <UserPreviewHeader
@@ -32,7 +60,7 @@ export const UserPreview = ({
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}
       />
       <UserPreviewPersonalData
-        avatarUrl={''}
+        avatarUrl={userPhoto}
         dateOfBirth={selectedEmployee?.personalInfo?.dateOfBirth as string}
         nationality={selectedEmployee?.personalInfo?.nationality as string}
         fullName={`${selectedEmployee?.personalInfo.firstName} ${selectedEmployee?.personalInfo.lastName}`}

@@ -7,8 +7,6 @@ import { DataWrapper } from '@modules/EmployeesTable/layout/UserPreview/layout/D
 
 import { useDayjs } from '@shared/hooks/useDayjs';
 
-import IconUser from '@shared/assets/icons/IconUser.svg';
-
 import './style.css';
 
 interface UserPreviewPersonalDataProps {
@@ -31,6 +29,15 @@ export const UserPreviewPersonalData = ({
 
   const age = dateOfBirth ? dayjs().diff(dayjs(dateOfBirth, 'DD-MM-YYYY'), 'year') : null;
 
+  const getInitials = (name: string): string => {
+    if (!name) return '';
+    const parts = name.trim().split(' ').filter(Boolean);
+    if (parts.length === 1) {
+      return parts[0][0].toUpperCase();
+    }
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  };
+
   return (
     <DataWrapper isFirstChild={true}>
       <header className={classNames('user-preview-personal-data-header')}>
@@ -44,7 +51,7 @@ export const UserPreviewPersonalData = ({
 
       <main className={classNames('user-preview-personal-data-content')}>
         <section className={classNames('user-preview-avatar', { 'has-background': !avatarUrl })}>
-          <img src={avatarUrl ? avatarUrl : IconUser} alt={t('userAvatarAlt')} />
+          {avatarUrl ? <img src={avatarUrl} alt={t('userAvatarAlt')} /> : getInitials(fullName)}
         </section>
 
         <section>
