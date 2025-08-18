@@ -109,5 +109,7 @@
   "resetSubtitle": "Після натискання «Скинути» ви отримаєте електронний лист з посиланням для зміни пароля.",
   "logout": "Вийти",
   "routeStuff": "Персонал",
-  "btnDelete": "Видалити"
+  "btnDelete": "Видалити",
+  "resetPasswordEmailSent": "На вашу електронну адресу <strong>{{email}}</strong> було надіслано лист із відновлення пароля.",
+  "resetPasswordEmailError": "Не вдалося надіслати лист на <strong>{{email}}</strong>. Спробуйте ще раз."
 }

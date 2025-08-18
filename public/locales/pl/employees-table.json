@@ -113,5 +113,7 @@
   "resetSubtitle": "Po kliknięciu „Resetuj” otrzymasz e-mail z linkiem do zmiany hasła.",
   "logout": "Wyloguj się",
   "routeStuff": "Personel",
-  "btnDelete": "Usuń"
+  "btnDelete": "Usuń",
+  "resetPasswordEmailSent": "Na Twój adres e-mail <strong>{{email}}</strong> wysłano wiadomość z instrukcjami resetowania hasła.",
+  "resetPasswordEmailError": "Nie udało się wysłać wiadomości resetującej na <strong>{{email}}</strong>. Spróbuj ponownie."
 }
