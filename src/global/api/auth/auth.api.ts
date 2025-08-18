@@ -2,7 +2,12 @@ import { UserSlice } from '@global/store/slices/User.slice';
 
 import { API_CONFIG } from '@global/api/api.constants';
 import { baseAuthApi } from '@global/api/auth/base-auth.api';
-import { SetNewPasswordArgs, UserEntity, UserSignInData } from '@shared/interfaces/User.interfaces';
+import {
+  SendResetPasswordEmail,
+  SetNewPasswordArgs,
+  UserEntity,
+  UserSignInData
+} from "@shared/interfaces/User.interfaces";
 
 const { setIsAuth, setCurrentUser } = UserSlice.actions;
 
@@ -25,6 +30,13 @@ export const authApi = baseAuthApi.injectEndpoints({
           console.error('Authentication failed:', error);
         }
       },
+    }),
+    sendResetPasswordEmail: builder.mutation<boolean, SendResetPasswordEmail>({
+      query: ({ email }) => ({
+        url: API_CONFIG.sendResetPasswordEmail(),
+        method: 'POST',
+        body: { email },
+      }),
     }),
     getMe: builder.query<UserEntity, void>({
       query: () => ({
@@ -80,4 +92,5 @@ export const {
   useLazyGetMeQuery,
   useSetNewPasswordMutation,
   useLogoutMutation,
+  useSendResetPasswordEmailMutation
 } = authApi;

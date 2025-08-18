@@ -11,6 +11,10 @@ export interface UserSignInData {
   password: string;
 }
 
+export interface SendResetPasswordEmail {
+  email: string;
+}
+
 export interface PersonalInfo {
   firstName?: string;
   lastName?: string;

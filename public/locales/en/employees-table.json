@@ -109,5 +109,7 @@
   "resetButton": "Reset",
   "resetSubtitle": "After clicking “Reset” you will receive an email with a link to change password.",
   "logout": "Log out",
-  "routeStuff": "Stuff"
+  "routeStuff": "Stuff",
+  "resetPasswordEmailSent": "An email with password reset instructions has been sent to your email <strong>{{email}}</strong>.",
+  "resetPasswordEmailError": "Failed to send reset email to <strong>{{email}}</strong>. Please try again."
 }
