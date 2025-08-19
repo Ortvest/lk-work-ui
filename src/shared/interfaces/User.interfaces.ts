@@ -15,6 +15,15 @@ export interface SendResetPasswordEmail {
   email: string;
 }
 
+export interface JobContract {
+  employmentStartDate: string;
+  employmentEndDate?: string;
+  company: string;
+  position: string;
+  _id: string;
+  contractUrl?: string;
+}
+
 export interface PersonalInfo {
   firstName?: string;
   lastName?: string;
@@ -50,6 +59,7 @@ export interface JobInfo {
   position?: string;
   employmentStartDate?: string | { year: string; month: string; day: string };
   employmentEndDate?: string | { year: string; month: string; day: string };
+  jobContracts?: JobContract[];
 }
 
 export interface BankInfo {

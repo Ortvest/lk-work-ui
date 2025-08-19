@@ -14,8 +14,21 @@ export const pdfApi = basePdfApi.injectEndpoints({
         headers: { Accept: 'application/pdf' },
       }),
     }),
+    uploadPdf: builder.mutation<{ fileUrl: string }, { file: File; userId: string; contractId: string }>({
+      query: ({ file, userId, contractId }) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return {
+          url: API_CONFIG.uploadPdf(userId, contractId),
+          method: 'POST',
+          credentials: 'include',
+          body: formData,
+        };
+      },
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useDownloadDocumentMutation } = pdfApi;
+export const { useDownloadDocumentMutation, useUploadPdfMutation } = pdfApi;
