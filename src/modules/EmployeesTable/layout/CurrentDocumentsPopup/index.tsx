@@ -17,7 +17,7 @@ import IconSave from '@shared/assets/icons/IconSave.svg';
 import './styles.css';
 
 import { useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
-import { useUploadPdfMutation } from '@global/api/pdf/pdf.api';
+import { useGetSignedPdfDownloadUrlMutation, useUploadPdfMutation } from '@global/api/pdf/pdf.api';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 
@@ -47,24 +47,39 @@ export const CurrentDocumentsPopup = ({
   const { t } = useTranslation('employees-table');
   const [triggerUploadPdf] = useUploadPdfMutation();
   const [triggerFetchAllEmployees] = useLazyFetchAllEmployeesQuery();
+  const [getSignedPdfDownloadUrl] = useGetSignedPdfDownloadUrlMutation();
   const user = useTypedSelector((state) => state.userReducer.user);
   const inputRefs = React.useRef<Record<string, HTMLInputElement | null>>({});
 
   const [contracts, setContracts] = useState(selectedEmployeeExpire?.jobInfo?.jobContracts || []);
   const [file, setFile] = useState<Record<string, File | null>>({});
   const [temporaryFileNames, setTemporaryFileNames] = useState<Record<string, string>>({});
-  const [, setUploadingContractId] = useState<string | null>(null);
 
   useEffect(() => {
     setContracts(selectedEmployeeExpire?.jobInfo?.jobContracts || []);
     setFile({});
     setTemporaryFileNames({});
     inputRefs.current = {};
-    setUploadingContractId(null);
   }, [selectedEmployeeExpire]);
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const handleFileChange = (rowKey: string, f?: File) => {
+  const handleDownloadPdf = async (contractUrl: string): Promise<void> => {
+    try {
+      const fileKey = contractUrl.split('/').pop() || contractUrl;
+      const { url } = await getSignedPdfDownloadUrl({ fileKey }).unwrap();
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${fileKey}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      console.error(e);
+      toast.error('Error during downloading PDF');
+    }
+  };
+
+  const handleFileChange = (rowKey: string, f?: File): void => {
     if (!f) return;
     setTemporaryFileNames((prev) => ({ ...prev, [rowKey]: f.name }));
     setFile((prev) => ({ ...prev, [rowKey]: f }));
@@ -78,7 +93,6 @@ export const CurrentDocumentsPopup = ({
     }
 
     const contractId = toIdString(contractIdRaw);
-    console.log(contractIdRaw, 'contractIdRaw');
     if (!contractId) {
       toast.error('Missing contractId for upload');
       return;
@@ -96,6 +110,7 @@ export const CurrentDocumentsPopup = ({
       });
 
       setIsExpireModalOpen(false);
+
       if (user?.role === UserRoles.SUPER_ADMIN) {
         await triggerFetchAllEmployees({
           company: '',
@@ -104,7 +119,7 @@ export const CurrentDocumentsPopup = ({
         });
       } else {
         setContracts((prev) =>
-          prev.map((c) => (toIdString(c._id) === contractId ? { ...c, contractUrl: response.fileUrl } : c))
+          prev.map((c: any) => (toIdString(c._id) === contractId ? { ...c, contractUrl: response.fileUrl } : c))
         );
       }
 
@@ -114,9 +129,7 @@ export const CurrentDocumentsPopup = ({
         delete updated[rowKey];
         return updated;
       });
-      setUploadingContractId(null);
-    } catch (err) {
-      console.error('Upload failed', err);
+    } catch {
       toast.error(t('toastPdfUploadError', { fileName: currentFile.name }), {
         style: { background: '#ffe6e6', color: '#842029', textAlign: 'center' },
       });
@@ -162,9 +175,7 @@ export const CurrentDocumentsPopup = ({
                     className="shared-img-preview-download-icon"
                     src={IconSave}
                     alt="save-icon"
-                    onClick={() => {
-                      handleUpload(toIdString(contract._id || ''), rowKey);
-                    }}
+                    onClick={() => handleUpload(toIdString(contract._id || ''), rowKey)}
                   />
                   <img
                     className="shared-img-preview-download-icon"
@@ -181,17 +192,12 @@ export const CurrentDocumentsPopup = ({
                   />
                 </div>
               ) : hasUploaded ? (
-                // Уже завантажений → Download + Refresh
                 <div style={{ display: 'flex' }}>
                   <img
                     className="shared-img-preview-download-icon"
                     src={DownLoadIcon}
-                    alt="download-icon"
-                    onClick={() => {
-                      if (contract.contractUrl) {
-                        window.open(contract.contractUrl, '_blank', 'noopener,noreferrer');
-                      }
-                    }}
+                    alt="open-pdf-icon"
+                    onClick={() => handleDownloadPdf(contract.contractUrl)}
                   />
                   <img
                     className="shared-img-preview-download-icon"
@@ -208,7 +214,6 @@ export const CurrentDocumentsPopup = ({
                   />
                 </div>
               ) : (
-                // Порожньо → кнопка Upload
                 <label className="contract-btn upload">
                   {t('uploadBtn')}
                   <input
