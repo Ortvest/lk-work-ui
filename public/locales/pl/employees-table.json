@@ -115,5 +115,10 @@
   "routeStuff": "Personel",
   "btnDelete": "Usuń",
   "resetPasswordEmailSent": "Na Twój adres e-mail <strong>{{email}}</strong> wysłano wiadomość z instrukcjami resetowania hasła.",
-  "resetPasswordEmailError": "Nie udało się wysłać wiadomości resetującej na <strong>{{email}}</strong>. Spróbuj ponownie."
+  "resetPasswordEmailError": "Nie udało się wysłać wiadomości resetującej na <strong>{{email}}</strong>. Spróbuj ponownie.",
+  "toastFileNotSelected": "Wybierz plik PDF przed przesłaniem.",
+  "toastPdfUploadSuccess": "Plik został pomyślnie przesłany.",
+  "toastPdfUploadError": "Nie udało się przesłać pliku. Spróbuj ponownie.",
+  "needUpload": "Wymaga przesłania",
+  "uploadBtn": "Prześlij"
 }

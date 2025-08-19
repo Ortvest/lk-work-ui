@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 import { EmployeeSlice } from '@global/store/slices/Employee.slice';
 
+import { CurrentDocumentsPopup } from '@modules/EmployeesTable/layout/CurrentDocumentsPopup';
+
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
@@ -49,6 +51,8 @@ export const EmployeesTableContent = ({
 
   const dispatch = useTypedDispatch();
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
+  const [isExpireModalOpen, setIsExpireModalOpen] = useState(false);
+  const [selectedEmployeeExpire, setSelectedEmployeeExpire] = useState<UserEntity | null>(null);
 
   const [fetchAllVacationRequests] = useLazyFetchVacationRequestsQuery();
   const [removeVacation] = useLazyRemoveVacationQuery();
@@ -149,7 +153,14 @@ export const EmployeesTableContent = ({
         }
 
         return (
-          <div className="contract-expire">
+          <div
+            className="contract-expire"
+            onClick={(e) => {
+              e.stopPropagation();
+              (table.options.meta as any)?.setSelectedEmployeeExpire(row.original);
+              (table.options.meta as any)?.setIsExpireModalOpen(true);
+            }}
+            style={{ cursor: 'pointer' }}>
             <span className={`contract-expire-dot ${dotColor}`} />
             <span className="contract-expire-label">{label}</span>
           </div>
@@ -230,7 +241,6 @@ export const EmployeesTableContent = ({
         return row.vacationDates;
       },
       cell: (info): JSX.Element => {
-        console.log(info, 'INFO');
         const dates = info.getValue() as string[];
         return (
           <>
@@ -306,13 +316,18 @@ export const EmployeesTableContent = ({
     data: isVacation ? (vacationRequests as unknown as TableData[]) : (employees as TableData[]),
     columns: (isVacation ? vacationRequestsColumns : employeesColumns) as AnyCols,
     getCoreRowModel: getCoreRowModel(),
-    meta: { onSelectEmployee, onRemoveVacation },
+    meta: { onSelectEmployee, onRemoveVacation, setSelectedEmployeeExpire, setIsExpireModalOpen },
   });
 
   if (isHandleLoading) return <Loader />;
 
   return (
     <table className="employees-table">
+      <CurrentDocumentsPopup
+        isExpireModalOpen={isExpireModalOpen}
+        setIsExpireModalOpen={setIsExpireModalOpen}
+        selectedEmployeeExpire={selectedEmployeeExpire}
+      />
       <thead className={classNames('employees-table-content-header')}>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>

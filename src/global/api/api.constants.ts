@@ -31,6 +31,7 @@ export const API_CONFIG = {
   collectData: (employeeId: string): string => `/employee/collect-data?employeeId=${employeeId}`,
   uploadPhoto: (): string => '/upload',
   uploadUserPhoto: (): string => '/upload/photo',
+  uploadPdf: (userId: string, contractId: string): string => `/upload/pdf?userId=${userId}&contractId=${contractId}`,
   getUploadedPhoto: (fileKey: string): string => `/signed-url?fileKey=${fileKey}`,
 
   getAllAccommodations: (): string => '/accommodation/list',

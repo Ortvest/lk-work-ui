@@ -111,5 +111,10 @@
   "routeStuff": "Персонал",
   "btnDelete": "Видалити",
   "resetPasswordEmailSent": "На вашу електронну адресу <strong>{{email}}</strong> було надіслано лист із відновлення пароля.",
-  "resetPasswordEmailError": "Не вдалося надіслати лист на <strong>{{email}}</strong>. Спробуйте ще раз."
+  "resetPasswordEmailError": "Не вдалося надіслати лист на <strong>{{email}}</strong>. Спробуйте ще раз.",
+  "toastFileNotSelected": "Будь ласка, оберіть PDF перед завантаженням.",
+  "toastPdfUploadSuccess": "Документ успішно завантажено.",
+  "toastPdfUploadError": "Не вдалося завантажити документ. Спробуйте ще раз.",
+  "needUpload": "Завантажити",
+  "uploadBtn": "Завантажити"
 }
