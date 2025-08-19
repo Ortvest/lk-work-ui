@@ -9,11 +9,11 @@ export const pdfApi = basePdfApi.injectEndpoints({
         method: 'POST',
         credentials: 'include',
         body: { userId, template },
-        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        responseHandler: async (response) => await response.blob(),
+        responseHandler: async (response): Promise<Blob> => await response.blob(),
         headers: { Accept: 'application/pdf' },
       }),
     }),
+
     uploadPdf: builder.mutation<{ fileUrl: string }, { file: File; userId: string; contractId: string }>({
       query: ({ file, userId, contractId }) => {
         const formData = new FormData();
@@ -27,8 +27,31 @@ export const pdfApi = basePdfApi.injectEndpoints({
         };
       },
     }),
+
+    getSignedPdfDownloadUrl: builder.mutation<{ url: string }, { fileKey: string; fileName?: string }>({
+      query: ({ fileKey, fileName }) => ({
+        url: API_CONFIG.getSignedPdfDownloadUrl(),
+        method: 'POST',
+        credentials: 'include',
+        body: { fileKey, fileName },
+      }),
+    }),
+
+    getSignedPdfInlineUrl: builder.mutation<{ url: string }, { fileKey: string; fileName?: string }>({
+      query: ({ fileKey, fileName }) => ({
+        url: API_CONFIG.getSignedPdfInlineUrl(),
+        method: 'POST',
+        credentials: 'include',
+        body: { fileKey, fileName },
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useDownloadDocumentMutation, useUploadPdfMutation } = pdfApi;
+export const {
+  useDownloadDocumentMutation,
+  useUploadPdfMutation,
+  useGetSignedPdfDownloadUrlMutation,
+  useGetSignedPdfInlineUrlMutation,
+} = pdfApi;

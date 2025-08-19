@@ -33,6 +33,8 @@ export const API_CONFIG = {
   uploadUserPhoto: (): string => '/upload/photo',
   uploadPdf: (userId: string, contractId: string): string => `/upload/pdf?userId=${userId}&contractId=${contractId}`,
   getUploadedPhoto: (fileKey: string): string => `/signed-url?fileKey=${fileKey}`,
+  getSignedPdfDownloadUrl: (): string => '/pdf/signed-download',
+  getSignedPdfInlineUrl: (): string => '/pdf/signed-inline',
 
   getAllAccommodations: (): string => '/accommodation/list',
   addAccommodations: (): string => '/accommodation/create',
