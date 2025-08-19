@@ -29,7 +29,6 @@ interface CurrentDocumentsPopupProps {
 
 function getContractName(fileKey: string): string {
   if (!fileKey) return '';
-  // беремо останній сегмент, якщо це URL
   const last = fileKey.split('/').pop() || fileKey;
   const parts = last.split('-');
   return parts
