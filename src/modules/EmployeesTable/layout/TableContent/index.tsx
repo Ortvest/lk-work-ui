@@ -107,6 +107,7 @@ export const EmployeesTableContent = ({
       accessorFn: (row) => `${row.personalInfo.firstName} ${row.personalInfo.lastName}`,
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-employee' },
+      size: 200
     },
     {
       header: t('columnStatus'),
@@ -116,6 +117,7 @@ export const EmployeesTableContent = ({
         return <span className={`status ${value.replace(/\s/g, '-').toLowerCase()}`}>{value.toUpperCase()}</span>;
       },
       meta: { className: 'column-status' },
+      size: 200
     },
     {
       header: t('columnCitizenship'),
@@ -124,6 +126,7 @@ export const EmployeesTableContent = ({
         return nationality.charAt(0).toUpperCase() + nationality.slice(1);
       },
       meta: { className: 'column-citizenship' },
+      size: 200
     },
 
     {
@@ -167,6 +170,7 @@ export const EmployeesTableContent = ({
         );
       },
       meta: { className: 'column-expire' },
+      size: 200
     },
     {
       header: t('columnHireDate'),
@@ -196,6 +200,7 @@ export const EmployeesTableContent = ({
         );
       },
       meta: { className: 'column-action' },
+      size: 200
     },
   ];
 
@@ -322,13 +327,14 @@ export const EmployeesTableContent = ({
   if (isHandleLoading) return <Loader />;
 
   return (
-    <table className="employees-table">
-      <CurrentDocumentsPopup
-        isExpireModalOpen={isExpireModalOpen}
-        setIsExpireModalOpen={setIsExpireModalOpen}
-        selectedEmployeeExpire={selectedEmployeeExpire}
-      />
-      <thead className={classNames('employees-table-content-header')}>
+    <div className={'employees-table-wrapper'}>
+      <table className="employees-table">
+        <CurrentDocumentsPopup
+          isExpireModalOpen={isExpireModalOpen}
+          setIsExpireModalOpen={setIsExpireModalOpen}
+          selectedEmployeeExpire={selectedEmployeeExpire}
+        />
+        <thead className={classNames('employees-table-content-header')}>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header: any) => (
@@ -340,8 +346,8 @@ export const EmployeesTableContent = ({
             ))}
           </tr>
         ))}
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         {table?.getRowModel()?.rows?.map((row) => (
           <tr
             key={row.id}
@@ -363,7 +369,9 @@ export const EmployeesTableContent = ({
             ))}
           </tr>
         ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+
   );
 };

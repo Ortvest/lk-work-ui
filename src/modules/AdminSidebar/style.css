@@ -216,3 +216,40 @@
 
   background-color: var(--light-gray);
 }
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;   /* центрируем всё содержимое */
+    align-items: center;
+
+    width: 100%;
+    height: 64px;
+    padding: 0 12px;
+
+    border-top: 1px solid var(--light-gray);
+    background-color: var(--white);
+    z-index: 1000;
+  }
+
+  .admin-sidebar-navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;  /* центрируем пункты */
+    align-items: center;
+    gap: 24px;                /* расстояние между иконками */
+    width: auto;              /* убираем лишнее растяжение */
+  }
+
+  .admin-sidebar-top-routes,
+  .admin-sidebar-bottom-routes {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+}

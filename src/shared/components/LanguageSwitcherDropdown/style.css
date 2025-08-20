@@ -7,3 +7,7 @@
 .lang-switch-dropdown > select:hover {
   cursor: pointer;
 }
+
+.lang-switch-dropdown {
+  display: flex;
+}

@@ -7,6 +7,8 @@
   border-collapse: collapse;
 
   background-color: var(--white);
+
+  table-layout: auto;
 }
 
 .employees-table th,
@@ -210,4 +212,18 @@
   background: #eee;
 
   cursor: pointer;
+}
+
+.employees-table-wrapper {
+  width: 100%;
+}
+
+@media (width <= 948px) {
+  .employees-table {
+    display: block;
+
+    min-width: calc(100%);
+
+    overflow-x: scroll;
+  }
 }
