@@ -15,6 +15,10 @@
   .status-panel-wrapper {
     padding: 0 16px;
   }
+
+  .status-panel-wrapper:has(:only-child) {
+    justify-content: flex-end;
+  }
 }
 
 .status-panel-menu-btn {

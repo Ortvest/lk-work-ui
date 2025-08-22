@@ -81,6 +81,14 @@
   box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
 }
 
+@media (width < 512px) {
+  .user-exit-button-wrapper {
+    position: absolute;
+    top: 35px;
+    left: -90px;
+  }
+}
+
 .user-exit-buttun {
   padding: 8px 16px;
 

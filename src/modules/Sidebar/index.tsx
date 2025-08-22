@@ -35,7 +35,7 @@ export const Sidebar = (): JSX.Element => {
         <nav className={classNames('sidebar-navigation')}>
           <Navigation />
         </nav>
-        {userRole !== UserRoles.EMPLOYEE ? (
+        {userRole === UserRoles.EMPLOYEE ? (
           <Fragment>
             <button className={classNames('sidebar-book-day-off-btn')} onClick={onModalOpenHandler}>
               <img src={CalendarIcon} alt="book-day-off-icon" />

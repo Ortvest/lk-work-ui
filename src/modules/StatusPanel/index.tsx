@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
+
+import { AppRoutes } from '@global/router/routes.constans';
 
 import { Status } from '@modules/StatusPanel/layout/Status';
 
@@ -22,6 +25,8 @@ export const StatusPanel = (): JSX.Element => {
   const userDocumentsStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
   const { setIsEditModeEnabled, setIsSidebarVisible } = CommonSlice.actions;
 
+  const location = useLocation();
+
   const shouldShowEditOrSaveButton =
     (userRole === UserRoles.EMPLOYEE && userDocumentsStatus === UserDocumentsStatuses.WAITING_FOR_BRIEFING) ||
     userRole === UserRoles.OFFICE_WORKER ||
@@ -41,9 +46,12 @@ export const StatusPanel = (): JSX.Element => {
     <section className={classNames('status-panel')}>
       <div className={classNames('status-panel-wrapper')}>
         <Status />
-        <button className={classNames('status-panel-menu-btn')} onClick={(e) => onToggleMobileSidebarHandler(e)}>
-          Menu
-        </button>
+        {location.pathname !== AppRoutes.QUESTIONNAIRE.path ? (
+          <button className={classNames('status-panel-menu-btn')} onClick={(e) => onToggleMobileSidebarHandler(e)}>
+            Menu
+          </button>
+        ) : null}
+
         {shouldShowEditOrSaveButton &&
           (isEditModeEnabled ? (
             <SharedButton type="submit" text={t('buttonSave')} />
