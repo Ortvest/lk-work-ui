@@ -10,6 +10,12 @@
   background-color: var(--white);
 }
 
+@media (width < 450px) {
+  .job-info-preview-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}
+
 .job-info-preview-fields-wrapper > label {
   color: #00000080;
 }

@@ -45,6 +45,16 @@
   flex-grow: 1;
 }
 
+@media (width < 450px) {
+  .user-name {
+    font-size: 16px;
+  }
+
+  .user-email {
+    font-size: 14px;
+  }
+}
+
 .user-options {
   position: relative;
 

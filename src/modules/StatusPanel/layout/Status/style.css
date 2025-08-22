@@ -7,6 +7,12 @@
   color: var(--dark-gray);
 }
 
+@media (width < 420px) {
+  .status-panel-value {
+    display: none;
+  }
+}
+
 .status-panel-value-text {
   margin: 0 0 0 12px;
   padding: 2.5px 6px;

@@ -7,6 +7,25 @@
   background-color: var(--white);
 }
 
+@media (width <= 1120px) {
+  .sidebar {
+    display: none;
+  }
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .mobileSidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    display: block;
+
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
 .sidebar-header::after {
   content: '';
 

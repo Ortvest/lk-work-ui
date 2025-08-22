@@ -12,3 +12,9 @@
 
   background-color: var(--white);
 }
+
+@media (width < 460px) {
+  .sign-in-wrapper {
+    padding: 12px 16px;
+  }
+}

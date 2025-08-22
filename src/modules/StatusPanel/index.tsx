@@ -20,7 +20,7 @@ export const StatusPanel = (): JSX.Element => {
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const userDocumentsStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
-  const { setIsEditModeEnabled } = CommonSlice.actions;
+  const { setIsEditModeEnabled, setIsSidebarVisible } = CommonSlice.actions;
 
   const shouldShowEditOrSaveButton =
     (userRole === UserRoles.EMPLOYEE && userDocumentsStatus === UserDocumentsStatuses.WAITING_FOR_BRIEFING) ||
@@ -32,10 +32,18 @@ export const StatusPanel = (): JSX.Element => {
     dispatch(setIsEditModeEnabled(true));
   };
 
+  const onToggleMobileSidebarHandler = (e: any): void => {
+    e.preventDefault();
+    dispatch(setIsSidebarVisible(true));
+  };
+
   return (
     <section className={classNames('status-panel')}>
       <div className={classNames('status-panel-wrapper')}>
         <Status />
+        <button className={classNames('status-panel-menu-btn')} onClick={(e) => onToggleMobileSidebarHandler(e)}>
+          Menu
+        </button>
         {shouldShowEditOrSaveButton &&
           (isEditModeEnabled ? (
             <SharedButton type="submit" text={t('buttonSave')} />

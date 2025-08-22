@@ -6,6 +6,15 @@
   max-width: 360px;
 }
 
+@media (width < 720px) {
+  .select-options {
+    justify-content: center;
+
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .select-option {
   display: flex;
   flex-grow: 1;

@@ -11,6 +11,12 @@
   background-color: var(--white);
 }
 
+@media (width < 450px) {
+  .ukrainian-docs-preview-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}
+
 .ukrainian-docs-preview-fields-wrapper > label > span::first-letter {
   text-transform: uppercase;
 }

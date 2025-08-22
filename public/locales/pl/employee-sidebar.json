@@ -26,6 +26,7 @@
   "calendarCancelBtn": "Anuluj",
   "calendarBookBtn": "Zarezerwuj",
   "toastVacationRequestSent": "Wniosek urlopowy został pomyślnie wysłany!",
+  "toastDaysPickError": "Nie można wybrać więcej niż 7 dni!",
   "personalInfoSubtitle": "Podstawowe informacje o użytkowniku",
   "userPhoto": "Zdjęcie użytkownika:",
   "firstName": "Imię:*",

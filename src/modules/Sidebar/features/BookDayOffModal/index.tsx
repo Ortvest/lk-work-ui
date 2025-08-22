@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import {
   addDays,
   addMonths,
+  differenceInCalendarDays,
   endOfMonth,
   endOfWeek,
   format,
@@ -70,6 +71,13 @@ export const BookDayOffModal = ({ isModalOpen, setIsModalOpen }: BookDayOffModal
       const from = tempRange.from;
       const to = day > from ? day : from;
       const newRange = { from, to };
+
+      const daysCount = differenceInCalendarDays(to, from) + 1;
+      if (daysCount > 7) {
+        toast.error(t('toastDaysPickError'));
+        setTempRange({});
+        return;
+      }
 
       const isDuplicate = selectedRanges.some((range) => isSameRange(range, newRange));
       if (!isDuplicate) {

@@ -7,3 +7,9 @@
   margin: 0 auto;
   padding: 16px 48px;
 }
+
+@media (width < 450px) {
+  .header-wrapper {
+    padding: 16px;
+  }
+}

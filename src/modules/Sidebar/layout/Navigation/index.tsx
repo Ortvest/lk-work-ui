@@ -22,7 +22,7 @@ export const Navigation = (): JSX.Element => {
   const { t } = useTranslation('employee-sidebar');
   const currentPathname = location.pathname;
   const dispatch = useTypedDispatch();
-  const { setIsEditModeEnabled } = CommonSlice.actions;
+  const { setIsEditModeEnabled, setIsSidebarVisible } = CommonSlice.actions;
   const sidebarNavigationItems: AppRoute[] = useMemo(
     () =>
       Object.values(AppRoutes).filter(
@@ -35,6 +35,7 @@ export const Navigation = (): JSX.Element => {
 
   const onRouteChangeHandler = (): void => {
     dispatch(setIsEditModeEnabled(false));
+    dispatch(setIsSidebarVisible(false));
   };
 
   return (

@@ -10,3 +10,9 @@
 
   background-color: var(--white);
 }
+
+@media (width < 450px) {
+  .ukrainian-docs-form-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}

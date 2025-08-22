@@ -26,6 +26,7 @@
   "calendarCancelBtn": "Скасувати",
   "calendarBookBtn": "Забронювати",
   "toastVacationRequestSent": "Запит на відпустку успішно надіслано!",
+  "toastDaysPickError": "Ви не можете обрати більше 7 днів!",
   "personalInfoSubtitle": "Основна особиста інформація користувача",
   "userPhoto": "Фото користувача:",
   "firstName": "Ім’я:*",

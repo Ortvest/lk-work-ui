@@ -9,6 +9,15 @@
   border: none;
 }
 
+@media (width < 720px) {
+  .phone-wrapper {
+    justify-content: center;
+
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .phone-select-wrapper {
   position: relative;
 

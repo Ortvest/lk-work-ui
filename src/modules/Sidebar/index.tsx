@@ -20,13 +20,14 @@ export const Sidebar = (): JSX.Element => {
   const { t } = useTranslation('employee-sidebar');
   const userRole = useTypedSelector((state) => state.userReducer.user?.role);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const isSidebarVisible = useTypedSelector((state) => state.CommonReducer.isSidebarVisible);
 
   const onModalOpenHandler = (): void => {
     setIsModalOpen(true);
   };
 
   return (
-    <section className={classNames('sidebar')}>
+    <section className={classNames('sidebar', { mobileSidebar: isSidebarVisible })}>
       <SidebarWrapper>
         <header className={classNames('sidebar-header')}>
           <UserData />
@@ -34,7 +35,7 @@ export const Sidebar = (): JSX.Element => {
         <nav className={classNames('sidebar-navigation')}>
           <Navigation />
         </nav>
-        {userRole === UserRoles.EMPLOYEE ? (
+        {userRole !== UserRoles.EMPLOYEE ? (
           <Fragment>
             <button className={classNames('sidebar-book-day-off-btn')} onClick={onModalOpenHandler}>
               <img src={CalendarIcon} alt="book-day-off-icon" />

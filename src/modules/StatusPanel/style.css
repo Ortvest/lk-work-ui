@@ -10,3 +10,31 @@
 
   background-color: var(--white);
 }
+
+@media (width < 450px) {
+  .status-panel-wrapper {
+    padding: 0 16px;
+  }
+}
+
+.status-panel-menu-btn {
+  display: none;
+
+  margin: 16px 0;
+  margin: 0 8px 0 0;
+  padding: 8px 24px;
+
+  color: var(--white);
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: var(--black);
+}
+
+@media (width <= 1120px) {
+  .status-panel-menu-btn {
+    display: block;
+  }
+}

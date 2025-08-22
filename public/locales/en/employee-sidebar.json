@@ -26,6 +26,7 @@
   "calendarCancelBtn": "Cancel",
   "calendarBookBtn": "Book",
   "toastVacationRequestSent": "Vacation request sent successfully!",
+  "toastDaysPickError": "You can`t pick more than 7 days!",
   "personalInfoSubtitle": "Basic personal information of the user",
   "userPhoto": "User photo:",
   "firstName": "First name:*",

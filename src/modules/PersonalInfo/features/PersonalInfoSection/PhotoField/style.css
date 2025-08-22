@@ -58,6 +58,15 @@
   background-color: #e5e5e5;
 }
 
+@media (width < 450px) {
+  .photo-field-initials {
+    width: 60px;
+    height: 60px;
+
+    font-size: 18px;
+  }
+}
+
 .photo-field-input {
   display: none;
 }
