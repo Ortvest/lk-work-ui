@@ -68,5 +68,5 @@ export const {
   useEditWorkCompanyMutation,
   useLazyRemoveWorkCompanyQuery,
   useLazyGetAllWorkCompaniesQuery,
-  useLazySearchWorkCompanyQuery
+  useLazySearchWorkCompanyQuery,
 } = workCompanyApi;

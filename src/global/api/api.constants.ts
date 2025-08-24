@@ -7,6 +7,7 @@ export const API_CONFIG = {
   logout: (): string => '/auth/logout',
   sendResetPasswordEmail: (): string => '/auth/send-reset-password-email',
   getWorkCompanySearch: (name: string): string => `/work-company/search?name=${encodeURIComponent(name)}`,
+  getAccommodationSearch: (name: string): string => `/accommodation/search?name=${encodeURIComponent(name)}`,
 
   fetchEmployees: (
     location?: string,

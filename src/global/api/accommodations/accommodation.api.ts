@@ -36,6 +36,21 @@ export const accommodationApi = baseAccommodationApi.injectEndpoints({
         }
       },
     }),
+    searchAccommodation: builder.query<any[], string>({
+      query: (name) => ({
+        url: API_CONFIG.getAccommodationSearch(name),
+        method: 'GET',
+        credentials: 'include',
+      }),
+      async onQueryStarted(_name, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setAccommodations(data));
+        } catch (error) {
+          console.error('Failed to search accommodations:', error);
+        }
+      },
+    }),
     removeAccommodation: builder.query<boolean, { accommodationId: string }>({
       query: ({ accommodationId }) => ({
         url: API_CONFIG.removeAccommodation(accommodationId),
@@ -52,4 +67,5 @@ export const {
   useLazyGetAllAccommodationsQuery,
   useEditAccommodationMutation,
   useLazyRemoveAccommodationQuery,
+  useLazySearchAccommodationQuery,
 } = accommodationApi;

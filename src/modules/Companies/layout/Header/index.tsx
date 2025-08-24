@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { AddCompanyPopupButton } from '@modules/Companies/feature/AddCompanyPopupButton';
-import { FindCompanyField } from "@modules/Companies/feature/FindCompanyField";
+import { FindCompanyField } from '@modules/Companies/feature/FindCompanyField';
 
 import './style.css';
 
