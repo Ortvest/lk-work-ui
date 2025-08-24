@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { AddWorkAssetsPopupButton } from '@modules/WorkAssets/features/AddWorkAssetsPopupButton';
+import { FindAssetField } from '@modules/WorkAssets/features/FindAssetField';
 
 import './style.css';
 
@@ -28,6 +29,9 @@ export const WorkAssetsTableHeader = ({
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>
           <AddWorkAssetsPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        </div>
+        <div className={classNames('employees-table-header-toolbar')}>
+          <FindAssetField />
         </div>
       </section>
     </header>
