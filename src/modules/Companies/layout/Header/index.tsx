@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { AddCompanyPopupButton } from '@modules/Companies/feature/AddCompanyPopupButton';
+import { FindCompanyField } from "@modules/Companies/feature/FindCompanyField";
 
 import './style.css';
 
@@ -28,6 +29,9 @@ export const CompaniesTableHeader = ({
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>
           <AddCompanyPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        </div>
+        <div className={classNames('employees-table-header-toolbar')}>
+          <FindCompanyField />
         </div>
       </section>
     </header>

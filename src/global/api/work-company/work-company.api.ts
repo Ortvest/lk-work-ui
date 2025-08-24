@@ -44,6 +44,21 @@ export const workCompanyApi = baseWorkCompanyApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
+    searchWorkCompany: builder.query<any[], string>({
+      query: (name) => ({
+        url: API_CONFIG.getWorkCompanySearch(name),
+        method: 'GET',
+        credentials: 'include',
+      }),
+      async onQueryStarted(_id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setWorkCompanies(data));
+        } catch {
+          dispatch(setWorkCompanies([]));
+        }
+      },
+    }),
   }),
 });
 
@@ -53,4 +68,5 @@ export const {
   useEditWorkCompanyMutation,
   useLazyRemoveWorkCompanyQuery,
   useLazyGetAllWorkCompaniesQuery,
+  useLazySearchWorkCompanyQuery
 } = workCompanyApi;

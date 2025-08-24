@@ -6,6 +6,7 @@ export const API_CONFIG = {
   authMe: (): string => '/auth/me',
   logout: (): string => '/auth/logout',
   sendResetPasswordEmail: (): string => '/auth/send-reset-password-email',
+  getWorkCompanySearch: (name: string): string => `/work-company/search?name=${encodeURIComponent(name)}`,
 
   fetchEmployees: (
     location?: string,
