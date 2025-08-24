@@ -43,5 +43,4 @@
   "deleteAsset": "Delete asset",
   "toastAssetDeleted": "Asset successfully deleted",
   "toastAssetDeleteFailed": "Failed to delete asset"
-
 }
