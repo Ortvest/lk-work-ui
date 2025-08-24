@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { AddAccommodationPopupButton } from '@modules/Accommodations/feature/AddAccommodationPopupButton';
+import { FindAccommodationField } from '@modules/Accommodations/feature/FindAccommodationField';
 
 import './style.css';
 
@@ -28,6 +29,9 @@ export const AccommodationsTableHeader = ({
       <section className={classNames('employees-table-header-content')}>
         <div style={{ alignSelf: 'flex-end' }}>
           <AddAccommodationPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        </div>
+        <div className={classNames('employees-table-header-toolbar')}>
+          <FindAccommodationField />
         </div>
       </section>
     </header>

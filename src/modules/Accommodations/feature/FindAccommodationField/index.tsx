@@ -8,12 +8,12 @@ import IconSearch from '@shared/assets/icons/IconSearch.svg';
 
 import './style.css';
 
-import { useLazySearchWorkCompanyQuery } from '@global/api/work-company/work-company.api';
+import { useLazySearchAccommodationQuery } from '@global/api/accommodations/accommodation.api';
 
-export const FindCompanyField = (): React.ReactNode => {
+export const FindAccommodationField = (): React.ReactNode => {
   const { t } = useTranslation(['work-assets-table', 'employees-table']);
 
-  const [triggerSearch] = useLazySearchWorkCompanyQuery();
+  const [triggerSearch] = useLazySearchAccommodationQuery();
   const [query, setQuery] = useState('');
   const [debounced] = useDebounce(query.trim(), 400);
 
