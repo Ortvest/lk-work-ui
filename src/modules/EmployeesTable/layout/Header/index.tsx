@@ -34,7 +34,7 @@ export const EmployeeTableHeader = ({
         <div>
           <h1 className={classNames('employees-table-header-title')}>{t('employeesTitle')}</h1>
         </div>
-        <div>
+        <div className={classNames('employees-table-header-switch-btns')}>
           <SwitchTableButton
             translationKey="hired"
             targetTab={EmployeeTableTabs.HIRED}
@@ -66,7 +66,7 @@ export const EmployeeTableHeader = ({
           />
         </div>
       </section>
-      <section className={classNames('employees-table-header-content')}>
+      <section className={classNames('employees-table-header-content', 'responsive')}>
         <div style={{ alignSelf: 'flex-end' }}>
           <AddEmployeePopupButton setIsOpenedModal={setIsOpenedModal} />
         </div>

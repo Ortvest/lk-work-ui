@@ -25,3 +25,21 @@
   gap: 8px;
   align-items: center;
 }
+
+.employees-table-header-switch-btns {
+  display: flex;
+  gap: 4px;
+}
+
+@media (width <= 868px) {
+  .employees-table-header {
+    flex-direction: column;
+    gap: 36px !important;
+
+    margin-bottom: 128px;
+  }
+
+  .employees-table-header-content.responsive {
+    flex-direction: row;
+  }
+}

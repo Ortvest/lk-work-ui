@@ -211,3 +211,13 @@
 
   cursor: pointer;
 }
+
+@media (width <= 868px) {
+  .employees-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .employees-table {
+    width: calc(100%);
+  }
+}
