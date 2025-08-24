@@ -37,7 +37,6 @@ export const workAssetsApi = baseWorkAssetsApi.injectEndpoints({
       async onQueryStarted(_id, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log(data, 'DATA');
           dispatch(setSelectedWorkAsset(data));
         } catch {
           dispatch(setSelectedWorkAsset(null));
