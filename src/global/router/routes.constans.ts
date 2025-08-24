@@ -24,6 +24,7 @@ import { AccommodationsPage } from '@pages/Accommodations';
 import { CompaniesPage } from '@pages/Companies';
 import { SetNewPassword } from '@pages/SetNewPassword';
 import { StuffPage } from '@pages/Stuff';
+import { WorkAssetsPage } from '@pages/WorkAssets';
 import { UserRole, UserRoles } from '@shared/enums/user.enums';
 
 export const UsageScopes = {
@@ -225,6 +226,15 @@ export const AppRoutes: Record<string, AppRoute> = {
     isPublic: false,
   },
 
+  WORK_ASSETS: {
+    path: '/work-assets',
+    isVisible: true,
+    title: 'routeWorkAssets',
+    usageScope: [UsageScopes.NONE],
+    allowedRoles: [UserRoles.OFFICE_WORKER, UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT],
+    element: WorkAssetsPage,
+    isPublic: false,
+  },
   COMPANIES: {
     path: '/companies',
     isVisible: true,

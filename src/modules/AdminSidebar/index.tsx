@@ -19,6 +19,7 @@ import IconEmployees from '@shared/assets/icons/IconEmployees.svg';
 import IconEmployeesWhite from '@shared/assets/icons/IconEmployeesWhite.svg';
 import IconGlobe from '@shared/assets/icons/IconGlobe.svg';
 import IconHome from '@shared/assets/icons/IconHome.svg';
+import IconPackage from '@shared/assets/icons/IconPackage.svg';
 import IconUser from '@shared/assets/icons/IconUser.svg';
 import IconUserProfile from '@shared/assets/icons/IconUserProfile.svg';
 import IconUserProfileWhite from '@shared/assets/icons/IconUserProfileWhite.svg';
@@ -71,6 +72,14 @@ const sidebarRoutes = [
     label: 'Companies',
     scope: RouteScopes.TOP,
     path: AppRoutes.COMPANIES.path,
+    roles: [UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT, UserRoles.OFFICE_WORKER],
+  },
+  {
+    icon: IconPackage,
+    selectedIcon: IconPackage,
+    label: 'Work assets',
+    scope: RouteScopes.TOP,
+    path: AppRoutes.WORK_ASSETS.path,
     roles: [UserRoles.SUPER_ADMIN, UserRoles.ACCOUNTANT, UserRoles.OFFICE_WORKER],
   },
 ];
