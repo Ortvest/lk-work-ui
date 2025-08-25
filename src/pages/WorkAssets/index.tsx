@@ -27,18 +27,20 @@ export const WorkAssetsPage = (): React.ReactNode => {
     })();
   }, []);
   return (
-    <div className={classNames('stuff-container')}>
-      <WorkAssetsTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
-      <WorkAssetsTableContent
-        setOpenedPopupType={setOpenedPopupType}
-        assets={(data || []) as unknown as WorkAsset[]}
-        setIsOpenedModal={setIsOpenedModal}
-      />
-      {openedPopupType === 'create' ? (
-        <AddAssetPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      ) : (
-        <EditAssetPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      )}
+    <div className="admin-content-wrapper">
+      <div className={classNames('stuff-container')}>
+        <WorkAssetsTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        <WorkAssetsTableContent
+          setOpenedPopupType={setOpenedPopupType}
+          assets={(data || []) as unknown as WorkAsset[]}
+          setIsOpenedModal={setIsOpenedModal}
+        />
+        {openedPopupType === 'create' ? (
+          <AddAssetPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        ) : (
+          <EditAssetPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        )}
+      </div>
     </div>
   );
 };

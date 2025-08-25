@@ -25,3 +25,40 @@
   gap: 8px;
   align-items: center;
 }
+
+@media (width < 400px) {
+  .employees-table-header-toolbar {
+    justify-content: center;
+  }
+}
+
+.employees-table-header-switch-btns {
+  display: flex;
+  gap: 4px;
+}
+
+@media (width <= 720px) {
+  .employees-table-header {
+    flex-direction: column;
+    gap: 36px !important;
+
+    margin-bottom: 120px;
+    padding-right: 0 !important;
+  }
+
+  .employees-table-header-content.responsive {
+    flex-direction: row;
+    justify-content: center !important;
+
+    width: 100%;
+  }
+}
+
+@media (width < 480px) {
+  .employees-table-header-switch-btns {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 12px;
+  }
+}

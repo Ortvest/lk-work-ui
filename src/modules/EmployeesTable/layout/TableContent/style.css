@@ -211,3 +211,15 @@
 
   cursor: pointer;
 }
+
+.employees-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+@media (width <= 1180px) {
+  .employees-table {
+    min-width: 981px;
+  }
+}

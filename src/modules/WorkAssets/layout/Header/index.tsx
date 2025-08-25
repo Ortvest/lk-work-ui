@@ -20,13 +20,13 @@ export const WorkAssetsTableHeader = ({
 }: WorkAssetsTableHeaderProps): React.ReactNode => {
   const { t } = useTranslation('work-assets-table');
   return (
-    <header className={classNames('employees-table-header')}>
+    <header className={classNames('employees-table-header-assets')}>
       <section className={classNames('employees-table-header-content')}>
         <div>
           <h1 className={classNames('employees-table-header-title')}>{t('routeWorkAssets')}</h1>
         </div>
       </section>
-      <section className={classNames('employees-table-header-content')}>
+      <section className={classNames('employees-table-header-content responsive-asset')}>
         <div style={{ alignSelf: 'flex-end' }}>
           <AddWorkAssetsPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
         </div>

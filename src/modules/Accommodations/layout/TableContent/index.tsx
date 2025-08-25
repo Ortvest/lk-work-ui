@@ -71,44 +71,49 @@ export const AccommodationTableContent = ({
   });
 
   return (
-    <table className="employees-table">
-      <thead className={classNames('employees-table-content-header')}>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header: any) => (
-              <th
-                key={header.id}
-                className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table?.getRowModel()?.rows?.map((row) => (
-          <tr
-            key={row.id}
-            className="employees-table-row"
-            onMouseEnter={() => setHoveredRowId(row.id)}
-            onMouseLeave={() => setHoveredRowId(null)}
-            onClick={() => onSelectAccommodation(row.original as unknown as AccommodationEntity)}>
-            {row?.getVisibleCells()?.map((cell: any) => (
-              <td
-                key={cell.id}
-                className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
-                {flexRender(cell?.column?.columnDef?.cell, {
-                  ...cell?.getContext(),
-                  hoveredRowId,
-                  currentRowId: row.id,
-                  setOpenedPopupType,
-                  setIsOpenedModal,
-                })}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="employees-table-wrapper-acc">
+      <table className="employees-table-acc">
+        <thead className={classNames('employees-table-content-header')}>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header: any) => (
+                <th
+                  key={header.id}
+                  className={classNames(
+                    header.column.columnDef.meta?.className,
+                    'employees-table-content-header-item'
+                  )}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table?.getRowModel()?.rows?.map((row) => (
+            <tr
+              key={row.id}
+              className="employees-table-row"
+              onMouseEnter={() => setHoveredRowId(row.id)}
+              onMouseLeave={() => setHoveredRowId(null)}
+              onClick={() => onSelectAccommodation(row.original as unknown as AccommodationEntity)}>
+              {row?.getVisibleCells()?.map((cell: any) => (
+                <td
+                  key={cell.id}
+                  className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
+                  {flexRender(cell?.column?.columnDef?.cell, {
+                    ...cell?.getContext(),
+                    hoveredRowId,
+                    currentRowId: row.id,
+                    setOpenedPopupType,
+                    setIsOpenedModal,
+                  })}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };

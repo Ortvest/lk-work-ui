@@ -117,50 +117,52 @@ export const WorkAssetsTableContent = ({
   });
 
   return (
-    <table className="assets-table">
-      <thead className={classNames('assets-table-content-header')}>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                className={classNames(
-                  (header.column.columnDef.meta as ColumnMetaWithClassName)?.className,
-                  'assets-table-content-header-item'
-                )}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr
-            key={row.id}
-            className="assets-table-row"
-            onMouseEnter={() => setHoveredRowId(row.id)}
-            onMouseLeave={() => setHoveredRowId(null)}
-            onClick={() => {
-              onSelectAsset(row.original._id);
-            }}>
-            {row.getVisibleCells().map((cell) => (
-              <td
-                key={cell.id}
-                className={classNames(
-                  (cell.column.columnDef.meta as ColumnMetaWithClassName)?.className,
-                  'assets-table-content-header-cell'
-                )}>
-                {flexRender(cell.column.columnDef.cell, {
-                  ...cell.getContext(),
-                  hoveredRowId,
-                  currentRowId: row.id,
-                })}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="assets-table-wrapper">
+      <table className="assets-table">
+        <thead className={classNames('assets-table-content-header')}>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  className={classNames(
+                    (header.column.columnDef.meta as ColumnMetaWithClassName)?.className,
+                    'assets-table-content-header-item'
+                  )}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr
+              key={row.id}
+              className="assets-table-row"
+              onMouseEnter={() => setHoveredRowId(row.id)}
+              onMouseLeave={() => setHoveredRowId(null)}
+              onClick={() => {
+                onSelectAsset(row.original._id);
+              }}>
+              {row.getVisibleCells().map((cell) => (
+                <td
+                  key={cell.id}
+                  className={classNames(
+                    (cell.column.columnDef.meta as ColumnMetaWithClassName)?.className,
+                    'assets-table-content-header-cell'
+                  )}>
+                  {flexRender(cell.column.columnDef.cell, {
+                    ...cell.getContext(),
+                    hoveredRowId,
+                    currentRowId: row.id,
+                  })}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };

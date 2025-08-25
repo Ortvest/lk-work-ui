@@ -1,6 +1,6 @@
 .admin-global-container {
   height: auto;
-  min-height: calc(100vh - 68px);
+  min-height: 100vh;
 
   background-color: var(--light-gray);
 }
@@ -8,4 +8,14 @@
 .admin-global-wrapper {
   display: flex;
   gap: 32px;
+  justify-content: space-between;
+
+  height: 100%;
+}
+
+@media (width < 1180px) {
+  .admin-global-wrapper {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+  }
 }

@@ -16,7 +16,7 @@ interface StuffTableHeaderProps {
 export const StuffTableHeader = ({ setIsOpenedModal, setOpenedPopupType }: StuffTableHeaderProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
   return (
-    <header className={classNames('employees-table-header')}>
+    <header className={classNames('employees-table-header-stuff')}>
       <section className={classNames('employees-table-header-content')}>
         <div>
           <h1 className={classNames('employees-table-header-title')}>{t('routeStuff')}</h1>

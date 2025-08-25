@@ -19,14 +19,16 @@ export const CompaniesPage = (): React.ReactNode => {
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);
 
   return (
-    <div className={classNames('companies-container')}>
-      <CompaniesTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
-      <CompaniesTable setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
-      {openedPopupType === 'create' ? (
-        <AddCompanyPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      ) : (
-        <EditCompanyPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      )}
+    <div className="admin-content-wrapper">
+      <div className={classNames('companies-container')}>
+        <CompaniesTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        <CompaniesTable setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        {openedPopupType === 'create' ? (
+          <AddCompanyPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        ) : (
+          <EditCompanyPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        )}
+      </div>
     </div>
   );
 };

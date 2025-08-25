@@ -12,6 +12,8 @@ import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { Drawer } from '@shared/components/Drawer';
 
+import './style.css';
+
 import { useLazyFetchAllEmployeesQuery, useLazyFetchVacationRequestsQuery } from '@global/api/employee/employee.api';
 import { EmployeeTableTab, EmployeeTableTabs } from '@shared/enums/general.enums';
 import { UserRoles, UserWorkStatuses } from '@shared/enums/user.enums';
@@ -97,7 +99,7 @@ export const EmployeesTable = (): JSX.Element => {
   }, [vacationType]);
 
   return (
-    <div style={{ width: '100%' }}>
+    <div className="admin-content-wrapper">
       {user?.role === UserRoles.SUPER_ADMIN && <WorkCompanyFilter selectedTable={selectedTable} />}
       <EmployeeTableHeader
         setSelectedTable={setSelectedTable}
