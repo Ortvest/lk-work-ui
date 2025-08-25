@@ -212,12 +212,14 @@
   cursor: pointer;
 }
 
-@media (width <= 868px) {
-  .employees-table-wrapper {
-    overflow-x: auto;
-  }
+.employees-table-wrapper {
+  width: 100%;
 
+  overflow-x: auto;
+}
+
+@media (width <= 1180px) {
   .employees-table {
-    width: calc(100%);
+    min-width: 981px;
   }
 }

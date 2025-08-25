@@ -18,14 +18,16 @@ export const AccommodationsPage = (): React.ReactNode => {
     console.log(openedPopupType, 'type');
   }, [openedPopupType]);
   return (
-    <div className={classNames('accommodations-container')}>
-      <AccommodationsTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
-      <AccommodationsTable setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
-      {openedPopupType === 'create' ? (
-        <AddAccommodationPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      ) : (
-        <EditAccommodationPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      )}
+    <div className="admin-content-wrapper">
+      <div className={classNames('accommodations-container')}>
+        <AccommodationsTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        <AccommodationsTable setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        {openedPopupType === 'create' ? (
+          <AddAccommodationPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        ) : (
+          <EditAccommodationPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        )}
+      </div>
     </div>
   );
 };

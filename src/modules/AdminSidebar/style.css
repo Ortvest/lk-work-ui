@@ -27,6 +27,12 @@
   gap: 8px;
 }
 
+@media (width < 360px) {
+  .admin-sidebar-top-routes {
+    gap: 4px;
+  }
+}
+
 .admin-sidebar-bottom-routes {
   position: relative;
 
@@ -55,6 +61,13 @@
   background: #fff;
 
   box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+@media (width < 1080px) {
+  .worker-info-popup {
+    left: auto;
+    right: 0;
+  }
 }
 
 .worker-info-header {
@@ -215,4 +228,32 @@
   margin: 6px 0 0;
 
   background-color: var(--light-gray);
+}
+
+@media (width < 360px) {
+  .split {
+    display: none;
+  }
+}
+
+@media (width < 1180px) {
+  .admin-sidebar {
+    width: 100%;
+    height: 48px;
+    padding: 4px;
+  }
+
+  .admin-sidebar-navigation {
+    flex-direction: row;
+  }
+
+  .admin-sidebar-top-routes {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .admin-sidebar-bottom-routes {
+    flex-direction: row;
+    align-items: center;
+  }
 }

@@ -207,3 +207,21 @@
 
   cursor: pointer;
 }
+
+.assets-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+@media (width <= 1180px) {
+  .assets-table {
+    min-width: 981px;
+  }
+}
+
+@media (width <= 400px) {
+  .assets-table {
+    margin-top: 84px !important;
+  }
+}

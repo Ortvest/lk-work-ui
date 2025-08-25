@@ -1,4 +1,4 @@
-.employees-table {
+.employees-table-acc {
   width: 100%;
   margin-top: 36px;
 
@@ -9,8 +9,8 @@
   background-color: var(--white);
 }
 
-.employees-table th,
-.employees-table td {
+.employees-table-acc th,
+.employees-table-acc td {
   padding: 12px;
 
   text-align: left;
@@ -210,4 +210,22 @@
   background: #eee;
 
   cursor: pointer;
+}
+
+.employees-table-wrapper-acc {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+@media (width <= 1180px) {
+  .employees-table-acc {
+    min-width: 981px;
+  }
+}
+
+@media (width <= 400px) {
+  .employees-table-acc {
+    margin-top: 84px !important;
+  }
 }

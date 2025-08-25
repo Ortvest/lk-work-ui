@@ -20,13 +20,13 @@ export const CompaniesTableHeader = ({
 }: AccommodationsTableHeaderProps): React.ReactNode => {
   const { t } = useTranslation('companies');
   return (
-    <header className={classNames('employees-table-header')}>
+    <header className={classNames('employees-table-header-companies')}>
       <section className={classNames('employees-table-header-content')}>
         <div>
           <h1 className={classNames('employees-table-header-title')}>{t('companiesTitle')}</h1>
         </div>
       </section>
-      <section className={classNames('employees-table-header-content')}>
+      <section className={classNames('employees-table-header-content responsive-comp')}>
         <div style={{ alignSelf: 'flex-end' }}>
           <AddCompanyPopupButton setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
         </div>

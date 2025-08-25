@@ -259,7 +259,6 @@ export const EmployeesTableContent = ({
       header: t('columnAction'),
       // @ts-ignore
       cell: ({ hoveredRowId, selectedTable, table }): JSX.Element => {
-
         return (
           <div className="employees-table-wrapper">
             <table className="employees-table">
@@ -330,48 +329,53 @@ export const EmployeesTableContent = ({
   if (isHandleLoading) return <Loader />;
 
   return (
-    <table className="employees-table">
-      <CurrentDocumentsPopup
-        isExpireModalOpen={isExpireModalOpen}
-        setIsExpireModalOpen={setIsExpireModalOpen}
-        selectedEmployeeExpire={selectedEmployeeExpire}
-      />
-      <thead className={classNames('employees-table-content-header')}>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header: any) => (
-              <th
-                key={header.id}
-                className={classNames(header.column.columnDef.meta?.className, 'employees-table-content-header-item')}>
-                {flexRender(header.column.columnDef.header, header.getContext())}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table?.getRowModel()?.rows?.map((row) => (
-          <tr
-            key={row.id}
-            className="employees-table-row"
-            onMouseEnter={() => setHoveredRowId(row.id)}
-            onMouseLeave={() => setHoveredRowId(null)}
-            onClick={() => onSelectEmployee(row.original)}>
-            {row?.getVisibleCells()?.map((cell: any) => (
-              <td
-                key={cell.id}
-                className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
-                {flexRender(cell?.column?.columnDef?.cell, {
-                  ...cell?.getContext(),
-                  hoveredRowId,
-                  currentRowId: row.id,
-                  selectedTable,
-                })}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className="employees-table-wrapper">
+      <table className="employees-table">
+        <CurrentDocumentsPopup
+          isExpireModalOpen={isExpireModalOpen}
+          setIsExpireModalOpen={setIsExpireModalOpen}
+          selectedEmployeeExpire={selectedEmployeeExpire}
+        />
+        <thead className={classNames('employees-table-content-header')}>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header: any) => (
+                <th
+                  key={header.id}
+                  className={classNames(
+                    header.column.columnDef.meta?.className,
+                    'employees-table-content-header-item'
+                  )}>
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table?.getRowModel()?.rows?.map((row) => (
+            <tr
+              key={row.id}
+              className="employees-table-row"
+              onMouseEnter={() => setHoveredRowId(row.id)}
+              onMouseLeave={() => setHoveredRowId(null)}
+              onClick={() => onSelectEmployee(row.original)}>
+              {row?.getVisibleCells()?.map((cell: any) => (
+                <td
+                  key={cell.id}
+                  className={classNames(cell.column.columnDef.meta?.className, 'employees-table-content-header-cell')}>
+                  {flexRender(cell?.column?.columnDef?.cell, {
+                    ...cell?.getContext(),
+                    hoveredRowId,
+                    currentRowId: row.id,
+                    selectedTable,
+                  })}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };

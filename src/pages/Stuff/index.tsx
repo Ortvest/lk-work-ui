@@ -26,18 +26,20 @@ export const StuffPage = (): React.ReactNode => {
   const [openedPopupType, setOpenedPopupType] = useState<OpenedPopupType>(null);
 
   return (
-    <div className={classNames('stuff-container')}>
-      <StuffTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
-      <StuffTableContent
-        setOpenedPopupType={setOpenedPopupType}
-        employees={(data || []) as unknown as UserEntity[]}
-        setIsDrawerOpen={setIsOpenedModal}
-      />
-      {openedPopupType === 'create' ? (
-        <AddStuffPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      ) : (
-        <EditStuffPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
-      )}
+    <div className="admin-content-wrapper">
+      <div className={classNames('stuff-container')}>
+        <StuffTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
+        <StuffTableContent
+          setOpenedPopupType={setOpenedPopupType}
+          employees={(data || []) as unknown as UserEntity[]}
+          setIsDrawerOpen={setIsOpenedModal}
+        />
+        {openedPopupType === 'create' ? (
+          <AddStuffPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        ) : (
+          <EditStuffPopup isOpen={isOpenedModal} setIsOpenedModal={setIsOpenedModal} />
+        )}
+      </div>
     </div>
   );
 };
