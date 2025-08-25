@@ -10,3 +10,9 @@
 
   background-color: var(--white);
 }
+
+@media (width < 450px) {
+  .driving-licence-preview-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}

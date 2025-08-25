@@ -1,0 +1,19 @@
+.statement-document {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 12px;
+
+  margin: 0 0 30px;
+}
+
+.statement-document:has(:only-child) {
+  align-items: center;
+}
+
+.statement-document-form {
+  width: 100%;
+  max-width: 660px;
+
+  background-color: var(--gray);
+}

@@ -1,6 +1,10 @@
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
+
+import { AppRoutes } from '@global/router/routes.constans';
 
 import { Status } from '@modules/StatusPanel/layout/Status';
 
@@ -11,25 +15,49 @@ import { SharedButton } from '@shared/components/SharedButton';
 
 import './style.css';
 
+import { UserDocumentsStatuses, UserRoles } from '@shared/enums/user.enums';
+
 export const StatusPanel = (): JSX.Element => {
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation('employee-sidebar');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
-  const { setIsEditModeEnabled } = CommonSlice.actions;
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const userDocumentsStatus = useTypedSelector((state) => state.userReducer.user?.documentStatus);
+  const { setIsEditModeEnabled, setIsSidebarVisible } = CommonSlice.actions;
+
+  const location = useLocation();
+
+  const shouldShowEditOrSaveButton =
+    (userRole === UserRoles.EMPLOYEE && userDocumentsStatus === UserDocumentsStatuses.WAITING_FOR_BRIEFING) ||
+    userRole === UserRoles.OFFICE_WORKER ||
+    userRole === UserRoles.SUPER_ADMIN;
 
   const onEditModeToggleHanlder = (e: React.MouseEvent): void => {
     e.preventDefault();
     dispatch(setIsEditModeEnabled(true));
   };
 
+  const onToggleMobileSidebarHandler = (e: any): void => {
+    e.preventDefault();
+    dispatch(setIsSidebarVisible(true));
+  };
+
   return (
     <section className={classNames('status-panel')}>
       <div className={classNames('status-panel-wrapper')}>
         <Status />
-        {isEditModeEnabled ? (
-          <SharedButton type="submit" text="Save" />
-        ) : (
-          <SharedButton type="button" text="Edit" onClick={(e) => onEditModeToggleHanlder(e)} />
-        )}
+        {location.pathname !== AppRoutes.QUESTIONNAIRE.path ? (
+          <button className={classNames('status-panel-menu-btn')} onClick={(e) => onToggleMobileSidebarHandler(e)}>
+            Menu
+          </button>
+        ) : null}
+
+        {shouldShowEditOrSaveButton &&
+          (isEditModeEnabled ? (
+            <SharedButton type="submit" text={t('buttonSave')} />
+          ) : (
+            <SharedButton type="button" text={t('buttonEdit')} onClick={onEditModeToggleHanlder} />
+          ))}
       </div>
     </section>
   );

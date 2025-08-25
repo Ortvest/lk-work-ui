@@ -1,6 +1,9 @@
+import { Fragment, useState } from 'react';
+
 import classNames from 'classnames';
 
 import DownLoadIcon from '@shared/assets/icons/DownloadIcon.svg';
+import FilePreviewIcon from '@shared/assets/icons/FilePreviewIcon.svg';
 
 import './style.css';
 
@@ -10,16 +13,54 @@ interface SharedImagePreviewProps {
 }
 
 export const SharedImagePreview = ({ imageName, imageUrl }: SharedImagePreviewProps): JSX.Element => {
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const handleDownload = (): void => {
+    try {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = imageName || 'file.png';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err) {
+      console.error('Download error', err);
+    }
+  };
+
   return (
-    <label className={classNames('shared-img-preview-container')}>
-      <div className={classNames('shared-img-preview-wrapper')}>
-        <img className={classNames('shared-img-preview')} src={imageUrl || ''} alt="document-photo" />
-      </div>
-      <div className={classNames('shared-img-preview-name-wrapper')}>
-        <p className={classNames('shared-img-preview-name')}>{imageName}</p>
-        <p className={classNames('shared-img-preview-size')}>2.8 Mb</p>
-      </div>
-      <img className={classNames('shared-img-preview-download-icon')} src={DownLoadIcon} alt="upload-icon" />
-    </label>
+    <Fragment>
+      <label className={classNames('shared-img-preview-container')}>
+        {imageUrl ? (
+          <div className={classNames('shared-img-preview-wrapper')} onClick={() => imageUrl && setIsPreviewOpen(true)}>
+            <img className={classNames('shared-img-preview')} src={imageUrl} alt="document-photo" />
+          </div>
+        ) : (
+          <div className={classNames('shared-img-preview-wrapper')}>
+            <img className={classNames('shared-img-preview')} src={FilePreviewIcon} alt="document-photo" />
+          </div>
+        )}
+
+        <div className={classNames('shared-img-preview-name-wrapper')}>
+          <p className={classNames('shared-img-preview-name')}>{imageName}</p>
+          <p className={classNames('shared-img-preview-size')}>
+            Size: {imageUrl ? (imageUrl.length / 1024).toFixed(2) + ' Mb' : '-'}
+          </p>
+        </div>
+        <img
+          className={classNames('shared-img-preview-download-icon')}
+          src={DownLoadIcon}
+          alt="download-icon"
+          onClick={handleDownload}
+        />
+      </label>
+
+      {isPreviewOpen && (
+        <div className="shared-img-lightbox" onClick={() => setIsPreviewOpen(false)}>
+          <img className="shared-img-lightbox-img" src={imageUrl} alt={imageName} />
+        </div>
+      )}
+    </Fragment>
   );
 };

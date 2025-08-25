@@ -1,10 +1,19 @@
-.status {
+.status-panel-value {
+  display: flex;
   flex-grow: 1;
+  gap: 12px;
+  align-items: center;
 
   color: var(--dark-gray);
 }
 
-.status-value {
+@media (width < 420px) {
+  .status-panel-value {
+    display: none;
+  }
+}
+
+.status-panel-value-text {
   margin: 0 0 0 12px;
   padding: 2.5px 6px;
 
@@ -14,4 +23,36 @@
   text-transform: uppercase;
 
   background-color: #e0f3ff;
+}
+
+.user-docs-status {
+  padding: 2.5px 6px;
+
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.status-waiting {
+  color: #e09017;
+
+  background-color: #e090171a;
+}
+
+.status-to-confirm {
+  color: #4ba1c9;
+
+  background-color: #4ba1c91a;
+}
+
+.status-waiting-docs {
+  color: #ea2a2a;
+
+  background-color: #ea2a2a1a;
+}
+
+.status-confirmed {
+  color: #00bd16;
+
+  background-color: #00bd161a;
 }

@@ -11,6 +11,12 @@
   background-color: var(--white);
 }
 
+@media (width < 450px) {
+  .residence-card-preview-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}
+
 .residence-card-preview-fields-wrapper > label > span::first-letter {
   text-transform: uppercase;
 }

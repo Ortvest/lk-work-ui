@@ -23,3 +23,17 @@
 
   background-color: var(--light-gray);
 }
+
+@media (width <= 460px) {
+  .sign-in-title {
+    padding: 0 0 12px;
+
+    font-size: 20px;
+  }
+
+  .sign-in-subtitle {
+    max-width: 525px;
+
+    font-size: 14px;
+  }
+}

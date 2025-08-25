@@ -1,0 +1,23 @@
+{
+  "accommodationsTitle": "Accommodations",
+  "columnAccommodationName": "Name",
+  "columnAccommodationAddress": "Address",
+  "columnAccommodationPrice": "Price",
+  "btnAddAccommodation": "Add Accommodation",
+  "modalCreateAccommodationTitle": "Dodaj zakwaterowanie",
+  "modalAccommodationNameLabel": "Nazwa zakwaterowania*",
+  "modalAccommodationNamePlaceholder": "Wpisz nazwę zakwaterowania",
+  "modalAccommodationAddressLabel": "Adres zakwaterowania*",
+  "modalAccommodationAddressPlaceholder": "Wpisz adres zakwaterowania",
+  "modalAccommodationPriceLabel": "Cena zakwaterowania*",
+  "modalAccommodationPricePlaceholder": "Wpisz cenę zakwaterowania",
+  "toastAccommodationAdded": "Accommodation successfully added",
+  "toastAccommodationEdited": "Accommodation successfully edited",
+  "toastAccommodationAddFailed": "Failed to add accommodation",
+  "btnEditAccommodation": "Edit Accommodation",
+  "modalCancelBtn": "Cancel",
+  "modalCreateAccommodation": "Create accommodation",
+  "modalEditAccommodation": "Edit accommodation",
+  "deleteAccommodation": "Delete accommodation",
+  "toastAccommodationDeleted": "Accommodation was deleted successfully."
+}

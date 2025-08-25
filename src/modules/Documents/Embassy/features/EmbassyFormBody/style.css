@@ -9,3 +9,9 @@
 
   background-color: var(--white);
 }
+
+@media (width < 450px) {
+  .embassy-form-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}

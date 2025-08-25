@@ -41,6 +41,32 @@
   border-radius: 50%;
 }
 
+.photo-field-initials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 80px;
+  height: 80px;
+
+  color: #2c20204d;
+  font-weight: 600;
+  font-size: 24px;
+
+  border-radius: 50%;
+
+  background-color: #e5e5e5;
+}
+
+@media (width < 450px) {
+  .photo-field-initials {
+    width: 60px;
+    height: 60px;
+
+    font-size: 18px;
+  }
+}
+
 .photo-field-input {
   display: none;
 }

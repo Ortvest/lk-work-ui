@@ -50,6 +50,12 @@
   text-align: center;
 }
 
+@media (width < 450px) {
+  .shared-file-subtitle {
+    font-size: 14px;
+  }
+}
+
 .shared-file-preview-container {
   display: flex;
   gap: 16px;

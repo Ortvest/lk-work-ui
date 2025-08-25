@@ -1,0 +1,9 @@
+{
+  "signInTitle": "Zaloguj się",
+  "signInSubTitle": "Możesz zacząć korzystać z funkcji systemu po zalogowaniu się. Dane logowania powinieneś otrzymać na swój adres e-mail.",
+  "signInButton": "Wejdź do systemu",
+  "emailLabel": "E-mail",
+  "passwordLabel": "Hasło",
+  "emailPlaceholder": "Wpisz swój adres e-mail...",
+  "passwordPlaceholder": "Wpisz swoje hasło..."
+}

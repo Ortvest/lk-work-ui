@@ -5,7 +5,12 @@
   gap: 12px;
 }
 
+.location:has(:only-child) {
+  align-items: center;
+}
+
 .location-form {
+  width: 100%;
   max-width: 660px;
 
   background-color: var(--gray);

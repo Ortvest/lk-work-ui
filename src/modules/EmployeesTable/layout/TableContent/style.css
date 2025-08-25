@@ -156,6 +156,10 @@
   width: 289px;
 }
 
+.column-vacation-citizenship {
+  width: auto;
+}
+
 .column-status {
   width: 289px;
 }
@@ -180,4 +184,52 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 100%;
+}
+
+.action-approve-btn {
+  padding: 6px 12px;
+
+  color: white;
+
+  border: none;
+  border-radius: 4px;
+
+  background: #222;
+
+  cursor: pointer;
+}
+
+.action-cancel-btn {
+  padding: 6px 12px;
+
+  color: #222;
+
+  border: none;
+  border-radius: 4px;
+
+  background: #eee;
+
+  cursor: pointer;
+}
+
+.employees-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+.employees-table-action-cell,
+.employees-table-row-actions { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 32px;
+}
+
+@media (width <= 1180px) {
+  .employees-table {
+    min-width: 981px;
+  }
 }
