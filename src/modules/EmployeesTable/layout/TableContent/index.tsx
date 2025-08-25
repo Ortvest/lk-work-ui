@@ -104,7 +104,19 @@ export const EmployeesTableContent = ({
   const employeesColumns: ColumnDef<UserEntity>[] = [
     {
       header: t('columnEmployee'),
-      accessorFn: (row) => `${row.personalInfo.firstName} ${row.personalInfo.lastName}`,
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      accessorFn: (row) => {
+        const first = row.personalInfo?.firstName ?? '';
+        const last = row.personalInfo?.lastName ?? '';
+        return `${first} ${last}`.trim() || '-';
+      },
+      cell: (info) => <span>{info.getValue() as string}</span>,
+      meta: { className: 'column-employee' },
+    },
+    {
+      header: t('columnCompany'),
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      accessorFn: (row) => row.jobInfo.company,
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-employee' },
     },
@@ -112,7 +124,7 @@ export const EmployeesTableContent = ({
       header: t('columnStatus'),
       accessorKey: 'workStatus',
       cell: (info): JSX.Element => {
-        const value = info.getValue() as string;
+        const value = (info.getValue() as string) ?? '-';
         return <span className={`status ${value.replace(/\s/g, '-').toLowerCase()}`}>{value.toUpperCase()}</span>;
       },
       meta: { className: 'column-status' },
@@ -120,19 +132,26 @@ export const EmployeesTableContent = ({
     {
       header: t('columnCitizenship'),
       accessorFn: (row): string => {
-        const nationality = row.personalInfo.nationality ?? '';
-        return nationality.charAt(0).toUpperCase() + nationality.slice(1);
+        const nationality = row.personalInfo?.nationality ?? '';
+        return nationality ? nationality.charAt(0).toUpperCase() + nationality.slice(1) : '-';
       },
       meta: { className: 'column-citizenship' },
     },
-
     {
       header: t('columnContractExpire'),
       cell: ({ row }): JSX.Element => {
         const rawDate = row.original.jobInfo.employmentEndDate as string;
+        if (!rawDate) {
+          return (
+            <div className="contract-expire">
+              <span className="contract-expire-dot dot-gray" />
+              <span className="contract-expire-label">—</span>
+            </div>
+          );
+        }
+
         const end = dayjs(rawDate, 'DD-MM-YYYY');
         const today = dayjs();
-
         const diffDays = end.diff(today, 'day');
 
         let label = '—';
@@ -157,8 +176,8 @@ export const EmployeesTableContent = ({
             className="contract-expire"
             onClick={(e) => {
               e.stopPropagation();
-              (table.options.meta as any)?.setSelectedEmployeeExpire(row.original);
-              (table.options.meta as any)?.setIsExpireModalOpen(true);
+              (table.options.meta as any)?.setSelectedEmployeeExpire?.(row.original);
+              (table.options.meta as any)?.setIsExpireModalOpen?.(true);
             }}
             style={{ cursor: 'pointer' }}>
             <span className={`contract-expire-dot ${dotColor}`} />
@@ -174,6 +193,7 @@ export const EmployeesTableContent = ({
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-hire-date' },
     },
+
     {
       header: t('columnAction'),
       // @ts-ignore
@@ -205,44 +225,40 @@ export const EmployeesTableContent = ({
       accessorKey: 'createdAt',
       cell: (info): JSX.Element => {
         const date = info.getValue() as string;
-        return <span>{dayjs(date).format('DD.MM.YYYY')}</span>;
+        return <span>{date ? dayjs(date).format('DD.MM.YYYY') : '-'}</span>;
       },
       meta: { className: 'column-hire-date' },
     },
     {
       header: t('columnFirstName'),
-      accessorFn: (row) => row.user.firstName,
+      accessorFn: (row) => row.user?.firstName ?? '-',
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-first-name' },
     },
     {
       header: t('columnLastName'),
-      accessorFn: (row) => row.user.lastName,
+      accessorFn: (row) => row.user?.lastName ?? '-',
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-last-name' },
     },
     {
       header: t('columnCitizenship'),
-      accessorFn: (row) => row.user.nationality,
+      accessorFn: (row) => row.user?.nationality ?? '-',
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-vacation-citizenship' },
     },
     {
       header: t('columnCompany'),
-      accessorFn: (row) => row.user.company,
+      accessorFn: (row) => row.user?.company ?? '-',
       cell: (info) => <span>{info.getValue() as string}</span>,
       meta: { className: 'column-company' },
     },
     {
       header: t('columnVacationPeriod'),
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      accessorFn: (row) => {
-        console.log(row, 'ROW');
-        return row.vacationDates;
-      },
+      accessorFn: (row) => row.vacationDates ?? [],
       cell: (info): JSX.Element => {
         const dates = info.getValue() as string[];
-        return (
+        return dates.length ? (
           <>
             {dates.map((date, idx) => (
               <span key={idx}>
@@ -251,6 +267,8 @@ export const EmployeesTableContent = ({
               </span>
             ))}
           </>
+        ) : (
+          <span>-</span>
         );
       },
       meta: { className: 'column-vacation-period' },
@@ -258,58 +276,50 @@ export const EmployeesTableContent = ({
     {
       header: t('columnAction'),
       // @ts-ignore
-      cell: ({ hoveredRowId, selectedTable, table }): JSX.Element => {
+      cell: ({ row, hoveredRowId, currentRowId, selectedTable }): JSX.Element => {
+        if (selectedTable === 'vacation-requests' && hoveredRowId === currentRowId) {
+          return (
+            <div className="employees-table-row-actions" style={{ display: 'flex', gap: '8px' }}>
+              <button
+                className="action-cancel-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectEmployee(row.original, 'rejected');
+                }}>
+                {t('btnCancel')}
+              </button>
+              <button
+                className="action-approve-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSelectEmployee(row.original, 'approved');
+                }}>
+                {t('btnApprove')}
+              </button>
+            </div>
+          );
+        }
+
+        if (selectedTable === 'on-vacation' && hoveredRowId === currentRowId) {
+          return (
+            <div className="employees-table-row-actions" style={{ display: 'flex', gap: '8px' }}>
+              <button
+                className="action-cancel-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveVacation((row.original as VacationRequestsResponse)?._id);
+                }}>
+                {t('btnCancel')}
+              </button>
+            </div>
+          );
+        }
+
         return (
-          <div className="employees-table-wrapper">
-            <table className="employees-table">
-              <CurrentDocumentsPopup
-                isExpireModalOpen={isExpireModalOpen}
-                setIsExpireModalOpen={setIsExpireModalOpen}
-                selectedEmployeeExpire={selectedEmployeeExpire}
-              />
-              <thead className={classNames('employees-table-content-header')}>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header: any) => (
-                      <th
-                        key={header.id}
-                        className={classNames(
-                          header.column.columnDef.meta?.className,
-                          'employees-table-content-header-item'
-                        )}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody>
-                {table?.getRowModel()?.rows?.map((row) => (
-                  <tr
-                    key={row.id}
-                    className="employees-table-row"
-                    onMouseEnter={() => setHoveredRowId(row.id)}
-                    onMouseLeave={() => setHoveredRowId(null)}
-                    onClick={() => onSelectEmployee(row.original)}>
-                    {row?.getVisibleCells()?.map((cell: any) => (
-                      <td
-                        key={cell.id}
-                        className={classNames(
-                          cell.column.columnDef.meta?.className,
-                          'employees-table-content-header-cell'
-                        )}>
-                        {flexRender(cell?.column?.columnDef?.cell, {
-                          ...cell?.getContext(),
-                          hoveredRowId,
-                          currentRowId: row.id,
-                          selectedTable,
-                        })}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="employees-table-action-cell">
+            <button className="action-button" aria-label={t('columnAction')}>
+              <img src={IconDots} alt="More" />
+            </button>
           </div>
         );
       },
@@ -359,7 +369,11 @@ export const EmployeesTableContent = ({
               className="employees-table-row"
               onMouseEnter={() => setHoveredRowId(row.id)}
               onMouseLeave={() => setHoveredRowId(null)}
-              onClick={() => onSelectEmployee(row.original)}>
+              onClick={() => {
+                if (selectedTable !== 'on-vacation') {
+                  onSelectEmployee(row.original);
+                }
+              }}>
               {row?.getVisibleCells()?.map((cell: any) => (
                 <td
                   key={cell.id}

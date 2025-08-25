@@ -36,11 +36,19 @@ export const EmployeesTable = (): JSX.Element => {
   const [selectedTable, setSelectedTable] = useState<EmployeeTableTab>('hired');
   const [vacationRequestsCount, setVacationRequestsCount] = useState(0);
   const selectedEmployee = useTypedSelector((state) => state.employeeReducer.selectedEmployee);
+
   useEffect(() => {
-    fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS).then((result) => {
-      setVacationRequestsCount(result.data?.length || 0);
-    });
-  }, []);
+    console.log(selectedTable, 'sel');
+  }, [selectedTable]);
+  useEffect(() => {
+    if (selectedTable === 'vacation-requests') {
+      fetchAllVacationRequests(VacationFilters.VACATION_REQUESTS).then((result) => {
+        setVacationRequestsCount(result.data?.length || 0);
+      });
+    } else if (selectedTable === 'on-vacation') {
+      fetchAllVacationRequests(VacationFilters.ON_VACATION);
+    }
+  }, [selectedTable]);
 
   useEffect(() => {
     if (selectedTable === 'hired') {
@@ -63,7 +71,7 @@ export const EmployeesTable = (): JSX.Element => {
           });
         })();
       }
-    } else {
+    } else if (selectedTable === 'fired') {
       if (user?.role === UserRoles.SUPER_ADMIN) {
         (async (): Promise<void> => {
           await fetchEmployees({

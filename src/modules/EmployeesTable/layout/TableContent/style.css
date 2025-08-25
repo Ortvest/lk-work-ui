@@ -218,6 +218,16 @@
   overflow-x: auto;
 }
 
+
+.employees-table-action-cell,
+.employees-table-row-actions { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 32px;
+}
+
 @media (width <= 1180px) {
   .employees-table {
     min-width: 981px;
