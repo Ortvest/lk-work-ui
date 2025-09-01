@@ -1,13 +1,16 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
+
+import { LanguageSwitcherDropdown } from '@shared/components/LanguageSwitcherDropdown';
 
 import './style.css';
 
 export const Menu = (): JSX.Element => {
+  const { t } = useTranslation('employee-sidebar');
   const headerMenuItems: AppRoute[] = useMemo(
     () =>
       Object.values(AppRoutes).filter(
@@ -16,25 +19,28 @@ export const Menu = (): JSX.Element => {
     []
   );
 
+  const [isSupportModalVisible, setIsSupportModalVisible] = useState(false);
+
   return (
     <nav className={classNames('header-navigation')}>
-      <ul className={classNames('header-navigation-list')}>
+      <ul
+        className={classNames('header-navigation-list')}
+        onClick={() => setIsSupportModalVisible(!isSupportModalVisible)}>
         {headerMenuItems.map((route: AppRoute, index: number) => (
           <li key={index} className={classNames('header-navigation-item')}>
-            <Link className={classNames('header-navigation-link')} to={route.path}>
-              {route.title}
-            </Link>
+            <button className={classNames('header-navigation-button')}>{t(route.title)}</button>
           </li>
         ))}
+        {isSupportModalVisible ? (
+          <div className="support-modal">
+            <h4 className="support-modal-title">{t('routeSupport')}</h4>
+            <p className="support-modal-text">
+              {t('headerSupportText')} <span>+123123123</span>
+            </p>
+          </div>
+        ) : null}
       </ul>
-      <select className={classNames('header-navigation-select')} name="lang-switch">
-        <option className={classNames('header-navigation-option')} value="eng">
-          Eng
-        </option>
-        <option className={classNames('header-navigation-option')} value="pl">
-          Pl
-        </option>
-      </select>
+      <LanguageSwitcherDropdown />
     </nav>
   );
 };

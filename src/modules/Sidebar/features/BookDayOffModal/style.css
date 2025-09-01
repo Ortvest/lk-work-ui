@@ -1,0 +1,200 @@
+.book-day-off-popup-container {
+  width: 430px;
+  height: fit-content;
+  padding: 24px;
+
+  background-color: var(--white);
+}
+
+.book-day-off-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(0 0 0 / 40%);
+}
+
+.book-day-off-popup-title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+}
+
+.book-day-off-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.book-day-off-cancel {
+  padding: 12px 24px;
+
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #dbdada;
+}
+
+.book-day-off-submit {
+  flex-grow: 1;
+
+  padding: 12px 24px;
+
+  color: var(--white);
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #2f2f2f;
+}
+
+.book-day-off-cancel:hover,
+.book-day-off-submit:hover {
+  cursor: pointer;
+}
+
+.book-day-off-header::after {
+  content: '';
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
+  margin: 24px 0 16px;
+
+  background-color: var(--light-gray);
+}
+
+.calendar-container {
+  padding: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 12px;
+}
+
+.tag button {
+  margin-left: 6px;
+
+  font-weight: bold;
+
+  border: none;
+
+  background: none;
+
+  cursor: pointer;
+}
+
+.calendar-header > button {
+  border: none;
+
+  background: none;
+}
+
+.calendar-header > button:hover {
+  cursor: pointer;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  margin-bottom: 10px;
+}
+
+.day-name {
+  color: #2f2f2f;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+}
+
+.day-cell {
+  padding: 8px;
+
+  font-weight: 500;
+  text-align: center;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+}
+
+.day-cell.selected {
+  color: #fff;
+
+  background-color: #2f2f2f;
+}
+
+.day-cell.selected.disabled {
+  text-decoration: none;
+}
+
+.day-cell.temp-start {
+  background-color: #ecebeb;
+}
+
+.day-cell.dim {
+  color: #ccc;
+}
+
+.selected-ranges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  margin: 16px 0 0;
+
+  color: #2f2f2f;
+}
+
+.selected-ranges::after {
+  content: '';
+
+  display: block;
+
+  width: 100%;
+  height: 1px;
+  margin: 24px 0 16px;
+
+  background-color: var(--light-gray);
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  background-color: #eee;
+}
+
+.day-cell.disabled {
+  color: #ccc;
+  text-decoration: line-through;
+
+  pointer-events: none;
+}
+
+.day-cell.range-start {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.day-cell.range-end {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}

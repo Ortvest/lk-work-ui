@@ -9,11 +9,26 @@
   border: none;
 }
 
+@media (width < 720px) {
+  .phone-wrapper {
+    justify-content: center;
+
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.phone-select-wrapper {
+  position: relative;
+
+  flex: 1;
+}
+
 .phone-select {
+  width: 100%;
   padding: 10px 40px 10px 16px;
 
-  color: var(--dark-gray);
-  font-size: 16px;
+  color: transparent;
 
   border: 1px solid var(--border-dark-gray);
 
@@ -29,4 +44,17 @@
 
 .phone-select:hover {
   cursor: pointer;
+}
+
+.phone-select-overlay {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+
+  color: var(--dark-gray);
+  font-size: 16px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
 }

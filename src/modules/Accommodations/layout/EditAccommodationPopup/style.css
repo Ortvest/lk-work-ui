@@ -1,0 +1,32 @@
+.add-employee-popup-container {
+  width: 430px;
+  height: fit-content;
+  padding: 24px;
+
+  background-color: var(--white);
+}
+
+.add-employee-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(0 0 0 / 40%);
+}
+
+.add-employee-popup-title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 100%;
+}
+
+.edit-accommodation-delete-btn-wrapper {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+}

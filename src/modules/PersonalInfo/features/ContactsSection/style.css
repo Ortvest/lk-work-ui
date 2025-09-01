@@ -9,3 +9,9 @@
 
   background-color: var(--white);
 }
+
+@media (width < 450px) {
+  .contacts-fields-wrapper {
+    padding: 0 16px 16px;
+  }
+}

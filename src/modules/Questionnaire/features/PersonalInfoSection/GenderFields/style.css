@@ -1,0 +1,37 @@
+.questionnaire-gender-options {
+  display: flex;
+  gap: 12px;
+}
+
+.questionnaire-gender-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 174px;
+  padding: 8px 0;
+
+  color: var(--dark-gray);
+
+  border: 1px solid var(--border-dark-gray);
+
+  background-color: var(--soft-gray);
+}
+
+.questionnaire-gender-option.active {
+  color: var(--white);
+
+  background-color: #565353;
+}
+
+.questionnaire-gender-option:hover {
+  cursor: pointer;
+}
+
+.questionnaire-gender-option > input {
+  display: none;
+}
+
+label > span.questionnaire-gender-value::first-letter {
+  text-transform: uppercase;
+}

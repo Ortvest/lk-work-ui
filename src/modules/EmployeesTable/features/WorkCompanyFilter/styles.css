@@ -1,0 +1,108 @@
+.company-dropdown {
+  position: relative;
+
+  max-width: 600px;
+  padding: 12px 0;
+
+  border-radius: 6px;
+
+  background-color: var(--light-gray);
+
+  user-select: none;
+}
+
+@media (width < 868px) {
+  .company-dropdown {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 100%;
+  }
+}
+
+.company-dropdown-header {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  color: #1d1d1d;
+  font-weight: 600;
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.company-name {
+  font-weight: 600;
+}
+
+.dropdown-icon {
+  margin-left: 2px;
+
+  font-size: 12px;
+
+  transform: rotate(180deg);
+
+  transition: 0.3s all;
+}
+
+.dropdown-icon.open {
+  transform: rotate(0deg);
+}
+
+.company-dropdown-list {
+  position: absolute;
+  z-index: 10;
+
+  width: 100%;
+  margin-top: 8px;
+
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  background-color: white;
+
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+
+  overflow: hidden;
+}
+
+.company-dropdown-item {
+  padding: 10px 16px;
+
+  color: #333;
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.company-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.company-dropdown-item.selected {
+  font-weight: 600;
+
+  background-color: #e0e0e0;
+}
+
+.company-address {
+  margin-top: 12px;
+
+  color: #666;
+  font-size: 14px;
+}
+
+.see-all-btn {
+  margin-left: 4px;
+
+  color: #000;
+  font-weight: 500;
+  text-decoration: underline;
+
+  border: none;
+
+  background-color: transparent;
+
+  cursor: pointer;
+}

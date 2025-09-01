@@ -45,12 +45,62 @@
   flex-grow: 1;
 }
 
+@media (width < 450px) {
+  .user-name {
+    font-size: 16px;
+  }
+
+  .user-email {
+    font-size: 14px;
+  }
+}
+
 .user-options {
+  position: relative;
+
   border: none;
 
   background: none;
 }
 
 .user-options:hover {
+  cursor: pointer;
+}
+
+.user-exit-button-wrapper {
+  position: absolute;
+  top: -25px;
+  left: 28px;
+
+  padding: 8px;
+
+  border-radius: 8px;
+
+  background-color: var(--white);
+
+  box-shadow: rgb(0 0 0 / 24%) 0 3px 8px;
+}
+
+@media (width < 512px) {
+  .user-exit-button-wrapper {
+    position: absolute;
+    top: 35px;
+    left: -90px;
+  }
+}
+
+.user-exit-buttun {
+  padding: 8px 16px;
+
+  color: #ea2a2a;
+  white-space: nowrap;
+
+  border: none;
+  border-radius: 8px;
+
+  background-color: #ea2a2a1f;
+}
+
+.user-exit-buttun:hover {
   cursor: pointer;
 }

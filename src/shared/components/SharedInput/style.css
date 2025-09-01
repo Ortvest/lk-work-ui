@@ -15,3 +15,10 @@
   color: var(--dark-gray);
   font-size: 16px;
 }
+
+@media (width <= 720px) {
+  .field-input {
+    width: 100%;
+    max-width: 100%;
+  }
+}

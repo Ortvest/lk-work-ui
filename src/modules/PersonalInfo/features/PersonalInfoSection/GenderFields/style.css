@@ -3,14 +3,33 @@
   gap: 12px;
 }
 
+@media (width < 720px) {
+  .gender-options {
+    justify-content: center;
+
+    width: 100%;
+  }
+}
+
 .gender-option {
-  padding: 8px 63px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 174px;
+  padding: 8px 0;
 
   color: var(--dark-gray);
 
   border: 1px solid var(--border-dark-gray);
 
   background-color: var(--soft-gray);
+}
+
+@media (width < 720px) {
+  .gender-option {
+    width: 100%;
+  }
 }
 
 .gender-option.active {

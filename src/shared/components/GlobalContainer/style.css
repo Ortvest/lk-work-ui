@@ -1,5 +1,5 @@
 .global-container {
-  height: auto;
+  height: 100vh;
   min-height: calc(100vh - 68px);
 
   background-color: var(--light-gray);
@@ -13,4 +13,16 @@
   max-width: 1212px;
   margin: 0 auto;
   padding: 26px 48px 0;
+}
+
+@media (width <= 550px) {
+  .global-wrapper {
+    padding: 18px 24px 0;
+  }
+}
+
+@media (width <= 450px) {
+  .global-wrapper {
+    padding: 18px 16px 0;
+  }
 }

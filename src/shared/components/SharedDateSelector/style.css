@@ -16,6 +16,15 @@
   appearance: none;
 }
 
+@media (width < 720px) {
+  .date-select {
+    justify-content: center;
+
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .date-select:hover {
   cursor: pointer;
 }
@@ -28,4 +37,13 @@
   max-width: 360px;
 
   border: none;
+}
+
+@media (width < 720px) {
+  .date-selector-fields-wrapper {
+    justify-content: center;
+
+    width: 100%;
+    max-width: 100%;
+  }
 }

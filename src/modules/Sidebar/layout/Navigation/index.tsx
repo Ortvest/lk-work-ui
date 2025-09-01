@@ -1,25 +1,28 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
+
+import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { AppRoute, AppRoutes, UsageScopes } from '@global/router/routes.constans';
 
 import { CurrentStatus } from '@modules/Sidebar/layout/CurrentStatus';
 import { DocumentsNavigation } from '@modules/Sidebar/layout/DocumentsNavigation';
 
+import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
+
 import DocumentsIcon from '@shared/assets/icons/DocumentsIcon.svg';
 
 import './style.css';
 
 export const Navigation = (): JSX.Element => {
-  const currentPathname = window.location.pathname;
-  const [activeRoute, setActiveRoute] = useState<string | null>(currentPathname);
-
-  const onRouteChangeHanlder = (selectedRoute: string): void => {
-    setActiveRoute(selectedRoute);
-  };
-
+  const location = useLocation();
+  const { t } = useTranslation('employee-sidebar');
+  const currentPathname = location.pathname;
+  const dispatch = useTypedDispatch();
+  const { setIsEditModeEnabled, setIsSidebarVisible } = CommonSlice.actions;
   const sidebarNavigationItems: AppRoute[] = useMemo(
     () =>
       Object.values(AppRoutes).filter(
@@ -28,34 +31,42 @@ export const Navigation = (): JSX.Element => {
     []
   );
 
+  const isDocumentsSectionActive = currentPathname.startsWith(AppRoutes.DOCUMENTS.path);
+
+  const onRouteChangeHandler = (): void => {
+    dispatch(setIsEditModeEnabled(false));
+    dispatch(setIsSidebarVisible(false));
+  };
+
   return (
     <ul className={classNames('sidebar-navigation-list')}>
       {sidebarNavigationItems.map((route: AppRoute, index: number) => (
         <li key={index} className={classNames('sidebar-navigation-item')}>
           <Link
             className={classNames('sidebar-navigation-link', {
-              active: activeRoute === route.path,
+              active: currentPathname === route.path,
             })}
             to={route.path}
-            onClick={() => onRouteChangeHanlder(route.path)}>
+            onClick={onRouteChangeHandler}>
             <img className={classNames('sidebar-navigation-icon')} src={route.icon} alt="route icon" />
-            {route.title}
+            {t(route.title)}
           </Link>
           <CurrentStatus />
         </li>
       ))}
+
       <li className={classNames('sidebar-navigation-item')}>
-        <a
+        <Link
           className={classNames('sidebar-navigation-link', {
-            active: activeRoute === AppRoutes.DOCUMENTS.path,
+            active: isDocumentsSectionActive,
           })}
-          onClick={() => onRouteChangeHanlder('documents')}>
+          to={AppRoutes.PASSPORT.path}>
           <img className={classNames('sidebar-navigation-icon')} src={DocumentsIcon} alt="route icon" />
-          Documents
-        </a>
+          {t('routeDocuments')}
+        </Link>
         <CurrentStatus />
       </li>
-      {activeRoute === AppRoutes.DOCUMENTS.path ? <DocumentsNavigation /> : null}
+      {isDocumentsSectionActive ? <DocumentsNavigation /> : null}
     </ul>
   );
 };
