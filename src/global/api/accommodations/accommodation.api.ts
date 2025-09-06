@@ -12,6 +12,7 @@ export const accommodationApi = baseAccommodationApi.injectEndpoints({
         url: API_CONFIG.addAccommodations(),
         method: 'POST',
         body: { address, name, price },
+        credentials: 'include',
       }),
     }),
     editAccommodation: builder.mutation<boolean, EditAccommodation>({
@@ -19,6 +20,7 @@ export const accommodationApi = baseAccommodationApi.injectEndpoints({
         url: API_CONFIG.editAccommodation(accommodationId),
         method: 'PUT',
         body: { address, name, price },
+        credentials: 'include',
       }),
     }),
     getAllAccommodations: builder.query({

@@ -218,9 +218,8 @@
   overflow-x: auto;
 }
 
-
 .employees-table-action-cell,
-.employees-table-row-actions { 
+.employees-table-row-actions {
   display: flex;
   justify-content: center;
   align-items: center;

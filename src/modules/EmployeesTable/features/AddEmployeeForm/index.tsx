@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 import { AddEmployeeButton } from '@modules/EmployeesTable/features/AddEmployeeButton';
 
+import { useTypedSelector } from "@shared/hooks/useTypedSelector";
+
 import './style.css';
 
 import { useInviteEmployeeMutation, useLazyFetchAllEmployeesQuery } from '@global/api/employee/employee.api';
@@ -22,11 +24,27 @@ export const AddEmployeeForm = ({ setIsOpenedModal }: AddEmployeeFormProps): Rea
   const [inviteEmployee] = useInviteEmployeeMutation();
   const [fetchAllEmployees] = useLazyFetchAllEmployeesQuery();
 
+  const user = useTypedSelector((state) => state.userReducer.user);
   const onSubmit = async (data: AddEmployee): Promise<void> => {
     try {
       await inviteEmployee({ ...data, role: UserRoles.EMPLOYEE }).unwrap();
       setIsOpenedModal(false);
-      await fetchAllEmployees({ workStatus: UserWorkStatuses.WORKING });
+      if (user?.role === UserRoles.SUPER_ADMIN) {
+        await fetchAllEmployees({
+          location: '',
+          workStatus: UserWorkStatuses.WORKING,
+          company: '',
+          fullName: '',
+        });
+      } else {
+        await fetchAllEmployees({
+          location: '',
+          workStatus: UserWorkStatuses.WORKING,
+          company: user?.jobInfo.company,
+          fullName: '',
+        });
+      }
+
       toast.success(t('toastEmployeeAdded'));
     } catch (error) {
       toast.error(t('toastEmployeeAddFailed'));

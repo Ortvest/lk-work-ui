@@ -13,6 +13,7 @@ export const uploadPhotoApi = baseUploadPhoto.injectEndpoints({
         url: API_CONFIG.uploadPhoto(),
         method: 'POST',
         body: file,
+        credentials: 'include',
       }),
     }),
     uploadUserPhoto: builder.mutation<UploadFileResponse, FormData>({
@@ -20,12 +21,14 @@ export const uploadPhotoApi = baseUploadPhoto.injectEndpoints({
         url: API_CONFIG.uploadUserPhoto(),
         method: 'POST',
         body: file,
+        credentials: 'include',
       }),
     }),
     getUploadedPhotoUrl: builder.mutation<{ url: string }, string>({
       query: (fileKey) => ({
         url: API_CONFIG.getUploadedPhoto(fileKey),
         method: 'GET',
+        credentials: 'include',
       }),
     }),
   }),

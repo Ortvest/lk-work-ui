@@ -14,7 +14,7 @@ const BACKEND_URL = RAW_BACKEND_URL?.endsWith('/') ? RAW_BACKEND_URL : `${RAW_BA
 
 export async function getServerPublicKey(): Promise<{ keyId: string; publicKeyB64: string }> {
   if (cached) return cached;
-  const res = await fetch(`${BACKEND_URL}crypto/public-key`);
+  const res = await fetch(`${BACKEND_URL}crypto/public-key`, {credentials: 'include',});
   const json = await res.json();
   cached = { keyId: json.keyId, publicKeyB64: String(json.publicKey).trim() };
   return cached;
