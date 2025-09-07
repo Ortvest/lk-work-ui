@@ -1,0 +1,22 @@
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-ring {
+  width: 48px;
+  height: 48px;
+
+  border: 5px solid rgb(0 0 0 / 10%);
+  border-top-color: #222;
+  border-radius: 50%;
+
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

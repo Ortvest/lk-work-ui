@@ -7,7 +7,12 @@
   margin: 0 0 30px;
 }
 
+.work-permission:has(:only-child) {
+  align-items: center;
+}
+
 .work-permission-form {
+  width: 100%;
   max-width: 660px;
 
   background-color: var(--gray);

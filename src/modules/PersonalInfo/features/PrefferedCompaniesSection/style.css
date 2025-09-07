@@ -10,6 +10,12 @@
   background-color: var(--white);
 }
 
+@media (width < 450px) {
+  .preffered-companies-fields-wrapper {
+    padding: 0 16px 16px;
+  }
+}
+
 .preffered-companies-text::first-letter {
   text-transform: uppercase;
 }

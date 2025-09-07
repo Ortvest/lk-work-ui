@@ -7,8 +7,9 @@ export const UserDocumentsStatuses = {
 
 export const UserRoles = {
   SUPER_ADMIN: 'super-admin',
-  MANAGER: 'manager',
+  OFFICE_WORKER: 'office-worker',
   EMPLOYEE: 'employee',
+  ACCOUNTANT: 'accountant',
 } as const;
 
 export const UserWorkStatuses = {

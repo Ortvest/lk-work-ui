@@ -9,7 +9,7 @@ export const Logo = (): JSX.Element => {
   return (
     <div className={classNames('header-logo')}>
       <Link className={classNames('header-logo-link')} to={AppRoutes.PERSONAL_INFO.path}>
-        Logo
+        LK-Work
       </Link>
     </div>
   );

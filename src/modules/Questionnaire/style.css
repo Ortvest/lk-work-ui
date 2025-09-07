@@ -1,0 +1,12 @@
+.questionnaire {
+  flex-grow: 1;
+
+  max-width: 660px;
+}
+
+.questionnaire-form {
+  max-width: 660px;
+  margin: 0 0 24px;
+
+  background-color: var(--gray);
+}

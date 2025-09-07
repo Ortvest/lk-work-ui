@@ -1,0 +1,51 @@
+.questionnaire-phone-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  width: 100%;
+  max-width: 360px;
+
+  border: none;
+}
+
+.questionnaire-phone-select-wrapper {
+  position: relative;
+
+  flex: 1;
+}
+
+.questionnaire-phone-select {
+  width: 100%;
+  padding: 10px 40px 10px 16px;
+
+  color: transparent;
+
+  border: 1px solid var(--border-dark-gray);
+
+  background-color: var(--soft-gray);
+  background-image: url('../../../../shared/assets/icons/ArrowDownIcon.svg');
+  background-repeat: no-repeat;
+  background-position: 88% 55%;
+
+  outline: none;
+
+  appearance: none;
+}
+
+.questionnaire-phone-select:hover {
+  cursor: pointer;
+}
+
+.questionnaire-phone-select-overlay {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+
+  color: var(--dark-gray);
+  font-size: 16px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+}

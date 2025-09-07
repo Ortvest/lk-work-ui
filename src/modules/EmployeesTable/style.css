@@ -1,0 +1,9 @@
+.admin-content-wrapper {
+  width: 100%;
+}
+
+@media (width < 868px) {
+  .admin-content-wrapper {
+    padding: 0 12px;
+  }
+}

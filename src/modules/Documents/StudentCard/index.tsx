@@ -1,47 +1,72 @@
+import { Fragment, useEffect } from 'react';
+
 import classNames from 'classnames';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { CommonSlice } from '@global/store/slices/Common.slice';
 
 import { StudentCardFormBody } from '@modules/Documents/StudentCard/features/StudentCardFormBody';
 import { StudentCardPreviewBody } from '@modules/Documents/StudentCard/features/StudentCardPreviewBody';
+import { Sidebar } from '@modules/Sidebar';
 import { StatusPanel } from '@modules/StatusPanel';
 
 import { useTypedDispatch } from '@shared/hooks/useTypedDispatch';
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
+import { GlobalContainer } from '@shared/components/GlobalContainer';
 import { SharedSectionHeader } from '@shared/components/SharedSectionHeader';
 
 import './style.css';
 
 import { useCollectUserStudentDataMutation } from '@global/api/updateUserData/collectData.api';
 import { useUploadPhotoMutation } from '@global/api/uploadPhoto/uploadPhoto.api';
-import { EducationDocuments, StudentNotUploadedData } from '@shared/interfaces/User.interfaces';
+import { UserRoles } from '@shared/enums/user.enums';
+import { EducationDocuments } from '@shared/interfaces/User.interfaces';
 import { dateParser } from '@shared/utils/dateParser';
+import { datePartsParser } from '@shared/utils/datePartsParser';
 
 export const StudentCard = (): JSX.Element => {
-  const methods = useForm<EducationDocuments>();
+  const { t } = useTranslation('employee-sidebar');
+  const studentCardData = useTypedSelector((state) => state.userReducer.user?.documents.educationDocuments);
+
+  const selectedEmployeeStudentCardData = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.documents.educationDocuments
+  );
+
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? studentCardData : selectedEmployeeStudentCardData;
+
+  const methods = useForm<EducationDocuments>({
+    defaultValues: {
+      studentFrontCardFileKey: currentDataOrigin?.studentFrontCardFileKey ?? '',
+      studentBackCardFileKey: currentDataOrigin?.studentBackCardFileKey ?? '',
+      studentPermitCardFileKey: currentDataOrigin?.studentPermitCardFileKey ?? '',
+      studentStatusDate: datePartsParser(currentDataOrigin?.studentStatusDate),
+    },
+  });
+
   const [uploadfile] = useUploadPhotoMutation();
   const [collectUserStudentData] = useCollectUserStudentDataMutation();
-  const employeeId = useTypedSelector((state) => state.userReducer.user?._id);
+  const employeeId = useTypedSelector((state) => state.employeeReducer.selectedEmployee?._id);
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const { setIsEditModeEnabled } = CommonSlice.actions;
   const dispatch = useTypedDispatch();
 
-  const onSaveHandler = async (data: StudentNotUploadedData): Promise<void> => {
+  const onSaveHandler = async (data: EducationDocuments): Promise<void> => {
     if (!employeeId) return;
 
     try {
-      const upload = async (file?: File): Promise<string> => {
-        if (!file) return '';
+      const upload = async (file?: File | string): Promise<string> => {
+        if (!file || typeof file === 'string') return file ?? '';
         const formData = new FormData();
         formData.append('file', file);
         return (await uploadfile(formData)).data?.fileKey ?? '';
       };
 
-      const frontKey = await upload(data.studentFrontCardFile);
-      const backKey = await upload(data.studentBackCardFile);
-      const permitKey = await upload(data.studentPermitCardFile);
+      const frontKey = await upload(data.studentFrontCardFileKey);
+      const backKey = await upload(data.studentBackCardFileKey);
+      const permitKey = await upload(data.studentPermitCardFileKey);
 
       const parsedData: EducationDocuments = {
         studentFrontCardFileKey: frontKey,
@@ -57,18 +82,43 @@ export const StudentCard = (): JSX.Element => {
     }
   };
 
+  useEffect(() => {
+    if (currentDataOrigin) {
+      methods.reset({
+        studentFrontCardFileKey: currentDataOrigin.studentFrontCardFileKey ?? '',
+        studentBackCardFileKey: currentDataOrigin.studentBackCardFileKey ?? '',
+        studentPermitCardFileKey: currentDataOrigin.studentPermitCardFileKey ?? '',
+        studentStatusDate: datePartsParser(currentDataOrigin.studentStatusDate),
+      });
+    }
+  }, [currentDataOrigin]);
+
   return (
-    <FormProvider {...methods}>
-      <section className={classNames('student-card')}>
-        <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
-          <StatusPanel />
-          <SharedSectionHeader
-            title="Student Card"
-            subtitle="Leave a photo of the document. Make sure the document is in good quality."
-          />
-          {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
-        </form>
-      </section>
-    </FormProvider>
+    <Fragment>
+      {userRole !== UserRoles.EMPLOYEE ? (
+        <FormProvider {...methods}>
+          <GlobalContainer>
+            <Sidebar />
+            <section className={classNames('student-card')}>
+              <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+                <StatusPanel />
+                <SharedSectionHeader title={t('routeStudentCard')} subtitle={t('studentCardSubtitle')} />
+                {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
+              </form>
+            </section>
+          </GlobalContainer>
+        </FormProvider>
+      ) : (
+        <FormProvider {...methods}>
+          <section className={classNames('student-card')}>
+            <form className={classNames('student-card-form')} onSubmit={methods.handleSubmit(onSaveHandler)}>
+              <StatusPanel />
+              <SharedSectionHeader title={t('routeStudentCard')} subtitle={t('studentCardSubtitle')} />
+              {isEditModeEnabled ? <StudentCardFormBody /> : <StudentCardPreviewBody />}
+            </form>
+          </section>
+        </FormProvider>
+      )}
+    </Fragment>
   );
 };

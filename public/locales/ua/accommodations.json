@@ -1,0 +1,23 @@
+{
+  "accommodationsTitle": "Житло",
+  "columnAccommodationName": "Назва",
+  "columnAccommodationAddress": "Адреса",
+  "columnAccommodationPrice": "Ціна",
+  "btnAddAccommodation": "Додати житло",
+  "modalCreateAccommodationTitle": "Додати житло",
+  "modalAccommodationNameLabel": "Назва житла*",
+  "modalAccommodationNamePlaceholder": "Введіть назву житла",
+  "modalAccommodationAddressLabel": "Адреса житла*",
+  "modalAccommodationAddressPlaceholder": "Введіть адресу житла",
+  "modalAccommodationPriceLabel": "Ціна житла*",
+  "modalAccommodationPricePlaceholder": "Введіть ціну житла",
+  "toastAccommodationAdded": "Житло успішно додано",
+  "toastAccommodationEdited": "Житло успішно відредаговано",
+  "toastAccommodationAddFailed": "Не вдалося додати житло",
+  "btnEditAccommodation": "Редагувати житло",
+  "modalCancelBtn": "Скасувати",
+  "modalCreateAccommodation": "Створити житло",
+  "modalEditAccommodation": "Редагувати житло",
+  "deleteAccommodation": "Видалити житло",
+  "toastAccommodationDeleted": "Житло було успішно видалене."
+}

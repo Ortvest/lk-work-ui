@@ -1,0 +1,16 @@
+{
+  "accommodationsTitle": "Zakwaterowanie",
+  "columnAccommodationName": "Nazwa",
+  "columnAccommodationAddress": "Adres",
+  "columnAccommodationPrice": "Cena",
+  "btnAddAccommodation": "Dodaj zakwaterowanie",
+  "toastAccommodationAdded": "Zakwaterowanie zostało pomyślnie dodane",
+  "toastAccommodationEdited": "Zakwaterowanie zostało pomyślnie zaktualizowane",
+  "toastAccommodationAddFailed": "Nie udało się dodać zakwaterowania",
+  "btnEditAccommodation": "Edytuj zakwaterowanie",
+  "modalCancelBtn": "Anuluj",
+  "modalCreateAccommodation": "Utwórz zakwaterowanie",
+  "modalEditAccommodation": "Edytuj zakwaterowanie",
+  "deleteAccommodation": "Usuń zakwaterowanie",
+  "toastAccommodationDeleted": "Zakwaterowanie zostało pomyślnie usunięte."
+}

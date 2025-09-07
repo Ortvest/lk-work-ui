@@ -11,6 +11,12 @@
   background-color: var(--white);
 }
 
+@media (width < 450px) {
+  .student-card-form-fields-wrapper {
+    padding: 0 16px 24px;
+  }
+}
+
 .student-card-line::after {
   content: '';
 

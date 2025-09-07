@@ -27,3 +27,9 @@
 
   background-color: var(--white);
 }
+
+@media (width < 450px) {
+  .personal-info-fields-wrapper {
+    padding: 0 16px;
+  }
+}

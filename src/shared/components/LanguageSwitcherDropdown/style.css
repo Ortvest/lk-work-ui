@@ -1,0 +1,9 @@
+.lang-switch-dropdown > select {
+  border: none;
+
+  outline: none;
+}
+
+.lang-switch-dropdown > select:hover {
+  cursor: pointer;
+}

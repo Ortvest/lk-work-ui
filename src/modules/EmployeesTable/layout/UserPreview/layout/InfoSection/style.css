@@ -4,6 +4,13 @@
 
 .user-preview-contact-header h1 {
   font-weight: 500;
+  font-size: 14px;
+}
+
+.user-preview-contact-header-icon {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .user-preview-contact-main {

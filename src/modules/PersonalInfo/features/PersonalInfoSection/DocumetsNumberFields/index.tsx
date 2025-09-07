@@ -1,36 +1,41 @@
 import { Fragment } from 'react';
 
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { useTypedSelector } from '@shared/hooks/useTypedSelector';
 
 import { SharedInput } from '@shared/components/SharedInput';
 import { SharedLabel } from '@shared/components/SharedLabel';
 
+import { UserRoles } from '@shared/enums/user.enums';
+
 export const DocumentsNumberField = (): JSX.Element => {
   const { register } = useFormContext();
+  const { t } = useTranslation('employee-sidebar');
   const { isEditModeEnabled } = useTypedSelector((state) => state.CommonReducer);
   const personalInfo = useTypedSelector((state) => state.userReducer.user?.personalInfo);
+  const selectedEmployeePersonalInfo = useTypedSelector(
+    (state) => state.employeeReducer.selectedEmployee?.personalInfo
+  );
 
+  const userRole = useTypedSelector((state) => state.userReducer.user?.role);
+
+  const currentDataOrigin = userRole === UserRoles.EMPLOYEE ? personalInfo : selectedEmployeePersonalInfo;
   return (
     <Fragment>
-      <SharedLabel title="Passport Number:*">
+      <SharedLabel title={t('passportNumber')}>
         {isEditModeEnabled ? (
-          <SharedInput type="text" {...register('passportNumber')} placeholder="Enter your passport number..." />
+          <SharedInput type="text" {...register('passportNumber')} placeholder={t('passportPlaceholder')} />
         ) : (
-          <span>{personalInfo?.passportNumber || '-'}</span>
+          <span>{currentDataOrigin?.passportNumber || '-'}</span>
         )}
       </SharedLabel>
-      <SharedLabel title="PESEL Number:*">
+      <SharedLabel title={t('peselNumber')}>
         {isEditModeEnabled ? (
-          <SharedInput
-            type="text"
-            maxLength={11}
-            {...register('peselNumber')}
-            placeholder="Enter your pesel number..."
-          />
+          <SharedInput type="text" maxLength={11} {...register('peselNumber')} placeholder={t('peselPlaceholder')} />
         ) : (
-          <span>{personalInfo?.peselNumber || '-'}</span>
+          <span>{currentDataOrigin?.peselNumber || '-'}</span>
         )}
       </SharedLabel>
     </Fragment>
