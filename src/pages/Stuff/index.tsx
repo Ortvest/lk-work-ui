@@ -30,6 +30,7 @@ export const StuffPage = (): React.ReactNode => {
       <div className={classNames('stuff-container')}>
         <StuffTableHeader setOpenedPopupType={setOpenedPopupType} setIsOpenedModal={setIsOpenedModal} />
         <StuffTableContent
+          setIsOpenedModal={setIsOpenedModal}
           setOpenedPopupType={setOpenedPopupType}
           employees={(data || []) as unknown as UserEntity[]}
           setIsDrawerOpen={setIsOpenedModal}

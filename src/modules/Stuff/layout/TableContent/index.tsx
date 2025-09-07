@@ -15,11 +15,13 @@ import { isUserEntity } from '@shared/guards/isUserEntity';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 import { getRoleLabel } from '@shared/utils/roleTransformer';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import EmptyTableScreen from "@shared/components/EmptyTable";
 
 interface EmployeeTableContentProps {
   employees: UserEntity[];
   setIsDrawerOpen: (isOpen: boolean) => void;
   setOpenedPopupType: (type: OpenedPopupType) => void;
+  setIsOpenedModal: (isOpen: boolean) => void;
 }
 interface ColumnMetaWithClassName {
   className?: string;
@@ -34,6 +36,7 @@ export const StuffTableContent = ({
   employees,
   setIsDrawerOpen,
   setOpenedPopupType,
+                                    setIsOpenedModal
 }: EmployeeTableContentProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
   const dispatch = useTypedDispatch();
@@ -88,6 +91,17 @@ export const StuffTableContent = ({
       onSelectEmployee,
     },
   });
+
+  if (!employees || employees.length === 0) {
+    return (
+      <EmptyTableScreen
+        onAddClick={() => {
+          setIsOpenedModal(true)
+          setOpenedPopupType('create');
+        }}
+      />
+    );
+  }
 
   return (
     <div className="employees-table-wrapper">

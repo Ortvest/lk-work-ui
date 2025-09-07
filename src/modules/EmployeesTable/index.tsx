@@ -120,6 +120,7 @@ export const EmployeesTable = (): JSX.Element => {
         selectedTable={selectedTable}
         setIsDrawerOpen={setIsUserPreviewDrawerOpen}
         employees={employees}
+        setIsOpenedModal={setIsOpenedModal}
         vacationRequests={data as VacationRequestsResponse[]}
         setVacationRequestsCount={setVacationRequestsCount}
       />

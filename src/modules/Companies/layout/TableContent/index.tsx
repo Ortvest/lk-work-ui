@@ -14,6 +14,7 @@ import './style.css';
 import { OpenedPopupType } from '@pages/Accommodations';
 import { WorkCompanyEntity } from '@shared/interfaces/WorkCompanies.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import EmptyTableScreen from "@shared/components/EmptyTable";
 
 export const CompanyTableContent = ({
   companies,
@@ -116,6 +117,16 @@ export const CompanyTableContent = ({
     },
   });
 
+  if (!companies || companies.length === 0) {
+    return (
+      <EmptyTableScreen
+        onAddClick={() => {
+          setIsOpenedModal(true)
+          setOpenedPopupType('create');
+        }}
+      />
+    );
+  }
   return (
     <div className="employees-table-wrapper-comp">
       <table className="employees-table-comp">

@@ -29,6 +29,7 @@ import { isUserEntity } from '@shared/guards/isUserEntity';
 import { UserEntity } from '@shared/interfaces/User.interfaces';
 import { VacationDecision, VacationRequestsResponse } from '@shared/interfaces/Vacation.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import EmptyTableScreen from '@shared/components/EmptyTable';
 
 const { setSelectedEmployee } = EmployeeSlice.actions;
 
@@ -38,6 +39,7 @@ interface EmployeeTableContentProps {
   setIsDrawerOpen: (isOpen: boolean) => void;
   selectedTable: EmployeeTableTab;
   setVacationRequestsCount: React.Dispatch<React.SetStateAction<number>>;
+  setIsOpenedModal: (isOpen: boolean) => void;
 }
 
 export const EmployeesTableContent = ({
@@ -46,6 +48,7 @@ export const EmployeesTableContent = ({
   selectedTable,
   vacationRequests,
   setVacationRequestsCount,
+  setIsOpenedModal,
 }: EmployeeTableContentProps): React.ReactNode => {
   const { t } = useTranslation('employees-table');
 
@@ -338,6 +341,13 @@ export const EmployeesTableContent = ({
 
   if (isHandleLoading) return <Loader />;
 
+  if (selectedTable === "hired" && (!employees || employees.length === 0)) {
+    return (
+      <EmptyTableScreen
+        onAddClick={() => setIsOpenedModal(true)}
+      />
+    );
+  }
   return (
     <div className="employees-table-wrapper">
       <table className="employees-table">

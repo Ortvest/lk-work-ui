@@ -12,6 +12,7 @@ import './style.css';
 import { OpenedPopupType } from '@pages/Accommodations';
 import { AccommodationEntity } from '@shared/interfaces/Accommodation.interfaces';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import EmptyTableScreen from "@shared/components/EmptyTable";
 
 export const accommodationsColumns = (t: (key: string) => string): ColumnDef<AccommodationEntity>[] => [
   {
@@ -69,6 +70,17 @@ export const AccommodationTableContent = ({
       setIsOpenedModal,
     },
   });
+
+  if (!accommodations || accommodations.length === 0) {
+    return (
+      <EmptyTableScreen
+        onAddClick={() => {
+          setIsOpenedModal(true)
+          setOpenedPopupType('create');
+        }}
+      />
+    );
+  }
 
   return (
     <div className="employees-table-wrapper-acc">

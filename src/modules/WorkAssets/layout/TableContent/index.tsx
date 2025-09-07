@@ -10,6 +10,7 @@ import { useLazyGetWorkAssetByIdQuery } from '@global/api/workAssets/workAssets'
 import { OpenedPopupType } from '@pages/Accommodations';
 import { WorkAsset } from '@shared/interfaces/work-asset.interface';
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import EmptyTableScreen from "@shared/components/EmptyTable";
 
 interface WorkAssetsTableContentProps {
   assets: WorkAsset[];
@@ -115,6 +116,17 @@ export const WorkAssetsTableContent = ({
       setIsOpenedModal,
     },
   });
+
+  if (!assets || assets.length === 0) {
+    return (
+      <EmptyTableScreen
+        onAddClick={() => {
+          setIsOpenedModal(true)
+          setOpenedPopupType('create');
+        }}
+      />
+    );
+  }
 
   return (
     <div className="assets-table-wrapper">
